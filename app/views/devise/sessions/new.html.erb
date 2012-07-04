@@ -1,0 +1,43 @@
+
+<div class="block">
+	<div class="content">
+		<h2 class="title">ADMIN SIGN IN</h2>
+		<div class="inner">
+			<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form" }) do |f| %>
+			<br />
+			<div class="group wat-cf">
+				<div class="">
+				<%= f.label :email, :class => "label left" %>
+				</div>
+				<div class="">
+				<%= f.email_field :email, :class => "text_field" %>
+				</div>
+			</div>
+
+			<div class="group wat-cf">
+				<div class="">
+				<%= f.label :password, :class => "label left"  %>
+				</div>
+				<div class="">
+				<%= f.password_field :password, :class => "text_field"  %>
+				</div>
+			</div>
+
+			<% if devise_mapping.rememberable? -%>
+			<div class="group wat-cf">
+				<div class="right">
+				<%= f.check_box :remember_me, :class => "checkbox" %> <%= f.label :remember_me, :class => "checkbox" %>
+				</div>
+			</div>
+			<% end -%>
+
+			<div class="group wat-cf">
+				<div class="right">
+				<%= f.submit "Sign in", :class => "button" %>
+				</div>
+			</div>
+			<% end %>
+		</div>
+	</div>
+</div>
+
