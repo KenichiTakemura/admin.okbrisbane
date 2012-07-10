@@ -45,3 +45,7 @@ gem 'devise'
 gem 'rb-readline'
 # Theme
 gem 'web-app-theme'
+# Paperclip
+gem "paperclip", "~> 3.0"
+# Kaminari
+gem 'kaminari'

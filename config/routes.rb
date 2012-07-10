@@ -1,4 +1,9 @@
 AdminOkbrisbane::Application.routes.draw do
+  match 'client_images/:id' => 'client_images#destroy', :via => :post
+  resources :client_images
+
+  resources :business_clients
+
   resources :banners
 
   resources :users

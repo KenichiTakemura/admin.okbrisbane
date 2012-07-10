@@ -1,0 +1,46 @@
+<%= form_for(@client_image) do |f| %>
+<%= f.hidden_field :business_client_id, :value => @business_client.id %>
+<% if @client_image.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@client_image.errors.count, "error") %> prohibited this client_image from being saved:</h2>
+
+	<ul>
+		<% @client_image.errors.full_messages.each do |msg| %>
+		<li>
+			<%= msg %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :avatar, "Image", :class => "label left" %>(<span class="description"><%= t("client_image_acceptable_extention") %></span>)
+	</div>
+	<div class="">
+		<%= f.file_field :avatar %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :resolution, t("client_image_size"), :class => "label left" %>
+	</div>
+	<div class="">
+	<%= f.select :resolution, options_for_select(@resolutions) %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :link_to_url, t("client_image_link_to_url"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :link_to_url, :class => "text_field", :size => 64 %>
+	</div>
+	<span class="description"><%= t("client_image_leave_blank_to_show_profile") %></span>
+</div>
+<div class="group wat-cf">
+	<div class="right">
+		<%= f.submit t("add_banner_image", :default => "Add"), :class => "button" %>
+	</div>
+</div>
+<% end %>

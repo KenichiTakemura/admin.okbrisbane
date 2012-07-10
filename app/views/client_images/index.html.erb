@@ -1,0 +1,24 @@
+<h1>Listing client_images</h1>
+
+<table class="table">
+	<tr>
+		<th><%= t("client_image_thumbnail) %></th>
+		<th>Clicked</th>
+		<th>Last Clicked On</th>
+		<th>Client Name</th>
+		<th>Created On</th>
+		<th>
+		<th></th>
+	</tr>
+
+	<% @client_images.each do |client_image| %>
+	<tr class="<%= cycle("odd", "even") %>" >
+		<td><%= image_tag client_image.avatar.url(:thumb) %></td>
+		<td><%= client_image.clicked %></td>
+		<td><%= Common.date_format(client_image.last_clicked) %></td>
+		<td><%= client_image.business_client.business_name if client_image.business_client %></td>
+		<td><%= Common.date_format(client_image.created_at) %></td>
+		<td><%= link_to t('delete', :default => 'Delete'), client_image, method: :get, data: { confirm: 'Are you sure?' } %></td>
+	</tr>
+	<% end %>
+</table>

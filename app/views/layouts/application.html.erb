@@ -5,6 +5,7 @@
 		<!-- %= stylesheet_link_tag "web-app-theme/base", "web-app-theme/themes/default/style", "web-app-theme/override", :cache => true % -->
 		<%= stylesheet_link_tag "application", :cache => false %>
 		<!-- %= javascript_include_tag :defaults, :cache => true % -->
+		<%= javascript_include_tag 'jquery-1.7.2.js' %>
 		<%= csrf_meta_tag %>
 	</head>
 	<body>
@@ -25,8 +26,11 @@
 				<div id="main-navigation">
 					<ul>
 						<li>
-							<%= link_to t("banner_management", :default => "Banner Management"), "#" %></a>
+							<%= link_to t("client_management", :default => "Client Management"), business_clients_path %></a>
 						</li>
+						<li>
+							<%= link_to t("banner_management", :default => "Banner Management"), banners_path %></a>
+						</li>bu
 						<li>
 							<%= link_to t("user_management", :default => "User Management"), users_path %></a>
 						</li>
@@ -52,7 +56,11 @@
 					<% end -%>
 				</div>
 				<div id="main">
+					<div class="block">
+					<div class="content">
 					<%= yield %>
+					</div>
+					</div>
 					<div id="footer">
 						<div class="block">
 							<p>

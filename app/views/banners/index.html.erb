@@ -1,21 +1,40 @@
-<h1>Listing banners</h1>
+<h2 class="title"><%= t("listing_banners", :default => "Banners") %></h2>
+<div class="inner">
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+	<div class="group wat-cf">
+		<div class="">
+			<%= label_tag :page, nil, :class => "label left" %>
+		</div>
+		<div class="">
+			<%= select_tag :page, options_from_collection_for_select(Page.all, "id", "name") , :id => 'page_changed' %>
+		</div>
+	</div>
+	<br/>
+	<script type="text/javascript" charset="utf-8">
+		$('#page_changed').change(function() {
+window.location.href =
+ "<%= banners_path %>" + "&page=" + $('#page_changed').val() ;
+	});
+	</script>
 
-<% @banners.each do |banner| %>
-  <tr>
-    <td><%= link_to 'Show', banner %></td>
-    <td><%= link_to 'Edit', edit_banner_path(banner) %></td>
-    <td><%= link_to 'Destroy', banner, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Banner', new_banner_path %>
+	<table class="table">
+		<tr>
+			<th class="first"><%= t("banner_page", :default => "Page") %></th>
+			<th><%= t("banner_section", :default => "Section") %></th>
+			<th><%= t("banner_alignment", :default => "Position") %></th>
+			<th><%= t("banner_size", :default => "Size (Width x Height) ") %></th>
+			<th><%= t("banner_images", :default => "Images") %></th>
+			<th class="last">&nbsp;</th>
+		</tr>
+		<% @banners.each do |banner| %>
+		<tr class="<%= cycle("odd", "even") %>" >
+			<td><%= banner.page.name%></td>
+			<td><%= banner.section.name%></td>
+			<td><%= banner.alignment.name%></td>
+			<td><%= banner.width%>&nbsp;x&nbsp;<%= banner.height%></td>
+			<td><%= banner.client_image%></td>
+			<td><%= link_to 'Att', banner %>&nbsp;|&nbsp;<%= link_to 'Edit', edit_banner_path(banner) %></td>
+		</tr>
+		<% end %>
+	</table>
+</div>

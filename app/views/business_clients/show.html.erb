@@ -1,0 +1,70 @@
+<p id="notice">
+	<%= notice %>
+</p>
+		<h2><%= t("business_profile_for", :default => "Business Profile for ") %><%= @business_client.business_name %></h2>
+		<div class="inner">
+<table class="table">
+	<tr class="odd">
+		<td><%= label_tag :business_name, t("client_business_name", :default => "Business Name"), :class => "label left" %> </td>
+		<td><%= @business_client.business_name %></td>
+	</tr>
+	<tr class="even">
+		<td><%= label_tag :contact_name, t("client_contact_name", :default => "Contact Name"), :class => "label left" %> </td>
+		<td><%= @business_client.contact_name %></td>
+	</tr>
+	<tr class="odd">
+		<td><%= label_tag :business_abn, t("client_business_abn", :default => "ABN"), :class => "label left" %> </td>
+		<td><%= @business_client.business_abn %></td>
+	</tr>
+	<tr class="even">
+		<td><%= label_tag :business_url, t("client_business_url", :default => "URL"), :class => "label left" %> </td>
+		<td><%= @business_client.business_url %></td>
+	</tr>
+	<tr class="odd">
+		<td><%= label_tag :business_phone, t("client_business_phone", :default => "Phone"), :class => "label left" %> </td>
+		<td><%= @business_client.business_phone %></td>
+	</tr>
+	<tr class="even">
+		<td><%= label_tag :business_fax, t("client_business_fax", :default => "Fax"), :class => "label left" %> </td>
+		<td><%= @business_client.business_fax %></td>
+	</tr>
+	<tr class="odd">
+		<td><%= label_tag :business_email, t("client_business_email", :default => "Email"), :class => "label left" %> </td>
+		<td><%= @business_client.business_email %></td>
+	</tr>
+	<tr class="even">
+		<div id="business_client_banner_images">
+		<td><%= label_tag :client_image, t("client_banner_images", :default => "Banner Images"), :class => "label left" %><br/>
+			<%= link_to t('add_business_banner_image', :default => 'Add Banner Image'), new_client_image_path(:client => @business_client, :page => @current_page) %>
+		</td>
+		<td>
+			<div style="width:100%; position: relative; display: inline;">
+			<% if @business_client.client_image %>
+		<% @business_client.client_image.each do |client_image| %>
+			<div style="position: relative; float: right; padding: 5px; width: 200px">
+			<%= image_tag client_image.avatar.url(:thumb) %>&nbsp;
+			<ul><li>
+			<%= t("client_image_size") %> : <%= client_image.resolution %>
+			</li>
+			<li>
+			<%= t("client_image_clicked") %> : <%= client_image.clicked %>
+			</li>
+			<li>
+			<%= t("client_image_last_clicked_on") %> : <%= Common.date_format(client_image.last_clicked) %>
+			</li>
+			</ul>
+						<%= button_to t('delete'), :controller => :client_images, :action => 'destroy', :id => client_image.id %>
+			</div>
+		<% end  %>
+		<% end  %>
+		</div>
+		</td>
+	</tr>
+	<tr class="odd">
+		<td><%= label_tag :business_profile, t("client_business_profile", :default => "Profile"), :class => "label left" %> </td>
+		<td><textarea class="text_area" rows="10" cols="80" readonly><%= @business_client.business_email %></textarea></td>
+	</tr>
+</table>
+</div>
+<%= link_to 'Edit', edit_business_client_path(@business_client) %> |
+<%= link_to 'Back', business_clients_path(:page => @current_page) %>

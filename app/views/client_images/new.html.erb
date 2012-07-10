@@ -1,0 +1,8 @@
+<h2><%= t("new_banner_image_for", :default => "New Banner Image for ") %><%= @business_client.business_name %></h2>
+<div class="inner">
+
+	<%= render 'form' %>
+
+</div>
+
+<%= link_to 'Back', business_clients_path(:page => @current_page) %>

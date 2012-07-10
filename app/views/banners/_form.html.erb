@@ -1,17 +1,54 @@
-<%= form_for(@banner) do |f| %>
-  <% if @banner.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@banner.errors.count, "error") %> prohibited this banner from being saved:</h2>
-
-      <ul>
-      <% @banner.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<%= form_for @image, :html => { :multipart => true } do |f| %>
+<% if @banner.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@banner.errors.count, "error") %> prohibited this banner from being saved:</h2>
+	<ul>
+		<% @banner.errors.full_messages.each do |msg| %>
+		<li>
+			<%= msg %>
+		</li>
+		<% end %>
+	</ul>
+</div>
 <% end %>
+
+<div class="group wat-cf">
+	<div class="">
+	<%= f.label :attached_page, :class => "label left" %>
+	</div>
+	<div class="">
+	<%= f.select :attached_page, options_from_collection_for_select(Page.all, "id", "name" ), :class => "right" %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+	<%= f.label :attached_section, :class => "label left" %>
+	</div>
+	<div class="">
+	<%= f.select :attached_section, options_from_collection_for_select(Section.all, "id", "name" ) %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+	<%= f.label :attached_alignment, :class => "label left" %>
+	</div>
+	<div class="">
+	<%= f.select :attached_alignment, options_from_collection_for_select(Alignment.all, "id", "name" ) %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+	<%= f.label :avatar, "Image", :class => "label left" %>
+	</div>
+	<div class="">
+	<%= f.file_field :avatar.avatar %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="right actions">
+		<%= f.submit 'Create', :class => "button" %>
+	</div>
+</div>
+
+<% end %>
+

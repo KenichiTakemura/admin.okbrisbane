@@ -2,8 +2,11 @@ class BannersController < ApplicationController
   # GET /banners
   # GET /banners.json
   def index
-    @banners = Banner.all
-
+    if(params[:page])
+      @banners = Banner.where('page = ?', params[:page])
+    else
+      @banners = Banner.all
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @banners }
@@ -25,10 +28,12 @@ class BannersController < ApplicationController
   # GET /banners/new.json
   def new
     @banner = Banner.new
-
+    @image = Image.new
+    @image.update_attribute(:attached, @banner)
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @banner }
+      format.json { render json: @image }
     end
   end
 
