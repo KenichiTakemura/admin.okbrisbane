@@ -1,17 +1,88 @@
-<%= form_for(@business_client) do |f| %>
-  <% if @business_client.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@business_client.errors.count, "error") %> prohibited this business_client from being saved:</h2>
+<%= form_for(@business_client, :html => { :class => "form" }) do |f| %>
 
-      <ul>
-      <% @business_client.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<% if @business_client.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@business_client.errors.count, "error") %> prohibited this business_client from being saved:</h2>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+	<ul>
+		<% @business_client.errors.full_messages.each do |msg| %>
+		<li>
+			<%= msg %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
+
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :business_name, t("business_name"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :business_name, :class => "text_field" %>
+	</div>
+	<span class="description"><%= t("must_be_filled") %></span>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :contact_name, t("contact_name"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :contact_name, :class => "text_field" %>
+	</div>
+	<span class="description"><%= t("must_be_filled") %></span>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :business_abn, t("business_abn"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :business_abn, :class => "text_field" %>
+	</div>
+	<span class="description"><%= t("optional") %></span>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :business_url, t("business_url"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :business_url, :class => "text_field" %>
+	</div>
+	<span class="description"><%= t("optional") %></span>
+	<span class="description"><%= t("linked_from_banner") %></span>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :business_phone, t("business_phone"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :business_phone, :class => "text_field" %>
+	</div>
+	<span class="description"><%= t("optional") %></span>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :business_fax, t("business_fax"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :business_fax, :class => "text_field" %>
+	</div>
+	<span class="description"><%= t("optional") %></span>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :business_email, t("business_email"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :business_email, :class => "text_field" %>
+	</div>
+	<span class="description"><%= t("optional") %></span>
+</div>
+
+
+<div class="group wat-cf">
+	<div class="left">
+		<%= f.submit t("create"), :class => "button" %>
+	</div>
+</div>
 <% end %>

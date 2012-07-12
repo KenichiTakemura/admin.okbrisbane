@@ -2,11 +2,12 @@ class BannersController < ApplicationController
   # GET /banners
   # GET /banners.json
   def index
-    if(params[:page])
-      @banners = Banner.where('page = ?', params[:page])
+    if(params[:page_id])
+      @banners = Banner.where('page_id = ?', params[:page_id]).order.page params[:page]
     else
-      @banners = Banner.all
+      @banners = Banner.order.page params[:page]
     end
+    @page_id = params[:page_id]
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @banners }

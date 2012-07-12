@@ -1,5 +1,47 @@
-<p id="notice"><%= notice %></p>
+<p id="notice">
+	<%= notice %>
+</p>
+<h2><%= t("listing_banners") %></h2>
+<h2><%= @banner.name %></h2>
+<div class="inner">
+	<table class="table">
+		<tr class="odd"></tr>
+		<tr class="even">
+			<div id="business_client_banner_images">
+				<td><%= label_tag :client_image, t("client_banner_image"), :class => "label left" %>
+				<br/>
+				<%= link_to t('add'), new_client_image_path(:banner => @banner, :page => @current_page) %> </td>
+				<td>
+				<div style="width:100%; position: relative; display: inline;">
+					<% if @banner.client_image %>
+					<% @banner.client_image.each do |client_image| %>
+					<div style="position: relative; float: left; padding: 5px; width: 250px">
+						<%= link_to image_tag(client_image.avatar.url(:thumb)), client_image.avatar.url(:medium), :target => "_blank"%>
+						<ul>
+							<li>
+								<%= client_image.business_client.business_name %>
+							</li>
+							<li>
+								<%= client_image.medium_size %>
+							</li>
+							<li>
+								<%= client_image.clicked %>&nbsp;<%= t("client_image_clicked") %>
+							</li>
+						</ul>
 
+						<div style="float:left; position: relative; margin-top: 5px">
+							<%= form_for(client_image, :method => :post, :url => client_image_dettach_path(client_image), :html => { :class => "form" }) do |f| %>
+							<%= f.submit t("client_image_remove_from_banner"), :confirm => t("confirm_remove_from_banner"), :class => "button"%>
+							<% end %>
+						</div>
+					</div>
+					<% end %>
+					<% end  %>
+				</div></td>
+			</div>
+		</tr>
 
+	</table>
+</div>
 <%= link_to 'Edit', edit_banner_path(@banner) %> |
 <%= link_to 'Back', banners_path %>

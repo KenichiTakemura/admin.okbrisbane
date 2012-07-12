@@ -1,4 +1,7 @@
-<h2><%= t("new_banner_image_for", :default => "New Banner Image for ") %><%= @business_client.business_name %></h2>
+
+<% if @business_client %>
+
+<h2><%= t("new_banner_image_for_client") %></h2>
 <div class="inner">
 
 	<%= render 'form' %>
@@ -6,3 +9,16 @@
 </div>
 
 <%= link_to 'Back', business_clients_path(:page => @current_page) %>
+
+<% elsif @banner %>
+
+<h2><%= t("new_banner_image_for_page") %></h2>
+<div class="inner">
+
+	<%= render 'form_banner' %>
+
+</div>
+
+<%= link_to 'Back', banners_path(:page => @current_page) %>
+
+<% end %>

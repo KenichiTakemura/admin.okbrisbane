@@ -9,8 +9,7 @@
 			<th><%= t("client_business_name", :default => "Business Name") %></th>
 			<th><%= t("client_contact_name", :default => "Contact Name")%></th>
 			<th><%= t("client_business_abn", :default => "ABN")%></th>
-			<th><%= t("client_number_of_banner_images", :default => "Number of Banner Images")%></th>
-			<th><%= t("client_number_of_banners", :default => "Number of Banners")%></th>
+			<th><%= t("client_banner_image", :default => "Number of Banner Images")%></th>
 			<th class="last"></th>
 		</tr>
 		<% @business_clients.each do |business_client| %>
@@ -19,8 +18,10 @@
 			<td><%= link_to business_client.business_name, business_client_path(:id => business_client, :page => @business_clients.current_page) %></td>
 			<td><%= business_client.contact_name %></td>
 			<td><%= business_client.business_abn %></td>
-			<td><%= link_to business_client.client_image.size, business_client_path(:id => business_client) + "#business_client_banner_images" %></td>
-			<td>0</td>
+<!-- 			<td><%= link_to business_client.client_image.size, business_client_path(:id => business_client) + "#business_client_banner_images" %></td> -->
+			<td><% business_client.client_image.each do |client_image| %>
+				<%= image_tag client_image.avatar.url(:thumb), :style => "width:40px;height:40px" %>
+				<% end %></td>
 			<td><%= link_to t('add_business_banner_image', :default => 'Add Banner Image'), new_client_image_path(:client => business_client, :page => @business_clients.current_page) %>
 			|
 			<%= link_to t('delete', :default => 'Delete'), business_client, method: :delete, data: { confirm: 'Are you sure?' } %></td>
