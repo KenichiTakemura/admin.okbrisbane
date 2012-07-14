@@ -49,3 +49,7 @@ gem 'web-app-theme'
 gem "paperclip", "~> 3.0"
 # Kaminari
 gem 'kaminari'
+# WYSIWYG
+# https://github.com/galetahub/ckeditor
+# rails generate ckeditor:install --orm=active_record --backend=paperclip
+gem "ckeditor", "3.7.1"

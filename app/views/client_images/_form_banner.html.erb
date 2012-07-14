@@ -1,6 +1,6 @@
 <%= form_for(@client_image, :html => { :class => "form" }) do |f| %>
-<%= f.hidden_field :attached_id, :value => @banner.id %>
-<%= f.hidden_field :medium_size, :value => "#{@banner.width}x#{@banner.height}" %>
+<%= f.hidden_field :attached_id, :value => @banner.id if @banner %>
+<%= f.hidden_field :medium_size, :value => "#{@banner.width}x#{@banner.height}" if @banner %>
 <% if @client_image.errors.any? %>
 <div id="error_explanation">
 	<h2><%= pluralize(@client_image.errors.count, "error") %> prohibited this client_image from being saved:</h2>
@@ -23,17 +23,25 @@
 		<%= f.label :business_client_id, t("business_client"), :class => "label left" %>
 	</div>
 	<div class="">
-	<%= f.select :business_client_id, options_from_collection_for_select(BusinessClient.all, "id", "business_name") %>
+	<% if @business_client %>
+		<%= f.select :business_client_id, options_from_collection_for_select(BusinessClient.all, "id", "business_name", @business_client.id) %>
+	<% elsif %>
+		<%= f.select :business_client_id, options_from_collection_for_select(BusinessClient.all, "id", "business_name") %>
+	<% end %>
 	</div>
 	<span class="description"><%= t("must_be_selected") %></span><br/>
-	<span class="description"><%= link_to t("not_listed?"), new_business_client_path %></span>
+	<span class="description"><%= link_to t("not_listed"), new_business_client_path %></span>
 </div>
 <div class="group wat-cf">
 	<div class="">
 		<%= f.label :banner_page, t("banner_page"), :class => "label left" %>
 	</div>
 	<div class="">
-	<%= f.label :banner_page, @banner.name %>
+	<% if @banner %>
+		<%= f.select :attached_id, options_from_collection_for_select(@banners, "id", "name", @banner.id ) %>
+	<% elsif %>
+		<%= f.select :attached_id, options_from_collection_for_select(@banners, "id", "name" ) %>
+	<% end %>
 	</div>
 </div>
 <div class="group wat-cf">
@@ -50,7 +58,11 @@
 		<%= f.label :medium_size, t("client_image_size"), :class => "label left" %>
 	</div>
 	<div class="">
-	<%= f.label :medium_size, "#{@banner.width} x #{@banner.height}", :readonly => true %>
+		<% if @banner %>
+			<%= f.select :attached_id, options_from_collection_for_select(@banners, "resolution", "resolution", @banner.resolution ) %>
+		<% elsif %>
+			<%= f.select :medium_size,options_from_collection_for_select(@banners, "resolution", "resolution", "") %>
+		<% end %>
 	</div>
 </div>
 <div class="group wat-cf">

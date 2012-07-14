@@ -26,19 +26,12 @@ class ClientImagesController < ApplicationController
   def new
     @current_page = params[:page]
     @client_image = ClientImage.new
-    @resolutions = Hash.new
-    Banner.find(:all, :select => "width, height").each do |wh|
-      resolution = wh.width.to_s << "x" << wh.height.to_s
-      logger.debug("resolution: #{resolution}")
-      @resolutions[resolution] = resolution
-    end
-
-    logger.debug("@resolutions: #{@resolutions}")
+    @banners  = Banner.all
     # Called from BusinessClient
     if(params[:client])
       @business_client = BusinessClient.find_by_id(params[:client])
       logger.debug("business_client => #{@business_client}")
-    @client_image.business_client_id = @business_client.id
+      @client_image.business_client_id = @business_client.id
     end
     # Called from Banners
     if(params[:banner])
@@ -70,7 +63,7 @@ class ClientImagesController < ApplicationController
       respond_to do |format|
         if @client_image.save
           # redirect_to  banner#show
-          format.html { redirect_to @banner, notice: t("client_image_was_successfully_created") }
+          format.html { redirect_to @banner, notice: t("successfully_created") }
           format.json { render json: @client_image, status: :created, location: @client_image }
         else
           @banner = Banner.find_by_id(@client_image.attached_id)
@@ -82,7 +75,7 @@ class ClientImagesController < ApplicationController
     respond_to do |format|
     if @client_image.save
     # redirect_to  business_clients#show
-    format.html { redirect_to @business_client, notice: t("client_image_was_successfully_created") }
+    format.html { redirect_to @business_client, notice: t("successfully_created") }
     format.json { render json: @client_image, status: :created, location: @client_image }
     else
     @business_client = BusinessClient.find_by_id(@client_image.business_client_id)

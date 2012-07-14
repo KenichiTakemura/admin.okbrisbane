@@ -1,4 +1,6 @@
 AdminOkbrisbane::Application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
+
   match 'client_images/:id' => 'client_images#destroy', :via => :post
   match 'client_images/:id/banner' => 'client_images#dettach', :via => :post, :as => "client_image_dettach"
   resources :client_images

@@ -1,6 +1,3 @@
-<p id="notice">
-	<%= notice %>
-</p>
 <h2><%= t("listing_banners") %></h2>
 <h2><%= @banner.name %></h2>
 <div class="inner">
@@ -19,7 +16,7 @@
 						<%= link_to image_tag(client_image.avatar.url(:thumb)), client_image.avatar.url(:medium), :target => "_blank"%>
 						<ul>
 							<li>
-								<%= client_image.business_client.business_name %>
+								<%= link_to client_image.business_client.business_name, client_image.business_client %>
 							</li>
 							<li>
 								<%= client_image.medium_size %>

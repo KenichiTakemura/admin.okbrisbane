@@ -1,15 +1,15 @@
 <h2 class="title"><%= t("listing_business_clients", :default => "Business Clients") %></h2>
 <div class="inner">
 
-	<%= link_to 'New Business client', new_business_client_path %>
+	<%= link_to t("new_business_client"), new_business_client_path %>
 	<div style="float:right"><%= paginate @business_clients %></div>
 	<table class="table">
 		<tr>
 			<th class="first"><%= t("id", :default => "Id")%></th>
-			<th><%= t("client_business_name", :default => "Business Name") %></th>
-			<th><%= t("client_contact_name", :default => "Contact Name")%></th>
-			<th><%= t("client_business_abn", :default => "ABN")%></th>
-			<th><%= t("client_banner_image", :default => "Number of Banner Images")%></th>
+			<th><%= t("business_name", :default => "Business Name") %></th>
+			<th><%= t("contact_name", :default => "Contact Name")%></th>
+			<th><%= t("business_abn", :default => "ABN")%></th>
+			<th><%= t("client_banner_image")%></th>
 			<th class="last"></th>
 		</tr>
 		<% @business_clients.each do |business_client| %>
@@ -18,13 +18,12 @@
 			<td><%= link_to business_client.business_name, business_client_path(:id => business_client, :page => @business_clients.current_page) %></td>
 			<td><%= business_client.contact_name %></td>
 			<td><%= business_client.business_abn %></td>
-<!-- 			<td><%= link_to business_client.client_image.size, business_client_path(:id => business_client) + "#business_client_banner_images" %></td> -->
 			<td><% business_client.client_image.each do |client_image| %>
-				<%= image_tag client_image.avatar.url(:thumb), :style => "width:40px;height:40px" %>
+				<%= link_to image_tag(client_image.avatar.url(:thumb), :style => "width:40px;height:40px"), client_image.avatar.url(:medium), :target => "_blank" %>
 				<% end %></td>
 			<td><%= link_to t('add_business_banner_image', :default => 'Add Banner Image'), new_client_image_path(:client => business_client, :page => @business_clients.current_page) %>
 			|
-			<%= link_to t('delete', :default => 'Delete'), business_client, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+			<%= link_to t('delete', :default => 'Delete'), business_client, method: :delete, data: { confirm: t('confirm_delete') } %></td>
 		</tr>
 		<% end %>
 	</table>

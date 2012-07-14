@@ -1,24 +1,14 @@
 
-<% if @business_client %>
 
-<h2><%= t("new_banner_image_for_client") %></h2>
-<div class="inner">
-
-	<%= render 'form' %>
-
-</div>
-
-<%= link_to 'Back', business_clients_path(:page => @current_page) %>
-
-<% elsif @banner %>
-
-<h2><%= t("new_banner_image_for_page") %></h2>
+<h2><%= t("new_banner_image") %></h2>
 <div class="inner">
 
 	<%= render 'form_banner' %>
 
-</div>
-
-<%= link_to 'Back', banners_path(:page => @current_page) %>
-
+<% if @business_client %>
+<%= link_to 'Back', business_clients_path(:page => @current_page) %>
+<% elsif @banner %>
+<%= link_to t('Back'), banners_path(:page => @current_page) %>
 <% end %>
+
+</div>

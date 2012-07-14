@@ -48,7 +48,7 @@
 	<div class="">
 		<%= f.text_field :business_url, :class => "text_field" %>
 	</div>
-	<span class="description"><%= t("optional") %></span>
+	<span class="description"><%= t("optional") %></span><br/>
 	<span class="description"><%= t("linked_from_banner") %></span>
 </div>
 <div class="group wat-cf">
@@ -78,8 +78,17 @@
 	</div>
 	<span class="description"><%= t("optional") %></span>
 </div>
-
-
+<%= f.fields_for @business_client.business_profile do |profile_form| %>
+<div class="group wat-cf">
+	<div class="">
+		<%= profile_form.label :body, t("business_profile"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= profile_form.cktext_area :body, :toolbar => 'Full' %>
+	</div>
+	<span class="description"><%= t("optional") %></span>
+</div>
+<% end %>
 <div class="group wat-cf">
 	<div class="left">
 		<%= f.submit t("create"), :class => "button" %>

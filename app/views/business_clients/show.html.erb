@@ -1,31 +1,30 @@
-<p id="notice">
-	<%= notice %>
-</p>
-<h2><%= t("business_profile_for") %><%= @business_client.business_name %></h2>
+<h2><%= t("business_client") %></h2>
 <div class="inner">
 	<table class="table">
+		<th class="first"><%= t("item") %></th>
+		<th class="last"><%= t("content") %></th>
 		<tr class="odd">
-			<td><%= label_tag :business_name, t("client_business_name", :default => "Business Name"), :class => "label left" %> </td>
+			<td><%= label_tag :business_name, t("business_name", :default => "Business Name"), :class => "label left" %> </td>
 			<td><%= @business_client.business_name %></td>
 		</tr>
 		<tr class="even">
-			<td><%= label_tag :contact_name, t("client_contact_name", :default => "Contact Name"), :class => "label left" %> </td>
+			<td><%= label_tag :contact_name, t("contact_name", :default => "Contact Name"), :class => "label left" %> </td>
 			<td><%= @business_client.contact_name %></td>
 		</tr>
 		<tr class="odd">
-			<td><%= label_tag :business_abn, t("client_business_abn", :default => "ABN"), :class => "label left" %> </td>
+			<td><%= label_tag :business_abn, t("business_abn", :default => "ABN"), :class => "label left" %> </td>
 			<td><%= @business_client.business_abn %></td>
 		</tr>
 		<tr class="even">
-			<td><%= label_tag :business_url, t("client_business_url", :default => "URL"), :class => "label left" %> </td>
+			<td><%= label_tag :business_url, t("business_url", :default => "URL"), :class => "label left" %> </td>
 			<td><%= @business_client.business_url %></td>
 		</tr>
 		<tr class="odd">
-			<td><%= label_tag :business_phone, t("client_business_phone", :default => "Phone"), :class => "label left" %> </td>
+			<td><%= label_tag :business_phone, t("business_phone", :default => "Phone"), :class => "label left" %> </td>
 			<td><%= @business_client.business_phone %></td>
 		</tr>
 		<tr class="even">
-			<td><%= label_tag :business_fax, t("client_business_fax", :default => "Fax"), :class => "label left" %> </td>
+			<td><%= label_tag :business_fax, t("business_fax", :default => "Fax"), :class => "label left" %> </td>
 			<td><%= @business_client.business_fax %></td>
 		</tr>
 		<tr class="odd">
@@ -45,16 +44,16 @@
 						<%= image_tag client_image.avatar.url(:thumb) %>&nbsp;
 						<ul>
 							<li>
-								<%= t("client_image_size") %> : <%= client_image.medium_size %>
+								<%= t("size") %> : <%= client_image.medium_size %>
 							</li>
 							<li>
-								<%= t("client_image_clicked") %> : <%= client_image.clicked %>
+								<%= client_image.clicked %>&nbsp;<%= t("client_image_clicked") %>
 							</li>
-							<li>
+							<li><%= t("banner_page") %>
 								<% if !client_image.attached %>
-								<%= t("client_image_bannered_to") %> : <%= t("not_present") %>
+								<br/><%= t("not_present") %>
 								<% elsif %>
-								<%= t("client_image_bannered_to") %> : <%= client_image.attached.name %>								
+								<br/><%= link_to client_image.attached.name, banner_path(client_image.attached_id) %>								
 								<% end %>
 							</li>
 
@@ -70,10 +69,16 @@
 				</div></td>
 		</tr>
 		<tr class="odd">
-			<td><%= label_tag :business_profile, t("client_business_profile", :default => "Profile"), :class => "label left" %> </td>
-			<td>			<textarea class="text_area" rows="10" cols="80" readonly><%= @business_client.business_email %></textarea></td>
+			<td><%= label_tag :business_profile_image, t("client_business_profile_image",), :class => "label left" %> </td>
+			<td><%= image_tag @business_client.business_profile_image.avatar.url(:medium) if !@business_client.business_profile_image.empty? %></td>
+		</tr>
+		<tr class="even">
+			<td><%= label_tag :business_profile, t("business_profile", :default => "Profile"), :class => "label left" %> </td>
+			<td><%=raw @business_client.business_profile.body %>
+				</td>
 		</tr>
 	</table>
+	<%= link_to t('Edit'), edit_business_client_path(@business_client) %> |
+	<%= link_to t('Back'), business_clients_path(:page => @current_page) %>
 </div>
-<%= link_to 'Edit', edit_business_client_path(@business_client) %> |
-<%= link_to 'Back', business_clients_path(:page => @current_page) %>
+

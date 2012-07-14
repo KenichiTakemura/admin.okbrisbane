@@ -27,7 +27,8 @@ class BusinessClientsController < ApplicationController
   # GET /business_clients/new.json
   def new
     @business_client = BusinessClient.new
-
+    @business_client.build_business_profile
+    logger.debug("@business_client: #{@business_client}")
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @business_client }
@@ -46,7 +47,7 @@ class BusinessClientsController < ApplicationController
 
     respond_to do |format|
       if @business_client.save
-        format.html { redirect_to @business_client, notice: 'Business client was successfully created.' }
+        format.html { redirect_to @business_client, notice: t("successfully_created") }
         format.json { render json: @business_client, status: :created, location: @business_client }
       else
         format.html { render action: "new" }
@@ -62,7 +63,7 @@ class BusinessClientsController < ApplicationController
 
     respond_to do |format|
       if @business_client.update_attributes(params[:business_client])
-        format.html { redirect_to @business_client, notice: 'Business client was successfully updated.' }
+        format.html { redirect_to @business_client, notice: t("successfully_updated") }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
