@@ -81,6 +81,15 @@
 <%= f.fields_for @business_client.business_profile do |profile_form| %>
 <div class="group wat-cf">
 	<div class="">
+		<%= profile_form.label :head, t("business_profile_head"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= profile_form.text_field :head, :class => 'text_field' %>
+	</div>
+	<span class="description"><%= t("optional") %></span>
+</div>
+<div class="group wat-cf">
+	<div class="">
 		<%= profile_form.label :body, t("business_profile"), :class => "label left" %>
 	</div>
 	<div class="">

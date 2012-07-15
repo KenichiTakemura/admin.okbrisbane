@@ -58,8 +58,8 @@ class ClientImagesController < ApplicationController
     @business_client = @client_image.business_client
     logger.debug("business_client: #{@business_client}")
     if @client_image.attached_id
-      @banner = Banner.find_by_id(@client_image.attached_id)
-      @client_image.attached_to(@banner)
+      banner = Banner.find_by_id(@client_image.attached_id)
+      @client_image.attached_to(banner)
       respond_to do |format|
         if @client_image.save
           # redirect_to  banner#show

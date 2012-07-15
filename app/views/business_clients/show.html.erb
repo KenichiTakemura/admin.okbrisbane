@@ -38,7 +38,7 @@
 				<%= link_to t('add'), new_client_image_path(:client => @business_client, :page => @current_page) %> </td>
 				<td>
 				<div style="width:100%; position: relative; display: inline;">
-					<% if @business_client.client_image %>
+					<% if !@business_client.client_image.empty? %>
 					<% @business_client.client_image.each do |client_image| %>
 					<div style="position: relative; float: left; padding: 5px; width: 250px">
 						<%= image_tag client_image.avatar.url(:thumb) %>&nbsp;
@@ -49,33 +49,57 @@
 							<li>
 								<%= client_image.clicked %>&nbsp;<%= t("client_image_clicked") %>
 							</li>
-							<li><%= t("banner_page") %>
+							<li>
+								<%= t("banner_page") %>
 								<% if !client_image.attached %>
-								<br/><%= t("not_present") %>
+								<br/>
+								<%= t("not_present") %>
 								<% elsif %>
-								<br/><%= link_to client_image.attached.name, banner_path(client_image.attached_id) %>								
+								<br/>
+								<%= link_to client_image.attached.name, banner_path(client_image.attached_id) %>
 								<% end %>
 							</li>
 
 						</ul>
 						<div style="float:left; position: relative; margin-top: 5px">
-						<%= form_for(client_image, :method => :post, :html => { :class => "form" }) do |f| %>
-						<%= f.submit t("delete"), :confirm => t("confirm_delete"), :class => "button"%>
+							<%= form_for(client_image, :method => :post, :html => { :class => "form" }) do |f| %>
+							<%= f.submit t("delete"), :confirm => t("confirm_delete"), :class => "button"%>
+							<% end %>
 						</div>
-						<% end %>
+
 					</div>
 					<% end  %>
-					<% end  %>
+					<% elsif %>
+					<%= noimage %>
+					<% end %>
 				</div></td>
 		</tr>
 		<tr class="odd">
-			<td><%= label_tag :business_profile_image, t("client_business_profile_image",), :class => "label left" %> </td>
-			<td><%= image_tag @business_client.business_profile_image.avatar.url(:medium) if !@business_client.business_profile_image.empty? %></td>
+			<td><%= label_tag :business_profile_image, t("business_profile_image",), :class => "label left" %>
+			<br/>
+			<%= link_to t('add'), new_business_profile_image_path(:client => @business_client, :page => @current_page) %> </td>
+			</td>
+			<td>
+			<div style="width:100%; position: relative; display: inline;">
+				<% if !@business_client.business_profile_image.empty? %>
+				<% @business_client.business_profile_image.each do |business_profile_image| %>
+				<div style="position: relative; float: left; padding: 5px; width: 250px">
+					<%= image_tag business_profile_image.avatar.url(:thumb) %>
+					<div style="position: relative; margin-top: 5px">
+						<%= form_for(business_profile_image, :method => :delete, :html => { :class => "form" }) do |f| %>
+						<%= f.submit t("delete"), :data => { :confirm => t("confirm_delete") } , :class => "button"%>
+						<% end %>
+					</div>
+				</div>
+				<% end %>
+				<% elsif %>
+				<%= noimage %>
+				<% end %>
+			</div></td>
 		</tr>
 		<tr class="even">
-			<td><%= label_tag :business_profile, t("business_profile", :default => "Profile"), :class => "label left" %> </td>
-			<td><%=raw @business_client.business_profile.body %>
-				</td>
+			<td><%= label_tag :business_profile, t("business_profile"), :class => "label left" %> </td>
+			<td><%= raw @business_client.business_profile.body %> </td>
 		</tr>
 	</table>
 	<%= link_to t('Edit'), edit_business_client_path(@business_client) %> |

@@ -1,5 +1,6 @@
 <%= form_for(@client_image, :html => { :class => "form" }) do |f| %>
-<%= f.hidden_field :business_client_id, :value => @business_client.id %>
+<%= f.hidden_field :attached_id, :value => @banner.id if @banner %>
+<%= f.hidden_field :medium_size, :value => "#{@banner.width}x#{@banner.height}" if @banner %>
 <% if @client_image.errors.any? %>
 <div id="error_explanation">
 	<h2><%= pluralize(@client_image.errors.count, "error") %> prohibited this client_image from being saved:</h2>
@@ -13,11 +14,34 @@
 </div>
 <% end %>
 <div class="group wat-cf">
+<div id="page_preview">
+	<iframe width=300px height=300px"></iframe>
+</div>
+</div>
+<div class="group wat-cf">
 	<div class="">
-		<%= f.label :business_name, t("business_name"), :class => "label left" %>
+		<%= f.label :business_client_id, t("business_client"), :class => "label left" %>
 	</div>
 	<div class="">
-	<%= f.label :business_name, "#{@business_client.business_name}", :readonly => true %>
+	<% if @business_client %>
+		<%= f.select :business_client_id, options_from_collection_for_select(BusinessClient.all, "id", "business_name", @business_client.id) %>
+	<% elsif %>
+		<%= f.select :business_client_id, options_from_collection_for_select(BusinessClient.all, "id", "business_name") %>
+	<% end %>
+	</div>
+	<span class="description"><%= t("must_be_selected") %></span><br/>
+	<span class="description"><%= link_to t("not_listed"), new_business_client_path %></span>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :banner_page, t("banner_page"), :class => "label left" %>
+	</div>
+	<div class="">
+	<% if @banner %>
+		<%= f.select :attached_id, options_from_collection_for_select(@banners, "id", "name", @banner.id ) %>
+	<% elsif %>
+		<%= f.select :attached_id, options_from_collection_for_select(@banners, "id", "name" ) %>
+	<% end %>
 	</div>
 </div>
 <div class="group wat-cf">
@@ -27,16 +51,19 @@
 	<div class="">
 		<%= f.file_field :avatar %>
 	</div>
-	<span class="description"><%= t("client_image_acceptable_extention") %></span>
+	<span class="description"><%= t("acceptable_extention") %></span>
 </div>
 <div class="group wat-cf">
 	<div class="">
-		<%= f.label :medium_size, t("client_image_size"), :class => "label left" %>
+		<%= f.label :medium_size, t("size"), :class => "label left" %>
 	</div>
 	<div class="">
-	<%= f.select :medium_size, options_for_select(@resolutions) %>
+		<% if @banner %>
+			<%= f.select :attached_id, options_from_collection_for_select(@banners, "resolution", "resolution", @banner.resolution ) %>
+		<% elsif %>
+			<%= f.select :medium_size,options_from_collection_for_select(@banners, "resolution", "resolution", "") %>
+		<% end %>
 	</div>
-	<span class="description"><%= t("client_image_size_is_changed") %></span>
 </div>
 <div class="group wat-cf">
 	<div class="">
@@ -52,4 +79,5 @@
 		<%= f.submit t("add"), :class => "button" %>
 	</div>
 </div>
+
 <% end %>

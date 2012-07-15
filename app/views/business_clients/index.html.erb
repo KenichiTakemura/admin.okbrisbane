@@ -1,14 +1,16 @@
 <h2 class="title"><%= t("listing_business_clients", :default => "Business Clients") %></h2>
+
 <div class="inner">
 
 	<%= link_to t("new_business_client"), new_business_client_path %>
 	<div style="float:right"><%= paginate @business_clients %></div>
 	<table class="table">
 		<tr>
-			<th class="first"><%= t("id", :default => "Id")%></th>
-			<th><%= t("business_name", :default => "Business Name") %></th>
-			<th><%= t("contact_name", :default => "Contact Name")%></th>
-			<th><%= t("business_abn", :default => "ABN")%></th>
+			<th class="first"><%= t("id")%></th>
+			<th><%= t("business_name") %></th>
+			<th><%= t("business_profile_image") %></th>
+			<th><%= t("contact_name")%></th>
+			<th><%= t("business_abn")%></th>
 			<th><%= t("client_banner_image")%></th>
 			<th class="last"></th>
 		</tr>
@@ -16,11 +18,24 @@
 		<tr class="<%= cycle("odd", "even") %>" >
 			<td><%= business_client.id %></td>
 			<td><%= link_to business_client.business_name, business_client_path(:id => business_client, :page => @business_clients.current_page) %></td>
+			<td>
+				<% if business_client.business_profile_image.empty? %>
+					<%= noimage %>
+				<% elsif %>
+					<%= image_tag(business_client.main_profile_image.avatar.url(:thumb), :style => "width:50px;height:50px") %>
+				<% end %>
+			</td>
 			<td><%= business_client.contact_name %></td>
 			<td><%= business_client.business_abn %></td>
-			<td><% business_client.client_image.each do |client_image| %>
-				<%= link_to image_tag(client_image.avatar.url(:thumb), :style => "width:40px;height:40px"), client_image.avatar.url(:medium), :target => "_blank" %>
-				<% end %></td>
+			<td>
+				<% if business_client.client_image.empty? %>
+					<%= noimage %>
+				<% elsif %>
+				<% business_client.client_image.each do |client_image| %>
+				<%= link_to image_tag(client_image.avatar.url(:thumb), :style => "width:50px;height:50px"), client_image.avatar.url(:medium), :target => "_blank" %>
+				<% end %>
+				<% end %>
+			</td>
 			<td><%= link_to t('add_business_banner_image', :default => 'Add Banner Image'), new_client_image_path(:client => business_client, :page => @business_clients.current_page) %>
 			|
 			<%= link_to t('delete', :default => 'Delete'), business_client, method: :delete, data: { confirm: t('confirm_delete') } %></td>

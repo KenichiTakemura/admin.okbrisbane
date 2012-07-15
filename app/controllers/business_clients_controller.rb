@@ -16,6 +16,7 @@ class BusinessClientsController < ApplicationController
   # GET /business_clients/1.json
   def show
     @business_client = BusinessClient.find(params[:id])
+    logger.debug("@business_client: #{@business_client}")
     @current_page = params[:page]
     respond_to do |format|
       format.html # show.html.erb

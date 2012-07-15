@@ -271,11 +271,12 @@ ko:
   optional: '옵션 입력'
   linked_from_banner: '광고 링크'
   not_listed: '일람안에 없습니다'
-  
+  acceptable_extention: ''
   
   business_client: '고객'
   new_business_client: '고객 추가하기'
   new_banner_image: '광고 이미지를 추가하기'
+  new_business_profile_image: '프로필 이미지를 추가하기'
   
   business_name:  '고객(회사) 이름'
   contact_name:   '담당자 이름 '
@@ -285,6 +286,8 @@ ko:
   business_fax: '고객(회사) FAX '
   business_email: '이메일 주소'
   business_profile: '프로필'
+  business_profile_head: '프로필 head'
+  business_profile_image: '프로필 이미지'
   
   banner_page: '광고란 페이지'
   

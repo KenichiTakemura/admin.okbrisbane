@@ -15,6 +15,13 @@ pre {
   padding: 10px;
   font-size: 11px; }
 
+a {
+  color: #eee;
+  &:visited {
+    color: #666; }
+  &:hover {
+    color: #fff;
+    background-color: #8FDA71; } }
 
 div {
   &.field, &.actions {
