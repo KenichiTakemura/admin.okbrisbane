@@ -1,5 +1,4 @@
 <%= form_for(@client_image, :html => { :class => "form" }) do |f| %>
-<%= f.hidden_field :attached_id, :value => @banner.id if @banner %>
 <%= f.hidden_field :medium_size, :value => "#{@banner.width}x#{@banner.height}" if @banner %>
 <% if @client_image.errors.any? %>
 <div id="error_explanation">
@@ -59,7 +58,7 @@
 	</div>
 	<div class="">
 		<% if @banner %>
-			<%= f.select :attached_id, options_from_collection_for_select(@banners, "resolution", "resolution", @banner.resolution ) %>
+			<%= f.select :medium_size, options_from_collection_for_select(@banners, "resolution", "resolution", @banner.resolution ) %>
 		<% elsif %>
 			<%= f.select :medium_size,options_from_collection_for_select(@banners, "resolution", "resolution", "") %>
 		<% end %>

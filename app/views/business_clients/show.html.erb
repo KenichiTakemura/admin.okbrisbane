@@ -1,5 +1,6 @@
 <h2><%= t("business_client") %></h2>
 <div class="inner">
+	<%= link_to t('business_preview'), '#' %>
 	<table class="table">
 		<th class="first"><%= t("item") %></th>
 		<th class="last"><%= t("content") %></th>
@@ -63,7 +64,7 @@
 						</ul>
 						<div style="float:left; position: relative; margin-top: 5px">
 							<%= form_for(client_image, :method => :post, :html => { :class => "form" }) do |f| %>
-							<%= f.submit t("delete"), :confirm => t("confirm_delete"), :class => "button"%>
+							<%= f.submit t("delete"), :data => { :confirm => t("confirm_delete") }, :class => "button"%>
 							<% end %>
 						</div>
 

@@ -1,4 +1,6 @@
 AdminOkbrisbane::Application.routes.draw do
+  resources :business_categories
+
   resources :business_profile_images
 
   mount Ckeditor::Engine => '/ckeditor'

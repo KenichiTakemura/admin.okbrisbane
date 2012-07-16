@@ -1,8 +1,9 @@
 <h2 class="title"><%= t("edit_business_clients") %></h2>
 <div class="inner">
 	<%= render 'form' %>
+
+
+<%= link_to t('Show'), @business_client %> |
+<%= link_to t('Back'), business_clients_path %>
+
 </div>
-
-<%= link_to 'Show', @business_client %> |
-<%= link_to 'Back', business_clients_path %>
-

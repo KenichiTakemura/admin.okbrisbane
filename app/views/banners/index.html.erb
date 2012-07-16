@@ -32,9 +32,14 @@ window.location.href ="<%= banners_path %>" + "&page_id=" + $('#page_changed').v
 			<td><%= banner.id%></td>
 			<td><%= link_to banner.name, banner_path(:id => banner, :page => @banners.current_page) %></td>
 			<td><%= banner.width%>&nbsp;x&nbsp;<%= banner.height%></td>
-			<td><% banner.client_image.each do |client_image| %>
+			<td>
+				<% if banner.client_image.empty? %>
+				<%= noimage %>
+				<% elsif %>
+				<% banner.client_image.each do |client_image| %>
 			<%= link_to image_tag(client_image.avatar.url(:thumb), :style => "width:40px;height:40px", :title => client_image.business_client.business_name), client_image.avatar.url(:medium), :target => "_blank" %>
-			<% end %> </td>
+			<% end %> 
+			<% end %></td>
 			<td><%= link_to t("banner_attach_images"), edit_banner_path(banner)  %> | <%= link_to t("banner_upload_images"), new_client_image_path(:banner => banner, :page => @banners.current_page)  %></td>
 		</tr>
 		<% end %>
