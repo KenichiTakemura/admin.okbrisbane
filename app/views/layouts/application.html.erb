@@ -14,10 +14,10 @@
 					<ul class="wat-cf">
 						
 						<li>
-							<%= link_to t("system_management", :default => "System Setting"), "#" %></a>
+							<%= link_to t("system_management"), "#" %></a>
 						</li>
 						<li>
-							<%= link_to t("web-app-theme.logout", :default => "Logout"), destroy_admin_session_path, :method => :delete, :class => "logout", data: { confirm: 'Sing out?' } %>
+							<%= link_to t("signout"), destroy_admin_session_path, :method => :delete, :class => "logout", data: { confirm: t('are_you_sure_to_singout') } %>
 						</li>
 					</ul>
 				</div>

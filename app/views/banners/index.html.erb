@@ -3,10 +3,10 @@
 
 	<div class="group wat-cf">
 		<div class="">
-			<%= label_tag :page, t("page"), :class => "label left" %>
+			<%= label_tag :page, t("pages"), :class => "label left" %>
 		</div>
 		<div class="">
-			<%= select_tag :page, options_from_collection_for_select(Page.all, "id", "name", @page_id) , :id => 'page_changed' %>
+			<%= select_tag :page, options_from_collection_for_select(Page.all, "id", "name_t", @page_id) , :id => 'page_changed' %>
 		</div>
 	</div>
 	<br/>
@@ -40,7 +40,7 @@ window.location.href ="<%= banners_path %>" + "&page_id=" + $('#page_changed').v
 			<%= link_to image_tag(client_image.avatar.url(:thumb), :style => "width:40px;height:40px", :title => client_image.business_client.business_name), client_image.avatar.url(:medium), :target => "_blank" %>
 			<% end %> 
 			<% end %></td>
-			<td><%= link_to t("banner_attach_images"), edit_banner_path(banner)  %> | <%= link_to t("banner_upload_images"), new_client_image_path(:banner => banner, :page => @banners.current_page)  %></td>
+			<td><%= link_to t("banner_attach_images"), edit_banner_path(banner)  %> <br/> <%= link_to t("banner_upload_images"), new_client_image_path(:banner => banner, :page => @banners.current_page)  %></td>
 		</tr>
 		<% end %>
 	</table>

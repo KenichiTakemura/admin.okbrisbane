@@ -1,4 +1,7 @@
 AdminOkbrisbane::Application.routes.draw do
+  
+  devise_for :admins
+  
   resources :business_categories
 
   resources :business_profile_images
@@ -9,15 +12,17 @@ AdminOkbrisbane::Application.routes.draw do
   match 'client_images/:id/banner' => 'client_images#dettach', :via => :post, :as => "client_image_dettach"
   resources :client_images
 
+  match 'business_clients/:id/images' => 'business_clients#destroy_image', :via => :delete, :as => "business_client_delete_all_images"
   resources :business_clients
 
   resources :banners
 
-  resources :users
+
 
   get "main/index"
 
-  devise_for :admins
+
+  resources :users
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

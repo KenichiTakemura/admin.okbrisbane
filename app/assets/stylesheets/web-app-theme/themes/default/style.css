@@ -23,16 +23,54 @@
   font-style: normal;
 }
 
+
+@font-face {
+  font-family: "gulim";
+  src: url("fonts/gulim.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NanumBrush";
+  src: url("fonts/NanumBrush.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NanumGothic";
+  src: url("fonts/NanumGothic.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NanumGothicBold";
+  src: url("fonts/NanumGothicBold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NanumGothicExtraBold";
+  src: url("fonts/NanumGothicExtraBold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+
 body {
   color: #111111;
   background: #c4c4c4 url("images/bgd.jpg");
-  font-family: "MuseoSans500", helvetica, arial, sans-serif;
+  font-family: "NanumGothic", "MuseoSans500", helvetica, arial, sans-serif;
 }
+
 
 h1, h2, h3 {
   color: #111111;
   font-weight: normal;
-  font-family: "Museo700", helvetica, arial, sans-serif;
+  font-family: "NanumGothic", "Museo700", helvetica, arial, sans-serif;
 }
 
 a:link, a:visited, a:hover, a:active {

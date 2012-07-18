@@ -84,4 +84,18 @@ class BusinessClientsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def destroy_image
+    @business_client = BusinessClient.find(params[:id])
+    client_images = @business_client.client_image
+    logger.debug("client_images: #{client_images}")
+    client_images.each do |image|
+      logger.info("image is deleted. #{image}")
+      image.destroy
+    end
+    respond_to do |format|
+      format.html { redirect_to business_clients_url }
+      format.json { head :no_content }
+    end
+  end
 end
