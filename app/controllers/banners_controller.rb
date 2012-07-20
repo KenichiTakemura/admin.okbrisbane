@@ -29,8 +29,6 @@ class BannersController < ApplicationController
   # GET /banners/new.json
   def new
     @banner = Banner.new
-    @image = Image.new
-    @image.update_attribute(:attached, @banner)
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @banner }
@@ -50,7 +48,7 @@ class BannersController < ApplicationController
 
     respond_to do |format|
       if @banner.save
-        format.html { redirect_to @banner, notice: 'Banner was successfully created.' }
+        format.html { redirect_to @banner, notice: 'successfully_created' }
         format.json { render json: @banner, status: :created, location: @banner }
       else
         format.html { render action: "new" }
@@ -66,7 +64,7 @@ class BannersController < ApplicationController
 
     respond_to do |format|
       if @banner.update_attributes(params[:banner])
-        format.html { redirect_to @banner, notice: 'Banner was successfully updated.' }
+        format.html { redirect_to @banner, notice: 'successfully_updated' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

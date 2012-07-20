@@ -38,7 +38,9 @@
 			</td>
 			<td><%= link_to t('add_business_banner_image'), new_client_image_path(:client => business_client, :page => @business_clients.current_page) %>
 			<br/>
+			<% if business_client.business_name != 'OKBRISBANE' %>
 			<%= link_to t('business_client_delete'), business_client, method: :delete, data: { confirm: t('confirm_delete') } %>
+			<% end %>
 			<br/><%= link_to t('business_banner_image_all_delete'), business_client_delete_all_images_path(business_client), method: :delete, data: { confirm: t('confirm_delete') } %></td>
 		</tr>
 		<% end %>

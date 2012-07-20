@@ -1,4 +1,4 @@
-<%= form_for @image, :html => { :multipart => true } do |f| %>
+<%= form_for(@banner, :html => { :class => "form" })  do |f| %>
 <% if @banner.errors.any? %>
 <div id="error_explanation">
 	<h2><%= pluralize(@banner.errors.count, "error") %> prohibited this banner from being saved:</h2>
@@ -14,39 +14,23 @@
 
 <div class="group wat-cf">
 	<div class="">
-	<%= f.label :attached_page, :class => "label left" %>
+	<%= f.label :width, :class => "label left" %>
 	</div>
 	<div class="">
-	<%= f.select :attached_page, options_from_collection_for_select(Page.all, "id", "name" ), :class => "right" %>
+	<%= f.text_field :width, :class => "text_field" %>
 	</div>
 </div>
 <div class="group wat-cf">
 	<div class="">
-	<%= f.label :attached_section, :class => "label left" %>
+	<%= f.label :height, :class => "label left" %>
 	</div>
 	<div class="">
-	<%= f.select :attached_section, options_from_collection_for_select(Section.all, "id", "name" ) %>
+	<%= f.text_field :height, :class => "text_field" %>
 	</div>
 </div>
 <div class="group wat-cf">
-	<div class="">
-	<%= f.label :attached_alignment, :class => "label left" %>
-	</div>
-	<div class="">
-	<%= f.select :attached_alignment, options_from_collection_for_select(Alignment.all, "id", "name" ) %>
-	</div>
-</div>
-<div class="group wat-cf">
-	<div class="">
-	<%= f.label :avatar, "Image", :class => "label left" %>
-	</div>
-	<div class="">
-	<%= f.file_field :avatar.avatar %>
-	</div>
-</div>
-<div class="group wat-cf">
-	<div class="right actions">
-		<%= f.submit 'Create', :class => "button" %>
+	<div class="left">
+		<%= f.submit t("create"), :class => "button" %>
 	</div>
 </div>
 

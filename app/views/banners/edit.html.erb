@@ -1,6 +1,7 @@
-<h1>Editing banner</h1>
+<h2 class="title"><%= t("edit_banner") %></h2>
+<div class="inner">
+	<%= render 'form' %>
 
-<%= render 'form' %>
+<%= link_to t('Back'), banners_path %>
 
-<%= link_to 'Show', @banner %> |
-<%= link_to 'Back', banners_path %>
+</div>

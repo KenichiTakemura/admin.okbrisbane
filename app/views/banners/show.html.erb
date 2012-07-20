@@ -2,7 +2,12 @@
 <h2><%= @banner.name %></h2>
 <div class="inner">
 	<table class="table">
-		<tr class="odd"></tr>
+		<tr class="odd">
+			<td><%= label_tag :resolution, t("size"), :class => "label left" %>
+				</td>
+				<td>
+					<%= @banner.resolution %>
+				</td>
 		<tr class="even">
 			<div id="business_client_banner_images">
 				<td><%= label_tag :client_image, t("client_banner_image"), :class => "label left" %>
