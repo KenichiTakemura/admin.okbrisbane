@@ -1,0 +1,19 @@
+<div class="secondary-navigation">
+	<ul class="wat-cf">
+		<li class="first" id="estate">
+			<%= link_to t('estate'),  sales_managements_path(:category => 'estate') %>
+		</li>
+		<li id="business">
+			<%= link_to t('business'),  sales_managements_path(:category => 'business')  %>
+		</li>
+		<li id="motor_vehicle">
+			<%= link_to t('motor_vehicle'),  sales_managements_path(:category => 'motor_vehicle')  %>
+		</li>
+		<li class="last" id="accommodation">
+			<%= link_to t('accommodation'),  sales_managements_path(:category => 'accommodation')  %>
+		</li>
+	</ul>
+</div>
+<% if @category %>
+<%= _script_document_ready(%Q|$('\##{@category}').addClass("active");|)%>
+<% end %>

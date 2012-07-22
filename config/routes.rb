@@ -1,5 +1,15 @@
 AdminOkbrisbane::Application.routes.draw do
+
+  match 'estates/:id/new_more' => 'estates#new_more', :via => :get, :as => "new_more_estate"
+  #resources :estates
+  resources :estates do
+    collection do
+    post :upload
+  end
+  end
   
+  resources :sales_managements
+
   devise_for :admins
   
   resources :business_categories
@@ -17,10 +27,7 @@ AdminOkbrisbane::Application.routes.draw do
 
   resources :banners
 
-
-
   get "main/index"
-
 
   resources :users
 

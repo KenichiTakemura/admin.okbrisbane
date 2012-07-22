@@ -4,15 +4,18 @@
 	<div class="group wat-cf">
 		<div class="">
 			<%= label_tag :page, t("pages"), :class => "label left" %>
-		</div>
-		<div class="">
-			<%= select_tag :page, options_from_collection_for_select(Page.all, "id", "name_t", @page_id) , :id => 'page_changed' %>
+			<%= select_tag :page, options_from_collection_for_select(Page.all, "id", "name_t", @page_id) , :id => 'page_changed', :include_blank => true  %>
+			<%= label_tag :section, t("section"), :class => "label left" %>
+			<%= select_tag :section, options_from_collection_for_select(Section.all, "id", "name_t", @section_id) , :id => 'section_changed', :include_blank => true  %>
 		</div>
 	</div>
 	<br/>
 	<script type="text/javascript" charset="utf-8">
 		$('#page_changed').change(function() {
 window.location.href ="<%= banners_path %>" + "&page_id=" + $('#page_changed').val() ;
+	});
+	$('#section_changed').change(function() {
+window.location.href ="<%= banners_path %>" + "&section_id=" + $('#section_changed').val() ;
 	});
 	</script>
 	<div style="float:right">

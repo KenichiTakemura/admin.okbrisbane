@@ -1,0 +1,63 @@
+<%= form_for(@estate, :html => { :class => "form" }) do |f| %>
+<% if @estate.errors.any? %>
+<div id="error_explanation">
+<!-- 	<h2><%= pluralize(@estate.errors.count, "error") %> prohibited this <%= t('#{@category}') %> from being saved:</h2> -->
+	<ul>
+		<% @estate.errors.full_messages.each do |field, msg| %>
+		<li>
+			<%= field %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<br/>
+<% end %>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :posted_by_id, t("autor"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.label :posted_by_id, current_admin.email, :class => "text_field" %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :category, t("category"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.select :category, options_for_select([[t("#{Estate::FOR_RENT}"), Estate::FOR_RENT], [t("#{Estate::FOR_SALE}"), Estate::FOR_SALE], [t("#{Estate::FOR_AUCTION}"), Estate::FOR_AUCTION]]) %>
+	</div>
+	<span class="description"><%= t("must_be_selected") %></span>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :price, t("price"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :price, :class => "text_field" %>
+	</div>
+	<span class="description"><%= t("must_be_filled") %></span>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :valid_until, t('valid_until'), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.date_select :valid_until, :class => "right" %><%= t('until')%>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :subject, t("subject"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :subject, :class => "text_field" %>
+	</div>
+	<span class="description"><%= t("must_be_filled") %></span>
+</div>
+<div class="group wat-cf">
+	<div class="left">
+		<%= f.submit t("create"), :class => "button" %>
+	</div>
+</div>
+<% end %>
