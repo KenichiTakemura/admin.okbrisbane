@@ -1,6 +1,7 @@
 AdminOkbrisbane::Application.routes.draw do
 
   match 'estates/:id/new_more' => 'estates#new_more', :via => :get, :as => "new_more_estate"
+  match 'estates/:id/image' => 'estates#destroy_image', :via => :delete, :as => "estate_delete_image"
   #resources :estates
   resources :estates do
     collection do
@@ -8,7 +9,7 @@ AdminOkbrisbane::Application.routes.draw do
   end
   end
   
-  resources :sales_managements
+  resources :sales_managements, :only => 'index'
 
   devise_for :admins
   

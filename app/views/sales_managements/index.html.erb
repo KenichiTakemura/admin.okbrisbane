@@ -12,6 +12,7 @@
 	<h2 class="title"><%= t("listing_#{@category}")%></h2>
 	<div class="inner">
 		<%= link_to t("new_#{@category}"), new_category_path(@category) %>
+		<br/>
 		<table class="table">
 			<tr>
 				<th class="first"><%= t("id") %></th>
@@ -37,11 +38,11 @@
 				<td><%= Common.date_format(item.created_at) %></td>
 				<td>
 					<% item.image.each do |image| %>
-					<%= image_tag(image.avatar.url(:thumb)) %>
+					<%= thumbnail(image, estate_delete_image_path(item, :image => image.id)) %>
 					<% end %>
 				</td>
-				<td><%= link_to t('Edit'), edit_category_path(@category, item) %><br/>
-					<%= link_to t('delete'), item, method: :delete, data: { confirm: t('confirm_delete') } %></td>
+				<td><%= link_to t('Show'), show_category_parh(@category, item) %><br/><%= link_to t('Edit'), edit_category_path(@category, item) %><br/>
+					<%= link_to t("delete_#{@category}"), item, method: :delete, data: { confirm: t('confirm_delete') } %></td>
 			</tr>
 			<% end %>
 					<% end %>

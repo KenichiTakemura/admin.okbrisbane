@@ -55,6 +55,36 @@
 	</div>
 	<span class="description"><%= t("must_be_filled") %></span>
 </div>
+<% if @estate.id %>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label t("image"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= _upload("estates", @estate.id) %>
+	</div>
+	<span class="description"><%= t("acceptable_extention") %></span><br/>
+	<span class="description"><%= t("max_size") %></span>
+</div>
+<div class="group wat-cf">
+<div style="position:relative; top: 0px; left: 0px; width:100%;" id="_imagebox">
+<% @estate.image.each do |image| %>
+<%= thumbnail(image) %>
+<% end %>
+</div>
+</div>
+<%= f.fields_for @estate.content do |content_form| %>
+<div class="group wat-cf">
+	<div class="">
+		<%= content_form.label :body, t("content"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= content_form.cktext_area :body, :toolbar => 'Full' %>
+	</div>
+	<span class="description"><%= t("optional") %></span>
+</div>
+<% end %>
+<% end %>
 <div class="group wat-cf">
 	<div class="left">
 		<%= f.submit t("create"), :class => "button" %>

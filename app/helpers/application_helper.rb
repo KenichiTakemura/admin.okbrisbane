@@ -1,4 +1,18 @@
 module ApplicationHelper
+
+  def version
+    "Version 0.1"
+  end
+  
+  def thumbnail(image, action)
+    logger.debug("delete_action: #{action}")
+    html = %Q|<div style="position: relative; float: left">|
+    html += link_to(image_tag(image.avatar.url(:thumb), :class => 'thumbnail'), image.avatar.url(:original))
+    html += %Q|<div style="position: absolute; top: 0px; left:90%;">|
+    html += link_to(t('x'), action, method: :delete, data: { confirm: t('confirm_delete') })
+    html += "</div></div>"
+    html.html_safe
+  end
   
   def noimage
     html = <<-HTML
@@ -73,12 +87,18 @@ module ApplicationHelper
       data = JSON.parse(event.target.responseText);
       $('\#dropbox_status').html("<div class=\\"message notice\\">"
       + "<p><strong>" + data.result + "</strong></p></div>");
+      images = data.images;
+      var html = "";
+      for (var i=0; i<images.length; i++) {
+        html += "<img class=thumbnail src=\" + images[i] + \"/>";
+      }
+      $('\#_imagebox').html(html);
     };
   </script>
   <div class="flash">
   <div id="dropbox_status"></div>
   </div>
-  <div id="dropbox">
+  <div style="postion:relative" id="dropbox">
     <p>
       <strong>#{I18n.t('please_drag_n_drop')}</strong>
     </p>

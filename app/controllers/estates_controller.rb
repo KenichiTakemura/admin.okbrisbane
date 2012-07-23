@@ -3,18 +3,28 @@ class EstatesController < ApplicationController
     @category = params[:category]
     @estate = Estate.new
     @estate.build_content
-     respond_to do |format|
+    respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @estate }
     end
   end
-  
+
   def new_more
     @category = params[:category]
     @estate = Estate.find(params[:id])
     @estate.build_content
-     respond_to do |format|
+    respond_to do |format|
       format.html # new.html.erb
+      format.json { render json: @estate }
+    end
+  end
+
+  def show
+    @category = params[:category]
+    @estate = Estate.find(params[:id])
+    @current_page = params[:page]
+    respond_to do |format|
+      format.html # show.html.erb
       format.json { render json: @estate }
     end
   end
@@ -22,6 +32,10 @@ class EstatesController < ApplicationController
   def edit
     @category = params[:category]
     @estate = Estate.find(params[:id])
+    if @estate.content.nil?
+      # Build only empty otherwise rails to delete exiting content
+      @estate.build_content
+     end
   end
 
   def create
@@ -29,8 +43,8 @@ class EstatesController < ApplicationController
     respond_to do |format|
       if @estate.save
         @estate.set_user(current_admin)
-        format.html { redirect_to new_more_estate_path(@estate, :category => 'estate'), notice: I18n.t('successfully_created') }
-        format.json { render json: @estate, status: :created, location: new_more_estate_path(@estate) }
+        format.html { redirect_to edit_estate_path(@estate, :category => 'estate'), notice: I18n.t('successfully_created') }
+        format.json { render json: @estate, status: :created, location: edit_estate_path(@estate) }
       else
         flash[:warning] = I18n.t("failed_to_create")
         logger.debug("@estate.errors: #{@estate.errors}")
@@ -39,8 +53,8 @@ class EstatesController < ApplicationController
       end
     end
   end
-  
-    def update
+
+  def update
     @estate = Estate.find(params[:id])
 
     respond_to do |format|
@@ -63,7 +77,18 @@ class EstatesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
+  def destroy_image
+    @estate = Estate.find(params[:id])
+    image = Image.find(params[:image])
+    logger.info("Destroy Image: #{image} for #{@estate}")
+    image.destroy
+    respond_to do |format|
+      format.html { redirect_to sales_managements_url(:category => 'estate') }
+      format.json { head :no_content }
+    end
+  end
+
   def upload
     estate = Estate.find(params[:id])
     _file = params[:file]
@@ -73,12 +98,12 @@ class EstatesController < ApplicationController
     logger.debug("size: #{_file.size}")
     _name = _file.original_filename
     #data = request.raw_post
-    #@file_content = File.open("#{Rails.root.to_s}/tmp/#{_name}", "wb") do |f| 
+    #@file_content = File.open("#{Rails.root.to_s}/tmp/#{_name}", "wb") do |f|
     #  f.write(data)
     #end
     image = Image.new(:avatar =>  _file)
     image.attached_to(estate)
-    #File.unlink("#{Rails.root.to_s}/tmp/#{_name}")
-    render :json => {:result => I18n.t('successfully_uploaded')}
+    images = estate.image.collect{|i| i.avatar.url(:thumb)}
+    render :json => {:result => I18n.t('successfully_uploaded'), :images => images}
   end
 end

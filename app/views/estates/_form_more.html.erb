@@ -23,15 +23,12 @@
 	<span class="description"><%= t("acceptable_extention") %></span><br/>
 	<span class="description"><%= t("max_size") %></span>
 </div>
-<div id="_upload_images"></div>
 <div class="group wat-cf">
-	<div class="">
-		<%= f.label :subject, t("subject"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.text_field :subject, :class => "text_field" %>
-	</div>
-	<span class="description"><%= t("must_be_filled") %></span>
+<div style="position:relative; top: 0px; left: 0px; width:100%;" id="_imagebox">
+<% @estate.image.each do |image| %>
+<%= thumbnail(image) %>
+<% end %>
+</div>
 </div>
 <%= f.fields_for @estate.content do |content_form| %>
 <div class="group wat-cf">

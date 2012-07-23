@@ -1,5 +1,8 @@
-<h2><%= t("estate") %></h2>
+<%= render :partial => 'estates/shared/head' %>
+<h2><%= t("estate") %> #<%= @estate.id %></h2>
 <div class="inner">
 	
+	<%= link_to t('Edit'), edit_estate_path(@estate, :category => @category) %> |
+	<%= link_to t('Back'), sales_managements_path(:category => @category) %>
 </div>
 

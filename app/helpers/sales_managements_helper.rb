@@ -12,5 +12,12 @@ module SalesManagementsHelper
       return edit_estate_path(item, :category => category)
     end
   end
+  
+  def show_category_parh(category, item)
+    case @category
+    when "estate"
+      return estate_path(item, :category => category)
+    end
+  end
 
 end
