@@ -67,10 +67,8 @@
 	<span class="description"><%= t("max_size") %></span>
 </div>
 <div class="group wat-cf">
-<div style="position:relative; top: 0px; left: 0px; width:100%;" id="_imagebox">
-<% @estate.image.each do |image| %>
-<%= thumbnail(image, estate_delete_image_path(@estate, :image => image.id)) %>
-<% end %>
+<div id="thumbnail_box">
+<%= render :partial => 'imagebox' %>
 </div>
 </div>
 <%= f.fields_for @estate.content do |content_form| %>

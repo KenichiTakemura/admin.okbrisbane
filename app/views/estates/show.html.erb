@@ -25,13 +25,15 @@
 		</tr>
 		<tr class="even">
 			<td><%= label_tag :avatar, t("image"), :class => "label left" %> </td>
-			<td> <% @collection.image.each do |image| %>
+			<td>
+				
+				<% @collection.image.each do |image| %>
 			<%= thumbnail(image, estate_delete_image_path(@collection, :image => image.id)) %>
 			<% end %> </td>
 		</tr>
 		<tr class="odd">
 			<td><%= label_tag :context, t("content"), :class => "label left" %> </td>
-			<td><%= raw @collection.content.body %> </td>
+			<td><%= raw @collection.content.body if !@collection.content.nil? %> </td>
 		</tr>
 	</table>
 	<%= link_to t('Edit'), edit_estate_path(@collection, :category => @category) %> |

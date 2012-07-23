@@ -5,8 +5,8 @@ AdminOkbrisbane::Application.routes.draw do
   #resources :estates
   resources :estates do
     collection do
-    post :upload
-  end
+      post :upload
+    end
   end
   
   resources :sales_managements, :only => 'index'

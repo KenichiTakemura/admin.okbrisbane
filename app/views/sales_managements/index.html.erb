@@ -1,10 +1,10 @@
 <%= render :partial => 'sales_managements/shared/head' %>
 <div class="content">
 	<% if !@category %>
-	<h2 class="title"><%= t('sales_management.title')%></h2>
+	<h2 class="title"><%= t('sales_management_title')%></h2>
 	<div class="inner">
 		<p>
-			<%= t("sales_management.description")%>
+			<%= t("sales_management_description")%>
 		</p>
 	</div>
 	<% else %>
@@ -15,12 +15,11 @@
 		<div style="float:right"><%= paginate @collection %></div>
 		<table class="table">
 			<tr>
-				<th class="first"><%= t("id") %></th>
+				<th class="first"><%= t("category") %></th>
 				<th><%= t("subject") %></th>
 				<th><%= t("autor") %></th>
 				<th><%= t("created_at") %></th>
 				<th><%= t("image") %></th>
-
 				<th class="last"></th>
 			</tr>
 			<% if @collection.nil? || @collection.empty? %>
@@ -32,14 +31,15 @@
 			<% else %>
 			<% @collection.each do |item| %>
 			<tr class="<%= cycle("odd", "even") %>" >
-				<td><%= item.id%></td>
+				<td><%= t("#{item.category}") %></td>
 				<td><%= _truncate(item.subject) %></td>
 				<td><%= item.posted_by.email if !item.posted_by.nil? %></td>
 				<td><%= Common.date_format(item.created_at) %></td>
-				<td>
+				<td><div id="thumbnail_box">
 					<% item.image.each do |image| %>
 					<%= thumbnail(image, estate_delete_image_path(item, :image => image.id)) %>
 					<% end %>
+					</div>
 				</td>
 				<td><%= link_to t('Show'), show_category_parh(@category, item) %><br/><%= link_to t('Edit'), edit_category_path(@category, item) %><br/>
 					<%= link_to t("delete_#{@category}"), item, method: :delete, data: { confirm: t('confirm_delete') } %></td>

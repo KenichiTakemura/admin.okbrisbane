@@ -11,3 +11,21 @@
  *= require_self
  *= require_tree .
  */
+
+.thumbnail {
+	margin-left: 10px;
+}
+
+#thumbnail_box {
+	position:relative; top: 0px; left: 0px; width:100%;
+}
+
+.delete_x {
+	font-size: 16px;
+	font-style: bold;
+	font-family: "NanumGothicExtraBold";
+}
+
+.delete_x:hover {
+    background-color: #8FDA71;
+}

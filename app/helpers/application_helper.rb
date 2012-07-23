@@ -9,7 +9,7 @@ module ApplicationHelper
     html = %Q|<div style="position: relative; float: left">|
     html += link_to(image_tag(image.avatar.url(:thumb), :class => 'thumbnail'), image.avatar.url(:original))
     html += %Q|<div style="position: absolute; top: 0px; left:90%;">|
-    html += link_to(t('x'), action, method: :delete, data: { confirm: t('confirm_delete') })
+    html += link_to(t('x'), action, method: :delete, data: { confirm: t('confirm_delete') }, :remote => true, :class => 'delete_x', :title => t('delete'))
     html += "</div></div>"
     html.html_safe
   end
@@ -87,12 +87,18 @@ module ApplicationHelper
       data = JSON.parse(event.target.responseText);
       $('\#dropbox_status').html("<div class=\\"message notice\\">"
       + "<p><strong>" + data.result + "</strong></p></div>");
-      images = data.images;
+      ids = data.images;
+      images_t = data.images_t;
+      images_o = data.images_o;
       var html = "";
-      for (var i=0; i<images.length; i++) {
-        html += "<img class=thumbnail src=\" + images[i] + \"/>";
+      for (var i=0; i<ids.length; i++) {
+        html += '<div style="position: relative; float: left">';
+        html += '<a href="' + images_o[i] + '"><img class=thumbnail src="' + images_t[i] + '"/></a>';
+        html += '<div style="position: absolute; top: 0px; left:90%;">';
+        html += '<a href="/#{action}/#{item_id}/image?image=' + ids[i] + '" class="delete_x" rel="nofollow" data-remote="true" data-method="delete" data-confirm="#{t('confirm_delete')}" title="#{t('delete')}">' + "#{t('x')}" + "</a>"
+        html += "</div></div>"
       }
-      $('\#_imagebox').html(html);
+      $('\#thumbnail_box').html(html);
     };
   </script>
   <div class="flash">

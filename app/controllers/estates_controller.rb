@@ -78,17 +78,23 @@ class EstatesController < ApplicationController
     end
   end
 
+  # ajax request
   def destroy_image
     @estate = Estate.find(params[:id])
     image = Image.find(params[:image])
     logger.info("Destroy Image: #{image} for #{@estate}")
     image.destroy
-    respond_to do |format|
-      format.html { redirect_to sales_managements_url(:category => 'estate') }
-      format.json { head :no_content }
-    end
+   #render :json => {:result => "OK"}
+    #respond_to do |format|
+    #  format.html { redirect_to sales_managements_url(:category => 'estate') }
+    #  format.json { head :no_content }
+    #end
+    #ender(:new) do |page|
+    #  page.replace_html 'thumbnail_box', 'OK'
+    #end
   end
 
+  # ajax request
   def upload
     estate = Estate.find(params[:id])
     _file = params[:file]
@@ -103,7 +109,9 @@ class EstatesController < ApplicationController
     #end
     image = Image.new(:avatar =>  _file)
     image.attached_to(estate)
-    images = estate.image.collect{|i| i.avatar.url(:thumb)}
-    render :json => {:result => I18n.t('successfully_uploaded'), :images => images}
+    images = estate.image.collect{|i| i.id}
+    images_t = estate.image.collect{|i| i.avatar.url(:thumb)}
+    images_o = estate.image.collect{|i| i.avatar.url(:original)}
+    render :json => {:result => I18n.t('successfully_uploaded'), :images => images, :images_t => images_t, :images_o => images_o}
   end
 end
