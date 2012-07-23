@@ -12,7 +12,7 @@
 	<h2 class="title"><%= t("listing_#{@category}")%></h2>
 	<div class="inner">
 		<%= link_to t("new_#{@category}"), new_category_path(@category) %>
-		<br/>
+		<div style="float:right"><%= paginate @collection %></div>
 		<table class="table">
 			<tr>
 				<th class="first"><%= t("id") %></th>

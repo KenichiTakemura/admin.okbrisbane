@@ -21,11 +21,11 @@ class EstatesController < ApplicationController
 
   def show
     @category = params[:category]
-    @estate = Estate.find(params[:id])
+    @collection = Estate.find(params[:id])
     @current_page = params[:page]
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @estate }
+      format.json { render json: @collection }
     end
   end
 

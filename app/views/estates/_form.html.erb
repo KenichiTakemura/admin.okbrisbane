@@ -14,7 +14,7 @@
 <% end %>
 <div class="group wat-cf">
 	<div class="">
-		<%= f.label :posted_by_id, t("autor"), :class => "label left" %>
+		<%= f.label :posted_by_id, t("author"), :class => "label left" %>
 	</div>
 	<div class="">
 		<%= f.label :posted_by_id, current_admin.email, :class => "text_field" %>
@@ -69,7 +69,7 @@
 <div class="group wat-cf">
 <div style="position:relative; top: 0px; left: 0px; width:100%;" id="_imagebox">
 <% @estate.image.each do |image| %>
-<%= thumbnail(image) %>
+<%= thumbnail(image, estate_delete_image_path(@estate, :image => image.id)) %>
 <% end %>
 </div>
 </div>

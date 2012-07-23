@@ -1,8 +1,40 @@
-<%= render :partial => 'estates/shared/head' %>
-<h2><%= t("estate") %> #<%= @estate.id %></h2>
+<%= render :partial => 'estates/shared/head' %> <h2><%= t("estate") %> #<%= @collection.id %></h2>
 <div class="inner">
-	
-	<%= link_to t('Edit'), edit_estate_path(@estate, :category => @category) %> |
+	<table class="table">
+		<th class="first"><%= t("item") %></th>
+		<th class="last"><%= t("content") %></th>
+		<tr class="odd">
+			<td><%= label_tag :posted_by, t("author"), :class => "label left" %> </td>
+			<td><%= @collection.posted_by.email %></td>
+		</tr>
+		<tr class="even">
+			<td><%= label_tag :category, t("category"), :class => "label left" %> </td>
+			<td><%= t("#{@collection.category}") %></td>
+		</tr>
+		<tr class="odd">
+			<td><%= label_tag :price, t("author"), :class => "label left" %> </td>
+			<td><%= @collection.price %></td>
+		</tr>
+		<tr class="even">
+			<td><%= label_tag :valid_until, t("valid_until"), :class => "label left" %> </td>
+			<td><%= Common.date_format(@collection.valid_until) %></td>
+		</tr>
+		<tr class="odd">
+			<td><%= label_tag :subject, t("subject"), :class => "label left" %> </td>
+			<td><%= @collection.subject %></td>
+		</tr>
+		<tr class="even">
+			<td><%= label_tag :avatar, t("image"), :class => "label left" %> </td>
+			<td> <% @collection.image.each do |image| %>
+			<%= thumbnail(image, estate_delete_image_path(@collection, :image => image.id)) %>
+			<% end %> </td>
+		</tr>
+		<tr class="odd">
+			<td><%= label_tag :context, t("content"), :class => "label left" %> </td>
+			<td><%= raw @collection.content.body %> </td>
+		</tr>
+	</table>
+	<%= link_to t('Edit'), edit_estate_path(@collection, :category => @category) %> |
 	<%= link_to t('Back'), sales_managements_path(:category => @category) %>
 </div>
 

@@ -12,7 +12,7 @@ class SalesManagementsController < ApplicationController
     logger.debug("category: #{@category}")
     case @category
     when "estate"
-      @collection = Estate.all
+      @collection = Estate.order.page params[:page]
     when "business"
     when "motor_vehicle"
     when "accommodation"
