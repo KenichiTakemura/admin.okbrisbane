@@ -1,6 +1,7 @@
 class EstatesController < ApplicationController
   
   before_filter :checkCategory, :only => [:new, :show, :edit, :create, :update, :destroy]
+  before_filter :checkPage, :only => [:new, :show, :edit, :create, :destroy]
   
   def new
     _new(Estate)
@@ -9,17 +10,17 @@ class EstatesController < ApplicationController
   def show
     _show(Estate)
   end
+    
+  def create
+    _create(Estate, :estate)
+  end
   
   def edit
     _edit(Estate)
   end
   
-  def create
-    _create(Estate)
-  end
-  
   def update
-    _update(Estate)
+    _update(Estate, :estate)
   end
   
   def destroy
@@ -54,6 +55,11 @@ class EstatesController < ApplicationController
     raise "Bad Category" if @category.nil?
   end
   
+  def checkPage
+    @current_page = params[:page]
+    raise "No page set" if @current_page.nil?
+  end
+  
   def _new(model)
     @post = model.new
     @post.build_content
@@ -68,7 +74,6 @@ class EstatesController < ApplicationController
 
   def _show(model)
     @post = model.find(params[:id])
-    @current_page = params[:page]
     respond_to do |format|
         format.html { render :template => "sales_managements/show" }
         format.json { render json: @post }
@@ -89,8 +94,8 @@ class EstatesController < ApplicationController
 
   end
 
-  def _create(model)
-    @post = model.new(params[:estate])
+  def _create(model, model_symbol)
+    @post = model.new(params[model_symbol])
     respond_to do |format|
       if @post.save
         @post.set_user(current_admin)
@@ -108,11 +113,10 @@ class EstatesController < ApplicationController
     end
   end
 
-  def _update(model)
+  def _update(model, model_symbol)
     @post = model.find(params[:id])
-
     respond_to do |format|
-      if @post.update_attributes(params[:estate])
+      if @post.update_attributes(params[model_symbol])
         format.html { redirect_to sales_managements_url(:category => @category), notice: I18n.t('successfully_updated') }
         format.json { head :no_content }
       else
@@ -126,7 +130,7 @@ class EstatesController < ApplicationController
     @post = model.find(params[:id])
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to sales_managements_url(:category => @category) }
+      format.html { redirect_to sales_managements_url(:category => @category, :page => @current_page) }
       format.json { head :no_content }
     end
   end

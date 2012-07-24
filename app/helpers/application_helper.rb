@@ -24,6 +24,20 @@ module ApplicationHelper
     html.html_safe
   end
   
+  def noimage?(item)
+    if item.image.nil? || item.image.empty?
+      noimage
+    end
+  end
+  
+  # Used to show no image
+  def noimage
+    html = <<-HTML
+    <img src="/assets/noimage.jpg" width=50px height=50px/>
+    HTML
+    html.html_safe
+  end
+  
   def _upload(category, item_id)
     html = <<-HTML
     <style>

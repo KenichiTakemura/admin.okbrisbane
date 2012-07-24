@@ -35,7 +35,7 @@
 			<td><%= raw @post.content.body if !@post.content.nil? %> </td>
 		</tr>
 	</table>
-	<%= link_to t('Edit'), edit_category_path(@category, @post) %> |
-	<%= link_to t('Back'), sales_managements_path(:category => @category) %>
+	<%= link_to t('Edit'), edit_category_path(@category, @post, @current_page) %> |
+	<%= link_to t('List'), sales_managements_path(:category => @category, :page => @current_page) %>
 </div>
 

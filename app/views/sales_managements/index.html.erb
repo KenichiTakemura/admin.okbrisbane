@@ -11,11 +11,12 @@
 
 	<h2 class="title"><%= t("listing_#{@category}")%></h2>
 	<div class="inner">
-		<%= link_to t("new_#{@category}"), new_category_path(@category) %>
+		<%= link_to t("new_#{@category}"), new_category_path(@category, @post.current_page) %>
 		<div style="float:right"><%= paginate @post %></div>
 		<table class="table">
 			<tr>
-				<th class="first"><%= t("category") %></th>
+				<th class="first"><%= t("Id") %></th>
+					<th><%= t("category") %></th>
 				<th><%= t("subject") %></th>
 				<th><%= t("author") %></th>
 				<th><%= t("created_at") %></th>
@@ -23,7 +24,7 @@
 				<th class="last"></th>
 			</tr>
 			<% if @post.nil? || @post.empty? %>
-			<tr><td colspan="6">
+			<tr><td colspan="7">
 			<p>
 				<%= t("no_information")%>
 			</p>
@@ -31,18 +32,20 @@
 			<% else %>
 			<% @post.each do |item| %>
 			<tr class="<%= cycle("odd", "even") %>" >
+				<td><%= item.id %></td>
 				<td><%= t("#{item.category}") %></td>
 				<td><%= _truncate(item.subject) %></td>
 				<td><%= item.posted_by.email if !item.posted_by.nil? %></td>
 				<td><%= Common.date_format(item.created_at) %></td>
 				<td><div id="thumbnail_box_<%=item.id%>">
+					<%= noimage?(item) %>
 					<% item.image.each do |image| %>
 					<%= thumbnail(image, sales_managements_delete_image_path(item, :category => @category, :image => image.id)) %>
 					<% end %>
 					</div>
 				</td>
-				<td><%= link_to t('Show'), show_category_parh(@category, item) %><br/><%= link_to t('Edit'), edit_category_path(@category, item) %><br/>
-					<%= link_to t("delete_#{@category}"), delete_category_path(@category, item), method: :delete, data: { confirm: t('confirm_delete') } %></td>
+				<td><%= link_to t('Show'), show_category_parh(@category, item, @post.current_page) %><br/><%= link_to t('Edit'), edit_category_path(@category, item, @post.current_page) %><br/>
+					<%= link_to t("delete_#{@category}"), delete_category_path(@category, item, @post.current_page), method: :delete, data: { confirm: t('confirm_delete') } %></td>
 			</tr>
 			<% end %>
 					<% end %>

@@ -4,8 +4,24 @@ class BusinessesController < EstatesController
     _new(Business)
   end
   
+  def show
+    _show(Business)
+  end
+  
   def create
-    _create(Business)
+    _create(Business, :business)
+  end
+  
+  def edit
+    _edit(Business)
+  end
+  
+  def update
+    _update(Business, :business)
+  end
+  
+  def destroy
+    _destroy(Business)
   end
   
 end

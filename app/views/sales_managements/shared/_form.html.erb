@@ -1,5 +1,6 @@
 <%= form_for(@post, :html => { :class => "form" }) do |f| %>
 <%= hidden_field_tag :category, @category %>
+<%= hidden_field_tag :page, @current_page %>
 <% if @post.errors.any? %>
 <div id="error_explanation">
 	<ul>
