@@ -1,16 +1,19 @@
 <div class="secondary-navigation">
 	<ul class="wat-cf">
-		<li class="first" id="estate">
-			<%= link_to t('estate'),  sales_managements_path(:category => 'estate') %>
+		<li class="first" id="<%= Okvalue::ESTATE %>">
+			<%= link_to t(Okvalue::ESTATE),  sales_managements_path(:category => Okvalue::ESTATE) %>
 		</li>
-		<li id="business">
-			<%= link_to t('business'),  sales_managements_path(:category => 'business')  %>
+		<li id="<%= Okvalue::BUSINESS %>">
+			<%= link_to t(Okvalue::BUSINESS),  sales_managements_path(:category => Okvalue::BUSINESS)  %>
 		</li>
-		<li id="motor_vehicle">
-			<%= link_to t('motor_vehicle'),  sales_managements_path(:category => 'motor_vehicle')  %>
+		<li id="<%= Okvalue::MOTOR_VEHICLE %>">
+			<%= link_to t(Okvalue::MOTOR_VEHICLE),  sales_managements_path(:category => Okvalue::MOTOR_VEHICLE)  %>
 		</li>
-		<li class="last" id="accommodation">
-			<%= link_to t('accommodation'),  sales_managements_path(:category => 'accommodation')  %>
+		<li class="" id="<%= Okvalue::ACCOMMODATION %>">
+			<%= link_to t(Okvalue::ACCOMMODATION),  sales_managements_path(:category => Okvalue::ACCOMMODATION)  %>
+		</li>
+		<li class="last" id="<%= Okvalue::IMMIGRATION %>">
+			<%= link_to t(Okvalue::IMMIGRATION),  sales_managements_path(:category => Okvalue::IMMIGRATION)  %>
 		</li>
 	</ul>
 </div>

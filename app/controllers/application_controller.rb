@@ -14,5 +14,7 @@ class ApplicationController < ActionController::Base
     logger.debug "default_url_options is passed options: #{options.inspect}\n"
     { :locale => I18n.locale }
   end
+  
+
 
 end

@@ -1,9 +1,9 @@
-<%= form_for(@estate, :html => { :class => "form" }) do |f| %>
-<% if @estate.errors.any? %>
+<%= form_for(@post, :html => { :class => "form" }) do |f| %>
+<%= hidden_field_tag :category, @category %>
+<% if @post.errors.any? %>
 <div id="error_explanation">
-<!-- 	<h2><%= pluralize(@estate.errors.count, "error") %> prohibited this <%= t('#{@category}') %> from being saved:</h2> -->
 	<ul>
-		<% @estate.errors.full_messages.each do |field, msg| %>
+		<% @post.errors.full_messages.each do |field, msg| %>
 		<li>
 			<%= field %>
 		</li>
@@ -25,7 +25,7 @@
 		<%= f.label :category, t("category"), :class => "label left" %>
 	</div>
 	<div class="">
-		<%= f.select :category, options_for_select([[t("#{Estate::FOR_RENT}"), Estate::FOR_RENT], [t("#{Estate::FOR_SALE}"), Estate::FOR_SALE], [t("#{Estate::FOR_AUCTION}"), Estate::FOR_AUCTION]]) %>
+		<%= f.select :category, options_for_select(@post.category_list) %>
 	</div>
 	<span class="description"><%= t("must_be_selected") %></span>
 </div>
@@ -55,23 +55,23 @@
 	</div>
 	<span class="description"><%= t("must_be_filled") %></span>
 </div>
-<% if @estate.id %>
+<% if @post.id %>
 <div class="group wat-cf">
 	<div class="">
 		<%= f.label t("image"), :class => "label left" %>
 	</div>
 	<div class="">
-		<%= _upload("estates", @estate.id) %>
+		<%= _upload(@category, @post.id) %>
 	</div>
 	<span class="description"><%= t("acceptable_extention") %></span><br/>
 	<span class="description"><%= t("max_size") %></span>
 </div>
 <div class="group wat-cf">
-<div id="thumbnail_box">
-<%= render :partial => 'imagebox' %>
+<div id="thumbnail_box_<%=@post.id%>">
+<%= render :partial => 'sales_managements/shared/imagebox' %>
 </div>
 </div>
-<%= f.fields_for @estate.content do |content_form| %>
+<%= f.fields_for @post.content do |content_form| %>
 <div class="group wat-cf">
 	<div class="">
 		<%= content_form.label :body, t("content"), :class => "label left" %>

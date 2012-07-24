@@ -1,99 +1,31 @@
 class EstatesController < ApplicationController
+  
+  before_filter :checkCategory, :only => [:new, :show, :edit, :create, :update, :destroy]
+  
   def new
-    @category = params[:category]
-    @estate = Estate.new
-    @estate.build_content
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @estate }
-    end
+    _new(Estate)
   end
-
-  def new_more
-    @category = params[:category]
-    @estate = Estate.find(params[:id])
-    @estate.build_content
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @estate }
-    end
-  end
-
+  
   def show
-    @category = params[:category]
-    @collection = Estate.find(params[:id])
-    @current_page = params[:page]
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @collection }
-    end
+    _show(Estate)
   end
-
+  
   def edit
-    @category = params[:category]
-    @estate = Estate.find(params[:id])
-    if @estate.content.nil?
-      # Build only empty otherwise rails to delete exiting content
-      @estate.build_content
-     end
+    _edit(Estate)
   end
-
+  
   def create
-    @estate = Estate.new(params[:estate])
-    respond_to do |format|
-      if @estate.save
-        @estate.set_user(current_admin)
-        format.html { redirect_to edit_estate_path(@estate, :category => 'estate'), notice: I18n.t('successfully_created') }
-        format.json { render json: @estate, status: :created, location: edit_estate_path(@estate) }
-      else
-        flash[:warning] = I18n.t("failed_to_create")
-        logger.debug("@estate.errors: #{@estate.errors}")
-        format.html { render action: "new" }
-        format.json { render json: @estate.errors, status: :unprocessable_entity }
-      end
-    end
+    _create(Estate)
   end
-
+  
   def update
-    @estate = Estate.find(params[:id])
-
-    respond_to do |format|
-      if @estate.update_attributes(params[:estate])
-        format.html { redirect_to sales_managements_url(:category => 'estate'), notice: I18n.t('successfully_updated') }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @estate.errors, status: :unprocessable_entity }
-      end
-    end
+    _update(Estate)
   end
-
+  
   def destroy
-    @estate = Estate.find(params[:id])
-    @estate.destroy
-
-    respond_to do |format|
-      format.html { redirect_to sales_managements_url(:category => 'estate') }
-      format.json { head :no_content }
-    end
+    _destroy(Estate)
   end
-
-  # ajax request
-  def destroy_image
-    @estate = Estate.find(params[:id])
-    image = Image.find(params[:image])
-    logger.info("Destroy Image: #{image} for #{@estate}")
-    image.destroy
-   #render :json => {:result => "OK"}
-    #respond_to do |format|
-    #  format.html { redirect_to sales_managements_url(:category => 'estate') }
-    #  format.json { head :no_content }
-    #end
-    #ender(:new) do |page|
-    #  page.replace_html 'thumbnail_box', 'OK'
-    #end
-  end
-
+ 
   # ajax request
   def upload
     estate = Estate.find(params[:id])
@@ -114,4 +46,89 @@ class EstatesController < ApplicationController
     images_o = estate.image.collect{|i| i.avatar.url(:original)}
     render :json => {:result => I18n.t('successfully_uploaded'), :images => images, :images_t => images_t, :images_o => images_o}
   end
+  
+  protected
+  
+  def checkCategory
+    @category = params[:category]
+    raise "Bad Category" if @category.nil?
+  end
+  
+  def _new(model)
+    @post = model.new
+    @post.build_content
+    respond_to do |format|
+      #format.html # new.html.erb
+      #format.json { render json: @estate }
+      #format.html { render action: "new", :controller => "sales_management" }
+      format.html { render :template => "sales_managements/new" }
+      format.json { render json: @post }
+    end
+  end
+
+  def _show(model)
+    @post = model.find(params[:id])
+    @current_page = params[:page]
+    respond_to do |format|
+        format.html { render :template => "sales_managements/show" }
+        format.json { render json: @post }
+    end
+  end
+
+  def _edit(model)
+    @post = model.find(params[:id])
+    logger.debug("@post.content: #{@post.content}")
+    if @post.content.nil?
+      # Build only empty otherwise rails to delete exiting content
+      @post.build_content
+     end
+     respond_to do |format|
+        format.html { render :template => "sales_managements/edit" }
+        format.json { render json: @post }
+    end
+
+  end
+
+  def _create(model)
+    @post = model.new(params[:estate])
+    respond_to do |format|
+      if @post.save
+        @post.set_user(current_admin)
+        @post.build_content
+        format.html { render :template => "sales_managements/edit", notice: I18n.t('successfully_created') }
+        #format.html { redirect_to edit_estate_path(@estate, :category => 'estate'), notice: I18n.t('successfully_created') }
+        #format.json { render json: @post, status: :created, location: edit_estate_path(@post) }
+        format.json { render json: @post, status: :created }
+      else
+        #flash[:warning] = I18n.t("failed_to_create")
+        logger.debug("@post.errors: #{@post.errors}")
+        format.html { render :template => "sales_managements/new" }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def _update(model)
+    @post = model.find(params[:id])
+
+    respond_to do |format|
+      if @post.update_attributes(params[:estate])
+        format.html { redirect_to sales_managements_url(:category => @category), notice: I18n.t('successfully_updated') }
+        format.json { head :no_content }
+      else
+        format.html { render :template => "sales_managements/edit" }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def _destroy(model)
+    @post = model.find(params[:id])
+    @post.destroy
+    respond_to do |format|
+      format.html { redirect_to sales_managements_url(:category => @category) }
+      format.json { head :no_content }
+    end
+  end
+
 end

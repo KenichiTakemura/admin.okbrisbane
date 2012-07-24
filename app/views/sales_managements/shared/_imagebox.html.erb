@@ -1,0 +1,5 @@
+<% if !@post.image.nil? %>
+<% @post.image.each do |image| %>
+<%= thumbnail(image, sales_managements_delete_image_path(@post, :category => @category, :image => image.id)) %>
+<% end %>
+<% end %>

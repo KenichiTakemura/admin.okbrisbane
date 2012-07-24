@@ -1,42 +1,41 @@
-<%= render :partial => 'estates/shared/head' %> <h2><%= t("estate") %> #<%= @collection.id %></h2>
+<%= render :partial => 'sales_managements/shared/head' %> <h2><%= t("#{@category}") %> #<%= @post.id %></h2>
 <div class="inner">
 	<table class="table">
 		<th class="first"><%= t("item") %></th>
 		<th class="last"><%= t("content") %></th>
 		<tr class="odd">
 			<td><%= label_tag :posted_by, t("author"), :class => "label left" %> </td>
-			<td><%= @collection.posted_by.email %></td>
+			<td><%= @post.posted_by.email %></td>
 		</tr>
 		<tr class="even">
 			<td><%= label_tag :category, t("category"), :class => "label left" %> </td>
-			<td><%= t("#{@collection.category}") %></td>
+			<td><%= t("#{@post.category}") %></td>
 		</tr>
 		<tr class="odd">
 			<td><%= label_tag :price, t("author"), :class => "label left" %> </td>
-			<td><%= @collection.price %></td>
+			<td><%= @post.price %></td>
 		</tr>
 		<tr class="even">
 			<td><%= label_tag :valid_until, t("valid_until"), :class => "label left" %> </td>
-			<td><%= Common.date_format(@collection.valid_until) %></td>
+			<td><%= Common.date_format(@post.valid_until) %></td>
 		</tr>
 		<tr class="odd">
 			<td><%= label_tag :subject, t("subject"), :class => "label left" %> </td>
-			<td><%= @collection.subject %></td>
+			<td><%= @post.subject %></td>
 		</tr>
 		<tr class="even">
 			<td><%= label_tag :avatar, t("image"), :class => "label left" %> </td>
 			<td>
-				
-				<% @collection.image.each do |image| %>
-			<%= thumbnail(image, estate_delete_image_path(@collection, :image => image.id)) %>
-			<% end %> </td>
+			<div id="thumbnail_box_<%=@post.id%>">
+				<%= render :partial => 'sales_managements/shared/imagebox' %>
+			</div></td>
 		</tr>
 		<tr class="odd">
-			<td><%= label_tag :context, t("content"), :class => "label left" %> </td>
-			<td><%= raw @collection.content.body if !@collection.content.nil? %> </td>
+			<td><%= label_tag :context, t("content_body"), :class => "label left" %> </td>
+			<td><%= raw @post.content.body if !@post.content.nil? %> </td>
 		</tr>
 	</table>
-	<%= link_to t('Edit'), edit_estate_path(@collection, :category => @category) %> |
+	<%= link_to t('Edit'), edit_category_path(@category, @post) %> |
 	<%= link_to t('Back'), sales_managements_path(:category => @category) %>
 </div>
 

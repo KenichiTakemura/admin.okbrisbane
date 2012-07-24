@@ -1,0 +1,8 @@
+<%= render :partial => 'sales_managements/shared/head' %>
+<h2 class="title"><%= t("#{@category}") %> #<%= @post.id %> <%= t('Edit')%></h2>
+<div class="inner">
+	<%= render 'sales_managements/shared/form' %>
+<%= link_to t('Show'), show_category_parh(@category, @post) %> |
+<%= link_to t('Back'), sales_managements_path(:category => @category) %>
+
+</div>

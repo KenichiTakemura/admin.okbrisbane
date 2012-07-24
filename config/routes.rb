@@ -1,15 +1,24 @@
 AdminOkbrisbane::Application.routes.draw do
 
-  match 'estates/:id/new_more' => 'estates#new_more', :via => :get, :as => "new_more_estate"
-  match 'estates/:id/image' => 'estates#destroy_image', :via => :delete, :as => "estate_delete_image"
-  #resources :estates
-  resources :estates do
+  #match 'estates/:id/new_more' => 'estates#new_more', :via => :get, :as => "new_more_estate"
+  #match 'estates/:id/image' => 'estates#destroy_image', :via => :delete, :as => "estate_delete_image"
+  match 'estates/:id' => 'estates#destroy', :via => :delete, :as => "estate_delete"
+  resources :estates, :except => 'destroy' do
     collection do
       post :upload
     end
   end
   
-  resources :sales_managements, :only => 'index'
+  #match 'businesses/:id/image' => 'businesses#destroy_image', :via => :delete, :as => "business_delete_image"
+  match 'businesses/:id' => 'businesses#destroy', :via => :delete, :as => "business_delete"
+  resources :businesses, :except => 'destroy' do
+    collection do
+      post :upload
+    end
+  end
+  
+  match 'sales_managements/:id/image' => 'sales_managements#destroy_image', :via => :delete, :as => "sales_managements_delete_image"  
+  resources :sales_managements
 
   devise_for :admins
   

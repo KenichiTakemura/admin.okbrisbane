@@ -6,21 +6,14 @@ module ApplicationHelper
   
   def thumbnail(image, action)
     logger.debug("delete_action: #{action}")
-    html = %Q|<div style="position: relative; float: left">|
+    html = %Q|<div style="position: relative; float: left; width:#{image.width}px; height: #{image.height}px; margin-left: 5px">|
     html += link_to(image_tag(image.avatar.url(:thumb), :class => 'thumbnail'), image.avatar.url(:original))
-    html += %Q|<div style="position: absolute; top: 0px; left:90%;">|
+    html += %Q|<div style="position: absolute; top: 0px; left:95%;">|
     html += link_to(t('x'), action, method: :delete, data: { confirm: t('confirm_delete') }, :remote => true, :class => 'delete_x', :title => t('delete'))
     html += "</div></div>"
     html.html_safe
   end
-  
-  def noimage
-    html = <<-HTML
-    <img src="/assets/noimage.jpg" width=50px height=50px/>
-    HTML
-    html.html_safe
-  end
-  
+    
   def _script_document_ready(script)
     html = %Q|<script type="text/javascript" charset="utf-8">$(document).ready(function() {#{script}});</script>|
     html.html_safe
@@ -31,7 +24,7 @@ module ApplicationHelper
     html.html_safe
   end
   
-  def _upload(action, item_id)
+  def _upload(category, item_id)
     html = <<-HTML
     <style>
     \#dropbox {
@@ -65,13 +58,13 @@ module ApplicationHelper
     function upload(file) {
       $('\#dropbox_status').html("Uploading " + file.name);
       var formData = new FormData();
-      formData.append("id", #{item_id})
+      formData.append("id", #{item_id});
       formData.append("file", file);
       formData.append("authenticity_token", $("input[name='authenticity_token']").attr("value"));
       var xhr = new XMLHttpRequest();
       xhr.upload.addEventListener("progress", uploadProgress, false);
       xhr.addEventListener("load", uploadComplete, false);
-      xhr.open("POST", "/#{action}/upload", true);
+      xhr.open("POST", "/#{category}/upload", true);
       xhr.send(formData);
     };
     function uploadProgress(event) {
@@ -95,10 +88,10 @@ module ApplicationHelper
         html += '<div style="position: relative; float: left">';
         html += '<a href="' + images_o[i] + '"><img class=thumbnail src="' + images_t[i] + '"/></a>';
         html += '<div style="position: absolute; top: 0px; left:90%;">';
-        html += '<a href="/#{action}/#{item_id}/image?image=' + ids[i] + '" class="delete_x" rel="nofollow" data-remote="true" data-method="delete" data-confirm="#{t('confirm_delete')}" title="#{t('delete')}">' + "#{t('x')}" + "</a>"
+        html += '<a href="/sales_managements/#{item_id}/image?category=#{category}&image=' + ids[i] + '" class="delete_x" rel="nofollow" data-remote="true" data-method="delete" data-confirm="#{t('confirm_delete')}" title="#{t('delete')}">' + "#{t('x')}" + "</a>"
         html += "</div></div>"
       }
-      $('\#thumbnail_box').html(html);
+      $('\#thumbnail_box_#{item_id}').html(html);
     };
   </script>
   <div class="flash">
