@@ -20,6 +20,7 @@ class SalesManagementsController < ApplicationController
     when Okvalue::BUSINESS
       @post = Business.order.page page
     when Okvalue::MOTOR_VEHICLE
+      @post = MotorVehicle.order.page page
     when Okvalue::ACCOMMODATION
     when Okvalue::IMMIGRATION
     else
@@ -37,21 +38,20 @@ class SalesManagementsController < ApplicationController
   def destroy_image
     @category = params[:category]
     raise "Bad Category" if @category.nil?
-    @post = Estate.find(params[:id])
+    case @category
+    when Okvalue::ESTATE
+      @post = Estate.find(params[:id])
+    when Okvalue::BUSINESS
+      @post = Business.find(params[:id])
+    when Okvalue::MOTOR_VEHICLE
+      @post = MotorVehicle.find(params[:id])
+    when Okvalue::ACCOMMODATION
+    when Okvalue::IMMIGRATION
+      raise "Bad Category"
+    end
     image = Image.find(params[:image])
     logger.info("Destroy Image: #{image} for #{@post}")
     image.destroy
-    #respond_to do |format|
-    #  format.html { render :template => "sales_managements/destroy_image" }
-    #end
-   #render :json => {:result => "OK"}
-    #respond_to do |format|
-    #  format.html { redirect_to sales_managements_url(:category => 'estate') }
-    #  format.json { head :no_content }
-    #end
-    #ender(:new) do |page|
-    #  page.replace_html 'thumbnail_box', 'OK'
-    #end
   end
 
 end

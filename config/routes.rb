@@ -1,7 +1,5 @@
 AdminOkbrisbane::Application.routes.draw do
 
-  #match 'estates/:id/new_more' => 'estates#new_more', :via => :get, :as => "new_more_estate"
-  #match 'estates/:id/image' => 'estates#destroy_image', :via => :delete, :as => "estate_delete_image"
   match 'estates/:id' => 'estates#destroy', :via => :delete, :as => "estate_delete"
   resources :estates, :except => 'destroy' do
     collection do
@@ -9,9 +7,15 @@ AdminOkbrisbane::Application.routes.draw do
     end
   end
   
-  #match 'businesses/:id/image' => 'businesses#destroy_image', :via => :delete, :as => "business_delete_image"
   match 'businesses/:id' => 'businesses#destroy', :via => :delete, :as => "business_delete"
   resources :businesses, :except => 'destroy' do
+    collection do
+      post :upload
+    end
+  end
+  
+  match 'motor_vehicles/:id' => 'motor_vehicles#destroy', :via => :delete, :as => "motor_vehicle_delete"
+  resources :motor_vehicles, :except => 'destroy' do
     collection do
       post :upload
     end

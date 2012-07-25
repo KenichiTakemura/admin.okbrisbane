@@ -29,23 +29,7 @@ class EstatesController < ApplicationController
  
   # ajax request
   def upload
-    estate = Estate.find(params[:id])
-    _file = params[:file]
-    logger.debug("original_filename: #{_file.original_filename}")
-    logger.debug("content_type: #{_file.content_type}")
-    logger.debug("tempfile: #{_file.tempfile.path}")
-    logger.debug("size: #{_file.size}")
-    _name = _file.original_filename
-    #data = request.raw_post
-    #@file_content = File.open("#{Rails.root.to_s}/tmp/#{_name}", "wb") do |f|
-    #  f.write(data)
-    #end
-    image = Image.new(:avatar =>  _file)
-    image.attached_to(estate)
-    images = estate.image.collect{|i| i.id}
-    images_t = estate.image.collect{|i| i.avatar.url(:thumb)}
-    images_o = estate.image.collect{|i| i.avatar.url(:original)}
-    render :json => {:result => I18n.t('successfully_uploaded'), :images => images, :images_t => images_t, :images_o => images_o}
+    _upload(Estate)
   end
   
   protected
@@ -133,6 +117,24 @@ class EstatesController < ApplicationController
       format.html { redirect_to sales_managements_url(:category => @category, :page => @current_page) }
       format.json { head :no_content }
     end
+  end
+  
+  def _upload(model)
+    post = model.find(params[:id])
+    _file = params[:file]
+    logger.debug("original_filename: #{_file.original_filename}")
+    logger.debug("content_type: #{_file.content_type}")
+    logger.debug("tempfile: #{_file.tempfile.path}")
+    logger.debug("size: #{_file.size}")
+    _name = _file.original_filename
+    image = Image.new(:avatar =>  _file)
+    image.attached_to(post)
+    images = post.image.collect{|i| i.id}
+    images_w = post.image.collect{|i| i.width}
+    images_h = post.image.collect{|i| i.height}
+    images_t = post.image.collect{|i| i.avatar.url(:thumb)}
+    images_o = post.image.collect{|i| i.avatar.url(:original)}
+    render :json => {:result => I18n.t('successfully_uploaded'), :images => images, :w => images_w, :h => images_h, :images_t => images_t, :images_o => images_o}
   end
 
 end

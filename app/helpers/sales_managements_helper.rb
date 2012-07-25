@@ -6,8 +6,13 @@ module SalesManagementsHelper
     when Okvalue::BUSINESS
        return new_business_path(:category => category, :page => current_page)
     when Okvalue::MOTOR_VEHICLE
+      return new_motor_vehicle_path(:category => category, :page => current_page)
     when Okvalue::ACCOMMODATION
+      raise "Not implemented"
     when Okvalue::IMMIGRATION
+      raise "Not implemented"
+    else
+      raise "Bad Category"
     end
   end
 
@@ -18,8 +23,13 @@ module SalesManagementsHelper
     when Okvalue::BUSINESS
       return edit_business_path(item, :category => category, :page => current_page)
     when Okvalue::MOTOR_VEHICLE
+      return edit_motor_vehicle_path(item, :category => category, :page => current_page)
     when Okvalue::ACCOMMODATION
+      raise "Not implemented"
     when Okvalue::IMMIGRATION
+      raise "Not implemented"
+    else
+      raise "Bad Category"
     end
   end
   
@@ -30,20 +40,30 @@ module SalesManagementsHelper
     when Okvalue::BUSINESS
       return business_path(item, :category => category, :page => current_page)
     when Okvalue::MOTOR_VEHICLE
+       return motor_vehicle_path(item, :category => category, :page => current_page)
     when Okvalue::ACCOMMODATION
+      raise "Not implemented"
     when Okvalue::IMMIGRATION
+      raise "Not implemented"
+    else
+      raise "Bad Category"
     end
   end
   
   def delete_category_path(category, item, current_page)
-     case @category
+    case @category
     when Okvalue::ESTATE
       return estate_delete_path(item, :category => category, :page => current_page)
     when Okvalue::BUSINESS
       return business_delete_path(item, :category => category, :page => current_page)
     when Okvalue::MOTOR_VEHICLE
+      return motor_vehicle_delete_path(item, :category => category, :page => current_page)
     when Okvalue::ACCOMMODATION
+      raise "Not implemented"
     when Okvalue::IMMIGRATION
+      raise "Not implemented"
+    else
+      raise "Bad Category"
     end
   end
   
@@ -54,8 +74,13 @@ module SalesManagementsHelper
     when Okvalue::BUSINESS
       return business_delete_image_path(item, :category => category)
     when Okvalue::MOTOR_VEHICLE
+      return motor_vehicle_delete_image_path(item, :category => category)
     when Okvalue::ACCOMMODATION
+      raise "Not implemented"
     when Okvalue::IMMIGRATION
+      raise "Not implemented"
+    else
+      raise "Bad Category"
     end
   end
 

@@ -2,7 +2,7 @@
 
 <div class="inner">
 
-	<%= link_to t("new_business_client"), new_business_client_path(@post.current_page) %>
+	<%= link_to t("new_business_client"), new_business_client_path(@current_page) %>
 	<div style="float:right"><%= paginate @business_clients %></div>
 	<table class="table">
 		<tr>

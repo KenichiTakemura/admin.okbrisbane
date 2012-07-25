@@ -24,4 +24,9 @@ class BusinessesController < EstatesController
     _destroy(Business)
   end
   
+  # ajax request
+  def upload
+    _upload(Business)
+  end
+  
 end

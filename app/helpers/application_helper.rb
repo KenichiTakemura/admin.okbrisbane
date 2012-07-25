@@ -7,7 +7,7 @@ module ApplicationHelper
   def thumbnail(image, action)
     logger.debug("delete_action: #{action}")
     html = %Q|<div style="position: relative; float: left; width:#{image.width}px; height: #{image.height}px; margin-left: 5px">|
-    html += link_to(image_tag(image.avatar.url(:thumb), :class => 'thumbnail'), image.avatar.url(:original))
+    html += link_to(image_tag(image.avatar.url(:thumb), :class => 'thumbnail'), image.avatar.url(:original), :target => "_blank")
     html += %Q|<div style="position: absolute; top: 0px; left:95%;">|
     html += link_to(t('x'), action, method: :delete, data: { confirm: t('confirm_delete') }, :remote => true, :class => 'delete_x', :title => t('delete'))
     html += "</div></div>"
@@ -32,9 +32,7 @@ module ApplicationHelper
   
   # Used to show no image
   def noimage
-    html = <<-HTML
-    <img src="/assets/noimage.jpg" width=50px height=50px/>
-    HTML
+    html = %Q|<img src="/assets/noimage.jpg" width="50px" height="50px" />|
     html.html_safe
   end
   
@@ -95,13 +93,15 @@ module ApplicationHelper
       $('\#dropbox_status').html("<div class=\\"message notice\\">"
       + "<p><strong>" + data.result + "</strong></p></div>");
       ids = data.images;
+      w = data.w
+      h = data.h
       images_t = data.images_t;
       images_o = data.images_o;
       var html = "";
       for (var i=0; i<ids.length; i++) {
-        html += '<div style="position: relative; float: left">';
+        html += '<div style="position: relative; float: left; width:" + w[i] + "px; height:" + h[i] + "px; margin-left: 5px">';
         html += '<a href="' + images_o[i] + '"><img class=thumbnail src="' + images_t[i] + '"/></a>';
-        html += '<div style="position: absolute; top: 0px; left:90%;">';
+        html += '<div style="position: absolute; top: 0px; left:95%;">';
         html += '<a href="/sales_managements/#{item_id}/image?category=#{category}&image=' + ids[i] + '" class="delete_x" rel="nofollow" data-remote="true" data-method="delete" data-confirm="#{t('confirm_delete')}" title="#{t('delete')}">' + "#{t('x')}" + "</a>"
         html += "</div></div>"
       }
@@ -117,7 +117,7 @@ module ApplicationHelper
     </p>
   </div>
    HTML
-  html.html_safe
+  html.strip!.chop!.html_safe
   end
   
 end
