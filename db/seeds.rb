@@ -11,6 +11,7 @@ Admin.delete_all
 Admin.create(:email => "admin@okbrisbane.com", :password => "kristaadams111", :password_confirmation => "kristaadams111")
 
 # Okbrisbane
+TopFeedList.delete_all
 Estate.delete_all
 Business.delete_all
 MotorVehicle.delete_all
@@ -30,7 +31,7 @@ admin = Admin.first
 end
 
 1.upto(10) do |x|
-  post = Business.new(:category => Estate::FOR_SALE, :subject => "비즈니스 #{x}")
+  post = Business.new(:category => Business::FOR_SALE, :subject => "비즈니스 #{x}")
   post.build_content
   post.content(:body => "비즈니스 #{x}")
   post.price = "300000.00"
@@ -40,7 +41,7 @@ end
 end
 
 1.upto(9) do |x|
-  post = MotorVehicle.new(:category => Estate::FOR_SALE, :subject => "자동차 #{x}")
+  post = MotorVehicle.new(:category => MotorVehicle::FOR_SALE, :subject => "자동차 #{x}")
   post.build_content
   post.content(:body => "자동차 #{x}")
   post.price = "9999.99"
