@@ -13,28 +13,38 @@ Admin.create(:email => "admin@okbrisbane.com", :password => "kristaadams111", :p
 # Okbrisbane
 Estate.delete_all
 Business.delete_all
-
+MotorVehicle.delete_all
 
 # Sample Data
 # Not for Production
 admin = Admin.first
 
 1.upto(20) do |x|
-  estate = Estate.new(:category => Estate::FOR_SALE, :subject => "#{x}년 北김정은, 공항에 불쑥 나타나 女스튜어디스에 말 걸며")
-  estate.build_content
-  estate.content(:body => "김연아, #{x}년 만에 '록산느의 탱고' 연기한다")
-  estate.price = "1000.00"
-  estate.valid_until = Time.now
-  estate.set_user(admin)
-  estate.save
+  post = Estate.new(:category => Estate::FOR_SALE, :subject => "부동산 #{x}")
+  post.build_content
+  post.content(:body => "부동산 #{x}")
+  post.price = "200000.00"
+  post.valid_until = Time.now
+  post.set_user(admin)
+  post.save
 end
 
 1.upto(10) do |x|
-  business = Business.new(:category => Estate::FOR_SALE, :subject => "#{x}년 北김정은, 공항에 불쑥 나타나 女스튜어디스에 말 걸며")
-  business.build_content
-  business.content(:body => "김연아, #{x}년 만에 '록산느의 탱고' 연기한다")
-  business.price = "100000.00"
-  business.valid_until = Time.now
-  business.set_user(admin)
-  business.save
+  post = Business.new(:category => Estate::FOR_SALE, :subject => "비즈니스 #{x}")
+  post.build_content
+  post.content(:body => "비즈니스 #{x}")
+  post.price = "300000.00"
+  post.valid_until = Time.now
+  post.set_user(admin)
+  post.save
+end
+
+1.upto(9) do |x|
+  post = MotorVehicle.new(:category => Estate::FOR_SALE, :subject => "자동차 #{x}")
+  post.build_content
+  post.content(:body => "자동차 #{x}")
+  post.price = "9999.99"
+  post.valid_until = Time.now
+  post.set_user(admin)
+  post.save
 end
