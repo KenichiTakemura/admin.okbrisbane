@@ -5,6 +5,9 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_locale
   
+  # TODO
+  # Check authenticity_token including Ajax request
+  
   def set_locale
     #I18n.locale = params[:locale] || I18n.default_locale
     I18n.locale = params[:locale] || "ko"

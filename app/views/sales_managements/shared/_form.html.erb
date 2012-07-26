@@ -15,79 +15,97 @@
 <% end %>
 <div class="group wat-cf">
 	<div class="">
-		<%= f.label :posted_by_id, t("author"), :class => "label left" %>
+		<%= f.label :is_deleted, t("hide"), :class => "label left" %>
 	</div>
 	<div class="">
-		<%= f.label :posted_by_id, current_admin.email, :class => "text_field" %>
+		<%= f.check_box :is_deleted, :class => "text_field", :id => "_hide" %>
 	</div>
 </div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :category, t("category"), :class => "label left" %>
+<%= _script_document_ready(%Q|if ($('#_hide').is(":checked")) {$('#_filter').attr("style", "opacity: 0.2;filter: alpha(opacity=20);") }; $('#_hide').click(function() { if ($('#_hide').is(":checked")) {$('#_filter').attr("style", "opacity: 0.2;filter: alpha(opacity=20);") } else {$('#_filter').attr("style", "") }});|)%>
+	<div id="_filter">
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :posted_by_id, t("author"), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.label :posted_by_id, current_admin.email, :class => "text_field" %>
+		</div>
 	</div>
-	<div class="">
-		<%= f.select :category, options_for_select(@post.category_list) %>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :category, t("category"), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.select :category, options_for_select(@post.category_list) %>
+		</div>
+		<span class="description"><%= t("must_be_selected") %></span>
 	</div>
-	<span class="description"><%= t("must_be_selected") %></span>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :price, t("price"), :class => "label left" %>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :price, t("price"), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.text_field :price, :class => "text_field" %>
+		</div>
+		<span class="description"><%= t("must_be_filled") %></span>
 	</div>
-	<div class="">
-		<%= f.text_field :price, :class => "text_field" %>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :valid_until, t('valid_until'), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.date_select :valid_until, :class => "right" %><%= t('until')%>
+		</div>
 	</div>
-	<span class="description"><%= t("must_be_filled") %></span>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :valid_until, t('valid_until'), :class => "label left" %>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :subject, t("subject"), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.text_field :subject, :class => "text_field" %>
+		</div>
+		<span class="description"><%= t("must_be_filled") %></span>
 	</div>
-	<div class="">
-		<%= f.date_select :valid_until, :class => "right" %><%= t('until')%>
+
+
+	<% if @post.id %>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label t("image"), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= _upload(@category, @post.id) %>
+		</div>
+		<span class="description"><%= t("acceptable_extention") %></span>
+		<br/>
+		<span class="description"><%= t("max_size") %></span>
 	</div>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :subject, t("subject"), :class => "label left" %>
+	
+	<br/>
+	<div class="group wat-cf">
+		<div id="thumbnail_box_<%= @post.id%>">
+			<%= render :partial => 'sales_managements/shared/imagebox' %>
+		</div>
 	</div>
-	<div class="">
-		<%= f.text_field :subject, :class => "text_field" %>
+		<%= f.fields_for @post.content do |content_form| %>
+		<div class="group wat-cf">
+			<div class="">
+				<%= content_form.label :body, t("content"), :class => "label left" %>
+			</div>
+			<div class="">
+				<%= content_form.cktext_area :body, :toolbar => 'Full' %>
+			</div>
+			<span class="description"><%= t("optional") %></span>
+		</div>
+		<% end %>
+	<% end %>
+	
 	</div>
-	<span class="description"><%= t("must_be_filled") %></span>
-</div>
-<% if @post.id %>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label t("image"), :class => "label left" %>
+				
+	<div class="group wat-cf">
+		<div class="left">
+			<%= f.submit t("create"), :class => "button" %>
+		</div>
 	</div>
-	<div class="">
-		<%= _upload(@category, @post.id) %>
-	</div>
-	<span class="description"><%= t("acceptable_extention") %></span><br/>
-	<span class="description"><%= t("max_size") %></span>
-</div>
-<br/>
-<div class="group wat-cf">
-<div id="thumbnail_box_<%=@post.id%>">
-<%= render :partial => 'sales_managements/shared/imagebox' %>
-</div>
-</div>
-<%= f.fields_for @post.content do |content_form| %>
-<div class="group wat-cf">
-	<div class="">
-		<%= content_form.label :body, t("content"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= content_form.cktext_area :body, :toolbar => 'Full' %>
-	</div>
-	<span class="description"><%= t("optional") %></span>
-</div>
-<% end %>
-<% end %>
-<div class="group wat-cf">
-	<div class="left">
-		<%= f.submit t("create"), :class => "button" %>
-	</div>
-</div>
-<% end %>
+
+	<% end %>

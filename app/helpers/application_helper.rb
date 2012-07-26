@@ -117,7 +117,7 @@ module ApplicationHelper
     </p>
   </div>
    HTML
-  html.strip!.chop!.html_safe
+  html.html_safe
   end
   
 end

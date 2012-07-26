@@ -13,7 +13,7 @@
 <% end %>
 <div class="group wat-cf">
 	<div class="">
-	<%= f.label :display_name, :class => "label left" %>
+	<%= f.label :display_name, t('display_name'), :class => "label left" %>
 	</div>
 	<div class="">
 	<%= f.text_field :display_name, :class => "text_field" %>
@@ -21,7 +21,7 @@
 </div>
 <div class="group wat-cf">
 	<div class="">
-	<%= f.label :width, :class => "label left" %>
+	<%= f.label :width, t('width'), :class => "label left" %>
 	</div>
 	<div class="">
 	<%= f.text_field :width, :class => "text_field" %>
@@ -29,10 +29,18 @@
 </div>
 <div class="group wat-cf">
 	<div class="">
-	<%= f.label :height, :class => "label left" %>
+	<%= f.label :height, t('height'), :class => "label left" %>
 	</div>
 	<div class="">
 	<%= f.text_field :height, :class => "text_field" %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+	<%= f.label :style, t('style'), :class => "label left" %>
+	</div>
+	<div class="">
+	<%= f.text_field :style, :class => "text_field" %>
 	</div>
 </div>
 <div class="group wat-cf">

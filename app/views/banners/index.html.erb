@@ -25,8 +25,10 @@ window.location.href ="<%= banners_path %>" + "&section_id=" + $('#section_chang
 		<tr>
 			<th class="first"><%= t("id") %></th>
 			<th><%= t("banner_page") %></th>
-			<th><%= t("size") %></th>
+			<th><%= t("image_size") %></th>
+			<th><%= t("style") %></th>
 			<th><%= t("client_banner_image") %></th>
+			
 			<th class="last">&nbsp;</th>
 		</tr>
 
@@ -34,8 +36,8 @@ window.location.href ="<%= banners_path %>" + "&section_id=" + $('#section_chang
 		<tr class="<%= cycle("odd", "even") %>" >
 			<td><%= banner.id %></td>
 			<td><%= banner.name %></td>
-			<td><%= banner.resolution %>
-			</td>
+			<td><%= banner.resolution %></td>
+			<td><%= banner.style %></td>
 			<td>
 				<% if banner.client_image.empty? %>
 				<%= noimage %>

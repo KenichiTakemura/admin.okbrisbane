@@ -3,12 +3,20 @@
 <div class="inner">
 	<table class="table">
 		<tr class="odd">
-			<td><%= label_tag :resolution, t("size"), :class => "label left" %>
+			<td><%= label_tag :resolution, t("image_size"), :class => "label left" %>
 				</td>
 				<td>
 					<%= @banner.resolution %>
 				</td>
-		<tr class="even">
+				</tr>
+						<tr class="even">
+			<td><%= label_tag :style, t("style"), :class => "label left" %>
+				</td>
+				<td>
+					<%= @banner.style %>
+				</td>
+				</tr>
+		<tr class="odd">
 			<div id="business_client_banner_images">
 				<td><%= label_tag :client_image, t("client_banner_image"), :class => "label left" %>
 				<br/>

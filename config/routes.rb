@@ -39,7 +39,7 @@ AdminOkbrisbane::Application.routes.draw do
   match 'business_clients/:id/images' => 'business_clients#destroy_image', :via => :delete, :as => "business_client_delete_all_images"
   resources :business_clients
 
-  resources :banners
+  resources :banners, :only => ["index", "show", "edit", "update"]
 
   get "main/index"
 

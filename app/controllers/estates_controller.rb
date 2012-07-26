@@ -58,6 +58,7 @@ class EstatesController < ApplicationController
 
   def _show(model)
     @post = model.find(params[:id])
+    logger.debug("post: #{@post}")
     respond_to do |format|
         format.html { render :template => "sales_managements/show" }
         format.json { render json: @post }
