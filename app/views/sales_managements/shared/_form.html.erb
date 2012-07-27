@@ -13,6 +13,10 @@
 </div>
 <br/>
 <% end %>
+<div style="float:right">
+	<%= label_tag :author, t("author"), :class => "label left" %>
+	<%= current_admin.email %>
+</div>
 <div class="group wat-cf">
 	<div class="">
 		<%= f.label :is_deleted, t("hide"), :class => "label left" %>
@@ -20,26 +24,39 @@
 	<div class="">
 		<%= f.check_box :is_deleted, :class => "text_field", :id => "_hide" %>
 	</div>
+	<span class="description"><%= t("if_checked_not_displayed") %></span>
 </div>
 <%= _script_document_ready(%Q|if ($('#_hide').is(":checked")) {$('#_filter').attr("style", "opacity: 0.2;filter: alpha(opacity=20);") }; $('#_hide').click(function() { if ($('#_hide').is(":checked")) {$('#_filter').attr("style", "opacity: 0.2;filter: alpha(opacity=20);") } else {$('#_filter').attr("style", "") }});|)%>
 	<div id="_filter">
-	<div class="group wat-cf">
+			<div class="group wat-cf">
 		<div class="">
-			<%= f.label :posted_by_id, t("author"), :class => "label left" %>
+			<%= f.label :subject, t("subject"), :class => "label left" %>
 		</div>
 		<div class="">
-			<%= f.label :posted_by_id, current_admin.email, :class => "text_field" %>
+			<%= f.text_field :subject, :class => "text_field" %>
 		</div>
+		<span class="description"><%= t("must_be_filled") %></span>
 	</div>
 	<div class="group wat-cf">
 		<div class="">
 			<%= f.label :category, t("category"), :class => "label left" %>
 		</div>
 		<div class="">
-			<%= f.select :category, options_for_select(@post.category_list) %>
+			<%= f.select :category, options_for_select(@post.category_list, @post.category) %>
 		</div>
 		<span class="description"><%= t("must_be_selected") %></span>
 	</div>
+	<% if @category == Okvalue::ACCOMMODATION %>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :room_type, t("room_type"), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.select :room_type, options_for_select(@post.room_type_list, @post.room_type) %>
+		</div>
+		<span class="description"><%= t("must_be_selected") %></span>
+	</div>
+	<% end%>
 	<div class="group wat-cf">
 		<div class="">
 			<%= f.label :price, t("price"), :class => "label left" %>
@@ -56,18 +73,8 @@
 		<div class="">
 			<%= f.date_select :valid_until, :class => "right" %><%= t('until')%>
 		</div>
+		<span class="description"><%= t("not_displayed_after_the_date") %></span>
 	</div>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :subject, t("subject"), :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.text_field :subject, :class => "text_field" %>
-		</div>
-		<span class="description"><%= t("must_be_filled") %></span>
-	</div>
-
-
 	<% if @post.id %>
 	<div class="group wat-cf">
 		<div class="">

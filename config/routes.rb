@@ -21,8 +21,15 @@ AdminOkbrisbane::Application.routes.draw do
     end
   end
   
+  match 'accommodations/:id' => 'accommodations#destroy', :via => :delete, :as => "accommodation_delete"
+  resources :accommodations, :except => 'destroy' do
+    collection do
+      post :upload
+    end
+  end
+  
   match 'sales_managements/:id/image' => 'sales_managements#destroy_image', :via => :delete, :as => "sales_managements_delete_image"  
-  resources :sales_managements
+  resources :sales_managements, :only => ["index"]
 
   devise_for :admins
   
@@ -59,7 +66,7 @@ AdminOkbrisbane::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-  resources :mains
+  resources :mains, :only => ["index"]
 
   # Sample resource route with options:
   #   resources :products do

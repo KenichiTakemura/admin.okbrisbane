@@ -18,9 +18,12 @@
 				<th class="first"><%= t("Id") %></th>
 				<th><%= t("hide") %></th>
 				<th><%= t("category") %></th>
+				<% if @category == Okvalue::ACCOMMODATION %>
+					<th><%= t("room_type") %></th>
+				<% end %>
 				<th><%= t("subject") %></th>
-				<th><%= t("author") %></th>
-				<th><%= t("created_at") %></th>
+				<!-- th><%= t("author") %></th -->
+				<th><%= t("valid_until") %></th>
 				<th><%= t("image") %></th>
 				<th class="last"></th>
 			</tr>
@@ -36,9 +39,12 @@
 				<td><%= item.id %></td>
 				<td><%= t("#{item.is_deleted}") %></td>
 				<td><%= t("#{item.category}") %></td>
+				<% if @category == Okvalue::ACCOMMODATION %>
+					<td><%= t("#{item.room_type}") %></td>
+				<% end %>
 				<td><%= _truncate(item.subject) %></td>
-				<td><%= item.posted_by.email if !item.posted_by.nil? %></td>
-				<td><%= Common.date_format(item.created_at) %></td>
+				<!-- td><%= item.posted_by.email if !item.posted_by.nil? %></td -->
+				<td><%= Common.date_format(item.valid_until) %></td>
 				<td><div id="thumbnail_box_<%=item.id%>">
 					<%= noimage?(item) %>
 					<% item.image.each do |image| %>

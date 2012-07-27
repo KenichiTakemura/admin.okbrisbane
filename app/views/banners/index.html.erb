@@ -26,7 +26,7 @@ window.location.href ="<%= banners_path %>" + "&section_id=" + $('#section_chang
 			<th class="first"><%= t("id") %></th>
 			<th><%= t("banner_page") %></th>
 			<th><%= t("image_size") %></th>
-			<th><%= t("style") %></th>
+			<!-- th><%= t("style") %></th -->
 			<th><%= t("client_banner_image") %></th>
 			
 			<th class="last">&nbsp;</th>
@@ -37,7 +37,7 @@ window.location.href ="<%= banners_path %>" + "&section_id=" + $('#section_chang
 			<td><%= banner.id %></td>
 			<td><%= banner.name %></td>
 			<td><%= banner.resolution %></td>
-			<td><%= banner.style %></td>
+			<!-- td><%= banner.style %></td -->
 			<td>
 				<% if banner.client_image.empty? %>
 				<%= noimage %>
@@ -47,8 +47,8 @@ window.location.href ="<%= banners_path %>" + "&section_id=" + $('#section_chang
 			<% end %> 
 			<% end %></td>
 			<td><%= link_to t('Show'), banner_path(:id => banner, :page => @banners.current_page) %><br/>
-				<%= link_to t('Edit'), edit_banner_path(banner)  %><br/>
-				<%= link_to t("banner_attach_images"), edit_banner_path(banner)  %> <br/> 
+				<%= link_to t('Edit'), edit_banner_path(banner, :page => @banners.current_page)  %><br/>
+				<!-- %= link_to t("banner_attach_images"), edit_banner_path(banner, :page => @banners.current_page)  %> <br/ --> 
 				<!-- %= link_to t("banner_upload_images"), new_client_image_path(:banner => banner, :page => @banners.current_page)  % -->
 				</td>
 		</tr>

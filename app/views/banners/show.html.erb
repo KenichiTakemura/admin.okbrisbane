@@ -53,6 +53,6 @@
 
 	</table>
 
-<%= link_to t('Edit'), edit_banner_path(@banner) %> |
-<%= link_to t('Back'), banners_path %>
+<%= link_to t('Edit'), edit_banner_path(@banner, :page => @current_page) %> |
+<%= link_to t('Back'), banners_path(:page => @current_page) %>
 </div>

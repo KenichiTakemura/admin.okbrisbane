@@ -13,15 +13,13 @@ class SalesManagementsController < ApplicationController
     logger.debug("category: #{@category} page: #{page}")
     case @category
     when Okvalue::ESTATE
-      @post = Estate.order.page page
-      if @post.empty? && page.to_i > 1
-        @post = Estate.order.page page.to_i - 1
-      end
+      @post = getPost(Estate, page)
     when Okvalue::BUSINESS
-      @post = Business.order.page page
+      @post = getPost(Business, page)
     when Okvalue::MOTOR_VEHICLE
-      @post = MotorVehicle.order.page page
+      @post = getPost(MotorVehicle, page)
     when Okvalue::ACCOMMODATION
+      @post = getPost(Accommodation, page)
     when Okvalue::IMMIGRATION
     else
       raise "Bad Category"
@@ -46,12 +44,23 @@ class SalesManagementsController < ApplicationController
     when Okvalue::MOTOR_VEHICLE
       @post = MotorVehicle.find(params[:id])
     when Okvalue::ACCOMMODATION
+      @post = Accommodation.find(params[:id])
     when Okvalue::IMMIGRATION
       raise "Bad Category"
     end
     image = Image.find(params[:image])
     logger.info("Destroy Image: #{image} for #{@post}")
     image.destroy
+  end
+  
+  protected
+  
+  def getPost(model, page)
+    post = model.order.page page
+    if post.empty? && page.to_i > 1
+        post = model.order.page page.to_i - 1
+    end
+    post
   end
 
 end

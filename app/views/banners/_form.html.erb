@@ -1,4 +1,5 @@
 <%= form_for(@banner, :html => { :class => "form" })  do |f| %>
+<%= hidden_field_tag :page, @current_page %>
 <% if @banner.errors.any? %>
 <div id="error_explanation">
 	<h2><%= pluralize(@banner.errors.count, "error") %> prohibited this banner from being saved:</h2>

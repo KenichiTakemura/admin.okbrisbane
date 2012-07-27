@@ -8,7 +8,7 @@ module SalesManagementsHelper
     when Okvalue::MOTOR_VEHICLE
       return new_motor_vehicle_path(:category => category, :page => current_page)
     when Okvalue::ACCOMMODATION
-      raise "Not implemented"
+      return new_accommodation_path(:category => category, :page => current_page)
     when Okvalue::IMMIGRATION
       raise "Not implemented"
     else
@@ -25,7 +25,7 @@ module SalesManagementsHelper
     when Okvalue::MOTOR_VEHICLE
       return edit_motor_vehicle_path(item, :category => category, :page => current_page)
     when Okvalue::ACCOMMODATION
-      raise "Not implemented"
+      return edit_accommodation_path(item, :category => category, :page => current_page)
     when Okvalue::IMMIGRATION
       raise "Not implemented"
     else
@@ -42,7 +42,7 @@ module SalesManagementsHelper
     when Okvalue::MOTOR_VEHICLE
        return motor_vehicle_path(item, :category => category, :page => current_page)
     when Okvalue::ACCOMMODATION
-      raise "Not implemented"
+       return accommodation_path(item, :category => category, :page => current_page)
     when Okvalue::IMMIGRATION
       raise "Not implemented"
     else
@@ -59,7 +59,7 @@ module SalesManagementsHelper
     when Okvalue::MOTOR_VEHICLE
       return motor_vehicle_delete_path(item, :category => category, :page => current_page)
     when Okvalue::ACCOMMODATION
-      raise "Not implemented"
+      return accommodation_delete_path(item, :category => category, :page => current_page)
     when Okvalue::IMMIGRATION
       raise "Not implemented"
     else
@@ -76,7 +76,7 @@ module SalesManagementsHelper
     when Okvalue::MOTOR_VEHICLE
       return motor_vehicle_delete_image_path(item, :category => category)
     when Okvalue::ACCOMMODATION
-      raise "Not implemented"
+      return accommodation_delete_image_path(item, :category => category)
     when Okvalue::IMMIGRATION
       raise "Not implemented"
     else
