@@ -9,9 +9,10 @@
 	</div>
 	<% else %>
 
-	<h2 class="title"><%= t("listing_#{@category}")%></h2>
+	<h2 class="title"><%= t("#{@category}")%>&nbsp;<%= t('List') %></h2>
 	<div class="inner">
-		<%= link_to t("new_#{@category}"), new_category_path(@category, @post.current_page) %>
+		<% title = t("#{@category}") << t("New") %>
+		<%= link_to title, new_category_path(@category, @post.current_page) %>
 		<div style="float:right"><%= paginate @post %></div>
 		<table class="table">
 			<tr>
@@ -22,7 +23,6 @@
 					<th><%= t("room_type") %></th>
 				<% end %>
 				<th><%= t("subject") %></th>
-				<!-- th><%= t("author") %></th -->
 				<th><%= t("valid_until") %></th>
 				<th><%= t("image") %></th>
 				<th class="last"></th>
@@ -39,11 +39,10 @@
 				<td><%= item.id %></td>
 				<td><%= t("#{item.is_deleted}") %></td>
 				<td><%= t("#{item.category}") %></td>
-				<% if @category == Okvalue::ACCOMMODATION %>
+				<% if item.respond_to? :room_type %>
 					<td><%= t("#{item.room_type}") %></td>
 				<% end %>
 				<td><%= _truncate(item.subject) %></td>
-				<!-- td><%= item.posted_by.email if !item.posted_by.nil? %></td -->
 				<td><%= Common.date_format(item.valid_until) %></td>
 				<td><div id="thumbnail_box_<%=item.id%>">
 					<%= noimage?(item) %>
@@ -51,15 +50,13 @@
 					<%= thumbnail(image, sales_managements_delete_image_path(item, :category => @category, :image => image.id)) %>
 					<% end %>
 					</div>
-				</td>
-				<td><%= link_to t('Show'), show_category_parh(@category, item, @post.current_page) %><br/><%= link_to t('Edit'), edit_category_path(@category, item, @post.current_page) %><br/>
-					<%= link_to t("delete_#{@category}"), delete_category_path(@category, item, @post.current_page), method: :delete, data: { confirm: t('confirm_delete') } %></td>
+			</td>
+				<td><%= link_to t('Show'), show_category_path(@category, item, @post.current_page) %><br/><%= link_to t('Edit'), edit_category_path(@category, item, @post.current_page) %><br/>
+					<%= link_to t("#{@category}") << t("Delete"), delete_category_path(@category, item, @post.current_page), method: :delete, data: { confirm: t('confirm_delete') } %></td>
 			</tr>
 			<% end %>
 					<% end %>
 		</table>
-
-
 	</div>
 		<% end %>
 </div>

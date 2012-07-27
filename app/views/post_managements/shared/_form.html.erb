@@ -46,7 +46,7 @@
 		</div>
 		<span class="description"><%= t("must_be_selected") %></span>
 	</div>
-	<% if @post.respond_to? :room_type %>
+	<% if @category == Okvalue::ACCOMMODATION %>
 	<div class="group wat-cf">
 		<div class="">
 			<%= f.label :room_type, t("room_type"), :class => "label left" %>
@@ -57,7 +57,6 @@
 		<span class="description"><%= t("must_be_selected") %></span>
 	</div>
 	<% end%>
-	<% if @post.respond_to? :price %>
 	<div class="group wat-cf">
 		<div class="">
 			<%= f.label :price, t("price"), :class => "label left" %>
@@ -67,7 +66,6 @@
 		</div>
 		<span class="description"><%= t("must_be_filled") %></span>
 	</div>
-	<% end %>
 	<div class="group wat-cf">
 		<div class="">
 			<%= f.label :valid_until, t('valid_until'), :class => "label left" %>

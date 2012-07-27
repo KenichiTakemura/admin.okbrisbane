@@ -1,0 +1,16 @@
+<div class="secondary-navigation">
+	<ul class="wat-cf">
+		<li class="first" id="<%= Okvalue::JOB %>">
+			<%= link_to t(Okvalue::JOB),  post_managements_path(:category => Okvalue::JOB) %>
+		</li>
+		<li id="<%= Okvalue::BUY_AND_SELL %>">
+			<%= link_to t(Okvalue::BUY_AND_SELL),  post_managements_path(:category => Okvalue::BUY_AND_SELL)  %>
+		</li>
+		<li id="<%= Okvalue::WELLBEING %>">
+			<%= link_to t(Okvalue::WELLBEING),  post_managements_path(:category => Okvalue::WELLBEING)  %>
+		</li>
+	</ul>
+</div>
+<% if @category %>
+<%= _script_document_ready(%Q|$('\##{@category}').addClass("active");|)%>
+<% end %>

@@ -1,4 +1,4 @@
-class AccommodationsController < EstatesController
+class AccommodationsController < PostsController
   
   def new
     _new(Accommodation)

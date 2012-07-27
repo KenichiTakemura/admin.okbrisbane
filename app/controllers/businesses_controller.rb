@@ -1,4 +1,4 @@
-class BusinessesController < EstatesController
+class BusinessesController < PostsController
   
   def new
     _new(Business)

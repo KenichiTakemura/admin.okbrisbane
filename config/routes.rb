@@ -1,5 +1,15 @@
 AdminOkbrisbane::Application.routes.draw do
 
+  resources :post_managements
+
+
+  match 'legal_services/:id' => 'legal_services#destroy', :via => :delete, :as => "legal_service_delete"
+  resources :legal_services, :except => 'destroy' do
+    collection do
+      post :upload
+    end
+  end
+  
   match 'estates/:id' => 'estates#destroy', :via => :delete, :as => "estate_delete"
   resources :estates, :except => 'destroy' do
     collection do
@@ -23,6 +33,28 @@ AdminOkbrisbane::Application.routes.draw do
   
   match 'accommodations/:id' => 'accommodations#destroy', :via => :delete, :as => "accommodation_delete"
   resources :accommodations, :except => 'destroy' do
+    collection do
+      post :upload
+    end
+  end
+
+
+  match 'studies/:id' => 'studies#destroy', :via => :delete, :as => "study_delete"
+  resources :studies, :except => 'destroy' do
+    collection do
+      post :upload
+    end
+  end
+
+  match 'immigrations/:id' => 'immigrations#destroy', :via => :delete, :as => "immigration_delete"
+  resources :immigrations, :except => 'destroy' do
+    collection do
+      post :upload
+    end
+  end
+
+  match 'taxes/:id' => 'taxes#destroy', :via => :delete, :as => "tax_delete"
+  resources :taxes, :except => 'destroy' do
     collection do
       post :upload
     end

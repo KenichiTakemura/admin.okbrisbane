@@ -77,3 +77,13 @@ end
   post.save
   sleep 0.5
 end
+
+1.upto(7) do |x|
+  post = Law.new(:category => Law::FOR_ACCIDENT, :subject => "[시티]공원속의 라이프스타일 #{x}")
+  post.build_content
+  post.content(:body => "[시티]공원속의 라이프스타일 #{x}")
+  post.valid_until = Time.utc(2012,7,"#{x}")
+  post.set_user(admin)
+  post.save
+  sleep 0.5
+end

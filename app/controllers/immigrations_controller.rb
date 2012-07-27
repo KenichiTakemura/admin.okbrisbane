@@ -1,0 +1,2 @@
+class ImmigrationsController < ApplicationController
+end

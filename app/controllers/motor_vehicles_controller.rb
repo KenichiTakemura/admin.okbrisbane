@@ -1,4 +1,4 @@
-class MotorVehiclesController < EstatesController
+class MotorVehiclesController <  PostsController
   
   def new
     _new(MotorVehicle)

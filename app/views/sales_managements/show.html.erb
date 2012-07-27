@@ -16,8 +16,10 @@
 			<td><%= t("#{@post.category}") %></td>
 		</tr>
 		<tr class="even">
+			<% if @post.respond_to? :price %>
 			<td><%= label_tag :price, t("author"), :class => "label left" %> </td>
 			<td><%= @post.price %></td>
+			<% end %>
 		</tr>
 		<tr class="odd">
 			<td><%= label_tag :valid_until, t("valid_until"), :class => "label left" %> </td>
