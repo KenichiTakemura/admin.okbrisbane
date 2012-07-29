@@ -3,20 +3,26 @@
 <div class="inner">
 	<table class="table">
 		<tr class="odd">
-			<td><%= label_tag :resolution, t("image_size"), :class => "label left" %>
-				</td>
-				<td>
-					<%= @banner.resolution %>
-				</td>
-				</tr>
-						<tr class="even">
-			<td><%= label_tag :style, t("style"), :class => "label left" %>
-				</td>
-				<td>
-					<%= @banner.style %>
-				</td>
-				</tr>
+			<td><%= label_tag :div_resolution, t("div_size"), :class => "label left" %> </td>
+			<td> <%= @banner.div_resolution %> </td>
+		</tr>
+		<tr class="even">
+			<td><%= label_tag :img_resolution, t("image_size"), :class => "label left" %> </td>
+			<td> <%= @banner.img_resolution %> </td>
+		</tr>
 		<tr class="odd">
+			<td><%= label_tag :style, t("style"), :class => "label left" %> </td>
+			<td> <%= @banner.style %> </td>
+		</tr>
+		<tr class="even">
+			<td><%= label_tag :effect, t("effect"), :class => "label left" %> </td>
+			<td> <%= @banner.effect %> </td>
+		</tr>
+		<tr class="odd">
+			<td><%= label_tag :effect_speed, t("effect_speed"), :class => "label left" %> </td>
+			<td> <%= @banner.effect_speed %> </td>
+		</tr>
+		<tr class="even">
 			<div id="business_client_banner_images">
 				<td><%= label_tag :client_image, t("client_banner_image"), :class => "label left" %>
 				<br/>
@@ -53,6 +59,6 @@
 
 	</table>
 
-<%= link_to t('Edit'), edit_banner_path(@banner, :page => @current_page) %> |
-<%= link_to t('Back'), banners_path(:page => @current_page) %>
+	<!-- %= link_to t('Edit'), edit_banner_path(@banner, :page => @current_page) %> | -->
+	<%= link_to t('Back'), banners_path(:page_id => @page_id,) %>
 </div>

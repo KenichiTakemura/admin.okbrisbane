@@ -1,5 +1,5 @@
 <%= form_for(@banner, :html => { :class => "form" })  do |f| %>
-<%= hidden_field_tag :page, @current_page %>
+<%= hidden_field_tag :page_id, @page_id %>
 <% if @banner.errors.any? %>
 <div id="error_explanation">
 	<h2><%= pluralize(@banner.errors.count, "error") %> prohibited this banner from being saved:</h2>
@@ -14,34 +14,68 @@
 <% end %>
 <div class="group wat-cf">
 	<div class="">
-	<%= f.label :display_name, t('display_name'), :class => "label left" %>
+		<%= f.label :display_name, t('display_name'), :class => "label left" %>
 	</div>
 	<div class="">
-	<%= f.text_field :display_name, :class => "text_field" %>
-	</div>
-</div>
-<div class="group wat-cf">
-	<div class="">
-	<%= f.label :width, t('width'), :class => "label left" %>
-	</div>
-	<div class="">
-	<%= f.text_field :width, :class => "text_field" %>
+		<%= f.text_field :display_name, :class => "text_field" %>
 	</div>
 </div>
 <div class="group wat-cf">
 	<div class="">
-	<%= f.label :height, t('height'), :class => "label left" %>
+		<%= f.label :div_width, t('div_width'), :class => "label left" %>
 	</div>
 	<div class="">
-	<%= f.text_field :height, :class => "text_field" %>
+		<%= f.text_field :div_width, :class => "text_field" %>
 	</div>
 </div>
 <div class="group wat-cf">
 	<div class="">
-	<%= f.label :style, t('style'), :class => "label left" %>
+		<%= f.label :div_height, t('div_height'), :class => "label left" %>
 	</div>
 	<div class="">
-	<%= f.text_field :style, :class => "text_field" %>
+		<%= f.text_field :div_height, :class => "text_field" %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :img_width, t('img_width'), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :img_width, :class => "text_field" %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :img_height, t('img_height'), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :img_height, :class => "text_field" %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :effect, t("effect"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.select :effect, options_for_select(@banner.effect_list, @banner.effect) %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :effect_speed, t("effect_speed"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :effect_speed, :class => "text_field" %>
+	</div>
+	<span class="description"><%= t("unit_second") %></span>
+	<span class="description"><%= t("more_than_1") %></span>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :style, t('style'), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :style, :class => "text_field" %>
 	</div>
 </div>
 <div class="group wat-cf">

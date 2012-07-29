@@ -1,5 +1,4 @@
 class SalesManagementsController < ManagementsController
-  
   def index
     return if _index.nil?
     logger.debug("SalesManagementsController.index @category: #{@category}")
@@ -14,15 +13,21 @@ class SalesManagementsController < ManagementsController
       @post = getPost(Accommodation, @@page)
     when Okvalue::LAW
       @post = getPost(Law, @@page)
+    when Okvalue::STUDY
+      @post = getPost(Study, @@page)
+    when Okvalue::IMMIGRATION
+      @post = getPost(Immigration, @@page)
+    when Okvalue::TAX
+      @post = getPost(Tax, @@page)
     else
-      raise "Bad Category"
+    raise "Bad Category"
     end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @post }
     end
   end
-  
+
   # ajax request
   # Delete an image
   def destroy_image
@@ -37,10 +42,16 @@ class SalesManagementsController < ManagementsController
       @post = Accommodation.find(params[:id])
     when Okvalue::Law
       @post = Law.find(params[:id])
+    when Okvalue::STUDY
+      @post = Study.find(params[:id])
+    when Okvalue::IMMIGRATION
+      @post = Immigration.find(params[:id])
+    when Okvalue::TAX
+      @post = Tax.find(params[:id])
     else
-      raise "Bad Category"
+    raise "Bad Category"
     end
     _destroy_image
   end
-  
+
 end

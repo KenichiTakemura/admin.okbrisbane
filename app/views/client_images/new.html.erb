@@ -7,7 +7,7 @@
 <% if @business_client %>
 <%= link_to t('Back'), business_clients_path(:page => @current_page) %>
 <% elsif @banner %>
-<%= link_to t('Back'), banners_path(:page => @current_page) %>
+<%= link_to t('Back'), banners_path(:page_id => @page_id) %>
 <% end %>
 
 </div>

@@ -16,7 +16,7 @@ module SalesManagementsHelper
     when Okvalue::IMMIGRATION
       return new_immigration_path(:category => category, :page => current_page)
     when Okvalue::TAX
-      return new_tax_path(:category => category, :page => current_page)
+      return new_taxis_path(:category => category, :page => current_page)
     else
       raise "Bad Category"
     end
@@ -39,7 +39,7 @@ module SalesManagementsHelper
     when Okvalue::IMMIGRATION
       return edit_immigration_path(item, :category => category, :page => current_page)
     when Okvalue::TAX
-      return edit_tax_path(item, :category => category, :page => current_page)
+      return edit_taxis_path(item, :category => category, :page => current_page)
     else
       raise "Bad Category"
     end
@@ -63,7 +63,7 @@ module SalesManagementsHelper
     when Okvalue::IMMIGRATION
       return immigration_path(item, :category => category, :page => current_page)
     when Okvalue::TAX
-      return tax_path(item, :category => category, :page => current_page)
+      return taxis_path(item, :category => category, :page => current_page)
     else
       raise "Bad Category"
     end

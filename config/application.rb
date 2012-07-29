@@ -66,6 +66,7 @@ module AdminOkbrisbane
     
     # Share model from okbrisbane
     config.autoload_paths += %W( #{Rails.root}/../okbrisbane/app/models )
+    config.autoload_paths += %W( #{Rails.root}/../okbrisbane/app/helpers )
     config.autoload_paths += %W( #{Rails.root}/../okbrisbane/lib )
     config.autoload_paths += %W( #{config.root}/../okbrisbane/config/locales/ko.yml )
 

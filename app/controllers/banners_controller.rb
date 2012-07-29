@@ -1,24 +1,14 @@
 class BannersController < ApplicationController
 
-  before_filter :checkPage, :only => [:new, :show, :edit, :update]
-  
-  def checkPage
-    @current_page = params[:page]
-    raise "No page" if @current_page.nil?
-  end
-  
-  # GET /banners
-  # GET /banners.json
+  before_filter :_page 
+
   def index
-    if(params[:page_id] && !params[:page_id].empty?)
-      @banners = Banner.where('page_id = ?', params[:page_id]).order.page params[:page]
-    elsif (params[:section_id] && !params[:section_id].empty?)
-       @banners = Banner.where('section_id = ?', params[:section_id]).order.page params[:page]
-     else
-      @banners = Banner.order.page params[:page]
+    _page
+    if (params[:page_id] && !params[:page_id].empty?)
+      @banners = Banner.where('page_id = ?', params[:page_id]).order
+    else
+      @banners = Banner.all
     end
-    @page_id = params[:page_id]
-    @section_id = params[:section_id]
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @banners }
@@ -29,17 +19,16 @@ class BannersController < ApplicationController
   # GET /banners/1.json
   def show
     @banner = Banner.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @banner }
     end
   end
 
-
   # GET /banners/1/edit
   def edit
     @banner = Banner.find(params[:id])
+    _page
   end
 
   # PUT /banners/1
@@ -60,4 +49,12 @@ class BannersController < ApplicationController
     end
   end
 
+  private
+
+  def _page
+    @page_id = params[:page_id]
+    page = Page.find_by_id(@page_id)
+    @page_name = page.name if !page.nil?
+    logger.debug("@page_id: #{@page_id} @page_name: #{@page_name}")
+  end
 end

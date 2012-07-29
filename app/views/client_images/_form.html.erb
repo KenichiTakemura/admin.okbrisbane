@@ -1,5 +1,5 @@
 <%= form_for(@client_image, :html => { :class => "form" }) do |f| %>
-<%= f.hidden_field :medium_size, :value => "#{@banner.width}x#{@banner.height}" if @banner %>
+<%= f.hidden_field :medium_size, :value => "#{@banner.img_width}x#{@banner.img_height}" if @banner %>
 <% if @client_image.errors.any? %>
 <div id="error_explanation">
 	<h2><%= pluralize(@client_image.errors.count, "error") %> prohibited this client_image from being saved:</h2>
@@ -58,9 +58,9 @@
 	</div>
 	<div class="">
 		<% if @banner %>
-			<%= f.select :medium_size, options_from_collection_for_select(@banners, "resolution", "resolution", @banner.resolution ) %>
+			<%= f.select :medium_size, options_from_collection_for_select(@banners, "img_resolution", "img_resolution", @banner.img_resolution ) %>
 		<% elsif %>
-			<%= f.select :medium_size,options_from_collection_for_select(@banners, "resolution", "resolution", "") %>
+			<%= f.select :medium_size,options_from_collection_for_select(@banners, "img_resolution", "img_resolution", "") %>
 		<% end %>
 	</div>
 </div>

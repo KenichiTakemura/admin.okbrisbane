@@ -1,0 +1,12 @@
+<div class="secondary-navigation">
+	<ul class="wat-cf">
+		<% Page.all.each do |page| %>
+		<li class="" id="<%= page.name %>" >
+			<%= link_to(t(page.name), banners_path(:page_id => page.id)) %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% if @page_name %>
+<%= _script_document_ready(%Q|$('\##{@page_name}').addClass("active");|)%>
+<% end %>

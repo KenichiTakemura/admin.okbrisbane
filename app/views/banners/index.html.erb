@@ -1,57 +1,66 @@
+<%= render :partial => 'banners/shared/head' %>
+<% if !@page_name %>
 <h2 class="title"><%= t("listing_banners") %></h2>
 <div class="inner">
-
-	<div class="group wat-cf">
-		<div class="">
-			<%= label_tag :page, t("pages"), :class => "label left" %>
-			<%= select_tag :page, options_from_collection_for_select(Page.all, "id", "name_t", @page_id) , :id => 'page_changed', :include_blank => true  %>
-			<%= label_tag :section, t("section"), :class => "label left" %>
-			<%= select_tag :section, options_from_collection_for_select(Section.all, "id", "name_t", @section_id) , :id => 'section_changed', :include_blank => true  %>
-		</div>
-	</div>
-	<br/>
-	<script type="text/javascript" charset="utf-8">
-		$('#page_changed').change(function() {
-window.location.href ="<%= banners_path %>" + "&page_id=" + $('#page_changed').val() ;
-	});
-	$('#section_changed').change(function() {
-window.location.href ="<%= banners_path %>" + "&section_id=" + $('#section_changed').val() ;
-	});
-	</script>
-	<div style="float:right">
-		<%= paginate @banners %>
-	</div>
-	<table class="table">
-		<tr>
-			<th class="first"><%= t("id") %></th>
-			<th><%= t("banner_page") %></th>
-			<th><%= t("image_size") %></th>
-			<!-- th><%= t("style") %></th -->
-			<th><%= t("client_banner_image") %></th>
-			
-			<th class="last">&nbsp;</th>
-		</tr>
-
-		<% @banners.each do |banner| %>
-		<tr class="<%= cycle("odd", "even") %>" >
-			<td><%= banner.id %></td>
-			<td><%= banner.name %></td>
-			<td><%= banner.resolution %></td>
-			<!-- td><%= banner.style %></td -->
-			<td>
-				<% if banner.client_image.empty? %>
-				<%= noimage %>
-				<% elsif %>
-				<% banner.client_image.each do |client_image| %>
-			<%= link_to image_tag(client_image.avatar.url(:thumb), :style => "width:40px;height:40px", :title => client_image.business_client.business_name), client_image.avatar.url(:medium), :target => "_blank" %>
-			<% end %> 
-			<% end %></td>
-			<td><%= link_to t('Show'), banner_path(:id => banner, :page => @banners.current_page) %><br/>
-				<%= link_to t('Edit'), edit_banner_path(banner, :page => @banners.current_page)  %><br/>
-				<!-- %= link_to t("banner_attach_images"), edit_banner_path(banner, :page => @banners.current_page)  %> <br/ --> 
-				<!-- %= link_to t("banner_upload_images"), new_client_image_path(:banner => banner, :page => @banners.current_page)  % -->
-				</td>
-		</tr>
-		<% end %>
-	</table>
+	<p>
+		<%= t("banner_management_description")%>
+	</p>
 </div>
+<% else %>
+<h2 class="title"><%= t("banner") %> <%= t("page") %> <%= t(@page_name) %></h2>
+<style>
+	#_okbrisbane_html {
+		height: 100%;
+		width: 1000px;
+		margin: 0 auto;
+		background: #FFFFFF;
+	}
+	#_okbrisbane_left {
+		height: 100%;
+		position: relative;
+		background: #FFFFFF;
+		left:0px;
+		float: left;
+		width: 0px;
+	}
+	#_okbrisbane_right {
+		height: 100%;
+		position: relative;
+		background: #FFFFFF;
+		right:0px;
+		float: right;
+		width: 0px;
+	}
+	#_okbrisbane_body {
+		overflow: auto;
+		min-height: 100%;
+		padding: 10px;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		border: 1px solid white;
+		-webkit-border-radius: 12px;
+		-moz-border-radius: 12px;
+		border-radius: 12px;
+		-webkit-box-shadow: 5px 5px 25px rgba(0,0,0,.5);
+		-webkit-box-shadow: inset 5px 5px 25px rgba(0,0,0,.5);
+		-moz-box-shadow: inset 5px 5px 25px rgba(0,0,0,.5);
+		box-shadow: inset 5px 5px 25px rgba(0,0,0,.1);
+		font-size: 12px;
+		font-family: 'NanumGothic';
+		color: #333;
+		position: relative;
+	}
+</style>
+<div id="_okbrisbane_html">
+	<div id="_okbrisbane_left">
+		<%= edittable_background_banner(:home, :background, 1, "left") %>
+	</div>
+	<div id="_okbrisbane_right">
+		<%= edittable_background_banner(:home, :background, 2, "right") %>
+	</div>
+	<div id="_okbrisbane_body">
+		<%= render :partial => "banners/#{@page_name}/index" %>
+	</div>
+
+</div>
+<% end %>
