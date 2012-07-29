@@ -21,22 +21,25 @@ class ClientImagesController < ApplicationController
     end
   end
 
+  def _image_map
+    banners  = Banner.all
+    @img_resolutions = Hash.new
+    banners.each do |b|
+      @img_resolutions[b.img_resolution.to_sym] = b.img_resolution if !@img_resolutions[b.img_resolution.to_sym]
+    end
+  end
+
   # GET /client_images/new
   # GET /client_images/new.json
   def new
     @current_page = params[:page]
     @client_image = ClientImage.new
-    @banners  = Banner.all
+    _image_map
     # Called from BusinessClient
     if(params[:client])
       @business_client = BusinessClient.find_by_id(params[:client])
       logger.debug("business_client => #{@business_client}")
-      @client_image.business_client_id = @business_client.id
-    end
-    # Called from Banners
-    if(params[:banner])
-      @banner = Banner.find_by_id(params[:banner])
-      logger.debug("banner => #{@banner}")
+    @client_image.business_client_id = @business_client.id
     end
     logger.debug(@client_image)
     respond_to do |format|
@@ -57,35 +60,21 @@ class ClientImagesController < ApplicationController
     logger.debug("client_image: #{@client_image}")
     @business_client = @client_image.business_client
     logger.debug("business_client: #{@business_client}")
-    if @client_image.attached_id
-      @banner = Banner.find_by_id(@client_image.attached_id)
-      logger.debug("@banner #{@banner}")
-      @client_image.attached_to(@banner)
-      respond_to do |format|
-        if @client_image.save
-          # redirect_to  banner#show
-          format.html { redirect_to @banner, notice: t("successfully_created") }
-          format.json { render json: @client_image, status: :created, location: @client_image }
-        else
-          @banner = Banner.find_by_id(@client_image.attached_id)
-          format.html { render action: "new" }
-          format.json { render json: @banner.errors, status: :unprocessable_entity }
-        end
+    _image_map
+    respond_to do |format|  
+      if @client_image.save
+        logger.debug("client_image saved: #{@client_image}")
+        @business_client = BusinessClient.find_by_id(@client_image.business_client_id)
+        flash[:notice] = t("successfully_created")
+        @client_image = ClientImage.new
+        format.html { render action: "new" }
+        format.json { render json: @client_image, status: :created, location: @client_image }
+      else
+        @business_client = BusinessClient.find_by_id(@client_image.business_client_id)
+        format.html { render action: "new" }
+        format.json { render json: @client_image.errors, status: :unprocessable_entity }
       end
-    elsif
-    respond_to do |format|
-    if @client_image.save
-    # redirect_to  business_clients#show
-    format.html { redirect_to @business_client, notice: t("successfully_created") }
-    format.json { render json: @client_image, status: :created, location: @client_image }
-    else
-    @business_client = BusinessClient.find_by_id(@client_image.business_client_id)
-    format.html { render action: "new" }
-    format.json { render json: @client_image.errors, status: :unprocessable_entity }
     end
-    end
-    end
-
   end
 
   # PUT /client_images/1

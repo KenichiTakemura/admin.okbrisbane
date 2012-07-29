@@ -24,14 +24,12 @@
 		</tr>
 		<tr class="even">
 			<div id="business_client_banner_images">
-				<td><%= label_tag :client_image, t("client_banner_image"), :class => "label left" %>
-				<br/>
-				<%= link_to t('add'), new_client_image_path(:banner => @banner, :page => @current_page) %> </td>
+				<td><%= label_tag :client_image, t("client_banner_image"), :class => "label left" %></td>
 				<td>
 				<div style="width:100%; position: relative; display: inline;">
 					<% if @banner.client_image %>
 					<% @banner.client_image.each do |client_image| %>
-					<div style="position: relative; float: left; padding: 5px; width: 250px">
+					<div style="position: relative; float: left; padding: 5px; width: 150px">
 						<%= link_to image_tag(client_image.avatar.url(:thumb)), client_image.avatar.url(:medium), :target => "_blank"%>
 						<ul>
 							<li>

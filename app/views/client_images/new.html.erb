@@ -1,13 +1,7 @@
-
+<p id="notice"><%= notice %></p>
 <h2><%= t("new_banner_image") %></h2>
 <div class="inner">
 
 	<%= render 'form' %>
-
-<% if @business_client %>
-<%= link_to t('Back'), business_clients_path(:page => @current_page) %>
-<% elsif @banner %>
-<%= link_to t('Back'), banners_path(:page_id => @page_id) %>
-<% end %>
-
+	<%= link_to t('Back'), business_clients_path(:page => @current_page) %>
 </div>

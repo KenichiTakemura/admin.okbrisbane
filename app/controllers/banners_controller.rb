@@ -31,8 +31,6 @@ class BannersController < ApplicationController
     _page
   end
 
-  # PUT /banners/1
-  # PUT /banners/1.json
   def update
     @banner = Banner.find(params[:id])
     new_banner = params[:banner]
@@ -47,6 +45,16 @@ class BannersController < ApplicationController
         format.json { render json: @banner.errors, status: :unprocessable_entity }
       end
     end
+  end
+  
+  def select
+    @banner = Banner.find(params[:banner])
+    _page
+  end
+  
+  # Ajax
+  def select_image
+    @business_client = BusinessClient.find(params[:business_client])
   end
 
   private

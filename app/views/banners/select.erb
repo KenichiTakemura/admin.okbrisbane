@@ -1,0 +1,47 @@
+<h2 class="title"><%= t('banner')%> <%= @banner.name %> <%= t("Edit") %></h2>
+<div class="inner">
+	<style>
+		#images {
+			min-height: 500px;
+			overflow: auto;
+			position: relative;
+		}
+		#business_client_content {
+			min-height: 100%;
+			padding: 10px;
+			margin-top: 20px;
+			margin-bottom: 20px;
+			float: left;
+			position: relative;
+		}
+		#banner_content {
+			min-height: 100%;
+			padding: 10px;
+			margin-top: 20px;
+			margin-bottom: 20px;
+			float: left;
+			position: relative;
+		}
+	</style>
+	<div id="images">
+	<div id="business_client_content">
+		<h3><%=t("business_client")%></h3>
+		<%= select_tag :business_client_id, options_from_collection_for_select(BusinessClient.all, "id", "business_name", 0), :include_blank => true, :id => "business_client" %>
+		<%= _script_document_ready(%Q|$('\#business_client').change(function() {
+		$('\#_loading').css("display", "block")
+		$.post("select_image", {business_client: $('\#business_client').val()})
+		})|) %>
+		<div class="group wat-cf">
+			<div id="_loading" style="display:none">
+				<%= image_tag ("loading.gif")%>
+			</div>
+			<div id="_client_image"></div>
+		</div>
+	</div>
+	<div id="banner_content">
+		<h3><%= t("client_banner_image") %> <%= t('size') %> : <%= @banner.img_resolution %></h3>
+	</div>
+	</div>
+	<%= link_to t('Back'), banners_path(:page_id => @page_id) %>
+
+</div>

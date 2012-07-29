@@ -2,7 +2,6 @@ AdminOkbrisbane::Application.routes.draw do
 
   resources :post_managements
 
-
   match 'legal_services/:id' => 'legal_services#destroy', :via => :delete, :as => "legal_service_delete"
   resources :legal_services, :except => 'destroy' do
     collection do
@@ -78,7 +77,14 @@ AdminOkbrisbane::Application.routes.draw do
   match 'business_clients/:id/images' => 'business_clients#destroy_image', :via => :delete, :as => "business_client_delete_all_images"
   resources :business_clients
 
-  resources :banners, :only => ["index", "show", "edit", "update"]
+  #resources :banners, :only => ["index", "show", "edit", "update"]
+  resources :banners, :except => ["new","destroy"] do
+    collection do
+      get :select
+      post :attach_image
+      post :select_image
+    end
+  end
 
   get "main/index"
 

@@ -41,7 +41,7 @@
 				<div style="width:100%; position: relative; display: inline;">
 					<% if !@business_client.client_image.empty? %>
 					<% @business_client.client_image.each do |client_image| %>
-					<div style="position: relative; float: left; padding: 5px; width: 250px">
+					<div style="position: relative; float: left; padding: 5px; width: 150px">
 						<%= image_tag client_image.avatar.url(:thumb) %>&nbsp;
 						<ul>
 							<li>

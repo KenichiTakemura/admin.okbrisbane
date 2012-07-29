@@ -17,7 +17,7 @@ module BannersHelper
   def _link_to(b)
      link_to(t('Show'), banner_path(b,:page_id => @page_id), :class => 'button') +
       link_to(t('Edit'), edit_banner_path(b, :page_id => @page_id), :class => 'button') +
-      link_to(t('select_image'), new_client_image_path(:banner => b, :page_id => @page_id), :class => 'button')
+      link_to(t('select_image'), select_banners_path(:banner => b, :page_id => @page_id), :class => 'button')
   end
   
   def edittable_single_banner(p, s, a)
