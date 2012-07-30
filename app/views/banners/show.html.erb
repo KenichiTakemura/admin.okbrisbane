@@ -36,13 +36,12 @@
 								<%= link_to client_image.business_client.business_name, client_image.business_client %>
 							</li>
 							<li>
-								<%= client_image.medium_size %>
+								<%= client_image.original_size %>
 							</li>
 							<li>
 								<%= client_image.clicked %>&nbsp;<%= t("client_image_clicked") %>
 							</li>
 						</ul>
-
 						<div style="float:left; position: relative; margin-top: 5px">
 							<%= form_for(client_image, :method => :post, :url => client_image_dettach_path(client_image), :html => { :class => "form" }) do |f| %>
 							<%= f.submit t("client_image_remove_from_banner"), :confirm => t("confirm_remove_from_banner"), :class => "button"%>

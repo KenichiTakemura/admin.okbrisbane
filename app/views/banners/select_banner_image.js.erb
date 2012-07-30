@@ -1,0 +1,3 @@
+$("#_banner_loading").css("display","none")
+$("#_banner_image").html("<%= escape_javascript(render 'banner_imagebox', :banner  => @banner) %>")
+$("#_banner_image_size").html("<%= @banner.img_resolution %>")

@@ -53,8 +53,43 @@ class BannersController < ApplicationController
   end
   
   # Ajax
-  def select_image
-    @business_client = BusinessClient.find(params[:business_client])
+  def select_business_client_image
+    @business_client = BusinessClient.find(params[:id])
+    if !params[:banner] || params[:banner].empty?
+      return @business_client
+    end
+    banner = Banner.find(params[:banner]) 
+    @business_client.client_image.each_with_index do |image,i|
+      if image.original_size != banner.img_resolution
+        logger.debug("original_size: #{image.original_size} is filtered out")
+        image.is_deleted = true
+      end
+    end
+  end
+
+  # Ajax
+  def select_banner_image
+    @banner = Banner.find(params[:id])
+  end
+  
+  # Ajax
+  def attach_banner_image
+    @client_image = ClientImage.find(params[:client_image])
+    @banner = Banner.find(params[:banner])
+    @client_image.attached_to(@banner)
+    @business_client = BusinessClient.find(@client_image.business_client)
+    @banner = Banner.find(params[:banner])
+    logger.debug("client_image: #{@client_image} banner: #{@banner}")
+  end
+  
+  # Ajax
+  def dettach_banner_image
+    @client_image = ClientImage.find(params[:client_image])
+    @banner = Banner.find(params[:banner])
+    @client_image.attached_to(nil)
+    @business_client = BusinessClient.find(@client_image.business_client)
+    @banner = Banner.find(params[:banner])
+    logger.debug("client_image: #{@client_image} banner: #{@banner}")
   end
 
   private

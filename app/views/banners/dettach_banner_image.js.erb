@@ -1,0 +1,5 @@
+$("#_banner_loading").css("display","none")
+$("#_business_client_loading").css("display","none")
+$("#_business_client_image").html("<%= escape_javascript(render 'business_client_imagebox', :business_client  => @business_client) %>")
+$("#_banner_image").html("<%= escape_javascript(render 'banner_imagebox', :banner  => @banner) %>")
+

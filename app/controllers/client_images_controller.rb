@@ -1,25 +1,4 @@
 class ClientImagesController < ApplicationController
-  # GET /client_images
-  # GET /client_images.json
-  def index
-    @client_images = ClientImage.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @client_images }
-    end
-  end
-
-  # GET /client_images/1
-  # GET /client_images/1.json
-  def show
-    @client_image = ClientImage.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @client_image }
-    end
-  end
 
   def _image_map
     banners  = Banner.all
@@ -39,7 +18,7 @@ class ClientImagesController < ApplicationController
     if(params[:client])
       @business_client = BusinessClient.find_by_id(params[:client])
       logger.debug("business_client => #{@business_client}")
-    @client_image.business_client_id = @business_client.id
+      @client_image.business_client_id = @business_client.id
     end
     logger.debug(@client_image)
     respond_to do |format|
@@ -48,10 +27,6 @@ class ClientImagesController < ApplicationController
     end
   end
 
-  # GET /client_images/1/edit
-  def edit
-    @client_image = ClientImage.find(params[:id])
-  end
 
   # POST /client_images
   # POST /client_images.json
@@ -72,22 +47,6 @@ class ClientImagesController < ApplicationController
       else
         @business_client = BusinessClient.find_by_id(@client_image.business_client_id)
         format.html { render action: "new" }
-        format.json { render json: @client_image.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /client_images/1
-  # PUT /client_images/1.json
-  def update
-    @client_image = ClientImage.find(params[:id])
-
-    respond_to do |format|
-      if @client_image.update_attributes(params[:client_image])
-        format.html { redirect_to @client_image, notice: 'Client image was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
         format.json { render json: @client_image.errors, status: :unprocessable_entity }
       end
     end

@@ -8,14 +8,29 @@
 		}
 		#business_client_content {
 			min-height: 100%;
+			max-width: 50%;
 			padding: 10px;
 			margin-top: 20px;
 			margin-bottom: 20px;
 			float: left;
 			position: relative;
 		}
+		#_business_client_image {
+			margin-top: 10px;
+			float: left;
+			position: relative;
+			width: 100%;
+		}
+		#select_size {
+			margin-top: 10px;
+			float: left;
+			padding: 5px;
+			position: relative;
+			width: 100%;
+		}
 		#banner_content {
 			min-height: 100%;
+			max-width: 50%;
 			padding: 10px;
 			margin-top: 20px;
 			margin-bottom: 20px;
@@ -24,24 +39,60 @@
 		}
 	</style>
 	<div id="images">
-	<div id="business_client_content">
-		<h3><%=t("business_client")%></h3>
-		<%= select_tag :business_client_id, options_from_collection_for_select(BusinessClient.all, "id", "business_name", 0), :include_blank => true, :id => "business_client" %>
-		<%= _script_document_ready(%Q|$('\#business_client').change(function() {
-		$('\#_loading').css("display", "block")
-		$.post("select_image", {business_client: $('\#business_client').val()})
-		})|) %>
-		<div class="group wat-cf">
-			<div id="_loading" style="display:none">
-				<%= image_tag ("loading.gif")%>
+		<div id="business_client_content">
+			<h3><%= t("business_client")%> :
+			<div id="_business_client_name">
+				<%= t("please_select") %>
+			</div></h3>
+			<%= select_tag :business_client, options_from_collection_for_select(BusinessClient.all, "id", "business_name", 0), :include_blank => true, :id => "business_client_select" %>
+			<%= _script(%Q|populate_image = function(target,banner) {
+			if($('\#business_client_select').val() != "") {
+			$("\#_" + target + "_loading").css("display", "block")
+			$.post("select_" + target + "_image", {id: $('\#' + target + '_select').val(), banner: banner})
+			}};
+			attach_image = function(id) {
+			$("\#_business_client_loading").css("display", "block")
+			$("\#_banner_loading").css("display", "block")
+			$.post("attach_banner_image", {client_image: id, banner: $('\#banner_select').val()})
+			}
+			dettach_image = function(id) {
+			$("\#_business_client_loading").css("display", "block")
+			$("\#_banner_loading").css("display", "block")
+			$.post("dettach_banner_image", {client_image: id, banner: $('\#banner_select').val()})
+			}
+			|) %>
+			<%= _script_document_ready(%Q|populate_image('business_client',$('\#banner_select').val());$('\#_select_specific_size').attr("style", "color:rgb(15, 99, 30);font-size:medium;font-weight:bold");
+			$('\#business_client_select').change(function() { populate_image('business_client','')})
+			$('\#_select_specific_size').click(function() {$(this).attr("style", "color:rgb(15, 99, 30);font-size:medium;font-weight:bold");$('\#_select_all_size').attr("style","");populate_image('business_client',$('\#banner_select').val()); return false;})
+			$('\#_select_all_size').click(function() {$(this).attr("style", "color:rgb(15, 99, 30);font-size:medium;font-weight:bold");$('\#_select_specific_size').attr("style","");populate_image('business_client',''); return false;})
+			|) %>
+			<div class="group wat-cf">
+				<div id="_business_client_loading" style="display:none">
+					<%= image_tag ("loading.gif")%>
+				</div>
+				<div id="select_size">
+					<%= link_to t("select_specific_size"), '#', :class => '', :id => "_select_specific_size"%>
+					<%= link_to t("select_all_size"), '#', :class => '', :id => "_select_all_size"%>
+				</div>
+				<div id="_business_client_image"></div>
 			</div>
-			<div id="_client_image"></div>
 		</div>
+		<div id="banner_content">
+			<h3><%= t("client_banner_image") %> <%= t('size') %> :
+			<div id="_banner_image_size">	<%= @banner.img_resolution %></div></h3>
+			<%= select_tag :banner, options_from_collection_for_select(Banner.all, "id", "name", @banner), :include_blank => false, :id => "banner_select" %>
+			<%= _script_document_ready(%Q|populate_image('banner','');
+			$('\#banner_select').change(function() { populate_image('banner','')})|) %>
+			<div class="group wat-cf">
+				<div id="_banner_loading" style="display:none">
+					<%= image_tag ("loading.gif")%>
+				</div>
+				<div id="_banner_image"></div>
+			</div>
+		</div>
+
 	</div>
-	<div id="banner_content">
-		<h3><%= t("client_banner_image") %> <%= t('size') %> : <%= @banner.img_resolution %></h3>
-	</div>
-	</div>
-	<%= link_to t('Back'), banners_path(:page_id => @page_id) %>
+</div>
+<%= link_to t('Back'), banners_path(:page_id => @page_id) %>
 
 </div>

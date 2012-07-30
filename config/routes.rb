@@ -72,7 +72,7 @@ AdminOkbrisbane::Application.routes.draw do
 
   match 'client_images/:id' => 'client_images#destroy', :via => :post
   match 'client_images/:id/banner' => 'client_images#dettach', :via => :post, :as => "client_image_dettach"
-  resources :client_images
+  resources :client_images, :only => ["index","new","destroy","create"]
 
   match 'business_clients/:id/images' => 'business_clients#destroy_image', :via => :delete, :as => "business_client_delete_all_images"
   resources :business_clients
@@ -81,8 +81,10 @@ AdminOkbrisbane::Application.routes.draw do
   resources :banners, :except => ["new","destroy"] do
     collection do
       get :select
-      post :attach_image
-      post :select_image
+      post :attach_banner_image
+      post :dettach_banner_image
+      post :select_business_client_image
+      post :select_banner_image
     end
   end
 

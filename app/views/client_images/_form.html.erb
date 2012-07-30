@@ -14,7 +14,6 @@
 <div id="form_image_content">
 <div id="form_content">
 	<%= form_for(@client_image, :html => { :class => "form" }) do |f| %>
-	<%= f.hidden_field :medium_size, :value => "#{@banner.img_width}x#{@banner.img_height}" if @banner %>
 	<% if @client_image.errors.any? %>
 	<div id="error_explanation">
 		<h2><%= pluralize(@client_image.errors.count, "error") %> prohibited this client_image from being saved:</h2>
@@ -53,10 +52,10 @@
 	</div>
 	<div class="group wat-cf">
 		<div class="">
-			<%= f.label :medium_size, t("image_size"), :class => "label left" %>
+			<%= f.label :original_size, t("image_size"), :class => "label left" %>
 		</div>
 		<div class="">
-			<%= f.select :medium_size, options_for_select(@img_resolutions) %>
+			<%= f.select :original_size, options_for_select(@img_resolutions) %>
 		</div>
 	</div>
 	<div class="group wat-cf">
@@ -82,7 +81,7 @@
 			<%= image_tag client_image.avatar.url(:thumb) %>&nbsp;
 			<ul>
 				<li>
-					<%= t("size") %> : <%= client_image.medium_size %>
+					<%= t("size") %> : <%= client_image.original_size %>
 				</li>
 				<li>
 					<%= client_image.clicked %>&nbsp;<%= t("client_image_clicked") %>
