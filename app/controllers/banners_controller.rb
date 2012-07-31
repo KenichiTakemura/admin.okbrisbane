@@ -50,21 +50,13 @@ class BannersController < ApplicationController
   def select
     @banner = Banner.find(params[:banner])
     _page
+    @banners = Banner.where("page_id = ?", @page_id)
+    logger.debug("@banners: #{@banners}")
   end
   
   # Ajax
   def select_business_client_image
-    @business_client = BusinessClient.find(params[:id])
-    if !params[:banner] || params[:banner].empty?
-      return @business_client
-    end
-    banner = Banner.find(params[:banner]) 
-    @business_client.client_image.each_with_index do |image,i|
-      if image.original_size != banner.img_resolution
-        logger.debug("original_size: #{image.original_size} is filtered out")
-        image.is_deleted = true
-      end
-    end
+    _business_client(params[:id])
   end
 
   # Ajax
@@ -77,7 +69,7 @@ class BannersController < ApplicationController
     @client_image = ClientImage.find(params[:client_image])
     @banner = Banner.find(params[:banner])
     @client_image.attached_to(@banner)
-    @business_client = BusinessClient.find(@client_image.business_client)
+    @business_client = _business_client(@client_image.business_client)
     @banner = Banner.find(params[:banner])
     logger.debug("client_image: #{@client_image} banner: #{@banner}")
   end
@@ -87,7 +79,7 @@ class BannersController < ApplicationController
     @client_image = ClientImage.find(params[:client_image])
     @banner = Banner.find(params[:banner])
     @client_image.attached_to(nil)
-    @business_client = BusinessClient.find(@client_image.business_client)
+    @business_client = _business_client(@client_image.business_client)
     @banner = Banner.find(params[:banner])
     logger.debug("client_image: #{@client_image} banner: #{@banner}")
   end
@@ -99,5 +91,20 @@ class BannersController < ApplicationController
     page = Page.find_by_id(@page_id)
     @page_name = page.name if !page.nil?
     logger.debug("@page_id: #{@page_id} @page_name: #{@page_name}")
+  end
+
+  def _business_client(id)  
+    @business_client = BusinessClient.find(id)
+    if !params[:size] || params[:size].empty?
+      return @business_client
+    end
+    banner = Banner.find(params[:size]) 
+    @business_client.client_image.each_with_index do |image,i|
+      if image.original_size != banner.img_resolution
+        logger.debug("original_size: #{image.original_size} is filtered out")
+        image.is_deleted = true
+      end
+    end
+    @business_client
   end
 end
