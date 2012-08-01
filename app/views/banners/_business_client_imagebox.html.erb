@@ -3,7 +3,7 @@
 	<% @business_client.client_image.each do |client_image| %>
 		<% next if client_image.is_deleted %>
 	<div style="position: relative; float: left; padding: 5px; width: 150px">
-		<% if client_image.attached.nil? %>
+		<% if client_image.attached.nil? || client_image.attached.id != @banner.id %>
 		<%= link_to image_tag(client_image.avatar.url(:thumb)), client_image.avatar.url(:medium), :target => "_blank"%>
 		<% else %>
 		<%= link_to image_tag(client_image.avatar.url(:thumb), :class => "opacity"), client_image.avatar.url(:medium), :target => "_blank"%>
@@ -20,10 +20,11 @@
 			</li>
 		</ul>
 		<div style="position: relative; float:right;">
-			<% if client_image.attached.nil? %>
+			<% if client_image.attached.nil? || client_image.attached.id != @banner.id %>
 			<%= link_to t('select'), "#", :class => 'button', :id => "_attach_image_#{client_image.id}" %>
 			<% else %>
-			<%= t("selected") %>
+			<%= t("selected") %><br/>
+			<%= client_image.attached.name %>
 			<% end %>
 			<%= _script(%Q|$('\#_attach_image_#{client_image.id}').click(function() { attach_image('#{client_image.id}'); return false;})|) %>
 		</div>

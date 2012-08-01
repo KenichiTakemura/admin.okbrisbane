@@ -57,6 +57,7 @@ class BannersController < ApplicationController
   # Ajax
   def select_business_client_image
     _business_client(params[:id])
+    logger.debug("select_business_client_image: @business_client: #{@business_client.id} @banner: #{@banner.id}")
   end
 
   # Ajax
@@ -98,9 +99,10 @@ class BannersController < ApplicationController
     if !params[:size] || params[:size].empty?
       return @business_client
     end
-    banner = Banner.find(params[:size]) 
+    @banner = Banner.find(params[:size]) 
     @business_client.client_image.each_with_index do |image,i|
-      if image.original_size != banner.img_resolution
+      logger.debug("image.attached_id: #{image.attached}")
+      if image.original_size != @banner.img_resolution
         logger.debug("original_size: #{image.original_size} is filtered out")
         image.is_deleted = true
       end
