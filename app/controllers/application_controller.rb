@@ -21,6 +21,8 @@ class ApplicationController < ActionController::Base
     { :locale => I18n.locale }
   end
   
-
+  def rescue_action_in_public(exception)
+     render :template=>"common/error"
+  end
 
 end

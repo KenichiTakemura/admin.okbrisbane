@@ -6,8 +6,6 @@ class BannersController < ApplicationController
     _page
     if (params[:page_id] && !params[:page_id].empty?)
       @banners = Banner.where('page_id = ?', params[:page_id]).order
-    else
-      @banners = Banner.all
     end
     respond_to do |format|
       format.html # index.html.erb
@@ -50,7 +48,7 @@ class BannersController < ApplicationController
   def select
     @banner = Banner.find(params[:banner])
     _page
-    @banners = Banner.where("page_id = ?", @page_id)
+    @banners = Banner.where("page_id = ? AND is_disabled = ?", @page_id, false)
     logger.debug("@banners: #{@banners}")
   end
   

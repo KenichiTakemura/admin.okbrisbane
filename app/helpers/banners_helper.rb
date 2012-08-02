@@ -11,13 +11,13 @@ module BannersHelper
   end
   
   def _title(b)
-    "#{b.name} #{t("div_size")}:#{b.div_width}x#{b.div_height} #{t("image_size")}:#{b.img_width}x#{b.img_height}"
+    "#{b.name} #{t("div_size")}:#{b.div_width}x#{b.div_height}<br/>#{t("image_size")}:#{b.img_width}x#{b.img_height}"
   end
   
   def _link_to(b)
-     link_to(t('Show'), banner_path(b,:page_id => @page_id), :class => 'button') +
-      link_to(t('Edit'), edit_banner_path(b, :page_id => @page_id), :class => 'button') +
-      link_to(t('select_image'), select_banners_path(:banner => b, :page_id => @page_id), :class => 'button')
+     html = link_to(t('Show'), banner_path(b,:page_id => @page_id), :class => 'button')
+     html += link_to(t('Edit'), edit_banner_path(b, :page_id => @page_id), :class => 'button')
+     html += (link_to(t('select_image'), select_banners_path(:banner => b, :page_id => @page_id), :class => 'button') if !b.is_disabled)
   end
   
   def edittable_single_header_banner(a)

@@ -3,40 +3,40 @@
 	<table class="table">
 		<th class="first"><%= t("item") %></th>
 		<th class="last"><%= t("content") %></th>
-		<tr class="odd">
+		<tr class="even">
 			<td><%= label_tag :is_deleted, t("hide"), :class => "label left" %> </td>
 			<td><%= t("#{@post.is_deleted}") %></td>
 		</tr>
-		<tr class="even">
+		<tr class="odd">
 			<td><%= label_tag :posted_by, t("author"), :class => "label left" %> </td>
 			<td><%= @post.posted_by.email %></td>
 		</tr>
-		<tr class="odd">
+		<tr class="even">
 			<td><%= label_tag :category, t("category"), :class => "label left" %> </td>
 			<td><%= t("#{@post.category}") %></td>
 		</tr>
-		<tr class="even">
+		<tr class="odd">
 			<% if @post.respond_to? :price %>
 			<td><%= label_tag :price, t("author"), :class => "label left" %> </td>
 			<td><%= @post.price %></td>
 			<% end %>
 		</tr>
-		<tr class="odd">
+		<tr class="even">
 			<td><%= label_tag :valid_until, t("valid_until"), :class => "label left" %> </td>
 			<td><%= Common.date_format(@post.valid_until) %></td>
 		</tr>
-		<tr class="even">
+		<tr class="odd">
 			<td><%= label_tag :subject, t("subject"), :class => "label left" %> </td>
 			<td><%= @post.subject %></td>
 		</tr>
-		<tr class="odd">
+		<tr class="even">
 			<td><%= label_tag :avatar, t("image"), :class => "label left" %> </td>
 			<td>
 			<div id="thumbnail_box_<%=@post.id%>">
 				<%= render :partial => 'sales_managements/shared/imagebox' %>
 			</div></td>
 		</tr>
-		<tr class="even">
+		<tr class="odd">
 			<td><%= label_tag :context, t("content_body"), :class => "label left" %> </td>
 			<td><%= raw @post.content.body if !@post.content.nil? %> </td>
 		</tr>

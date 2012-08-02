@@ -27,8 +27,8 @@
 	<span class="description"><%= t("if_checked_not_displayed") %></span>
 </div>
 <%= _script_document_ready(%Q|if ($('#_hide').is(":checked")) {$('#_filter').attr("style", "opacity: 0.2;filter: alpha(opacity=20);") }; $('#_hide').click(function() { if ($('#_hide').is(":checked")) {$('#_filter').attr("style", "opacity: 0.2;filter: alpha(opacity=20);") } else {$('#_filter').attr("style", "") }});|)%>
-	<div id="_filter">
-			<div class="group wat-cf">
+<div id="_filter">
+	<div class="group wat-cf">
 		<div class="">
 			<%= f.label :subject, t("subject"), :class => "label left" %>
 		</div>
@@ -89,32 +89,32 @@
 		<br/>
 		<span class="description"><%= t("max_size") %></span>
 	</div>
-	
+
 	<br/>
 	<div class="group wat-cf">
 		<div id="thumbnail_box_<%= @post.id%>">
 			<%= render :partial => 'sales_managements/shared/imagebox' %>
 		</div>
 	</div>
-		<%= f.fields_for @post.content do |content_form| %>
-		<div class="group wat-cf">
-			<div class="">
-				<%= content_form.label :body, t("content"), :class => "label left" %>
-			</div>
-			<div class="">
-				<%= content_form.cktext_area :body, :toolbar => 'Full' %>
-			</div>
-			<span class="description"><%= t("optional") %></span>
-		</div>
-		<% end %>
-	<% end %>
-	
-	</div>
-				
+	<%= f.fields_for @post.content do |content_form| %>
 	<div class="group wat-cf">
-		<div class="left">
-			<%= f.submit t("create"), :class => "button" %>
+		<div class="">
+			<%= content_form.label :body, t("content"), :class => "label left" %>
 		</div>
+		<div class="">
+			<%= content_form.cktext_area :body, :toolbar => 'Full' %>
+		</div>
+		<span class="description"><%= t("optional") %></span>
 	</div>
-
 	<% end %>
+	<% end %>
+
+</div>
+
+<div class="group wat-cf">
+	<div class="left">
+		<%= f.submit t("create"), :class => "button" %>
+	</div>
+</div>
+
+<% end %>

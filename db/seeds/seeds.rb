@@ -6,13 +6,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-Admin.delete_all
-# Administrators
-Admin.create(:email => "admin@okbrisbane.com", :password => "kristaadams111", :password_confirmation => "kristaadams111")
 
-BusinessClient.delete_all
-BusinessProfile.delete_all
-BusinessProfileImage.delete_all
 TopFeedList.delete_all
 Job.delete_all
 BuyAndSell.delete_all
@@ -27,11 +21,6 @@ Tax.delete_all
 Image.delete_all
 ClientImage.delete_all
 Attachment.delete_all
-
-# OKBRISBANE 
-ok = BusinessClient.create(:business_name => "OKBRISBANE", :business_abn => "", :business_address => 'Shop 3 6 Zamia Street Sunny Bank QLD 4109', :business_url => 'http://www.okbrisbane.com', :business_phone => '07-3343-8880', :business_fax => '07-3343-8558', :business_email => 'mootal@hanmail.net', :contact_name => 'Elliott Joo')
-ok.build_business_profile(:body => 'OKBRISBANE rocks!')
-ok.save
 
 # Sample Data
 # Not for Production

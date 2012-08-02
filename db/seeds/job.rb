@@ -6,7 +6,15 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-Admin.delete_all
-# Administrators
-Admin.create(:email => "admin@okbrisbane.com", :password => "kristaadams111", :password_confirmation => "kristaadams111")
+TopFeedList.category_feed('Job').delete_all
+Job.delete_all
 
+# Sample Data
+# Not for Production
+admin = Admin.first
+
+2010.upto(2020) do |x|
+  job = Job.new(:category => Job::SEEK, :subject => "안녕 하세요 #{x}");
+  job.valid_until = Time.now
+  job.save
+end
