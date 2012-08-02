@@ -15,8 +15,18 @@ admin = Admin.first
 
 subject = "2009 FG XR6 Falcon"
 
+11.upto(50) do |x|
+  post = MotorVehicle.new(:category => "used_car", :subject => subject + " #{x}")
+  content = post.build_content(:body => "Very popular sedan finished in black, 5 speed manual, powerful 2.0L engine, many standard features.")
+  post.price = "29999.99"
+  post.valid_until = Time.utc(2012,8,31)
+  post.set_user(admin)
+  post.save
+  content.save
+end
+
 1.upto(10) do |x|
-  post = MotorVehicle.new(:category => MotorVehicle::Category[:new_car], :subject => subject)
+  post = MotorVehicle.new(:category => "new_car", :subject => subject + " #{x}")
   content = post.build_content(:body => "Very popular sedan finished in black, 5 speed manual, powerful 2.0L engine, many standard features.")
   post.price = "9999.99"
   post.valid_until = Time.utc(2012,7,"#{x}")
@@ -26,3 +36,4 @@ subject = "2009 FG XR6 Falcon"
   image = Image.new(:avatar => File.new("test/fixtures/car/car#{x}.jpg"))
   image.attached_to(post)
 end
+
