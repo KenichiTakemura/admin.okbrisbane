@@ -18,7 +18,6 @@ class ClientImagesController < ApplicationController
     if(params[:client])
       @business_client = BusinessClient.find_by_id(params[:client])
       logger.debug("business_client => #{@business_client}")
-      @client_image.business_client_id = @business_client.id
     end
     logger.debug(@client_image)
     respond_to do |format|
@@ -33,19 +32,20 @@ class ClientImagesController < ApplicationController
   def create
     @client_image = ClientImage.new(params[:client_image])
     logger.debug("client_image: #{@client_image}")
-    @business_client = @client_image.business_client
+    @business_client = BusinessClient.find_by_id(@client_image.attached_id)
     logger.debug("business_client: #{@business_client}")
     _image_map
     respond_to do |format|  
       if @client_image.save
         logger.debug("client_image saved: #{@client_image}")
-        @business_client = BusinessClient.find_by_id(@client_image.business_client_id)
+        @client_image.attached_to(@business_client)
+        # This must be donw to update images in another new view
+        @business_client = BusinessClient.find_by_id(@client_image.attached_id)
         flash[:notice] = t("successfully_created")
         @client_image = ClientImage.new
         format.html { render action: "new" }
         format.json { render json: @client_image, status: :created, location: @client_image }
       else
-        @business_client = BusinessClient.find_by_id(@client_image.business_client_id)
         format.html { render action: "new" }
         format.json { render json: @client_image.errors, status: :unprocessable_entity }
       end
@@ -55,7 +55,7 @@ class ClientImagesController < ApplicationController
   # POST /client_images/1
   def destroy
     @client_image = ClientImage.find(params[:id])
-    @business_client = @client_image.business_client
+    @business_client = @client_image.attached
     logger.debug("Delete client_image: #{@client_image}")
     @client_image.destroy
 

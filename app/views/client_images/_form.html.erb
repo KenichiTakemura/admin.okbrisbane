@@ -9,99 +9,90 @@
 	#image_content {
 		position: relative;
 	}
-
 </style>
 <div id="form_image_content">
-<div id="form_content">
-	<%= form_for(@client_image, :html => { :class => "form" }) do |f| %>
-	<% if @client_image.errors.any? %>
-	<div id="error_explanation">
-		<h2><%= pluralize(@client_image.errors.count, "error") %> prohibited this client_image from being saved:</h2>
-		<ul>
-			<% @client_image.errors.full_messages.each do |msg| %>
-			<li>
-				<%= msg %>
-			</li>
-			<% end %>
-		</ul>
+	<div id="form_content">
+		<%= form_for(@client_image, :html => { :class => "form" }) do |f| %>
+		<% if @client_image.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@client_image.errors.count, "error") %> prohibited this client_image from being saved:</h2>
+			<ul>
+				<% @client_image.errors.full_messages.each do |msg| %>
+				<li>
+					<%= msg %>
+				</li>
+				<% end %>
+			</ul>
+		</div>
+		<% end %>
+		<div class="group wat-cf">
+			<div class="">
+				<%= f.label :attached_id, t("business_client"), :class => "label left" %>
+			</div>
+			<div class="">
+				<% if @business_client %>
+				<%= f.select :attached_id, options_from_collection_for_select(BusinessClient.all, "id", "business_name", @business_client.id) %>
+				<% elsif %>
+				<%= f.select :attached_id, options_from_collection_for_select(BusinessClient.all, "id", "business_name") %>
+				<% end %>
+			</div>
+			<span class="description"><%= t("must_be_selected") %></span>
+			<br/>
+			<span class="description"><%= link_to t("not_listed"), new_business_client_path %></span>
+		</div>
+		<div class="group wat-cf">
+			<div class="">
+				<%= f.label :avatar, t("client_banner_image"), :class => "label left" %>
+			</div>
+			<div class="">
+				<%= f.file_field :avatar %>
+			</div>
+			<span class="description"><%= t("acceptable_extention") %></span>
+		</div>
+		<div class="group wat-cf">
+			<div class="">
+				<%= f.label :original_size, t("image_size"), :class => "label left" %>
+			</div>
+			<div class="">
+				<%= f.select :original_size, options_for_select(@img_resolutions) %>
+			</div>
+		</div>
+		<div class="group wat-cf">
+			<div class="">
+				<%= f.label :link_to_url, t("client_image_link_to_url"), :class => "label left" %>
+			</div>
+			<div class="">
+				<%= f.text_field :link_to_url, :class => "text_field" %>
+			</div>
+			<span class="description"><%= t("client_image_leave_blank_to_show_profile") %></span>
+		</div>
+		<div class="group wat-cf">
+			<div class="left">
+				<%= f.submit t("add"), :class => "button" %>
+			</div>
+		</div>
+		<% end %>
 	</div>
-	<% end %>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :business_client_id, t("business_client"), :class => "label left" %>
-		</div>
-		<div class="">
-			<% if @business_client %>
-			<%= f.select :business_client_id, options_from_collection_for_select(BusinessClient.all, "id", "business_name", @business_client.id) %>
-			<% elsif %>
-			<%= f.select :business_client_id, options_from_collection_for_select(BusinessClient.all, "id", "business_name") %>
-			<% end %>
-		</div>
-		<span class="description"><%= t("must_be_selected") %></span>
-		<br/>
-		<span class="description"><%= link_to t("not_listed"), new_business_client_path %></span>
-	</div>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :avatar, t("client_banner_image"), :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.file_field :avatar %>
-		</div>
-		<span class="description"><%= t("acceptable_extention") %></span>
-	</div>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :original_size, t("image_size"), :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.select :original_size, options_for_select(@img_resolutions) %>
-		</div>
-	</div>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :link_to_url, t("client_image_link_to_url"), :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.text_field :link_to_url, :class => "text_field" %>
-		</div>
-		<span class="description"><%= t("client_image_leave_blank_to_show_profile") %></span>
-	</div>
-	<div class="group wat-cf">
-		<div class="left">
-			<%= f.submit t("add"), :class => "button" %>
-		</div>
-	</div>
-	<% end %>
-</div>
 	<div style="width:100%; position: relative;">
 		<%= noimage?(@business_client) %>
 		<% @business_client.client_image.each do |client_image| %>
 		<div style="position: relative; float: left; padding: 5px; width: 150px">
 			<%= image_tag client_image.avatar.url(:thumb) %>&nbsp;
-			<ul>
-				<li>
-					<%= t("size") %> : <%= client_image.original_size %>
-				</li>
-				<li>
-					<%= client_image.clicked %>&nbsp;<%= t("client_image_clicked") %>
-				</li>
-				<li>
-					<%= t("banner_page") %>
-					<% if !client_image.attached %>
-					<br/>
-					<%= t("not_present") %>
-					<% elsif %>
-					<br/>
-					<%= link_to client_image.attached.name, banner_path(client_image.attached_id) %>
-					<% end %>
-				</li>
-			</ul>
-			<div style="float:left; position: relative; margin-top: 5px">
-				<%= form_for(client_image, :method => :post) do |client_image_form| %>
-				<%= client_image_form.submit t("delete"), :data => { :confirm => t("confirm_delete") }, :class => "button" %>
+			<p>
+				<%= client_image.original_size %>
+			</p>
+			<p>
+				<%= t("banner_page") %>
+				<% if client_image.banner.empty? %>
+				<br/>
+				<%= t("not_present") %>
+				<% elsif %>
+				<br/>
+				<%= client_image.banner.each do |banner| %>
+				<%= link_to banner.name, banner_path(banner) %>
 				<% end %>
-			</div>
+				<% end %>
+			</p>
 		</div>
 		<% end  %>
 	</div>

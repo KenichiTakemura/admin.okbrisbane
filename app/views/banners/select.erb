@@ -11,7 +11,7 @@
 		}
 		#business_client_content {
 			min-height: 100%;
-			max-width: 50%;
+			max-width: 45%;
 			padding: 10px;
 			margin-top: 20px;
 			margin-bottom: 20px;
@@ -33,7 +33,7 @@
 		}
 		#banner_content {
 			min-height: 100%;
-			max-width: 50%;
+			max-width: 45%;
 			padding: 10px;
 			margin-top: 20px;
 			margin-bottom: 20px;
@@ -52,12 +52,14 @@
 			populate_image = function(target) {
 			if($("\#" + target + "_select").val() != "") {
 			$("\#_" + target + "_loading").css("display", "block");
-			console.log("size=" + $('\#_selected_size').val())
+			$("#_" + target + "_image").html('');
 			$.post("select_" + target + "_image", {id: $('\#' + target + '_select').val(), size: $('\#_selected_size').val()})
 			}};
 			push_image = function(target, id) {
 			$("\#_business_client_loading").css("display", "block")
-			$("\#_banner_loading").css("display", "block")
+			$("\#_banner_loading").css("display", "block");
+			$("#_business_client_image").html('');
+			$("#_banner_image").html('');
 			$.post(target + "_banner_image", {client_image: id, size: $('\#_selected_size').val(), business_client: $('\#business_client_select').val(), banner: $('\#banner_select').val()})
 			}			
 			attach_image = function(id) { push_image("attach", id) }

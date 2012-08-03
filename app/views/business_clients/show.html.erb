@@ -52,12 +52,14 @@
 							</li>
 							<li>
 								<%= t("banner_page") %>
-								<% if !client_image.attached %>
+								<% if client_image.banner.empty? %>
 								<br/>
 								<%= t("not_present") %>
 								<% elsif %>
 								<br/>
-								<%= link_to client_image.attached.name, banner_path(client_image.attached_id) %>
+								<% client_image.banner.each do |banner| %>
+								<%= link_to banner.name, banner_path(banner) %><br/>
+								<% end %>
 								<% end %>
 							</li>
 

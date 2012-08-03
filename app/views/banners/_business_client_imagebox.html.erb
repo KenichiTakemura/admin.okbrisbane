@@ -1,16 +1,20 @@
 <div style="width:100%; position: relative; top:10px;">
 	<%= noimage?(@business_client) %>
 	<% @business_client.client_image.each do |client_image| %>
-		<% next if client_image.is_deleted %>
+	<% next if client_image.is_deleted %>
 	<div style="position: relative; float: left; padding: 5px; width: 150px">
-		<% if client_image.attached.nil? || client_image.attached.id != @banner.id %>
-		<%= link_to image_tag(client_image.avatar.url(:thumb)), client_image.avatar.url(:medium), :target => "_blank"%>
+		<% found = false %>
+		<% client_image.banner.each do |banner| %>
+			<% found = true if banner.id.to_i == @banner.id.to_i %>
+		<% end %>
+		<% if !found %>
+		<%= link_to image_tag(client_image.avatar.url(:thumb)), client_image.avatar.url(:medium), :target => "_blank" %>
 		<% else %>
 		<%= link_to image_tag(client_image.avatar.url(:thumb), :class => "opacity"), client_image.avatar.url(:medium), :target => "_blank"%>
 		<% end %>
 		<ul>
 			<li>
-				<%= link_to client_image.business_client.business_name, client_image.business_client %>
+				<%= link_to client_image.attached.business_name, client_image.attached, :target => "_blank" %>
 			</li>
 			<li>
 				<%= client_image.original_size %>
@@ -18,13 +22,23 @@
 			<li>
 				<%= client_image.clicked %>&nbsp;<%= t("client_image_clicked") %>
 			</li>
+			<li>
+				<%= t("banner_page") %><br/>
+				<% if client_image.banner.empty? %>
+					<%= t("not_present") %>
+				<% elsif %>
+					<% client_image.banner.each do |banner| %>
+						<%= link_to(banner.name, banner_path(banner))%><br/>
+					<% end %>
+				<% end %>
+			</li>
 		</ul>
 		<div style="position: relative; float:right;">
-			<% if client_image.attached.nil? || client_image.attached.id != @banner.id %>
+			<% if !found %>
 			<%= link_to t('select'), "#", :class => 'button', :id => "_attach_image_#{client_image.id}" %>
 			<% else %>
-			<%= t("selected") %><br/>
-			<%= client_image.attached.name %>
+			<%= t("selected") %>
+			<br/>
 			<% end %>
 			<%= _script(%Q|$('\#_attach_image_#{client_image.id}').click(function() { attach_image('#{client_image.id}'); return false;})|) %>
 		</div>

@@ -49,7 +49,6 @@ class BannersController < ApplicationController
     @banner = Banner.find(params[:banner])
     _page
     @banners = Banner.where("page_id = ? AND is_disabled = ?", @page_id, false)
-    logger.debug("@banners: #{@banners}")
   end
   
   # Ajax
@@ -67,8 +66,8 @@ class BannersController < ApplicationController
   def attach_banner_image
     @client_image = ClientImage.find(params[:client_image])
     @banner = Banner.find(params[:banner])
-    @client_image.attached_to(@banner)
-    @business_client = _business_client(@client_image.business_client)
+    @banner.client_image << @client_image
+    @business_client = _business_client(@client_image.attached)
     @banner = Banner.find(params[:banner])
     logger.debug("client_image: #{@client_image} banner: #{@banner}")
   end
@@ -77,8 +76,8 @@ class BannersController < ApplicationController
   def dettach_banner_image
     @client_image = ClientImage.find(params[:client_image])
     @banner = Banner.find(params[:banner])
-    @client_image.attached_to(nil)
-    @business_client = _business_client(@client_image.business_client)
+    @banner.client_image.delete(@client_image)
+    @business_client = _business_client(@client_image.attached)
     @banner = Banner.find(params[:banner])
     logger.debug("client_image: #{@client_image} banner: #{@banner}")
   end

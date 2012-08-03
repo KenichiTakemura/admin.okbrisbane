@@ -39,7 +39,7 @@
 						<%= link_to image_tag(client_image.avatar.url(:thumb)), client_image.avatar.url(:medium), :target => "_blank"%>
 						<ul>
 							<li>
-								<%= link_to client_image.business_client.business_name, client_image.business_client %>
+								<%= link_to client_image.attached.business_name, client_image.attached, :target => "_blank"%>
 							</li>
 							<li>
 								<%= client_image.original_size %>
