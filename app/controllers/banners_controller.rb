@@ -17,6 +17,7 @@ class BannersController < ApplicationController
   # GET /banners/1.json
   def show
     @banner = Banner.find(params[:id])
+    logger.debug("show @banner: #{@banner}")
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @banner }
@@ -31,12 +32,10 @@ class BannersController < ApplicationController
 
   def update
     @banner = Banner.find(params[:id])
-    new_banner = params[:banner]
-    logger.debug("new_banner: #{new_banner}")
-    new_banner[:display_name] = nil if new_banner[:display_name].empty?
+    _page
     respond_to do |format|
-      if @banner.update_attributes(new_banner)
-        format.html { redirect_to banner_path(@banner, :page => @current_page), notice: t('successfully_updated') }
+      if @banner.update_attributes(params[:banner])
+        format.html { redirect_to banner_path(@banner, :page_id => @page_id), notice: t('successfully_updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -54,7 +53,6 @@ class BannersController < ApplicationController
   # Ajax
   def select_business_client_image
     _business_client(params[:id])
-    logger.debug("select_business_client_image: @business_client: #{@business_client.id} @banner: #{@banner.id}")
   end
 
   # Ajax
@@ -86,8 +84,7 @@ class BannersController < ApplicationController
 
   def _page
     @page_id = params[:page_id]
-    page = Page.find_by_id(@page_id)
-    @page_name = page.name if !page.nil?
+    @page_name = Style.pagename(@page_id)
     logger.debug("@page_id: #{@page_id} @page_name: #{@page_name}")
   end
 

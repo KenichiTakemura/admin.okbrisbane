@@ -66,7 +66,7 @@ module BannersHelper
   
   def getBanner(p,s,a)
     @banners.each do |banner|
-      if banner.page.name == Style::PAGES[p] && banner.section.name == Style::SECTIONS[s] && banner.position_id.to_i == a.to_i
+      if banner.page_id == Style.pageid(p) && banner.section_id == Style.sectionid(s) && banner.position_id.to_i == a.to_i
         return banner
       end
     end

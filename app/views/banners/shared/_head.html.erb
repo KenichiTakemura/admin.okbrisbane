@@ -1,8 +1,8 @@
 <div class="secondary-navigation">
 	<ul class="wat-cf">
-		<% Page.all.each do |page| %>
-		<li class="" id="<%= page.name %>" >
-			<%= link_to(t(page.name), banners_path(:page_id => page.id)) %>
+		<% Style.pages.each do |key,page| %>
+		<li class="" id="<%= page %>" >
+			<%= link_to(t(page), banners_path(:page_id => Style.pageid(key))) %>
 		</li>
 		<% end %>
 	</ul>
