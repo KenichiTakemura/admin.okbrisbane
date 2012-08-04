@@ -41,7 +41,7 @@
 				<div style="width:100%; position: relative; display: inline;">
 					<% if !@business_client.client_image.empty? %>
 					<% @business_client.client_image.each do |client_image| %>
-					<div style="position: relative; float: left; padding: 5px; width: 150px">
+					<div class="banner_image_thumbnail_each_with_info">
 						<%= image_tag client_image.avatar.url(:thumb) %>&nbsp;
 						<ul>
 							<li>
@@ -50,6 +50,12 @@
 							<li>
 								<%= client_image.clicked %>&nbsp;<%= t("client_image_clicked") %>
 							</li>
+							<% if !client_image.caption.nil? %>	
+							<li>
+								<%= client_image.caption %>
+							</li>
+							<% end %>
+
 							<li>
 								<%= t("banner_page") %>
 								<% if client_image.banner.empty? %>
@@ -62,14 +68,11 @@
 								<% end %>
 								<% end %>
 							</li>
-
 						</ul>
-						<div style="float:left; position: relative; margin-top: 5px">
-							<%= form_for(client_image, :method => :post, :html => { :class => "form" }) do |f| %>
-							<%= f.submit t("delete"), :data => { :confirm => t("confirm_delete") }, :class => "button"%>
-							<% end %>
-						</div>
-
+						<span>
+							<%= link_to(t('delete'), client_image, method: :delete, data: { confirm: t('confirm_delete') }) %> | 
+							<%= link_to(t('Edit'), edit_client_image_path(client_image)) %>
+						</span>
 					</div>
 					<% end  %>
 					<% elsif %>

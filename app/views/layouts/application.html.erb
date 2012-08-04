@@ -13,7 +13,7 @@
 				<h1><a href="/">OKBRISBANE</a></h1>
 				<div id="user-navigation">
 					<ul class="wat-cf">
-						
+
 						<li>
 							<%= link_to t("system_management"), "#" %></a>
 						</li>
@@ -27,8 +27,18 @@
 						<li>
 							<%= link_to t("client_management"), business_clients_path %>
 						</li>
-						<li>
+						<li id="navigation_banner_management">
 							<%= link_to t("banner_management"), banners_path %>
+										<span class="banner_management_menu">
+				<div class="">
+					<ul class="">
+						<% Style.pages.each do |key,page| %>
+						<li class="" id="<%= page %>" >
+							<%= link_to(t(page), banners_path(:page_id => Style.pageid(key))) %>
+						</li>
+						<% end %>
+					</ul>
+				</div></span>
 						</li>
 						<li>
 							<%= link_to t("sales_management"), sales_managements_path %>
@@ -62,9 +72,9 @@
 				</div>
 				<div id="main">
 					<div class="block">
-					<div class="content">
-					<%= yield %>
-					</div>
+						<div class="content">
+							<%= yield %>
+						</div>
 					</div>
 					<div id="footer">
 						<div class="block">

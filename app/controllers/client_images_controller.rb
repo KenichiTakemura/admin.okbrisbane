@@ -25,6 +25,27 @@ class ClientImagesController < ApplicationController
       format.json { render json: @client_image }
     end
   end
+  
+  def edit
+    @client_image = ClientImage.find(params[:id])
+    _image_map
+    @business_client = BusinessClient.find_by_id(@client_image.attached_id)
+  end
+  
+  def update
+    @client_image = ClientImage.find(params[:id])
+    _image_map
+    @business_client = BusinessClient.find_by_id(@client_image.attached_id)
+   respond_to do |format|
+      if @client_image.update_attributes(params[:client_image])
+        format.html { redirect_to @business_client, notice: t('successfully_updated') }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @client_image.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
 
   # POST /client_images
