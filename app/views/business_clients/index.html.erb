@@ -1,13 +1,10 @@
 <h2 class="title"><%= t("listing_business_clients", :default => "Business Clients") %></h2>
 
 <div class="inner">
-
-	<%= link_to t("new_business_client"), new_business_client_path(@current_page) %>
 	<div style="float:right"><%= paginate @business_clients %></div>
 	<table class="table">
 		<tr>
-			<th class="first"><%= t("id")%></th>
-			<th><%= t("business_name") %></th>
+			<th class="first"><%= t("business_name") %></th>
 			<th><%= t("business_profile_image") %></th>
 			<th><%= t("contact_name")%></th>
 			<th><%= t("business_abn")%></th>
@@ -16,7 +13,6 @@
 		</tr>
 		<% @business_clients.each do |business_client| %>
 		<tr class="<%= cycle("odd", "even") %>" >
-			<td><%= business_client.id %></td>
 			<td><%= link_to business_client.business_name, business_client_path(:id => business_client, :page => @business_clients.current_page) %></td>
 			<td>
 				<% if business_client.business_profile_image.empty? %>

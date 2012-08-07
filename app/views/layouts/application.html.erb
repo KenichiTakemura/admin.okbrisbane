@@ -24,24 +24,65 @@
 				</div>
 				<div id="main-navigation">
 					<ul>
-						<li>
+						<li id="navigation_management">
 							<%= link_to t("client_management"), business_clients_path %>
+							<span class="management_menu">
+								<div class="">
+									<ul class="">
+										<li class="menu">
+											<%= link_to t("listing"), business_clients_path %>
+										</li>
+										<li class="menu">
+											<%= link_to t("add"), new_business_client_path(@current_page) %>
+										</li>
+
+									</ul>
+								</div></span>
 						</li>
-						<li id="navigation_banner_management">
+						<li id="navigation_management">
 							<%= link_to t("banner_management"), banners_path %>
-										<span class="banner_management_menu">
-				<div class="">
-					<ul class="">
-						<% Style.pages.each do |key,page| %>
-						<li class="" id="<%= page %>" >
-							<%= link_to(t(page), banners_path(:page_id => Style.pageid(key))) %>
+							<span class="management_menu">
+								<div class="">
+									<ul class="">
+										<% Style.pages.each do |key,page| %>
+										<li class="menu" id="<%= page %>" >
+											<%= link_to(t(page), banners_path(:page_id => Style.pageid(key))) %>
+										</li>
+										<% end %>
+									</ul>
+								</div></span>
 						</li>
-						<% end %>
-					</ul>
-				</div></span>
-						</li>
-						<li>
+						<li id="navigation_management">
 							<%= link_to t("sales_management"), sales_managements_path %>
+							<span class="management_menu">
+								<div class="">
+									<ul class="">
+										<li class="menu" id="<%= Okvalue::ESTATE %>">
+											<%= link_to t("title_" + Okvalue::ESTATE),  sales_managements_path(:category => Okvalue::ESTATE) %>
+										</li>
+										<li class="menu" id="<%= Okvalue::BUSINESS %>">
+											<%= link_to t("title_" + Okvalue::BUSINESS),  sales_managements_path(:category => Okvalue::BUSINESS)  %>
+										</li>
+										<li class="menu" id="<%= Okvalue::MOTOR_VEHICLE %>">
+											<%= link_to t("title_" + Okvalue::MOTOR_VEHICLE),  sales_managements_path(:category => Okvalue::MOTOR_VEHICLE)  %>
+										</li>
+										<li class="menu"  id="<%= Okvalue::ACCOMMODATION %>">
+											<%= link_to t("title_" + Okvalue::ACCOMMODATION),  sales_managements_path(:category => Okvalue::ACCOMMODATION)  %>
+										</li>
+										<li class="menu" id="<%= Okvalue::LAW%>">
+											<%= link_to t("title_" + Okvalue::LAW),  sales_managements_path(:category => Okvalue::LAW)  %>
+										</li>
+										<li class="menu" id="<%= Okvalue::STUDY%>">
+											<%= link_to t("title_" + Okvalue::STUDY),  sales_managements_path(:category => Okvalue::STUDY)  %>
+										</li>
+										<li class="menu" id="<%= Okvalue::IMMIGRATION %>">
+											<%= link_to t("title_" + Okvalue::IMMIGRATION),  sales_managements_path(:category => Okvalue::IMMIGRATION)  %>
+										</li>
+										<li class="menu" id="<%= Okvalue::TAX%>">
+											<%= link_to t("title_" + Okvalue::TAX),  sales_managements_path(:category => Okvalue::TAX)  %>
+										</li>
+									</ul>
+								</div></span>
 						</li>
 						<li>
 							<%= link_to t("post_management"), post_managements_path %>

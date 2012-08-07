@@ -13,12 +13,12 @@ admin = Admin.first
 
 1.upto(10) do |x|
   post = Business.new(:category => "for_sale", :subject => "비즈니스 #{x}")
-  post.build_content
-  post.content(:body => "비즈니스 #{x}")
+  content = post.build_content(:body => "비즈니스 #{x}")
   post.price = "300000.00"
   post.valid_until = Time.utc(2012,7,"#{x}")
   post.set_user(admin)
   post.save
+  content.save
   image = Image.new(:avatar => File.new("test/fixtures/business/b#{x}.jpg"))
   image.attached_to(post)
 end

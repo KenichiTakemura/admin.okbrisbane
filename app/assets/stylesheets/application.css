@@ -36,10 +36,9 @@ div.shadow:hover {
   box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
-span.banner_management_menu {
+span.management_menu {
   position: absolute;
   background-color: #642c78;
-  padding: 5px;
   border: 1px solid #666;
   visibility: hidden;
   color: black;
@@ -47,6 +46,17 @@ span.banner_management_menu {
   z-index: 1;
 }
 
-#navigation_banner_management:hover span.banner_management_menu {
-	visibility: visible;
+li.menu {
+	margin: auto;
+	width: 80px;
+}
+
+#navigation_management:hover span.management_menu {
+  visibility: visible;
+  -moz-box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }

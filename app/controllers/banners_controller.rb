@@ -74,7 +74,7 @@ class BannersController < ApplicationController
   def dettach_banner_image
     @client_image = ClientImage.find(params[:client_image])
     @banner = Banner.find(params[:banner])
-    @banner.client_image.delete(@client_image)
+    @banner.client_image.destroy(@client_image)
     @business_client = _business_client(@client_image.attached)
     @banner = Banner.find(params[:banner])
     logger.debug("client_image: #{@client_image} banner: #{@banner}")

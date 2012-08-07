@@ -6,15 +6,27 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-TopFeedList.category_feed('Job').delete_all
+TopFeedList.category_feed(Job.name).delete_all
 Job.delete_all
 
 # Sample Data
 # Not for Production
-admin = Admin.first
+user = User.first
 
-2010.upto(2020) do |x|
-  job = Job.new(:category => Job::SEEK, :subject => "안녕 하세요 #{x}");
-  job.valid_until = Time.now
-  job.save
+2010.upto(2050) do |x|
+  post = Job.new(:category => "seeking", :subject => "안녕 하세요 #{x}");
+  post.valid_until = Time.now
+  content = post.build_content(:body => "안녕 하세요")
+  post.set_user(user)
+  post.save
+  content.save
+end
+
+2100.upto(2150) do |x|
+  post = Job.new(:category => "hiring", :subject => "어서 오세요 #{x}");
+  post.valid_until = Time.now
+  content = post.build_content(:body => "어서 오세요")
+  post.set_user(user)
+  post.save
+  content.save
 end
