@@ -1,5 +1,6 @@
 class MotorVehiclesController <  PostsController
   
+  @@management_path = "sales_managements"
   def new
     _new(MotorVehicle)
   end

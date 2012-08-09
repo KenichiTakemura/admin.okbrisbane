@@ -42,7 +42,7 @@
 					<% if !@business_client.client_image.empty? %>
 					<% @business_client.client_image.each do |client_image| %>
 					<div class="banner_image_thumbnail_each_with_info">
-						<%= image_tag client_image.avatar.url(:thumb) %>&nbsp;
+						<%= image_tag client_image.thumb_image, :size => client_image.thumb_size %>&nbsp;
 						<ul>
 							<li>
 								<%= t("size") %> : <%= client_image.medium_size %>
@@ -50,12 +50,11 @@
 							<li>
 								<%= client_image.clicked %>&nbsp;<%= t("client_image_clicked") %>
 							</li>
-							<% if !client_image.caption.nil? %>	
+							<% if !client_image.caption.empty? %>	
 							<li>
 								<%= client_image.caption %>
 							</li>
 							<% end %>
-
 							<li>
 								<%= t("banner_page") %>
 								<% if client_image.banner.empty? %>

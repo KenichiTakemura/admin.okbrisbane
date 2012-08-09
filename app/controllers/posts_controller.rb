@@ -1,28 +1,26 @@
 class PostsController < ApplicationController
-  
+
   before_filter :checkCategory, :only => [:new, :show, :edit, :create, :update, :destroy]
   before_filter :checkPage, :only => [:new, :show, :edit, :create, :destroy]
 
   protected
-  
+
+  @@management_path = ""
   def checkCategory
     @category = params[:category]
     raise "Bad Category" if @category.nil?
   end
-  
+
   def checkPage
     @current_page = params[:page]
     raise "No page set" if @current_page.nil?
   end
-  
+
   def _new(model)
     @post = model.new
     @post.build_content
     respond_to do |format|
-      #format.html # new.html.erb
-      #format.json { render json: @estate }
-      #format.html { render action: "new", :controller => "sales_management" }
-      format.html { render :template => "sales_managements/new" }
+      format.html { render :template => "#{@@management_path}/new" }
       format.json { render json: @post }
     end
   end
@@ -31,8 +29,8 @@ class PostsController < ApplicationController
     @post = model.find(params[:id])
     logger.debug("post: #{@post}")
     respond_to do |format|
-        format.html { render :template => "sales_managements/show" }
-        format.json { render json: @post }
+      format.html { render :template => "#{@@management_path}/show" }
+      format.json { render json: @post }
     end
   end
 
@@ -40,12 +38,11 @@ class PostsController < ApplicationController
     @post = model.find(params[:id])
     logger.debug("@post.content: #{@post.content}")
     if @post.content.nil?
-      # Build only empty otherwise rails to delete exiting content
-      @post.build_content
-     end
-     respond_to do |format|
-        format.html { render :template => "sales_managements/edit" }
-        format.json { render json: @post }
+    @post.build_content
+    end
+    respond_to do |format|
+      format.html { render :template => "#{@@management_path}/edit" }
+      format.json { render json: @post }
     end
 
   end
@@ -56,14 +53,11 @@ class PostsController < ApplicationController
       if @post.save
         @post.set_user(current_admin)
         @post.build_content
-        format.html { render :template => "sales_managements/edit", notice: I18n.t('successfully_created') }
-        #format.html { redirect_to edit_estate_path(@estate, :category => 'estate'), notice: I18n.t('successfully_created') }
-        #format.json { render json: @post, status: :created, location: edit_estate_path(@post) }
+        format.html { render :template => "#{@@management_path}/edit", notice: I18n.t('successfully_created') }
         format.json { render json: @post, status: :created }
       else
-        #flash[:warning] = I18n.t("failed_to_create")
         logger.debug("@post.errors: #{@post.errors}")
-        format.html { render :template => "sales_managements/new" }
+        format.html { render :template => "#{@@management_path}/new" }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
@@ -76,7 +70,7 @@ class PostsController < ApplicationController
         format.html { redirect_to sales_managements_url(:category => @category), notice: I18n.t('successfully_updated') }
         format.json { head :no_content }
       else
-        format.html { render :template => "sales_managements/edit" }
+        format.html { render :template => "#{@@management_path}/edit" }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
@@ -86,11 +80,15 @@ class PostsController < ApplicationController
     @post = model.find(params[:id])
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to sales_managements_url(:category => @category, :page => @current_page) }
+    if @@management_path.eql? "sales_managements"
+        format.html { redirect_to sales_managements_url(:category => @category, :page => @current_page) }
+      else
+        format.html { redirect_to posts_managements_url(:category => @category, :page => @current_page) }
+      end
       format.json { head :no_content }
     end
   end
-  
+
   def _upload(model)
     post = model.find(params[:id])
     _file = params[:file]
@@ -109,4 +107,14 @@ class PostsController < ApplicationController
     render :json => {:result => I18n.t('successfully_uploaded'), :images => images, :w => images_w, :h => images_h, :images_t => images_t, :images_o => images_o}
   end
 
+  def get_url
+    case @@management_path
+    when "sales_managements"
+      return sales_managements_url
+    when "posts_managements"
+      return posts_managements_url
+    else
+    raise "Bad Url Request"
+    end
+  end
 end

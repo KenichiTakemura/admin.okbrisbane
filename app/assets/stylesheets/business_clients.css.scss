@@ -25,8 +25,12 @@ div.banner_image_thumbnail_each span, div.banner_image_thumbnail_each_with_info 
   z-index: 1;
 }
 
-div.banner_image_thumbnail_each:hover span, div.banner_image_thumbnail_each_with_info:hover span {
+div.banner_image_thumbnail_each_with_info:hover span {
   visibility: visible;
   top: 0px; /* use IF IE6 style to correct IE6 positions of larger image relative to thumb */
   left: 50px;/*position where enlarged image should offset horizontally */
+}
+
+div.banner_image_thumbnail_each:hover span {
+  visibility: visible;
 }

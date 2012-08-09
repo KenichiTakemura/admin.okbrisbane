@@ -1,5 +1,6 @@
 class TaxesController < PostsController
   
+  @@management_path = "sales_managements"
   def new
     _new(Tax)
   end

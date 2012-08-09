@@ -20,6 +20,9 @@ body = "런던올림픽 개막을 앞고 가진 지난 2번(뉴질랜드, 세네
   post = Estate.new(:category => "for_sale", :subject => subject)
   content = post.build_content(:body => body)
   post.price = "200000.00"
+  post.bed = 4
+  post.bath = 2
+  post.garage = 2
   post.valid_until = Time.utc(2012,7,"#{x}")
   post.set_user(admin)
   post.save
@@ -32,6 +35,9 @@ end
   post = Estate.new(:category => "for_auction", :subject => subject)
   content = post.build_content(:body => body)
   post.price = "200000.00"
+  post.bed = 4
+  post.bath = 2
+  post.garage = 2
   post.valid_until = Time.utc(2012,7,"#{x}")
   post.set_user(admin)
   post.save

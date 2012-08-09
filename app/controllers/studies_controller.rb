@@ -1,5 +1,6 @@
 class StudiesController < PostsController
   
+  @@management_path = "sales_managements"
   def new
     _new(Study)
   end

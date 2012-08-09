@@ -31,6 +31,28 @@ class ManagementsController < ApplicationController
   
   protected
   
+  MODELS = {:p_job => Job,
+    :p_buy_and_sell => BuyAndSell,
+    :p_wellbeing => WellBeing,
+    :p_estate => Estate,
+    :p_motor_vehicle => MotorVehicle,
+    :p_business => Business,
+    :p_accommodation => Accommodation,
+    :p_law => Law, 
+    :p_tax => Tax,
+    :p_study => Study,
+    :p_immig => Immigration,
+    :p_yellowpage => BusinessClient,
+    :p_sponsor => BusinessClient,
+    :p_mypage => Mypage
+  }
+  
+  def _model(category)
+    model = MODELS[category.to_sym]
+    raise "Bad Request for MODEL #{category}" if model.nil?
+    model
+  end
+  
   def getPost(model, page)
     post = model.order.page page
     if post.empty? && page.to_i > 1

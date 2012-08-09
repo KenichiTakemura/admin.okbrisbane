@@ -45,7 +45,7 @@
 				<%= f.label :avatar, t("client_banner_image"), :class => "label left" %>
 			</div>
 			<div class="">
-				<%= f.file_field :avatar %>
+				<%= f.file_field :avatar, :id => "avatar" %>
 			</div>
 			<span class="description"><%= t("acceptable_extention") %></span>
 		</div>
@@ -57,6 +57,16 @@
 				<%= f.select :original_size, options_for_select(@img_resolutions) %>
 			</div>
 		</div>
+		<div class="group wat-cf" >
+			<div class="">
+				<%= f.label :source_url, t("client_image_source_url"), :class => "label left" %>
+			</div>
+			<div id="source_url" class="">
+				<%= f.url_field :source_url, :class => "text_field", :id => "url_field" %>
+			</div>
+			<div id="content_url"></div>
+			<span class="description"><%= t("client_image_leave_blank_to_show_profile") %></span>
+		</div>
 		<div class="group wat-cf">
 			<div class="">
 				<%= f.label :link_to_url, t("client_image_link_to_url"), :class => "label left" %>
@@ -66,15 +76,7 @@
 			</div>
 			<span class="description"><%= t("client_image_leave_blank_to_show_profile") %></span>
 		</div>
-		<div class="group wat-cf">
-			<div class="">
-				<%= f.label :source_url, t("client_image_source_url"), :class => "label left" %>
-			</div>
-			<div class="">
-				<%= f.url_field :source_url, :class => "text_field" %>
-			</div>
-			<span class="description"><%= t("client_image_leave_blank_to_show_profile") %></span>
-		</div>
+
 		<div class="group wat-cf">
 			<div class="">
 				<%= f.label :caption, t("caption"), :class => "label left" %>
@@ -96,7 +98,7 @@
 		<%= noimage?(@business_client) %>
 		<% @business_client.client_image.each do |client_image| %>
 		<div style="position: relative; float: left; padding: 5px; width: 150px">
-			<%= image_tag client_image.avatar.url(:thumb) %>&nbsp;
+			<%= image_tag(client_image.thumb_image, :size => client_image.thumb_size) %>&nbsp;
 			<p>
 				<%= client_image.original_size %>
 			</p>
@@ -117,7 +119,7 @@
 	</div>
 	<% elsif %>
 	<div style="position: relative; float: left; padding: 5px; width: 150px">
-			<%= image_tag @client_image.avatar.url(:original) %>&nbsp;
+			<%= image_tag(@client_image.original_image, :size => @client_image.original_size) %>&nbsp;
 			<p>
 				<%= @client_image.original_size %>
 			</p>

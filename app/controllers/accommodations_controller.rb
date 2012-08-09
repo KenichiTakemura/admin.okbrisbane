@@ -1,5 +1,6 @@
 class AccommodationsController < PostsController
   
+  @@management_path = "sales_managements"
   def new
     _new(Accommodation)
   end
