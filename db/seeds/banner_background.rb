@@ -17,10 +17,14 @@ end
 
 # Main Background #1
 banner = getBanner(:p_home,:s_background,1)
-client_image = ClientImage.where("original_size = ?", banner.img_resolution).first
-banner.attach(client_image)
+client_images = ClientImage.where("original_size = ?", banner.img_resolution)
+client_images.each do |i|
+  banner.attach(i)
+end
 
 # Main Background #2
 banner = getBanner(:p_home,:s_background,2)
-client_image = ClientImage.where("original_size = ?", banner.img_resolution).last
-banner.attach(client_image)
+client_images = ClientImage.where("original_size = ?", banner.img_resolution)
+client_images.each do |i|
+  banner.attach(i)
+end

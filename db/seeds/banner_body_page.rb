@@ -16,8 +16,14 @@ def getBanner(p, s, a)
 end
 
 # logo position
+[:p_job,:p_buy_and_sell,:p_wellbeing,:p_study,:p_immig,:p_estate,:p_law,:p_tax,:p_yellowpage,:p_motor_vehicle,:p_business,:p_accommodation].each do |page|
+  banner = getBanner(page,:s_body,1)
+  client_images = ClientImage.where("original_size = ?", banner.img_resolution)
+  client_images.each do |i|
+    banner.attach(i)
+  end
+end
 
-#
 [:p_signin,:p_signup,:p_job,:p_buy_and_sell,:p_wellbeing,:p_study,:p_immig,:p_estate,:p_law,:p_tax,:p_yellowpage,:p_motor_vehicle,:p_business,:p_accommodation].each do |page|
   2.upto(5) do |x|
     banner = getBanner(page,:s_body,x)
@@ -30,11 +36,20 @@ end
 
 # Buy and Sell Related
 [:p_estate,:p_motor_vehicle,:p_business,:p_accommodation].each do |page|
-   6.upto(8) do |x|
+  6.upto(8) do |x|
     banner = getBanner(page,:s_body,x)
     client_images = ClientImage.where("original_size = ?", banner.img_resolution)
     client_images.each do |i|
       banner.attach(i)
     end
+  end
+end
+
+# Signin
+[:p_signin].each do |page|
+  banner = getBanner(page,:s_body,6)
+  client_images = ClientImage.where("original_size = ?", banner.img_resolution)
+  client_images.each do |i|
+    banner.attach(i)
   end
 end

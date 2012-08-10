@@ -15,7 +15,7 @@ def addImage(dir, client)
   Dir.foreach(dir) do |filename|
     next if filename == "." || filename == ".."
     resolution = Kernel.`("/usr/bin/identify #{dir}/#{filename} | awk '{print $3}' | tr -d '\n'")
-    client_image = ClientImage.new(:avatar => File.new("#{dir}/#{filename}"), :original_size => resolution, :source_url => "")
+    client_image = ClientImage.new(:avatar => File.new("#{dir}/#{filename}"), :original_size => resolution, :source_url => "", :caption => "")
     client_image.attached_to_by(client, @admin)
   end
 end
@@ -43,6 +43,7 @@ addImage("test/fixtures/banner/body/7", client)
 addImage("test/fixtures/banner/body/8", client)
 addImage("test/fixtures/banner/body/9", client)
 addImage("test/fixtures/banner/body/10", client)
+addImage("test/fixtures/banner/body/99", client)
 client_image = ClientImage.new(:source_url => "http://ads.yimg.com/la/adv/838460_230812/yahoo_sapphires_left_gutter_now_showing.jpg", :original_size => "160x800")
 client_image.attached_to(client)
 client_image = ClientImage.new(:source_url => "http://ads.yimg.com/la/adv/838460_230812/yahoo_sapphires_right_gutter_now_showing.jpg", :original_size => "160x800")
