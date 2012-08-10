@@ -7,7 +7,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 TopFeedList.category_feed(BuyAndSell.name).delete_all
-Job.delete_all
+BuyAndSell.delete_all
 
 # Sample Data
 # Not for Production

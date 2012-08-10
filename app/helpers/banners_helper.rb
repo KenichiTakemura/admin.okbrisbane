@@ -72,4 +72,12 @@ module BannersHelper
     end
     raise "No banner space found for #{p} >> #{s} >> #{a}"
   end
+  
+  def flash?(client_image)
+    html = ""
+    if client_image.flash?
+       html = image_tag("common/flash-seo.png", :size => "30x30")
+    end
+    html.html_safe
+  end
 end

@@ -6,9 +6,11 @@
 		<% found = false %>
 		<% if !client_image.banner.include?(@banner) %>
 			<%= link_to image_tag(client_image.thumb_image, :size => client_image.thumb_size), client_image.original_image, :target => "_blank" %>
+			<%= flash?(client_image) %>
 		<% else %>
 			<% found = true %>
 			<%= link_to image_tag(client_image.thumb_image, :size => client_image.thumb_size, :class => "opacity"), client_image.original_image, :target => "_blank"%>
+			<%= flash?(client_image) %>
 		<% end %>
 		<ul>
 			<li>

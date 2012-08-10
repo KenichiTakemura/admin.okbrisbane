@@ -3,6 +3,7 @@
 	<% @banner.client_image.each do |client_image| %>
 	<div style="position: relative; float: left; padding: 5px; width: 150px">
 		<%= link_to image_tag(client_image.thumb_image, :size => client_image.thumb_size), client_image.original_image, :target => "_blank"%>
+		<%= flash?(client_image) %>
 		<ul>
 			<li>
 				<%= link_to client_image.attached.business_name, client_image.attached %>

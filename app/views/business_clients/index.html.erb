@@ -33,11 +33,7 @@
 				<% business_client.client_image.each do |client_image| %>
 				
 				<div class="banner_image_thumbnail_each">
-				<% if !client_image.source_url.empty? %>
-					<%= link_to image_tag(client_image.source_url, :style => "width:50px;height:50px"), client_image.source_url, :target => "_blank" %>
-				<% else %>
-					<%= link_to image_tag(client_image.avatar.url(:thumb), :style => "width:50px;height:50px"), client_image.avatar.url(:medium), :target => "_blank" %>
-				<% end %>
+				<%= link_to image_tag(client_image.thumb_image, :style => "width:50px;height:50px"), client_image.medium_image, :target => "_blank" %>
 				<span><%= link_to t('Edit'), edit_client_image_path(client_image) %>
 							</span>
 					</div>

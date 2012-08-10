@@ -98,11 +98,14 @@
 		<%= noimage?(@business_client) %>
 		<% @business_client.client_image.each do |client_image| %>
 		<div style="position: relative; float: left; padding: 5px; width: 150px">
-			<%= image_tag(client_image.thumb_image, :size => client_image.thumb_size) %>&nbsp;
+			<%= image_tag(client_image.thumb_image, :size => client_image.thumb_size) %>
+			<%= flash?(@client_image) %>
 			<p>
 				<%= client_image.original_size %>
 			</p>
 			<p>
+				<%= client_image.avatar_content_type %>
+				<br/>
 				<%= t("banner_page") %>
 				<% if client_image.banner.empty? %>
 				<br/>
@@ -119,11 +122,13 @@
 	</div>
 	<% elsif %>
 	<div style="position: relative; float: left; padding: 5px; width: 150px">
-			<%= image_tag(@client_image.original_image, :size => @client_image.original_size) %>&nbsp;
+			<%= image_tag(@client_image.original_image, :size => @client_image.original_size) %>
+			<%= flash?(@client_image) %>
 			<p>
 				<%= @client_image.original_size %>
 			</p>
 			<p>
+				<%= @client_image.avatar_content_type %>
 				<%= t("banner_page") %>
 				<% if @client_image.banner.empty? %>
 				<br/>

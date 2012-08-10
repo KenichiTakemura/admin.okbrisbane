@@ -51,14 +51,36 @@ class ClientImagesController < ApplicationController
   # POST /client_images
   # POST /client_images.json
   def create
-    @client_image = ClientImage.new(params[:client_image])
+    _file = params[:client_image][:avatar]
+    if _file.content_type.eql? Okvalue::FLASH_CONTENT_TYPE
+      picture_file = "#{Rails.root.to_s}/tmp/#{_file.original_filename}.jpg"
+      _temp_file = _file.tempfile.path
+      picture_id = Kernel.`("/usr/local/bin/swfextract #{_temp_file} | grep -- -j | awk '{print $5}'")
+      picture_id.delete!(",").chop!
+      extract = Kernel.`("/usr/local/bin/swfextract #{_temp_file} -j #{picture_id} -o #{picture_file}")
+      logger.debug("extract: #{extract}")
+      params[:client_image].delete :avatar
+      
+      @client_image = ClientImage.new(params[:client_image])
+      @client_image.avatar = File.new(picture_file)
+      @client_image.avatar_content_type = Okvalue::FLASH_CONTENT_TYPE
+      File.unlink(picture_file)
+    else
+      @client_image = ClientImage.new(params[:client_image])
+    end
     logger.debug("client_image: #{@client_image}")
     @business_client = BusinessClient.find_by_id(@client_image.attached_id)
     logger.debug("business_client: #{@business_client}")
     _image_map
     respond_to do |format|  
       if @client_image.save
-        logger.debug("client_image saved: #{@client_image}")
+        logger.debug("client_image saved: #{@client_image.avatar.path(:original)}")
+        if @client_image.flash?
+          target = File.dirname(@client_image.avatar.path(:original)) + "/" + _file.original_filename
+          logger.debug("copy: #{_temp_file} to #{target}")
+          File.copy_stream(_file.tempfile.path, target)
+          File.new(target).chmod(0644)
+        end
         @client_image.attached_to(@business_client)
         # This must be donw to update images in another new view
         @business_client = BusinessClient.find_by_id(@client_image.attached_id)
@@ -67,6 +89,7 @@ class ClientImagesController < ApplicationController
         format.html { render action: "new" }
         format.json { render json: @client_image, status: :created, location: @client_image }
       else
+        @client_image = ClientImage.new
         format.html { render action: "new" }
         format.json { render json: @client_image.errors, status: :unprocessable_entity }
       end

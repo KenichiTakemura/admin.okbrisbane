@@ -42,7 +42,8 @@
 					<% if !@business_client.client_image.empty? %>
 					<% @business_client.client_image.each do |client_image| %>
 					<div class="banner_image_thumbnail_each_with_info">
-						<%= image_tag client_image.thumb_image, :size => client_image.thumb_size %>&nbsp;
+						<%= image_tag client_image.thumb_image, :size => client_image.thumb_size %>
+						<%= flash?(client_image) %>
 						<ul>
 							<li>
 								<%= t("size") %> : <%= client_image.medium_size %>

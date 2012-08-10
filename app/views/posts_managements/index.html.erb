@@ -43,7 +43,7 @@
 				<td><%= item.id %></td>
 				<td><%= t("#{item.is_deleted}") %></td>
 				<td><%= t("#{item.category}") %></td>
-				<td><%= item.posted_by.email %></td>
+				<td><%= item.posted_by.name %></td>
 				<td><%= _truncate(item.subject) %></td>
 				<td><%= Common.date_format(item.created_at) %></td>
 				<td><%= Common.date_format(item.valid_until) %></td>
