@@ -1,3 +1,46 @@
 // Place all the styles related to the banners controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.edittable_banner {}
+
+.edittable_banner:hover {
+  -moz-box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    border: 2px solid #666;
+}
+
+.edittable_banner:hover span {
+  visibility: visible;
+  top:0px;
+  right:0px;
+}
+
+.edittable_background_banner {
+  position:absolute;
+}
+
+.edittable_background_banner:hover span {
+  visibility:visible;
+}
+
+.edittable_banner span {
+  position: absolute;
+  background-color: #fff;
+  border: 2px solid #666;
+  visibility: hidden;
+  width: 200px;
+  text-decoration: none;
+  z-index: 1;
+}
+
+.edittable_background_banner span {
+  position: fixed;
+  background-color: #fff;
+  border: 2px solid #666;
+  visibility: hidden;
+  width: 200px;
+  text-decoration: none;
+  z-index: 1;
+}

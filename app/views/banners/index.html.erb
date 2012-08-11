@@ -12,6 +12,7 @@
 	#_okbrisbane_html {
 		height: 100%;
 		width: 1200px;
+		height: 2500px;
 		margin: 0 auto;
 		background: #FFFFFF;
 	}
@@ -54,9 +55,13 @@
 <div id="_okbrisbane_html">
 	<div id="_okbrisbane_left">
 		<%= edittable_background_banner(1, "left") %>
+		<%= edittable_background_banner(3, "left") %>
+		<%= edittable_background_banner(5, "left") %>
 	</div>
 	<div id="_okbrisbane_right">
 		<%= edittable_background_banner(2, "right") %>
+		<%= edittable_background_banner(4, "right") %>
+		<%= edittable_background_banner(6, "right") %>
 	</div>
 	<div id="_okbrisbane_body">
 		<%= render :partial => "banners/#{@page_name}/index" %>

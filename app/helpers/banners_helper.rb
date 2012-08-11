@@ -1,12 +1,8 @@
 module BannersHelper
   
-  def _edit_common(p, s, a)
-    b = getBanner(p,s,a)
-    raise "Internal Error" if !b
+  def _edit_common(p, s, a, b)
     div_id = Style.create_banner_div(p,s,a)
-    html = %Q|<div class="shadow" id="banner_edit_#{div_id}" style="#{b.style};">|
-    html += %Q|<div style="position:relative;top:0px;left:0px;color:black;background-color:white">| + _title(b) + %Q|</div>|
-    html += %Q|<div style="position:relative;top:0px;right:0px;height:20px;font-style:bold;font-size:10px">| + _link_to(b) + %Q|</div>|
+    html = %Q|<div class="edittable_banner" id="banner_edit_#{div_id}" style="#{b.style};">|
     html
   end
   
@@ -15,9 +11,12 @@ module BannersHelper
   end
   
   def _link_to(b)
-     html = link_to(t('Show'), banner_path(b,:page_id => @page_id), :class => 'button')
-     html += link_to(t('Edit'), edit_banner_path(b, :page_id => @page_id), :class => 'button')
-     html += (link_to(t('select_image'), select_banners_path(:banner => b, :page_id => @page_id), :class => 'button') if !b.is_disabled)
+     html = "<div>" + link_to(t('Show'), banner_path(b,:page_id => @page_id), :class => 'button') + "</div>"
+     html += "<div>" + link_to(t('Edit'), edit_banner_path(b, :page_id => @page_id), :class => 'button') + "</div>"
+     if !b.is_disabled
+       html += "<div>" + link_to(t('select_image'), select_banners_path(:banner => b, :page_id => @page_id), :class => 'button') + "</div>"
+     end
+     html
   end
   
   def edittable_single_header_banner(a)
@@ -33,8 +32,11 @@ module BannersHelper
   end  
   
   def edittable_single_banner(p, s, a)
-    html = _edit_common(p, s, a)
+    b = getBanner(p,s,a)
+    raise "Internal Error" if !b
+    html = _edit_common(p, s, a, b)
     html += single_banner(p, s, a)
+    html += %Q|<span>| + _title(b) + "<br/>" + _link_to(b) + %Q|</span>|
     html += "</div>"
     html.html_safe
   end
@@ -45,21 +47,21 @@ module BannersHelper
     b = getBanner(p, s, a)
     raise "Internal Error" if !b
     div_id = Style.create_banner_div(p, s, a)
-    if lr == "left"
-      html = %Q|<div style="position:relative;top:0px;float:right;width:100px;color:black;background-color:white">| + _title(b) + %Q|</div>|
-      html += %Q|<div style="position:relative;top:0px;float:right;width:100px;font-style:bold;font-size:10px">| + _link_to(b)  + %Q|</div>|
-    else
-      html = %Q|<div style="position:relative;top:0px;float:left;width:100px;color:black;background-color:white">| + _title(b) + %Q|</div>|
-      html += %Q|<div style="position:relative;top:0px;float:left;width:100px;font-style:bold;font-size:10px">| + _link_to(b) + %Q|</div>|
-    end      
+    b.style =~ /^*top:[0-9]+*/
+    top = $~.to_s.split(':').last.to_i  
+    html = %Q|<div class="edittable_background_banner" id="banner_edit_#{div_id}" style="">|
     html += single_banner(p, s, a)
-    #html += "</div>"
+    html += %Q|<span>| + _title(b) + "<br/>" + _link_to(b) + %Q|</span>|
+    html += "</div>"
     html.html_safe
   end
   
   def edittable_multi_banner(p, s, a)
-    html = _edit_common(p, s, a)
+    b = getBanner(p,s,a)
+    raise "Internal Error" if !b
+    html = _edit_common(p, s, a, b)
     html += multi_banner(p, s, a)
+    html += %Q|<span>| + _title(b) + "<br/>" + _link_to(b) + %Q|</span>|
     html += %Q|</div>|
     html.html_safe
   end
