@@ -100,8 +100,16 @@
 									</ul>
 								</div></span>
 						</li>
-						<li>
+						<li id="navigation_management">
 							<%= link_to t("member_management"), users_path %>
+							<span class="management_menu">
+								<div class="">
+									<ul class="">
+										<li class="menu">
+											<%= link_to t("listing"), users_path %>
+										</li>
+									</ul>
+								</div></span>
 						</li>
 						<li>
 							<%= link_to t("site_statistics"), "#" %>

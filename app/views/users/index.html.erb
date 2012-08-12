@@ -1,31 +1,23 @@
-<div class="secondary-navigation">
-	<ul class="wat-cf">
-		<li class="first">
-			<a href="#block-text"><%= t('member_list')%></a>
-		</li>
-	</ul>
-</div>
 <div class="content">
 	<h2 class="title">User List</h2>
 	<div class="inner">
 		<form action="#" class="form">
 			<table class="table">
 				<tr>
-					<th>Id</th>
-					<th>Email</th>
-					<th>Signed In Since</th>
-					<th>Last Signed In On</th>
+					<th><%= t("email") %></th>
+					<th><%= t("name") %></th>				
+					<th><%= t("total_signin") %></th>
+					<th><%= t("last_signin") %></th>
 					<th></th>
 					<th></th>
 				</tr>
-
 				<% @users.each do |user| %>
 				<tr>
-					<td><%= user.id%></td>
 					<td><%= user.email%></td>
+					<td><%= user.name%></td>
 					<td><%= user.sign_in_count%></td>
 					<td><%= user.last_sign_in_at%></td>
-					<td><%= link_to 'Detail', user %></td>
+					<td><%= link_to 'Show', user %></td>
 					<td><%= link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure? All related information will be deleted too.' } %></td>
 				</tr>
 				<% end %>
