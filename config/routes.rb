@@ -97,7 +97,9 @@ AdminOkbrisbane::Application.routes.draw do
 
   get "main/index"
 
-  resources :users
+  match "users/:id/clean_image" => "users#clean_image", :via => :delete, :as => "users_clean_image"
+  match "users/:id/clean_attachment" => "users#clean_attachment", :via => :delete, :as => "users_clean_attachment"
+  resources :users, :except => ["new"]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

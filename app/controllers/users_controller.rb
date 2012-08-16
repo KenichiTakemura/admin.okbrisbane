@@ -80,4 +80,30 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def clean_image
+    @user = User.find(params[:id])
+    images = @user.unattached_image
+    images.each do |i|
+      i.destroy
+    end
+    respond_to do |format|
+      format.html { redirect_to @user }
+      format.json { head :no_content }
+    end
+  end
+
+  def clean_attachment
+    @user = User.find(params[:id])
+    attachments = @user.unattached_attachment
+    attachments.each do |i|
+      i.destroy
+    end
+    respond_to do |format|
+      format.html { redirect_to @user }
+      format.json { head :no_content }
+    end
+  end
+
+
 end

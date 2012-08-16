@@ -53,8 +53,12 @@ class ManagementsController < ApplicationController
     model
   end
   
-  def getPost(model, page)
-    post = model.order.page page
+  def getPost(model, page, user=nil)
+    if !user.nil?
+      post = model.where("posted_by_id = ?", user).order.page page
+    else
+      post = model.order.page page
+    end
     if post.empty? && page.to_i > 1
         post = model.order.page page.to_i - 1
     end
