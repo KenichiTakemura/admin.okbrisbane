@@ -64,9 +64,18 @@ AdminOkbrisbane::Application.routes.draw do
     end
   end
   
+  match 'buy_and_sells/:id' => 'buy_and_sells#destroy', :via => :delete, :as => "buy_and_sell_delete"
+  resources :buy_and_sells, :except => 'destroy' do
+    collection do
+      post :upload
+    end
+  end
+  
   match 'sales_managements/:id/image' => 'sales_managements#destroy_image', :via => :delete, :as => "sales_managements_delete_image"  
   resources :sales_managements, :only => ["index"]
 
+  match 'posts_managements/:id/attachment' => 'posts_managements#destroy_attachment', :via => :delete, :as => "posts_managements_delete_attachment"  
+  match 'posts_managements/:id/image' => 'posts_managements#destroy_image', :via => :delete, :as => "posts_managements_delete_image"  
   resources :posts_managements, :only => ["index"]
   
   devise_for :admins
@@ -84,10 +93,10 @@ AdminOkbrisbane::Application.routes.draw do
   match 'business_clients/:id/images' => 'business_clients#destroy_image', :via => :delete, :as => "business_client_delete_all_images"
   resources :business_clients
 
-  #resources :banners, :only => ["index", "show", "edit", "update"]
   resources :banners, :except => ["new","destroy"] do
     collection do
       get :select
+      get :image_size_index
       post :attach_banner_image
       post :dettach_banner_image
       post :select_business_client_image

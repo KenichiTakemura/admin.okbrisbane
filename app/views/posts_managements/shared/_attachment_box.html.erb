@@ -1,3 +1,9 @@
-<%= noimage?(@post) %>
-<% @post.attachment.each do |image| %>
+<%= noattachment?(@post) %>
+<% @post.attachment.each do |attachment| %>
+<div style="position: relative; float: left;margin-left: 5px">
+	<%= image_tag("common/Icon-Document03-Blue.png", :size => "50x50", :title => "#{attachment.avatar_file_name}") %>
+	<div style="position: absolute; top: 0px; left:95%;">
+		<%= link_to(t('x'), posts_managements_delete_attachment_path(@post, :category => @category,  :attachment => attachment.id), :class => "delete_x", :remote => true, method: :delete, data: { confirm: t('confirm_delete') }) %> 
+	</div>
+</div>
 <% end %>

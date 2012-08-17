@@ -44,15 +44,19 @@
 				<td><%= item.id %></td>
 				<td><%= t("#{item.is_deleted}") %></td>
 				<td><%= t("#{item.category}") %></td>
-				<td><%= item.posted_by.name %></td>
+				<td><%= author_name(item) %></td>
 				<td><%= item.subject %></td>
 				<td><%= Common.date_format(item.created_at) %></td>
 				<td><%= Common.date_format(item.valid_until) %></td>
 				<td>
-					<%= item.has_image? %>
+					<% if item.has_image? %>
+					<%= image_tag("common/IconData2.gif") %>
+					<% end %>
 				</td>
 				<td>
-					<%= item.has_attachment? %>
+					<% if item.has_attachment? %>
+					<%= image_tag("common/IconData2.gif") %>
+					<% end %>
 				</td>
 				<td><%= item.views %></td>
 				<td><%= item.likes %></td>

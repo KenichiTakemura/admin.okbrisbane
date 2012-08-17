@@ -12,6 +12,24 @@ class BannersController < ApplicationController
       format.json { render json: @banners }
     end
   end
+  
+  def image_size_index
+    banners  = Banner.where("is_disabled = false")
+    img_resolutions = Hash.new
+    @image_size_map = Hash.new
+    banners.each do |b|
+      if !img_resolutions[b.img_resolution.to_sym]
+        img_resolutions[b.img_resolution.to_sym] = b.img_resolution 
+        @image_size_map[b.img_resolution.to_sym] = Array.new
+      end
+    end
+    img_resolutions.each do |key,value|
+      banners.each do |b|
+        @image_size_map[key].push(b.name) if value.eql?(b.img_resolution)
+      end
+    end
+    logger.debug("@image_size_map: #{@image_size_map}")
+  end
 
   # GET /banners/1
   # GET /banners/1.json

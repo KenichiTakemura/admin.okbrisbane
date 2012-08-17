@@ -8,6 +8,15 @@ class Admin < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
   
-  has_many :estate, :as => :posted_by, :class_name => 'Estate', :dependent => :destroy
+  has_one :mypage, :as => :mypagable, :class_name => "Mypage", :dependent => :destroy
+  has_many :role, :as => :rolable, :class_name => "Role", :dependent => :destroy
+  
+  after_create :create_mypage, :init_role
 
+  def create_mypage
+    logger.info("User created: " << self.to_s)
+    m = Mypage.create()
+    m.update_attribute(:mypagable, self)
+  end
+  
 end

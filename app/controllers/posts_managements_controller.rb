@@ -9,5 +9,13 @@ class PostsManagementsController < ManagementsController
       format.json { render json: @post }
     end
   end
+  
+  # ajax request
+  # Delete an image
+  def destroy_image
+    @post = _model(@category).find(params[:id])
+    _destroy_image
+  end
+
 
 end

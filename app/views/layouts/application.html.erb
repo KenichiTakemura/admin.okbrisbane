@@ -43,6 +43,9 @@
 							<span class="management_menu">
 								<div class="">
 									<ul class="">
+										<li class="menu" id="image_size" >
+											<%= link_to(t("image_size_list"), image_size_index_banners_path) %>
+										</li>
 										<% Style.pages.each do |key,page| %>
 										<li class="menu" id="<%= page %>" >
 											<%= link_to(t(page), banners_path(:page_id => Style.pageid(key))) %>

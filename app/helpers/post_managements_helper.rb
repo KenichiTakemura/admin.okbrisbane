@@ -3,6 +3,8 @@ module PostManagementsHelper
     case @category
     when Style.page(:p_job)
       return new_job_path(:category => category, :page => current_page)
+    when Style.page(:p_buy_and_sell)
+      return new_buy_and_sell_path(:category => category, :page => current_page)
     else
       raise "Bad Category"
     end
@@ -12,6 +14,8 @@ module PostManagementsHelper
     case @category
     when Style.page(:p_job)
       return edit_job_path(item, :category => category, :page => current_page)
+    when Style.page(:p_buy_and_sell)
+      return edit_buy_and_sell_path(item, :category => category, :page => current_page)
     else
       raise "Bad Category"
     end
@@ -22,6 +26,8 @@ module PostManagementsHelper
     case @category
     when Style.page(:p_job)
       return job_path(item, :category => category, :page => current_page)
+    when Style.page(:p_buy_and_sell)
+      return buy_and_sell_path(item, :category => category, :page => current_page)
     else
       raise "Bad Category"
     end
@@ -31,6 +37,8 @@ module PostManagementsHelper
     case @category
     when Style.page(:p_job)
       return job_delete_path(item, :category => category, :page => current_page)
+    when Style.page(:p_buy_and_sell)
+      return buy_and_sell_delete_path(item, :category => category, :page => current_page)
     else
       raise "Bad Category"
     end
@@ -40,6 +48,8 @@ module PostManagementsHelper
     case @category
     when Style.page(:p_job)
       return job_delete_image_path(item, :category => category)
+    when Style.page(:p_buy_and_sell)
+      return buy_and_sell_delete_image_path(item, :category => category)
     else
       raise "Bad Category"
     end

@@ -1,0 +1,21 @@
+<h2 class="title"><%= t("image_size") %> <%= t("listing") %></h2>
+
+<div class="inner">
+	<table class="table">
+		<tr>
+			<th class="first"><%= t("page") %></th>
+			<th class="last"><%= t("size") %></th>
+		</tr>
+		<% @image_size_map.each do |key,value| %>
+		<tr class="<%= cycle("odd", "even") %>" >
+			<td>
+				<% value.each do |page|%>
+					<%= page %>
+					<br/>
+				<% end %>
+			</td>
+			<td><%= key.to_s %></td>
+		</tr>
+		<% end %>
+	</table>
+</div>
