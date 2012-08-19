@@ -1,4 +1,4 @@
-<h2><%= t("member") %></h2>
+<h2><%= t("admin") %></h2>
 <div class="inner">
 	<table class="table">
 		<th class="first"><%= t("item") %></th>
@@ -37,12 +37,12 @@
 		</tr>
 		<tr class="odd">
 			<td><%= label_tag :unattached_image, t("num_of_unattached_image"), :class => "label left" %> </td>
-			<td><%= @user.unattached_image.size %> <%= link_to t("delete"), users_clean_image_path(@user), method: :delete, data: { confirm: t("confirm_all_delete") } %></td>
+			<td><%= @user.unattached_image.size %> <%= link_to t("delete"), okadmins_clean_image_path(@user), method: :delete, data: { confirm: t("confirm_all_delete") } %></td>
 		</tr>
 		<tr class="even">
 			<td><%= label_tag :unattached_attachment, t("num_of_unattached_attachment"), :class => "label left" %> </td>
-			<td><%= @user.unattached_attachment.size %> <%= link_to t("delete"), users_clean_attachment_path(@user), method: :delete, data: { confirm: t("confirm_all_delete") } %></td>
+			<td><%= @user.unattached_attachment.size %> <%= link_to t("delete"), okadmins_clean_attachment_path(@user), method: :delete, data: { confirm: t("confirm_all_delete") } %></td>
 		</tr>
 		</table>
-<%= link_to 'Back', users_path %>
+		<%= link_to 'Back', okadmins_path %>
 </div>

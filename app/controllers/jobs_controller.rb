@@ -18,8 +18,4 @@ class JobsController < PostsController
     _update(Job, :job)
   end
   
-  def destroy
-    _destroy(Job)
-  end
-  
 end

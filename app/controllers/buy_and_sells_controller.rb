@@ -17,9 +17,5 @@ class BuyAndSellsController < PostsController
   def update
     _update(BuyAndSell, :buy_and_sell)
   end
-  
-  def destroy
-    _destroy(BuyAndSell)
-  end
  
 end

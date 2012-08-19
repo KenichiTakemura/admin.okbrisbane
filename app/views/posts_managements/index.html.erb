@@ -61,7 +61,7 @@
 				<td><%= item.rank %></td>
 				<td><%= item.abuse %></td>
 				<td><%= link_to t('Show'), show_post_path(@category, item, @post.current_page) %><br/><%= link_to t('Edit'), edit_post_path(@category, item, @post.current_page) %><br/>
-					<%= link_to t("#{@category}") << t("Delete"), delete_post_path(@category, item, @post.current_page), method: :delete, data: { confirm: t('confirm_delete') } %></td>
+					<%= link_to t("Delete"), posts_management_path(item, :category => @category, :page => @post.current_page), method: :delete, data: { confirm: t('confirm_delete') } %></td>
 			</tr>
 			<% end %>
 					<% end %>

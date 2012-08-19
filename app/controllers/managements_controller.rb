@@ -1,6 +1,6 @@
 class ManagementsController < ApplicationController
 
-  before_filter :checkCategory, :only => [:write, :destroy_image]
+  before_filter :checkCategory, :only => [:write, :destroy_image,:destroy]
   def checkCategory
     @category = params[:category]
     raise "Bad Category" if @category.nil?
@@ -26,6 +26,15 @@ class ManagementsController < ApplicationController
     post.build_content
     post.valid_until = post_expiry
     post
+  end
+  
+  def _destroy
+    @post = _model(@category).find(params[:id])
+    @post.destroy
+    respond_to do |format|
+      format.html { redirect_to posts_managements_url(:category => @category, :page => @current_page) }
+      format.json { head :no_content }
+    end
   end
 
   # ajax request

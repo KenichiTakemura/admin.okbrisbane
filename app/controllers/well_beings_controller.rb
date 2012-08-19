@@ -18,8 +18,4 @@ class WellBeingsController < PostsController
     _update(WellBeing, :well_being)
   end
   
-  def destroy
-    _destroy(WellBeing)
-  end
-  
 end

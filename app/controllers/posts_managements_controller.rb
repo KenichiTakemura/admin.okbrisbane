@@ -18,6 +18,10 @@ class PostsManagementsController < ManagementsController
     @post = _write_post
   end
   
+  def destroy
+    _destroy
+  end
+  
   def expired
     return if _index.nil?
     logger.debug("PostsManagementsController.expired @category: #{@category}")

@@ -56,13 +56,11 @@ AdminOkbrisbane::Application.routes.draw do
     end
   end
 
-  match 'jobs/:id' => 'jobs#destroy', :via => :delete, :as => "job_delete"
-  resources :jobs, :except => 'destroy'
+  resources :jobs, :except => 'new'
 
-  match 'buy_and_sells/:id' => 'buy_and_sells#destroy', :via => :delete, :as => "buy_and_sell_delete"
-  resources :buy_and_sells, :except => 'destroy'
+  resources :buy_and_sells, :except => 'new'
 
-  resources :well_beings
+  resources :well_beings, :except => 'new'
 
   match 'sales_managements/:id/image' => 'sales_managements#destroy_image', :via => :delete, :as => "sales_managements_delete_image"
   resources :sales_managements, :only => ["index"]
@@ -70,15 +68,16 @@ AdminOkbrisbane::Application.routes.draw do
   match 'posts_managements/:id/attachment' => 'posts_managements#destroy_attachment', :via => :delete, :as => "posts_managements_delete_attachment"
   match 'posts_managements/:id/image' => 'posts_managements#destroy_image', :via => :delete, :as => "posts_managements_delete_image"
   match 'posts_managements/expired' => 'posts_managements#expired', :via => :get, :as => "posts_managements_expired"
-  resources :posts_managements, :only => ["index"] do
+  resources :posts_managements, :only => ["index","destroy"] do
     collection do
       get :write
-      post :upload_image
-      post :upload_attachment
-      post :get_image
-      post :get_attachment
-      delete :delete_image
-      delete :delete_attachment
+      #delete :delete_post
+      #post :upload_image
+      #post :upload_attachment
+      #post :get_image
+      #post :get_attachment
+      #delete :delete_image
+      #delete :delete_attachment
     end
   end
 
@@ -113,8 +112,16 @@ AdminOkbrisbane::Application.routes.draw do
 
   match "users/:id/clean_image" => "users#clean_image", :via => :delete, :as => "users_clean_image"
   match "users/:id/clean_attachment" => "users#clean_attachment", :via => :delete, :as => "users_clean_attachment"
-  resources :users, :except => ["new"]
+  resources :users, :only => ["index","show","destroy"]
 
+  match "okadmins/:id" => "okadmins#destroy", :via => :delete, :as => "okadmins_delete"
+  match "okadmins" => "okadmins#index", :via => :get, :as => "okadmins"
+  match "okadmins/:id" => "okadmins#show", :via => :get, :as => "okadmin"
+  match "okadmins/:id/clean_image" => "okadmins#clean_image", :via => :delete, :as => "okadmins_clean_image"
+  match "okadmins/:id/clean_attachment" => "okadmins#clean_attachment", :via => :delete, :as => "okadmins_clean_attachment"
+
+  resources :okadmins, :only => []
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

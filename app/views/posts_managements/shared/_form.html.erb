@@ -50,7 +50,11 @@
 			<%= f.label :category, t("category"), :class => "label left" %>
 		</div>
 		<div class="">
+		<% if @post.id.nil? %>
 			<%= f.select :category, options_for_select(@post.admin_category_list, @post.category) %>
+		<% else %>
+			<%= t(@post.category) %>
+		<% end %>
 		</div>
 	</div>
 	<% if @post.respond_to? :room_type %>
@@ -93,6 +97,7 @@
 		</div>
 	</div>
 	<% end %>
+	<!--
 	<div class="group wat-cf">
 	    <div class="image">
 	    	<%= f.label :add_image, t("image") + t("add"), :class => "label left" %>
@@ -159,38 +164,14 @@
 			</div>
 			<div class="group">
 			<div class="display_image" style="margin: 3px;float:left">
-				<%= render :partial => 'posts_managements/shared/image_box' %>
+				<% @images = @post.image %>
+				<% @timestamp = @post.write_at %>
+				<%= render :partial => 'posts_managements/shared/upload_image_box' %>
 			</div>
 			</div>
 		</div>
 		<div class="clear"></div>
-
-
-
-
-
-
-
-
-<!-- 
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label t("image"), :class => "label left" %>
-		</div>
-		<div class="">
-			<%= _upload(@category, @post.id) %>
-		</div>
-		<span class="description"><%= t("acceptable_extention") %></span>
-		<br/>
-		<span class="description"><%= t("max_size") %></span>
-	</div>
-
-	<div class="group wat-cf">
-		<div id="thumbnail_box_<%= @post.id%>">
-			<%= render :partial => 'posts_managements/shared/image_box' %>
-		</div>
-	</div>
--->
+    -->
 	<% if !@post.id.nil? %>
 	<div class="group wat-cf">
 		<div class="">

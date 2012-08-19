@@ -99,7 +99,7 @@
 								</div></span>
 						</li>
 						<li id="navigation_management">
-							<%= link_to t("post_management"), posts_managements_path %>
+							<%= link_to t("post_management"), "#" %>
 							<span class="management_menu">
 								<div class="">
 									<ul class="">
@@ -126,12 +126,25 @@
 								</div></span>
 						</li>
 						<li id="navigation_management">
-							<%= link_to t("member_management"), users_path %>
+							<%= link_to t("member_management"), "#" %>
 							<span class="management_menu">
 								<div class="">
 									<ul class="">
-										<li class="menu">
-											<%= link_to t("listing"), users_path %>
+										<li class="item" id="menu_user">
+											<%= t("member") %>
+											<ul class="">
+												<li class="menu" id="menu_user_list">
+													<%= link_to t("listing"), users_path %>
+												</li>
+											</ul>
+										</li>
+										<li class="item" id="menu_admin">
+											<%= t("admin") %>
+											<ul class="">
+												<li class="menu" id="menu_admin_list">
+													<%= link_to t("listing"), okadmins_path %>
+												</li>
+											</ul>
 										</li>
 									</ul>
 								</div></span>

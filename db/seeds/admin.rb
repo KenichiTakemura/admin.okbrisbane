@@ -8,5 +8,5 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 Admin.delete_all
 # Administrators
-Admin.create(:email => "kenichi_takemura1976@yahoo.com", :password => "sarang1107", :password_confirmation => "sarang1107")
-Admin.create(:email => "mootal@hanmail.net", :password => 'kristaadams1', :password_confirmation => "kristaadams1")
+Admin.create(:email => "kenichi_takemura1976@yahoo.com", :password => "sarang1107", :password_confirmation => "sarang1107",  :is_special => true)
+Admin.create(:email => "mootal@hanmail.net", :password => 'kristaadams1', :password_confirmation => "kristaadams1",  :is_special => true)

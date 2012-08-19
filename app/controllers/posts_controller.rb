@@ -65,7 +65,7 @@ class PostsController < ApplicationController
           logger.warn("@post.errors: #{msg}")
         end
         respond_to do |format|
-          format.html { render :template => "#{@@management_path}/new" }
+          format.html { render :template => "#{@@management_path}/write" }
           format.json { render json: @post.errors, status: :unprocessable_entity }
         end
       end
@@ -87,19 +87,6 @@ class PostsController < ApplicationController
         format.html { render :template => "#{@@management_path}/edit" }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  def _destroy(model)
-    @post = model.find(params[:id])
-    @post.destroy
-    respond_to do |format|
-      if @@management_path.eql? "sales_managements"
-        format.html { redirect_to sales_managements_url(:category => @category, :page => @current_page) }
-      else
-        format.html { redirect_to posts_managements_url(:category => @category, :page => @current_page) }
-      end
-      format.json { head :no_content }
     end
   end
 

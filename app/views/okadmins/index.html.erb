@@ -1,0 +1,38 @@
+<div class="content">
+	<h2 class="title"><%=t("admin")%> <%=t("List")%></h2>
+	<div class="inner">
+		<form action="#" class="form">
+			<table class="table">
+				<tr>
+					<th class="first"><%= t("email") %></th>
+					<th><%= t("name") %></th>				
+					<th><%= t("total_signin") %></th>
+					<th><%= t("current_signin_at") %></th>
+					<th><%= t("current_signin_ip") %></th>
+					<th><%= t("last_signin_at") %></th>
+					<th><%= t("last_signin_ip") %></th>
+					<th><%= t("number_of_post") %></th>
+					<th class="last"></th>
+				</tr>
+				<% @users.each do |user| %>
+				<tr>
+					<td><%= user.email%></td>
+					<td><%= user.name%></td>
+					<td><%= user.sign_in_count%></td>
+					<td><%= user.current_sign_in_at%></td>
+					<td><%= user.current_sign_in_ip%></td>
+					<td><%= user.last_sign_in_at%></td>
+					<td><%= user.last_sign_in_ip%></td>
+					<td><%= user.mypage.num_of_post %></td>
+					<td><%= link_to t('Show'), okadmin_path(user) %> | 
+					<% if !user.is_special %>
+					<%= link_to t('Delete'), okadmin_path(user), method: :delete, data: { confirm: t("confirm_delete") } %>
+					<% end %>
+					</td>
+				</tr>
+				<% end %>
+			</table>
+		</form>
+	</div>
+</div>
+
