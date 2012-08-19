@@ -15,6 +15,7 @@ class BannersController < ApplicationController
   
   def image_size_index
     banners  = Banner.where("is_disabled = false")
+    @style_class = "image_size_list"
     img_resolutions = Hash.new
     @image_size_map = Hash.new
     banners.each do |b|
@@ -29,6 +30,11 @@ class BannersController < ApplicationController
       end
     end
     logger.debug("@image_size_map: #{@image_size_map}")
+  end
+  
+  def all_page_index
+    @banners  = Banner.where("is_disabled = false").order("page_id, section_id")
+    @style_class = "all_page_list"
   end
 
   # GET /banners/1

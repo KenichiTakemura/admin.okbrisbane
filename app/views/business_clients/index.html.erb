@@ -1,10 +1,13 @@
 <h2 class="title"><%= t("listing_business_clients", :default => "Business Clients") %></h2>
 
 <div class="inner">
-	<div style="float:right"><%= paginate @business_clients %></div>
+	<div style="float:right">
+		<%= paginate @business_clients %>
+	</div>
 	<table class="table">
 		<tr>
-			<th class="first"><%= t("business_name") %></th>
+			<th class="first"><%= t("Id") %></th>
+			<th><%= t("business_name") %></th>
 			<th><%= t("business_profile_image") %></th>
 			<th><%= t("contact_name")%></th>
 			<th><%= t("business_abn")%></th>
@@ -13,41 +16,36 @@
 		</tr>
 		<% @business_clients.each do |business_client| %>
 		<tr class="<%= cycle("odd", "even") %>" >
+			<td><%= business_client.id %></td>
 			<td><%= link_to business_client.business_name, business_client_path(:id => business_client, :page => @business_clients.current_page) %></td>
-			<td>
-				<% if business_client.business_profile_image.empty? %>
-					<%= noimage %>
-				<% elsif %>
-					
-					<%= image_tag(business_client.main_profile_image.avatar.url(:thumb), :style => "width:50px;height:50px") %>
-											
-				<% end %>
-			</td>
+			<td> <% if business_client.business_profile_image.empty? %>
+			<%= noimage %>
+			<% elsif %>
+
+			<%= image_tag(business_client.main_profile_image.avatar.url(:thumb), :style => "width:50px;height:50px") %>
+
+			<% end %> </td>
 			<td><%= business_client.contact_name %></td>
 			<td><%= business_client.business_abn %></td>
-			<td>
-				<% if business_client.client_image.empty? %>
-					<%= noimage %>
-				<% elsif %>
-				<div class="banner_image_thumbnail">
+			<td> <% if business_client.client_image.empty? %>
+			<%= noimage %>
+			<% elsif %>
+			<div class="banner_image_thumbnail">
 				<% business_client.client_image.each do |client_image| %>
-				
-				<div class="banner_image_thumbnail_each">
-				<%= link_to image_tag(client_image.thumb_image, :style => "width:50px;height:50px"), client_image.medium_image, :target => "_blank" %>
-				<span><%= link_to t('Edit'), edit_client_image_path(client_image) %>
-							</span>
-					</div>
-				<% end %>
-									</div>
 
+				<div class="banner_image_thumbnail_each">
+					<%= link_to image_tag(client_image.thumb_image, :style => "width:50px;height:50px"), client_image.medium_image, :target => "_blank" %>
+					<span><%= link_to t('Edit'), edit_client_image_path(client_image) %> </span>
+				</div>
 				<% end %>
-			</td>
+			</div> <% end %> </td>
 			<td><%= link_to t('add_business_banner_image'), new_client_image_path(:client => business_client, :page => @business_clients.current_page) %>
 			<br/>
-			<% if business_client.business_name != 'OKBRISBANE' %>
+			<% if !business_client.business_name.eql?(Okvalue::BUSINESS_CLIENT_OK) %>
 			<%= link_to t('business_client_delete'), business_client, method: :delete, data: { confirm: t('confirm_delete') } %>
 			<% end %>
-			<br/><%= link_to t('business_banner_image_all_delete'), business_client_delete_all_images_path(business_client), method: :delete, data: { confirm: t('confirm_delete') } %></td>
+			<br/>
+			<%= link_to t('business_banner_image_all_delete'), business_client_delete_all_images_path(business_client), method: :delete, data: { confirm: t('confirm_delete') } %></td>
 		</tr>
 		<% end %>
 	</table>

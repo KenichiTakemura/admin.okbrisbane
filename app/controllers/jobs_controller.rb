@@ -1,10 +1,7 @@
 class JobsController < PostsController
 
   @@management_path = "posts_managements"  
-  def new
-    _new(Job)
-  end
-  
+
   def show
     _show(Job)
   end
@@ -23,11 +20,6 @@ class JobsController < PostsController
   
   def destroy
     _destroy(Job)
-  end
- 
-  # ajax request
-  def upload
-    _upload(Job)
   end
   
 end

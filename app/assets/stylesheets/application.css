@@ -44,11 +44,20 @@ span.management_menu {
   color: black;
   text-decoration: none;
   z-index: 1;
+  width: 400px;
 }
 
 li.menu {
 	margin: auto;
-	width: 80px;
+	width: 100px;
+}
+
+li.item {
+	font-size: 16px;
+	font-style: bold;
+	color: #fff;
+	margin: auto;
+	width: 100px;
 }
 
 #navigation_management:hover span.management_menu {

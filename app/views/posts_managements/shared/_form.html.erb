@@ -1,6 +1,6 @@
 <%= form_for(@post, :html => { :class => "form" }) do |f| %>
 <%= hidden_field_tag :category, @category %>
-<%= hidden_field_tag :page, @current_page %>
+<%= f.hidden_field :write_at, :id => "write_at" %>
 <% if @post.errors.any? %>
 <div id="error_explanation">
 	<ul>
@@ -13,9 +13,17 @@
 </div>
 <br/>
 <% end %>
-<div style="float:right">
-	<%= label_tag :author, t("author"), :class => "label left" %>
-	<%= current_admin.email %>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :author, t("author"), :class => "label left" %>
+	</div>
+	<div class="">
+		<% if @post.posted_by %>
+		<%= @post.posted_by.name %>
+		<% else %>
+		<%= current_admin.name %>
+		<% end %>
+	</div>
 </div>
 <div class="group wat-cf">
 	<div class="">
@@ -27,8 +35,8 @@
 	<span class="description"><%= t("if_checked_not_displayed") %></span>
 </div>
 <%= _script_document_ready(%Q|if ($('#_hide').is(":checked")) {$('#_filter').attr("style", "opacity: 0.2;filter: alpha(opacity=20);") }; $('#_hide').click(function() { if ($('#_hide').is(":checked")) {$('#_filter').attr("style", "opacity: 0.2;filter: alpha(opacity=20);") } else {$('#_filter').attr("style", "") }});|)%>
-	<div id="_filter">
-			<div class="group wat-cf">
+<div id="_filter">
+	<div class="group wat-cf">
 		<div class="">
 			<%= f.label :subject, t("subject"), :class => "label left" %>
 		</div>
@@ -42,11 +50,10 @@
 			<%= f.label :category, t("category"), :class => "label left" %>
 		</div>
 		<div class="">
-			<%= f.select :category, options_for_select(@post.category_list, @post.category) %>
+			<%= f.select :category, options_for_select(@post.admin_category_list, @post.category) %>
 		</div>
-		<span class="description"><%= t("must_be_selected") %></span>
 	</div>
-	<% if @category == Okvalue::ACCOMMODATION %>
+	<% if @post.respond_to? :room_type %>
 	<div class="group wat-cf">
 		<div class="">
 			<%= f.label :room_type, t("room_type"), :class => "label left" %>
@@ -57,6 +64,7 @@
 		<span class="description"><%= t("must_be_selected") %></span>
 	</div>
 	<% end%>
+	<% if @post.respond_to? :price %>
 	<div class="group wat-cf">
 		<div class="">
 			<%= f.label :price, t("price"), :class => "label left" %>
@@ -66,6 +74,7 @@
 		</div>
 		<span class="description"><%= t("must_be_filled") %></span>
 	</div>
+	<% end %>
 	<div class="group wat-cf">
 		<div class="">
 			<%= f.label :valid_until, t('valid_until'), :class => "label left" %>
@@ -73,9 +82,97 @@
 		<div class="">
 			<%= f.date_select :valid_until, :class => "right" %><%= t('until')%>
 		</div>
-		<span class="description"><%= t("not_displayed_after_the_date") %></span>
 	</div>
-	<% if @post.id %>
+	<%= f.fields_for @post.content do |content_form| %>
+	<div class="group wat-cf">
+		<div class="">
+			<%= content_form.label :body, t("content"), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= content_form.cktext_area :body, :toolbar => 'Full' %>
+		</div>
+	</div>
+	<% end %>
+	<div class="group wat-cf">
+	    <div class="image">
+	    	<%= f.label :add_image, t("image") + t("add"), :class => "label left" %>
+	    	<span class="description"><%= t("post_image_upload_description") %></span>
+			<%= text_field_tag :something, '', :placeholder => t("write_something"), :class => "text_field", :id => "something" %>
+			<br/>
+			<%= file_field_tag :image, :id => "image" %><div class="image_upload_status" style="display:none"><%= image_tag("common/loading.gif")%></div>
+			<div class="flash"><div class="image_upload_progress"></div></div>
+			<% script = %Q|
+			    function upload_image() {
+				  if($('\#image').val() != "") {
+      				$('div.image_upload_status').css("display","block");
+     				var formData = new FormData();
+      				formData.append("file", document.getElementById('image').files[0]);
+      				formData.append("something",$("\#something").attr("value"));
+				    formData.append("authenticity_token", $("input[name='authenticity_token']").attr("value"));
+				    formData.append("timestamp", $("\#write_at").attr("value"));
+      				var xhr = new XMLHttpRequest();
+      				xhr.upload.addEventListener("progress", uploadImageProgress, false);
+         	        xhr.addEventListener("load", uploadImageComplete, false);
+      				xhr.open("POST", "/posts_managements/upload_image", true);
+      				xhr.send(formData);
+      			  }
+    			};
+    			function uploadImageProgress(event) {
+      				var progress = Math.round((event.loaded / event.total) * 100);
+      				$('div.image_upload_progress').html(progress + "%");
+    			};
+    			function uploadImageComplete(event) {
+    			   $('div.image_upload_status').css("display","none");
+    			   $('\#image').val('');
+    			   $('\#something').val('');
+                   if (event.target.status != 200) {
+                     $('div.image_upload_progress').html("<div class=\\"message error\\">"
+                       + "<p><strong>#{t("failed_to_upload")}</strong></p></div>");
+                       return false;
+                    }
+                    data = JSON.parse(event.target.responseText);
+                    if(data.result != 0) {
+                    $('div.image_upload_progress').html("<div class=\\"message error\\">"
+                      + "<p><strong>#{t("failed_to_upload")}</strong></p></div>");
+                    } else {
+                      $('div.image_upload_progress').html("<div class=\\"message notice\\">"
+                      + "<p><strong>#{t("successfully_uploaded")}</strong></p></div>");
+                      showImages(data);
+                    }
+    			 };
+    			 function showImages(data) {
+    			 	 ids = data.images;
+                     thumbnails = data.thumbnails;
+                     somethingies = data.somethingies;
+                     var html = "";
+                     for (var i=0; i<ids.length; i++) {
+                       html += '<div style="position: relative; float: left;margin-left: 5px">';
+                       html += '<img src="' + thumbnails[i] + '" title="' + somethingies[i] + '" />';
+                        html += '<div style="position: absolute; top: 0px; left:95%;">';
+                        html += '<a href="/posts_managements/delete_image?id=' + ids[i] + '&t=' + $('\#write_at').val() + '" class="delete_x" rel="nofollow" data-remote="true" data-method="delete" data-confirm="#{t('confirm_delete')}" title="#{t('delete')}">' + "#{t('x')}" + "</a>"
+                        html += "</div></div>"
+                     }
+                     $('div.display_image').html(html);
+    			 };
+    			| %>
+    			<%= _script(%Q|$('\#image').change(function() {upload_image()});| + script) %>
+			</div>
+			<div class="group">
+			<div class="display_image" style="margin: 3px;float:left">
+				<%= render :partial => 'posts_managements/shared/image_box' %>
+			</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+
+
+
+
+
+
+
+
+<!-- 
 	<div class="group wat-cf">
 		<div class="">
 			<%= f.label t("image"), :class => "label left" %>
@@ -87,32 +184,63 @@
 		<br/>
 		<span class="description"><%= t("max_size") %></span>
 	</div>
-	
-	<br/>
+
 	<div class="group wat-cf">
 		<div id="thumbnail_box_<%= @post.id%>">
-			<%= render :partial => 'sales_managements/shared/imagebox' %>
+			<%= render :partial => 'posts_managements/shared/image_box' %>
 		</div>
 	</div>
-		<%= f.fields_for @post.content do |content_form| %>
-		<div class="group wat-cf">
-			<div class="">
-				<%= content_form.label :body, t("content"), :class => "label left" %>
-			</div>
-			<div class="">
-				<%= content_form.cktext_area :body, :toolbar => 'Full' %>
-			</div>
-			<span class="description"><%= t("optional") %></span>
-		</div>
-		<% end %>
-	<% end %>
-	
-	</div>
-				
+-->
+	<% if !@post.id.nil? %>
 	<div class="group wat-cf">
-		<div class="left">
-			<%= f.submit t("create"), :class => "button" %>
+		<div class="">
+			<%= f.label :views, t("viewed"), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.number_field :views, :class => "text_field" %>
 		</div>
 	</div>
-
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :likes, t("liked"), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.number_field :likes, :class => "text_field" %>
+		</div>
+	</div>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :dislikes, t("disliked"), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.number_field :dislikes, :class => "text_field" %>
+		</div>
+	</div>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :rank, t("rank"), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.number_field :rank, :class => "text_field" %>
+		</div>
+	</div>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :abuse, t("abuse"), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.number_field :abuse, :class => "text_field" %>
+		</div>
+	</div>
 	<% end %>
+
+</div>
+<!-- filter -->
+
+<div class="group wat-cf">
+	<div class="left">
+		<%= f.submit t("create"), :class => "button" %>
+	</div>
+</div>
+
+<% end %>

@@ -1,0 +1,26 @@
+<%= render :partial => 'banners/shared/head' %>
+<h2 class="title"><%= t("banner") %> <%= t("page") %> <%= t("listing") %></h2>
+<div class="inner">
+	<table class="table">
+		<thead>
+			<tr>
+			<th class="first"><%= t("Id") %></th>
+			<th><%= t("page") %></th>
+			<th><%= t("div_size") %></th>
+			<th class="last"><%= t("image_size") %></th>
+			</tr>
+		</thead>
+		<tbody>
+		<% i = 1 %>
+		<% @banners.each do |banner| %>
+		  <tr class="<%= cycle("odd", "even") %>" >
+		  	<td><%= i %></td>
+			<td><%= banner.name %></td>
+			<td><%= banner.div_resolution %></td>
+			<td><%= banner.img_resolution %></td>
+		  </tr>
+		  <% i += 1 %>
+		<% end %>
+		</tbody>
+	</table>
+</div>

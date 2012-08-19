@@ -42,7 +42,7 @@
 			<%= f.label :category, t("category"), :class => "label left" %>
 		</div>
 		<div class="">
-			<%= f.select :category, options_for_select(@post.category_list, @post.category) %>
+			<%= f.select :category, options_for_select(@post.admin_category_list, @post.category) %>
 		</div>
 		<span class="description"><%= t("must_be_selected") %></span>
 	</div>
@@ -75,7 +75,6 @@
 		<div class="">
 			<%= f.date_select :valid_until, :class => "right" %><%= t('until')%>
 		</div>
-		<span class="description"><%= t("not_displayed_after_the_date") %></span>
 	</div>
 	<% if @post.id %>
 	<div class="group wat-cf">
@@ -93,7 +92,7 @@
 	<br/>
 	<div class="group wat-cf">
 		<div id="thumbnail_box_<%= @post.id%>">
-			<%= render :partial => 'sales_managements/shared/imagebox' %>
+			<%= render :partial => 'sales_managements/shared/image_box' %>
 		</div>
 	</div>
 	<%= f.fields_for @post.content do |content_form| %>

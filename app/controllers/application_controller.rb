@@ -24,5 +24,10 @@ class ApplicationController < ActionController::Base
   def rescue_action_in_public(exception)
      render :template=>"common/error"
   end
+  
+  def post_expiry
+    system_setting = SystemSetting.first
+    Time.now + system_setting.post_expiry_length.days
+  end
 
 end

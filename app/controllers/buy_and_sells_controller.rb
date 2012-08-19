@@ -1,10 +1,7 @@
 class BuyAndSellsController < PostsController
 
   @@management_path = "posts_managements"  
-  def new
-    _new(BuyAndSell)
-  end
-  
+
   def show
     _show(BuyAndSell)
   end
@@ -25,9 +22,4 @@ class BuyAndSellsController < PostsController
     _destroy(BuyAndSell)
   end
  
-  # ajax request
-  def upload
-    _upload(BuyAndSell)
-  end
-  
 end

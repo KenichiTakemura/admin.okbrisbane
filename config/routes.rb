@@ -6,35 +6,34 @@ AdminOkbrisbane::Application.routes.draw do
       post :upload
     end
   end
-  
+
   match 'estates/:id' => 'estates#destroy', :via => :delete, :as => "estate_delete"
   resources :estates, :except => 'destroy' do
     collection do
       post :upload
     end
   end
-  
+
   match 'businesses/:id' => 'businesses#destroy', :via => :delete, :as => "business_delete"
   resources :businesses, :except => 'destroy' do
     collection do
       post :upload
     end
   end
-  
+
   match 'motor_vehicles/:id' => 'motor_vehicles#destroy', :via => :delete, :as => "motor_vehicle_delete"
   resources :motor_vehicles, :except => 'destroy' do
     collection do
       post :upload
     end
   end
-  
+
   match 'accommodations/:id' => 'accommodations#destroy', :via => :delete, :as => "accommodation_delete"
   resources :accommodations, :except => 'destroy' do
     collection do
       post :upload
     end
   end
-
 
   match 'studies/:id' => 'studies#destroy', :via => :delete, :as => "study_delete"
   resources :studies, :except => 'destroy' do
@@ -58,28 +57,33 @@ AdminOkbrisbane::Application.routes.draw do
   end
 
   match 'jobs/:id' => 'jobs#destroy', :via => :delete, :as => "job_delete"
-  resources :jobs, :except => 'destroy' do
-    collection do
-      post :upload
-    end
-  end
-  
+  resources :jobs, :except => 'destroy'
+
   match 'buy_and_sells/:id' => 'buy_and_sells#destroy', :via => :delete, :as => "buy_and_sell_delete"
-  resources :buy_and_sells, :except => 'destroy' do
-    collection do
-      post :upload
-    end
-  end
-  
-  match 'sales_managements/:id/image' => 'sales_managements#destroy_image', :via => :delete, :as => "sales_managements_delete_image"  
+  resources :buy_and_sells, :except => 'destroy'
+
+  resources :well_beings
+
+  match 'sales_managements/:id/image' => 'sales_managements#destroy_image', :via => :delete, :as => "sales_managements_delete_image"
   resources :sales_managements, :only => ["index"]
 
-  match 'posts_managements/:id/attachment' => 'posts_managements#destroy_attachment', :via => :delete, :as => "posts_managements_delete_attachment"  
-  match 'posts_managements/:id/image' => 'posts_managements#destroy_image', :via => :delete, :as => "posts_managements_delete_image"  
-  resources :posts_managements, :only => ["index"]
-  
+  match 'posts_managements/:id/attachment' => 'posts_managements#destroy_attachment', :via => :delete, :as => "posts_managements_delete_attachment"
+  match 'posts_managements/:id/image' => 'posts_managements#destroy_image', :via => :delete, :as => "posts_managements_delete_image"
+  match 'posts_managements/expired' => 'posts_managements#expired', :via => :get, :as => "posts_managements_expired"
+  resources :posts_managements, :only => ["index"] do
+    collection do
+      get :write
+      post :upload_image
+      post :upload_attachment
+      post :get_image
+      post :get_attachment
+      delete :delete_image
+      delete :delete_attachment
+    end
+  end
+
   devise_for :admins
-  
+
   resources :business_categories
 
   resources :business_profile_images
@@ -97,6 +101,7 @@ AdminOkbrisbane::Application.routes.draw do
     collection do
       get :select
       get :image_size_index
+      get :all_page_index
       post :attach_banner_image
       post :dettach_banner_image
       post :select_business_client_image
@@ -163,9 +168,9 @@ AdminOkbrisbane::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => 'main#index'
 
-  # See how all your routes lay out with "rake routes"
+# See how all your routes lay out with "rake routes"
 
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
+# This is a legacy wild controller route that's not recommended for RESTful applications.
+# Note: This route will make all actions in every controller accessible via GET requests.
+# match ':controller(/:action(/:id))(.:format)'
 end

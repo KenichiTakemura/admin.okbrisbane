@@ -16,7 +16,7 @@ def getBanner(p, s, a)
 end
 
 # logo position
-[:p_job,:p_buy_and_sell,:p_wellbeing,:p_study,:p_immig,:p_estate,:p_law,:p_tax,:p_yellowpage,:p_motor_vehicle,:p_business,:p_accommodation].each do |page|
+[:p_job,:p_buy_and_sell,:p_well_being,:p_study,:p_immig,:p_estate,:p_law,:p_tax,:p_yellowpage,:p_motor_vehicle,:p_business,:p_accommodation].each do |page|
   banner = getBanner(page,:s_body,1)
   client_images = ClientImage.where("original_size = ?", banner.img_resolution)
   client_images.each do |i|
@@ -24,7 +24,7 @@ end
   end
 end
 
-[:p_signin,:p_signup,:p_job,:p_buy_and_sell,:p_wellbeing,:p_study,:p_immig,:p_estate,:p_law,:p_tax,:p_yellowpage,:p_motor_vehicle,:p_business,:p_accommodation].each do |page|
+[:p_signin,:p_signup,:p_job,:p_buy_and_sell,:p_well_being,:p_study,:p_immig,:p_estate,:p_law,:p_tax,:p_yellowpage,:p_motor_vehicle,:p_business,:p_accommodation].each do |page|
   2.upto(5) do |x|
     banner = getBanner(page,:s_body,x)
     client_images = ClientImage.where("original_size = ?", banner.img_resolution)

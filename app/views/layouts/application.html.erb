@@ -43,14 +43,26 @@
 							<span class="management_menu">
 								<div class="">
 									<ul class="">
-										<li class="menu" id="image_size" >
-											<%= link_to(t("image_size_list"), image_size_index_banners_path) %>
+										<li class="item" id="menu_banner_page">
+											<%= t("page") %> <%= t("listing") %>
+											<ul class="">
+												<li class="menu" id="menu_banner_image_size_list">
+													<%= link_to(t("image_size_list"), image_size_index_banners_path) %>
+												</li>
+												<li class="menu" id="menu_banner_all_page_list">
+													<%= link_to(t("all_page_list"), all_page_index_banners_path) %>
+												</li>
+											</ul>
+										<li class="item" id="menu_banner_page_list">
+											<%= t("page") %>
+											<ul class="">
+												<% Style.pages.each do |key,page| %>
+												<li class="menu" id="menu_banner_<%= page %>">
+													<%= link_to(t(page), banners_path(:page_id => Style.pageid(key))) %>
+												</li>
+												<% end %>
+											</ul>
 										</li>
-										<% Style.pages.each do |key,page| %>
-										<li class="menu" id="<%= page %>" >
-											<%= link_to(t(page), banners_path(:page_id => Style.pageid(key))) %>
-										</li>
-										<% end %>
 									</ul>
 								</div></span>
 						</li>
@@ -91,15 +103,25 @@
 							<span class="management_menu">
 								<div class="">
 									<ul class="">
-										<li class="menu" id="menu_<%= Style.page(:p_job) %>">
-											<%= link_to t(Style.page(:p_job)),  posts_managements_path(:category => Style.page(:p_job)) %>
+										<% [:p_job,:p_buy_and_sell,:p_well_being].each do |page| %>
+										<li class="item" id="menu_<%= Style.page(page) %>">
+											<%= t(Style.page(page)) %>
+            								<ul class="">
+												<li class="menu" id="menu_valid_list_<%= Style.page(page) %>">
+													<%= link_to t("valid_post_list"),  posts_managements_path(:category => Style.page(page), :status => 'valid')  %>
+												</li>
+												<li class="menu" id="menu_invalid_list_<%= Style.page(page) %>">
+													<%= link_to t("invalid_post_list"),  posts_managements_path(:category => Style.page(page), :status => 'invalid')  %>
+												</li>
+												<li class="menu" id="menu_expired_<%= Style.page(page) %>">
+													<%= link_to t("expired_post_list"),  posts_managements_expired_path(:category => Style.page(page)) %>
+												</li>
+												<li class="menu" id="menu_new_<%= Style.page(page) %>">
+													<%= link_to t("add"),  write_posts_managements_path(:category => Style.page(page)) %>
+												</li>
+											</ul>
 										</li>
-										<li class="menu" id="menu_<%= Style.page(:p_buy_and_sell) %>">
-											<%= link_to t(Style.page(:p_buy_and_sell)),  posts_managements_path(:category => Style.page(:p_buy_and_sell))  %>
-										</li>
-										<li class="menu" id="menu_<%= Style.page(:p_wellbeing) %>">
-											<%= link_to t(Style.page(:p_wellbeing)),  posts_managements_path(:category => Style.page(:p_wellbeing))  %>
-										</li>
+										<% end %>
 									</ul>
 								</div></span>
 						</li>

@@ -19,4 +19,15 @@ class Admin < ActiveRecord::Base
     m.update_attribute(:mypagable, self)
   end
   
+  def init_role
+    [:p_job,:p_buy_and_sell,:p_well_being].each do |page|
+    role = Role.new(:role_name => Style.page(page), :role_value => Role::R[:user_all] | Role::R[:other_all] | Role::R[:group_all] )
+    role.assign(self)
+    end
+  end
+  
+  def name
+    "#{I18n.t("admin")} [#{self.email}]"
+  end
+  
 end
