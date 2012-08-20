@@ -67,34 +67,29 @@
 								</div></span>
 						</li>
 						<li id="navigation_management">
-							<%= link_to t("sales_management"), sales_managements_path %>
-							<span class="management_menu">
+							<%= link_to t("sales_management"), "#" %>
+                                <span class="management_menu">
 								<div class="">
 									<ul class="">
-										<li class="menu" id="<%= Okvalue::ESTATE %>">
-											<%= link_to t("title_" + Okvalue::ESTATE),  sales_managements_path(:category => Okvalue::ESTATE) %>
+										<% [:p_estate,:p_motor_vehicle,:p_business,:p_accommodation,:p_law,:p_tax,:p_study,:p_immig].each do |page| %>
+										<li class="item" id="menu_<%= Style.page(page) %>">
+											<%= t(Style.page(page)) %>
+            								<ul class="">
+												<li class="menu" id="menu_valid_list_<%= Style.page(page) %>">
+													<%= link_to t("valid_post_list"),  sales_managements_path(:category => Style.page(page), :status => 'valid')  %>
+												</li>
+												<li class="menu" id="menu_invalid_list_<%= Style.page(page) %>">
+													<%= link_to t("invalid_post_list"),  sales_managements_path(:category => Style.page(page), :status => 'invalid')  %>
+												</li>
+												<li class="menu" id="menu_expired_<%= Style.page(page) %>">
+													<%= link_to t("expired_post_list"),  sales_managements_path(:category => Style.page(page), :status => 'expired') %>
+												</li>
+												<li class="menu" id="menu_new_<%= Style.page(page) %>">
+													<%= link_to t("add"),  write_sales_managements_path(:category => Style.page(page)) %>
+												</li>
+											</ul>
 										</li>
-										<li class="menu" id="<%= Okvalue::BUSINESS %>">
-											<%= link_to t("title_" + Okvalue::BUSINESS),  sales_managements_path(:category => Okvalue::BUSINESS)  %>
-										</li>
-										<li class="menu" id="<%= Okvalue::MOTOR_VEHICLE %>">
-											<%= link_to t("title_" + Okvalue::MOTOR_VEHICLE),  sales_managements_path(:category => Okvalue::MOTOR_VEHICLE)  %>
-										</li>
-										<li class="menu"  id="<%= Okvalue::ACCOMMODATION %>">
-											<%= link_to t("title_" + Okvalue::ACCOMMODATION),  sales_managements_path(:category => Okvalue::ACCOMMODATION)  %>
-										</li>
-										<li class="menu" id="<%= Okvalue::LAW%>">
-											<%= link_to t("title_" + Okvalue::LAW),  sales_managements_path(:category => Okvalue::LAW)  %>
-										</li>
-										<li class="menu" id="<%= Okvalue::STUDY%>">
-											<%= link_to t("title_" + Okvalue::STUDY),  sales_managements_path(:category => Okvalue::STUDY)  %>
-										</li>
-										<li class="menu" id="<%= Okvalue::IMMIGRATION %>">
-											<%= link_to t("title_" + Okvalue::IMMIGRATION),  sales_managements_path(:category => Okvalue::IMMIGRATION)  %>
-										</li>
-										<li class="menu" id="<%= Okvalue::TAX%>">
-											<%= link_to t("title_" + Okvalue::TAX),  sales_managements_path(:category => Okvalue::TAX)  %>
-										</li>
+										<% end %>
 									</ul>
 								</div></span>
 						</li>
@@ -114,7 +109,7 @@
 													<%= link_to t("invalid_post_list"),  posts_managements_path(:category => Style.page(page), :status => 'invalid')  %>
 												</li>
 												<li class="menu" id="menu_expired_<%= Style.page(page) %>">
-													<%= link_to t("expired_post_list"),  posts_managements_expired_path(:category => Style.page(page)) %>
+													<%= link_to t("expired_post_list"),  posts_managements_path(:category => Style.page(page), :status => 'expired') %>
 												</li>
 												<li class="menu" id="menu_new_<%= Style.page(page) %>">
 													<%= link_to t("add"),  write_posts_managements_path(:category => Style.page(page)) %>

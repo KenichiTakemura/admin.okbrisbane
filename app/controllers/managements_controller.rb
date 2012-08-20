@@ -6,18 +6,30 @@ class ManagementsController < ApplicationController
     raise "Bad Category" if @category.nil?
   end
 
+  protected
+
   def _index
     @category = params[:category]
+    logger.debug("PostsManagementsController.index @category: #{@category}")
     if !@category || @category.empty?
       logger.debug("@category is empty")
       respond_to do |format|
         format.html # index.html.erb
-        return nil
+        return
       end
     end
     @@page = params[:page]
     logger.debug("category: #{@category} page: #{@@page}")
     @current_page = @@page.to_s
+    if params[:user]
+      @post = getPostByUser(_model(@category), @@page, params[:user])
+    else
+      @post = getPost(_model(@category), @@page, params[:status])
+    end
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @post }
+    end
   end
 
   def _write_post
@@ -27,7 +39,7 @@ class ManagementsController < ApplicationController
     post.valid_until = post_expiry
     post
   end
-  
+
   def _destroy
     @post = _model(@category).find(params[:id])
     @post.destroy
@@ -40,6 +52,7 @@ class ManagementsController < ApplicationController
   # ajax request
   # Delete an image
   def _destroy_image
+    @post = _model(@category).find(params[:id])
     image = Image.find(params[:image])
     logger.info("Destroy Image: #{image} for #{@post}")
     image.destroy
@@ -74,8 +87,6 @@ class ManagementsController < ApplicationController
     end
   end
 
-  protected
-
   MODELS = {:p_job => Job,
     :p_buy_and_sell => BuyAndSell,
     :p_well_being => WellBeing,
@@ -109,23 +120,21 @@ class ManagementsController < ApplicationController
   def getPost(model, page, status)
     if status.nil? || status.eql?("valid")
     post = model.is_valid.order.page page
-    else
+    elsif status.eql?("invalid")
     post = model.is_invalid.order.page page
+    elsif status.eql?("expired")
+      post = model.where("valid_until < ?", Time.now).order.page page
+    else
+      raise "Bad status #{status}"
     end
     if post.empty? && page.to_i > 1
-      if status.nil? || status.eql?("invalid")
-      post = model.is_invalid.order.page page
-      else
-      post = model.is_valid.order.page page
+      if status.nil? || status.eql?("valid")
+      post = model.is_valid.order.page page.to_i - 1
+      elsif status.eql?("invalid")
+      post = model.is_invalid.order.page page.to_i - 1
+      elsif status.eql?("expired")
+        post = model.where("valid_until < ?", Time.now).order.page page.to_i - 1
       end
-    end
-    post
-  end
-
-  def getExpiredPost(model, page)
-    post = model.where("valid_until < ?", Time.now).order.page page
-    if post.empty? && page.to_i > 1
-      post = model.where("valid_until < ?", Time.now).order.page page .to_i - 1
     end
     post
   end

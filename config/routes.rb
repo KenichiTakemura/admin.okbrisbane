@@ -7,8 +7,7 @@ AdminOkbrisbane::Application.routes.draw do
     end
   end
 
-  match 'estates/:id' => 'estates#destroy', :via => :delete, :as => "estate_delete"
-  resources :estates, :except => 'destroy' do
+  resources :estates, :except => ['new','destroy'] do
     collection do
       post :upload
     end
@@ -56,18 +55,21 @@ AdminOkbrisbane::Application.routes.draw do
     end
   end
 
-  resources :jobs, :except => 'new'
+  resources :jobs, :except => ['new','destroy']
 
-  resources :buy_and_sells, :except => 'new'
+  resources :buy_and_sells, :except => ['new','destroy']
 
-  resources :well_beings, :except => 'new'
+  resources :well_beings, :except => ['new','destroy']
 
   match 'sales_managements/:id/image' => 'sales_managements#destroy_image', :via => :delete, :as => "sales_managements_delete_image"
-  resources :sales_managements, :only => ["index"]
-
+  resources :sales_managements, :only => ["index","destroy"] do
+    collection do
+      get :write
+    end
+  end
+  
   match 'posts_managements/:id/attachment' => 'posts_managements#destroy_attachment', :via => :delete, :as => "posts_managements_delete_attachment"
   match 'posts_managements/:id/image' => 'posts_managements#destroy_image', :via => :delete, :as => "posts_managements_delete_image"
-  match 'posts_managements/expired' => 'posts_managements#expired', :via => :get, :as => "posts_managements_expired"
   resources :posts_managements, :only => ["index","destroy"] do
     collection do
       get :write

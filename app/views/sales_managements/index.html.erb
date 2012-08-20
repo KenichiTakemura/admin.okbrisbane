@@ -1,4 +1,3 @@
-<%= render :partial => 'sales_managements/shared/head' %>
 <div class="content">
 	<% if !@category %>
 	<h2 class="title"><%= t('sales_management_title')%></h2>
@@ -11,15 +10,13 @@
 
 	<h2 class="title"><%= t("#{@category}")%>&nbsp;<%= t('List') %></h2>
 	<div class="inner">
-		<% title = t("#{@category}") << t("New") %>
-		<%= link_to title, new_category_path(@category, @post.current_page) %>
 		<div style="float:right"><%= paginate @post %></div>
 		<table class="table">
 			<tr>
 				<th class="first"><%= t("Id") %></th>
 				<th><%= t("hide") %></th>
 				<th><%= t("category") %></th>
-				<% if @category == Okvalue::ACCOMMODATION %>
+				<% if @category.eql?(Style.page(:p_accommodation)) %>
 					<th><%= t("room_type") %></th>
 				<% end %>
 				<th><%= t("subject") %></th>
