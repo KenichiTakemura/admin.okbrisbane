@@ -18,13 +18,4 @@ class PostsManagementsController < ManagementsController
     _destroy_image
   end
   
-  #def delete_image
-  #  _delete_image
-  #end
-
-  #def upload_image
-  #  _upload_image
-  #end
-  
-
 end

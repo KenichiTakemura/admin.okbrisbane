@@ -65,6 +65,9 @@ AdminOkbrisbane::Application.routes.draw do
   resources :sales_managements, :only => ["index","destroy"] do
     collection do
       get :write
+      post :upload_image
+      post :get_image
+      delete :delete_image
     end
   end
   
@@ -73,13 +76,6 @@ AdminOkbrisbane::Application.routes.draw do
   resources :posts_managements, :only => ["index","destroy"] do
     collection do
       get :write
-      #delete :delete_post
-      #post :upload_image
-      #post :upload_attachment
-      #post :get_image
-      #post :get_attachment
-      #delete :delete_image
-      #delete :delete_attachment
     end
   end
 

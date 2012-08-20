@@ -17,5 +17,17 @@ class SalesManagementsController < ManagementsController
   def destroy_image
     _destroy_image
   end
+  
+  def delete_image
+    _delete_image
+  end
+
+  def upload_image
+    _upload_image
+  end
+  
+  def get_image
+    _get_image
+  end
 
 end

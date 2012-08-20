@@ -18,9 +18,4 @@ class EstatesController < PostsController
     _update(Estate, :estate)
   end
 
-  # ajax request
-  def upload
-    _upload(Estate)
-  end
-
 end

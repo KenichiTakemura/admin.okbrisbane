@@ -1,9 +1,6 @@
 class BusinessesController < PostsController
 
   @@management_path = "sales_managements"  
-  def new
-    _new(Business)
-  end
   
   def show
     _show(Business)
@@ -19,15 +16,6 @@ class BusinessesController < PostsController
   
   def update
     _update(Business, :business)
-  end
-  
-  def destroy
-    _destroy(Business)
-  end
-  
-  # ajax request
-  def upload
-    _upload(Business)
   end
   
 end

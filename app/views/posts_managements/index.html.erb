@@ -14,7 +14,7 @@
 		<table class="table">
 			<tr>
 				<th class="first"><%= t("Id") %></th>
-				<th><%= t("hide") %></th>
+				<th><%= t("status") %></th>
 				<th><%= t("category") %></th>
 				<th><%= t("author") %></th>
 				<th><%= t("subject") %></th>
@@ -39,7 +39,7 @@
 			<% @post.each do |item| %>
 			<tr class="<%= cycle("odd", "even") %>">
 				<td><%= item.id %></td>
-				<td><%= t("#{item.is_deleted}") %></td>
+				<td><%= t("#{item.status}") %></td>
 				<td><%= t("#{item.category}") %></td>
 				<td><%= author_name(item) %></td>
 				<td><%= item.subject %></td>
@@ -47,12 +47,12 @@
 				<td><%= Common.date_format(item.valid_until) %></td>
 				<td>
 					<% if item.has_image? %>
-					<%= image_tag("common/IconData2.gif") %>
+					<%= image_tag("common/IconData2.gif") %><%= item.image.size%>
 					<% end %>
 				</td>
 				<td>
 					<% if item.has_attachment? %>
-					<%= image_tag("common/IconData2.gif") %>
+					<%= image_tag("common/IconData2.gif") %><%= item.attachment.size%>
 					<% end %>
 				</td>
 				<td><%= item.views %></td>

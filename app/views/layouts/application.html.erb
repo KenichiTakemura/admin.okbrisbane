@@ -76,13 +76,13 @@
 											<%= t(Style.page(page)) %>
             								<ul class="">
 												<li class="menu" id="menu_valid_list_<%= Style.page(page) %>">
-													<%= link_to t("valid_post_list"),  sales_managements_path(:category => Style.page(page), :status => 'valid')  %>
+													<%= link_to t("public") << " " << t("post_list"),  sales_managements_path(:category => Style.page(page), :status => 'valid')  %>
 												</li>
 												<li class="menu" id="menu_invalid_list_<%= Style.page(page) %>">
-													<%= link_to t("invalid_post_list"),  sales_managements_path(:category => Style.page(page), :status => 'invalid')  %>
+													<%= link_to t("hidden") << " " << t("post_list"),  sales_managements_path(:category => Style.page(page), :status => 'invalid')  %>
 												</li>
 												<li class="menu" id="menu_expired_<%= Style.page(page) %>">
-													<%= link_to t("expired_post_list"),  sales_managements_path(:category => Style.page(page), :status => 'expired') %>
+													<%= link_to t("expired") << " " << t("post_list"),  sales_managements_path(:category => Style.page(page), :status => 'expired') %>
 												</li>
 												<li class="menu" id="menu_new_<%= Style.page(page) %>">
 													<%= link_to t("add"),  write_sales_managements_path(:category => Style.page(page)) %>
@@ -103,13 +103,13 @@
 											<%= t(Style.page(page)) %>
             								<ul class="">
 												<li class="menu" id="menu_valid_list_<%= Style.page(page) %>">
-													<%= link_to t("valid_post_list"),  posts_managements_path(:category => Style.page(page), :status => 'valid')  %>
+													<%= link_to t("public") << " " << t("post_list"),  posts_managements_path(:category => Style.page(page), :status => 'valid')  %>
 												</li>
 												<li class="menu" id="menu_invalid_list_<%= Style.page(page) %>">
-													<%= link_to t("invalid_post_list"),  posts_managements_path(:category => Style.page(page), :status => 'invalid')  %>
+													<%= link_to t("hidden") << " " << t("post_list"),  posts_managements_path(:category => Style.page(page), :status => 'invalid')  %>
 												</li>
 												<li class="menu" id="menu_expired_<%= Style.page(page) %>">
-													<%= link_to t("expired_post_list"),  posts_managements_path(:category => Style.page(page), :status => 'expired') %>
+													<%= link_to t("expired") << " " << t("post_list"),  posts_managements_path(:category => Style.page(page), :status => 'expired') %>
 												</li>
 												<li class="menu" id="menu_new_<%= Style.page(page) %>">
 													<%= link_to t("add"),  write_posts_managements_path(:category => Style.page(page)) %>

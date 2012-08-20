@@ -4,8 +4,8 @@
 		<th class="first"><%= t("item") %></th>
 		<th class="last"><%= t("content") %></th>
 		<tr class="odd">
-			<td><%= label_tag :is_deleted, t("hide"), :class => "label left" %> </td>
-			<td><%= t("#{@post.is_deleted}") %></td>
+			<td><%= label_tag :status, t("status"), :class => "label left" %> </td>
+			<td><%= t("#{@post.status}") %></td>
 		</tr>
 		<tr class="even">
 			<td><%= label_tag :posted_by, t("author"), :class => "label left" %> </td>

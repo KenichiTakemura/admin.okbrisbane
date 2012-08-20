@@ -1,9 +1,6 @@
 class TaxesController < PostsController
   
   @@management_path = "sales_managements"
-  def new
-    _new(Tax)
-  end
   
   def show
     _show(Tax)
@@ -19,15 +16,6 @@ class TaxesController < PostsController
   
   def update
     _update(Tax, :tax)
-  end
-  
-  def destroy
-    _destroy(Tax)
-  end
- 
-  # ajax request
-  def upload
-    _upload(Tax)
   end
   
 end

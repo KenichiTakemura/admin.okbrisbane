@@ -56,7 +56,11 @@ class PostsController < ApplicationController
         end
         flash[:notice] = I18n.t("successfully_created")
         respond_to do |format|
-          format.html { redirect_to posts_managements_path(:category => @category) }
+          if @@management_path.eql? "sales_managements"
+            format.html { redirect_to sales_managements_path(:category => @category) }
+          else
+            format.html { redirect_to posts_managements_path(:category => @category) }
+          end
           format.json { render json: @post, status: :created }
         end
       else

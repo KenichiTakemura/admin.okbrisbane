@@ -1,6 +1,6 @@
 <%= form_for(@post, :html => { :class => "form" }) do |f| %>
 <%= hidden_field_tag :category, @category %>
-<%= hidden_field_tag :page, @current_page %>
+<%= f.hidden_field :write_at, :id => "write_at" %>
 <% if @post.errors.any? %>
 <div id="error_explanation">
 	<ul>
@@ -13,20 +13,26 @@
 </div>
 <br/>
 <% end %>
-<div style="float:right">
-	<%= label_tag :author, t("author"), :class => "label left" %>
-	<%= current_admin.email %>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :author, t("author"), :class => "label left" %>
+	</div>
+	<div class="">
+		<% if @post.posted_by %>
+		<%= @post.posted_by.name %>
+		<% else %>
+		<%= current_admin.name %>
+		<% end %>
+	</div>
 </div>
 <div class="group wat-cf">
 	<div class="">
-		<%= f.label :is_deleted, t("hide"), :class => "label left" %>
+		<%= f.label :status, t("status"), :class => "label left" %>
 	</div>
 	<div class="">
-		<%= f.check_box :is_deleted, :class => "text_field", :id => "_hide" %>
+		<%= f.select :status, options_for_select(@post.status_list, @post.status), :id => "_hide" %>
 	</div>
-	<span class="description"><%= t("if_checked_not_displayed") %></span>
 </div>
-<%= _script_document_ready(%Q|if ($('#_hide').is(":checked")) {$('#_filter').attr("style", "opacity: 0.2;filter: alpha(opacity=20);") }; $('#_hide').click(function() { if ($('#_hide').is(":checked")) {$('#_filter').attr("style", "opacity: 0.2;filter: alpha(opacity=20);") } else {$('#_filter').attr("style", "") }});|)%>
 <div id="_filter">
 	<div class="group wat-cf">
 		<div class="">
@@ -42,7 +48,7 @@
 			<%= f.label :category, t("category"), :class => "label left" %>
 		</div>
 		<div class="">
-			<%= f.select :category, options_for_select(@post.admin_category_list, @post.category) %>
+			<%= f.select :category, options_for_select(@post.category_list, @post.category) %>
 		</div>
 		<span class="description"><%= t("must_be_selected") %></span>
 	</div>
@@ -76,25 +82,88 @@
 			<%= f.date_select :valid_until, :class => "right" %><%= t('until')%>
 		</div>
 	</div>
-	<% if @post.id %>
 	<div class="group wat-cf">
-		<div class="">
-			<%= f.label t("image"), :class => "label left" %>
+	    <div class="image">
+	    	<%= f.label :add_image, t("image") + t("add"), :class => "label left" %>
+	    	<span class="description"><%= t("post_image_upload_description") %></span>
+			<%= text_field_tag :something, '', :placeholder => t("write_something"), :class => "text_field", :id => "something" %>
+			<br/>
+			<%= file_field_tag :image, :id => "image" %><div class="image_upload_status" style="display:none"><%= image_tag("common/loading.gif")%></div>
+			<div class="flash"><div class="image_upload_progress"></div></div>
+			<% script = %Q|
+			    function upload_image() {
+				  if($('\#image').val() != "") {
+      				$('div.image_upload_status').css("display","block");
+     				var formData = new FormData();
+      				formData.append("file", document.getElementById('image').files[0]);
+      				formData.append("something",$("\#something").attr("value"));
+				    formData.append("authenticity_token", $("input[name='authenticity_token']").attr("value"));
+				    formData.append("timestamp", $("\#write_at").attr("value"));
+				    formData.append("category", "#{@category}");|
+				    if !@post.id.nil?
+				    	script += %Q|formData.append("id", #{@post.id});|
+				    end
+				    script += %Q|
+      				var xhr = new XMLHttpRequest();
+      				xhr.upload.addEventListener("progress", uploadImageProgress, false);
+         	        xhr.addEventListener("load", uploadImageComplete, false);
+      				xhr.open("POST", "/sales_managements/upload_image", true);
+      				xhr.send(formData);
+      			  }
+    			};
+    			function uploadImageProgress(event) {
+      				var progress = Math.round((event.loaded / event.total) * 100);
+      				$('div.image_upload_progress').html(progress + "%");
+    			};
+    			function uploadImageComplete(event) {
+    			   $('div.image_upload_status').css("display","none");
+    			   $('\#image').val('');
+    			   $('\#something').val('');
+                   if (event.target.status != 200) {
+                     $('div.image_upload_progress').html("<div class=\\"message error\\">"
+                       + "<p><strong>#{t("failed_to_upload")}</strong></p></div>");
+                       return false;
+                    }
+                    data = JSON.parse(event.target.responseText);
+                    if(data.result != 0) {
+                    $('div.image_upload_progress').html("<div class=\\"message error\\">"
+                      + "<p><strong>#{t("failed_to_upload")}</strong></p></div>");
+                    } else {
+                      $('div.image_upload_progress').html("<div class=\\"message notice\\">"
+                      + "<p><strong>#{t("successfully_uploaded")}</strong></p></div>");
+                      showImages(data);
+                    }
+    			 };
+    			 function showImages(data) {
+    			 	 ids = data.images;
+                     thumbnails = data.thumbnails;
+                     somethingies = data.somethingies;
+                     var html = "";
+                     for (var i=0; i<ids.length; i++) {
+                       html += '<div style="position: relative; float: left;margin-left: 5px">';
+                       html += '<img src="' + thumbnails[i] + '" title="' + somethingies[i] + '" />';
+                       html += '<div style="position: absolute; top: 0px; left:95%;">';
+                       html += '<a href="/sales_managements/delete_image?id=' + ids[i] + '&t=' + $('\#write_at').val()|
+				       if !@post.id.nil?
+				    	 script += %Q| + '&post_id=#{@post.id}'|
+   				       end
+				       script += %Q| + '" class="delete_x" rel="nofollow" data-remote="true" data-method="delete" data-confirm="#{t('confirm_delete')}" title="#{t('delete')}">' + "#{t('x')}" + "</a>"
+                       html += "</div></div>"
+                     }
+                     $('div.display_image').html(html);
+    			 };
+    			| %>
+    			<%= _script(%Q|$('\#image').change(function() {upload_image()});| + script) %>
+			</div>
+			<div class="group">
+			<div class="display_image" style="margin: 3px;float:left">
+				<% @images = @post.image %>
+				<% @timestamp = @post.write_at %>
+				<%= render :partial => 'sales_managements/shared/upload_image_box' %>
+			</div>
+			</div>
 		</div>
-		<div class="">
-			<%= _upload(@category, @post.id) %>
-		</div>
-		<span class="description"><%= t("acceptable_extention") %></span>
-		<br/>
-		<span class="description"><%= t("max_size") %></span>
-	</div>
-
-	<br/>
-	<div class="group wat-cf">
-		<div id="thumbnail_box_<%= @post.id%>">
-			<%= render :partial => 'sales_managements/shared/image_box' %>
-		</div>
-	</div>
+		<div class="clear"></div>
 	<%= f.fields_for @post.content do |content_form| %>
 	<div class="group wat-cf">
 		<div class="">
@@ -106,7 +175,6 @@
 		<span class="description"><%= t("optional") %></span>
 	</div>
 	<% end %>
-	<% end %>
 
 </div>
 
@@ -117,3 +185,14 @@
 </div>
 
 <% end %>
+<% script = %Q|
+$('div.image_upload_status').css("display","block");
+$.post("| + get_image_sales_managements_path + %Q|", {timestamp: $('\#write_at').val()|
+if !@post.id.nil?
+	script += ", id: #{@post.id}"
+end
+script += %Q|}, function(data) {
+  $('div.image_upload_status').css("display","none");showImages(data);
+});|
+%>
+<%= _script_document_ready(script) %>

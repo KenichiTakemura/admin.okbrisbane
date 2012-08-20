@@ -63,7 +63,7 @@ class ManagementsController < ApplicationController
     image = Image.find(params[:id])
     @timestamp = params[:t]
     image.destroy
-    @images = Image.where("attached_by_id = ? AND attached_id is NULL AND write_at = ?", current_admin, @timestamp)
+    @images = find_image(@timestamp, params[:post_id])
   end
 
   def _upload_image
@@ -74,9 +74,14 @@ class ManagementsController < ApplicationController
     if image.thumbnailable?
       image.write_at = timestamp;
       image.something = params[:something]
-      image.attached_by(current_admin)
+      if params[:id]
+        model = MODELS[params[:category].to_sym]
+        image.attached_to_by(model.find(params[:id]), current_admin)
+      else
+        image.attached_by(current_admin)
+      end
       logger.debug("image saved. #{image}")
-      images = Image.where("attached_by_id = ? AND attached_id is NULL AND write_at = ?", current_admin, timestamp)
+      images = find_image(timestamp, params[:id])
       image_ids = images.collect{|i| i.id}
       thumbnails = images.collect{|i| i.thumb_image}
       somethingies = images.collect{|i| i.something}
@@ -85,6 +90,15 @@ class ManagementsController < ApplicationController
       logger.debug("not thumbnailable? #{image}")
       render :json => {:result => 1}
     end
+  end
+  
+  def _get_image
+    timestamp = params[:timestamp]
+    images = find_image(timestamp, params[:id])
+    image_ids = images.collect{|i| i.id}
+    thumbnails = images.collect{|i| i.thumb_image}
+    somethingies = images.collect{|i| i.something}
+    render :json => {:result => 0, :images => image_ids, :thumbnails => thumbnails, :somethingies => somethingies }    
   end
 
   MODELS = {:p_job => Job,
@@ -119,24 +133,32 @@ class ManagementsController < ApplicationController
 
   def getPost(model, page, status)
     if status.nil? || status.eql?("valid")
-    post = model.is_valid.order.page page
+      post = model.is_valid.order.page page
     elsif status.eql?("invalid")
-    post = model.is_invalid.order.page page
+      post = model.is_invalid.order.page page
     elsif status.eql?("expired")
-      post = model.where("valid_until < ?", Time.now).order.page page
+      post = model.expired.order.page page
     else
       raise "Bad status #{status}"
     end
     if post.empty? && page.to_i > 1
       if status.nil? || status.eql?("valid")
-      post = model.is_valid.order.page page.to_i - 1
+        post = model.is_valid.order.page page.to_i - 1
       elsif status.eql?("invalid")
-      post = model.is_invalid.order.page page.to_i - 1
+        post = model.is_invalid.order.page page.to_i - 1
       elsif status.eql?("expired")
-        post = model.where("valid_until < ?", Time.now).order.page page.to_i - 1
+         post = model.expired.order.page page.to_i - 1
       end
     end
     post
+  end
+  
+  def find_image(timestamp, id)
+    if id
+      images = Image.where("attached_by_id = ? AND attached_id = ? AND write_at = ?", current_admin, id, timestamp)
+    else
+      images = Image.where("attached_by_id = ? AND attached_id is NULL AND write_at = ?", current_admin, timestamp)
+    end
   end
 
 end
