@@ -13,9 +13,10 @@ class Admin < ActiveRecord::Base
   has_many :job, :as => :posted_by, :class_name => 'Job', :dependent => :destroy
   has_many :buy_and_sell, :as => :posted_by, :class_name => 'BuyAndSell', :dependent => :destroy
   has_many :well_being, :as => :posted_by, :class_name => 'WellBeing', :dependent => :destroy
-  has_many :comment, :as => :commented_by, :dependent => :destroy
+  has_many :comment, :as => :commented_by, :class_name => 'Comment', :dependent => :destroy
   has_many :attachment, :as => :attached_by, :class_name => 'Attachment', :dependent => :destroy
   has_many :image, :as  => :attached_by, :class_name => 'Image', :dependent => :destroy
+  has_many :issue, :as => :issued, :class_name => "Issue", :dependent => :nullify
 
   after_create :create_mypage, :init_role
 

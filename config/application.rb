@@ -21,6 +21,7 @@ module AdminOkbrisbane
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
+    #config.force_ssl = true
 
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
@@ -66,6 +67,7 @@ module AdminOkbrisbane
     
     # Share model from okbrisbane
     config.autoload_paths += %W( #{Rails.root}/../okbrisbane/app/models )
+    config.autoload_paths += %W(#{Rails.root}/../okbrisbane/app/models/validator)
     config.autoload_paths += %W( #{Rails.root}/../okbrisbane/app/helpers )
     config.autoload_paths += %W( #{Rails.root}/../okbrisbane/lib )
     config.autoload_paths += %W( #{config.root}/../okbrisbane/config/locales/ko.yml )

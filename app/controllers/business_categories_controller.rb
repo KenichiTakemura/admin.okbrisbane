@@ -1,9 +1,7 @@
 class BusinessCategoriesController < ApplicationController
-  # GET /business_categories
-  # GET /business_categories.json
-  def index
-    @business_categories = BusinessCategory.all
 
+  def index
+    @business_categories = BusinessCategory.order.page params[:page]
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @business_categories }
@@ -44,7 +42,7 @@ class BusinessCategoriesController < ApplicationController
 
     respond_to do |format|
       if @business_category.save
-        format.html { redirect_to @business_category, notice: 'Business category was successfully created.' }
+        format.html { redirect_to @business_category, notice: t("successfully_created") }
         format.json { render json: @business_category, status: :created, location: @business_category }
       else
         format.html { render action: "new" }
@@ -60,7 +58,7 @@ class BusinessCategoriesController < ApplicationController
 
     respond_to do |format|
       if @business_category.update_attributes(params[:business_category])
-        format.html { redirect_to @business_category, notice: 'Business category was successfully updated.' }
+        format.html { redirect_to @business_category, notice: t("successfully_updated") }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

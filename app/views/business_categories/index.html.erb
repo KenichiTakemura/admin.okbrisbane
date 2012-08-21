@@ -1,21 +1,37 @@
-<h1>Listing business_categories</h1>
+<h2 class="title"><%= t("listing_business_categories") %></h2>
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @business_categories.each do |business_category| %>
-  <tr>
-    <td><%= link_to 'Show', business_category %></td>
-    <td><%= link_to 'Edit', edit_business_category_path(business_category) %></td>
-    <td><%= link_to 'Destroy', business_category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Business category', new_business_category_path %>
+<div style="position:absolute;right:0px;top:20px;">
+	<%= paginate @business_categories %>
+</div>
+<div class="inner">
+	<table class="table">
+		<tr>
+			<th class="first"><%= t("Id") %></th>
+			<th><%= t("en_name") %></th>
+			<th><%= t("display_name") %></th>
+			<th><%= t("search_keyword")%></th>
+			<th><%= t("business_client")%></th>
+			<th class="last"></th>
+		</tr>
+		<% @business_categories.each do |business_category| %>
+		<tr class="<%= cycle("odd", "even") %>" >
+			<td><%= business_category.id %></td>
+			<td><%= business_category.en_name %></td>
+			<td><%= business_category.display_name %></td>
+			<td><%= business_category.search_keyword %></td>
+			<td>
+				<% business_category.business_client.each do |business_client| %>
+					<%= business_client.business_name %>
+					<br/>
+				<% end %>
+			</td>
+			<td>
+			<%= link_to t('Show'), business_category %>
+			<br/>
+			<%= link_to t('Edit'), edit_business_category_path(business_category) %>
+			<br/>
+			<%= link_to t('Delete'), business_category, method: :delete, data: { confirm: t('confirm_delete') } %>
+		</tr>
+		<% end %>
+	</table>
+</div>

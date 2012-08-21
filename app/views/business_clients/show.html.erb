@@ -1,31 +1,38 @@
 <h2><%= t("business_client") %></h2>
 <div class="inner">
-	<%= link_to t('business_preview'), '#' %>
 	<table class="table">
 		<th class="first"><%= t("item") %></th>
 		<th class="last"><%= t("content") %></th>
 		<tr class="odd">
-			<td><%= label_tag :business_name, t("business_name", :default => "Business Name"), :class => "label left" %> </td>
+			<td><%= label_tag :business_name, t("business_name"), :class => "label left" %> </td>
 			<td><%= @business_client.business_name %></td>
 		</tr>
 		<tr class="even">
-			<td><%= label_tag :contact_name, t("contact_name", :default => "Contact Name"), :class => "label left" %> </td>
+			<td><%= label_tag :contact_name, t("contact_name"), :class => "label left" %> </td>
 			<td><%= @business_client.contact_name %></td>
 		</tr>
 		<tr class="odd">
-			<td><%= label_tag :business_abn, t("business_abn", :default => "ABN"), :class => "label left" %> </td>
+			<td><%= label_tag :business_category, t("business_category"), :class => "label left" %> </td>
+			<td><%= @business_client.business_category %></td>
+		</tr>
+		<tr class="even">
+			<td><%= label_tag :search_keyword, t("search_keyword"), :class => "label left" %> </td>
+			<td><%= @business_client.search_keyword %></td>
+		</tr>
+		<tr class="odd">
+			<td><%= label_tag :business_abn, t("business_abn"), :class => "label left" %> </td>
 			<td><%= @business_client.business_abn %></td>
 		</tr>
 		<tr class="even">
-			<td><%= label_tag :business_url, t("business_url", :default => "URL"), :class => "label left" %> </td>
+			<td><%= label_tag :business_url, t("business_url"), :class => "label left" %> </td>
 			<td><%= @business_client.business_url %></td>
 		</tr>
 		<tr class="odd">
-			<td><%= label_tag :business_phone, t("business_phone", :default => "Phone"), :class => "label left" %> </td>
+			<td><%= label_tag :business_phone, t("business_phone"), :class => "label left" %> </td>
 			<td><%= @business_client.business_phone %></td>
 		</tr>
 		<tr class="even">
-			<td><%= label_tag :business_fax, t("business_fax", :default => "Fax"), :class => "label left" %> </td>
+			<td><%= label_tag :business_fax, t("business_fax"), :class => "label left" %> </td>
 			<td><%= @business_client.business_fax %></td>
 		</tr>
 		<tr class="odd">
@@ -104,6 +111,10 @@
 			</div></td>
 		</tr>
 		<tr class="even">
+			<td><%= label_tag :business_profile_head, t("business_profile_head"), :class => "label left" %> </td>
+			<td><%= raw @business_client.business_profile.head %> </td>
+		</tr>
+		<tr class="odd">
 			<td><%= label_tag :business_profile, t("business_profile"), :class => "label left" %> </td>
 			<td><%= raw @business_client.business_profile.body %> </td>
 		</tr>

@@ -1,5 +1,7 @@
 AdminOkbrisbane::Application.routes.draw do
 
+  resources :issues
+
   match 'legal_services/:id' => 'legal_services#destroy', :via => :delete, :as => "legal_service_delete"
   resources :legal_services, :except => 'destroy' do
     collection do

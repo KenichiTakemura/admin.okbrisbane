@@ -28,12 +28,11 @@
 		<%= f.label :business_category, t("business_category"), :class => "label left" %>
 	</div>
 	<div class="">
-		<%= f.text_field :business_category, :class => "text_field" %>
+		<%= f.select :business_category, options_from_collection_for_select(BusinessCategory.all, "id", "display_name", @business_client.business_category), :include_blank => false %>
 	</div>
 	<span class="description"><%= t("must_be_selected") %></span><br/>
 	<span class="description"><%= link_to t("not_listed"), new_business_category_path %></span>
 </div>
-
 <div class="group wat-cf">
 	<div class="">
 		<%= f.label :contact_name, t("contact_name"), :class => "label left" %>
@@ -106,7 +105,7 @@
 	<div class="">
 		<%= profile_form.text_field :head, :class => 'text_field' %>
 	</div>
-	<span class="description"><%= t("optional") %></span>
+	<span class="description"><%= t("must_be_filled") %></span>
 </div>
 <div class="group wat-cf">
 	<div class="">
@@ -115,7 +114,7 @@
 	<div class="">
 		<%= profile_form.cktext_area :body, :toolbar => 'Full' %>
 	</div>
-	<span class="description"><%= t("optional") %></span>
+	<span class="description"><%= t("must_be_filled") %></span>
 </div>
 <% end %>
 <div class="group wat-cf">

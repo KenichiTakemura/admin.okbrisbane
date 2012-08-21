@@ -47,7 +47,7 @@ module BannersHelper
     b = getBanner(p, s, a)
     raise "Internal Error" if !b
     div_id = Style.create_banner_div(p, s, a)
-    b.style =~ /^*top:[0-9]+*/
+    b.style =~ /^*top:[0-9]*/
     top = $~.to_s.split(':').last.to_i  
     html = %Q|<div class="edittable_background_banner" id="banner_edit_#{div_id}" style="">|
     html += single_banner(p, s, a)

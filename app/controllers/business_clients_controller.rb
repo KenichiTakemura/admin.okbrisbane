@@ -44,8 +44,10 @@ class BusinessClientsController < ApplicationController
   # POST /business_clients
   # POST /business_clients.json
   def create
-    @business_client = BusinessClient.new(params[:business_client])
-
+    business_category = BusinessCategory.find(params[:business_client][:business_category])
+    params[:business_client].delete :business_category
+   @business_client = BusinessClient.new(params[:business_client])
+   @business_client.business_category = business_category
     respond_to do |format|
       if @business_client.save
         format.html { redirect_to @business_client, notice: t("successfully_created") }

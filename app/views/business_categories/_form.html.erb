@@ -1,17 +1,58 @@
-<%= form_for(@business_category) do |f| %>
-  <% if @business_category.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@business_category.errors.count, "error") %> prohibited this business_category from being saved:</h2>
+<%= form_for(@business_category, :html => { :class => "form" }) do |f| %>
 
-      <ul>
-      <% @business_category.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<% if @business_category.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@business_category.errors.count, "error") %> prohibited this business_category from being saved:</h2>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+	<ul>
+		<% @business_category.errors.full_messages.each do |msg| %>
+		<li>
+			<%= msg %>
+		</li>
+		<% end %>
+	</ul>
+</div>
 <% end %>
+
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :en_name, t("en_name"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :en_name, :class => "text_field" %>
+	</div>
+	<span class="description"><%= t("must_be_filled") %></span>
+	<br />
+	<span class="description"><%= t("only_characters") %></span>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :display_name, t("display_name"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :display_name, :class => "text_field" %>
+	</div>
+	<span class="description"><%= t("must_be_filled") %></span>
+	<br />
+	<span class="description"><%= t("korean_allowed") %></span>
+</div>
+
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :search_keyword, t("search_keyword"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :search_keyword, :class => "text_field" %>
+	</div>
+	<span class="description"><%= t("optional") %></span>
+	<br />
+	<span class="description"><%= t("commma_separated") %></span>
+</div>
+
+<div class="group wat-cf">
+	<div class="left">
+		<%= f.submit t("create"), :class => "button" %>
+	</div>
+</div>
+<% end %>
+

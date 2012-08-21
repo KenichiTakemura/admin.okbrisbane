@@ -24,17 +24,32 @@
 				<div id="main-navigation">
 					<ul>
 						<li id="navigation_management">
-							<%= link_to t("client_management"), business_clients_path %>
+							<%= link_to t("client_management"), "#" %>
 							<span class="management_menu">
 								<div class="">
 									<ul class="">
-										<li class="menu">
-											<%= link_to t("listing"), business_clients_path %>
+										<li class="item" id="menu_business_client">
+											<%= t("business_client") %>
+											<ul class="">
+												<li class="menu" id="menu_business_client_list">
+													<%= link_to t("listing"), business_clients_path %>
+												</li>
+												<li class="menu" id="menu_new_business_client">
+													<%= link_to t("add"), new_business_client_path(@current_page) %>
+												</li>
+											</ul>
 										</li>
-										<li class="menu">
-											<%= link_to t("add"), new_business_client_path(@current_page) %>
+										<li class="item" id="menu_business_category">
+											<%= t("business_category") %>
+											<ul class="">
+												<li class="menu" id="menu_business_category_list">
+													<%= link_to t("listing"), business_categories_path %>
+												</li>
+												<li class="menu" id="menu_new_business_client">
+													<%= link_to t("add"), new_business_category_path(@current_page) %>
+												</li>
+											</ul>
 										</li>
-
 									</ul>
 								</div></span>
 						</li>
@@ -68,13 +83,13 @@
 						</li>
 						<li id="navigation_management">
 							<%= link_to t("sales_management"), "#" %>
-                                <span class="management_menu">
+							<span class="management_menu">
 								<div class="">
 									<ul class="">
 										<% [:p_estate,:p_motor_vehicle,:p_business,:p_accommodation,:p_law,:p_tax,:p_study,:p_immig].each do |page| %>
 										<li class="item" id="menu_<%= Style.page(page) %>">
 											<%= t(Style.page(page)) %>
-            								<ul class="">
+											<ul class="">
 												<li class="menu" id="menu_valid_list_<%= Style.page(page) %>">
 													<%= link_to t("public") << " " << t("post_list"),  sales_managements_path(:category => Style.page(page), :status => 'valid')  %>
 												</li>
@@ -101,7 +116,7 @@
 										<% [:p_job,:p_buy_and_sell,:p_well_being].each do |page| %>
 										<li class="item" id="menu_<%= Style.page(page) %>">
 											<%= t(Style.page(page)) %>
-            								<ul class="">
+											<ul class="">
 												<li class="menu" id="menu_valid_list_<%= Style.page(page) %>">
 													<%= link_to t("public") << " " << t("post_list"),  posts_managements_path(:category => Style.page(page), :status => 'valid')  %>
 												</li>
