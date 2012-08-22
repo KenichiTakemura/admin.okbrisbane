@@ -162,8 +162,26 @@
 						<li>
 							<%= link_to t("site_statistics"), "#" %>
 						</li>
-						<li>
+						<li id="navigation_management">
 							<%= link_to t("issue_management"), "#" %>
+							<span class="management_menu">
+								<div class="">
+									<ul class="">
+										<% [:p_issue,].each do |page| %>
+										<li class="item" id="menu_issue">
+											<%= t("issue") %>
+											<ul class="">
+												<li class="menu" id="menu_issue_list">
+													<%= link_to t("listing"), issues_managements_path(:category => Style.page(page), :status => 'valid') %>
+												</li>
+												<li class="menu" id="menu_new_issue">
+													<%= link_to t("add"), write_issues_managements_path(:category => Style.page(page)) %>
+												</li>
+											</ul>
+										</li>
+										<% end %>
+									</ul>
+								</div> </span>
 						</li>
 					</ul>
 					<div class="clear"></div>

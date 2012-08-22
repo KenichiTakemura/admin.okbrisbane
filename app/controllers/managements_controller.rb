@@ -1,12 +1,15 @@
 class ManagementsController < ApplicationController
 
-  before_filter :checkCategory, :only => [:write, :destroy_image,:destroy]
+  before_filter :checkCategory, :only => [:write, :edit, :show, :destroy_image,:destroy]
+
   def checkCategory
     @category = params[:category]
     raise "Bad Category" if @category.nil?
   end
 
   protected
+
+  @@management_path = "this_is_over_written"
 
   def _index
     @category = params[:category]
@@ -34,9 +37,20 @@ class ManagementsController < ApplicationController
 
   def _write_post
     post = _model(@category).new
-    post.write_at = Time.now.to_i
+    post.write_at = Time.now.utc.to_i
     post.build_content
     post.valid_until = post_expiry
+    @managements_path = @@management_path
+    post
+  end
+  
+  def _edit
+    post = _model(@category).find(params[:id])
+    post
+  end
+  
+  def _show
+    post = _model(@category).find(params[:id])
     post
   end
 
@@ -44,7 +58,15 @@ class ManagementsController < ApplicationController
     @post = _model(@category).find(params[:id])
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to posts_managements_url(:category => @category, :page => @current_page) }
+      if @@management_path.eql? "sales_managements"
+        format.html { redirect_to sales_managements_url(:category => @category, :page => @current_page) }
+      elsif @@management_path.eql? "posts_managements"
+        format.html { redirect_to posts_managements_url(:category => @category, :page => @current_page) }
+      elsif @@management_path.eql? "issues_managements"
+        format.html { redirect_to issues_managements_url(:category => @category, :page => @current_page) }
+      else
+        raise "Bad management_path #{@@management_path}"
+      end
       format.json { head :no_content }
     end
   end
@@ -74,11 +96,12 @@ class ManagementsController < ApplicationController
     if image.thumbnailable?
       image.write_at = timestamp;
       image.something = params[:something]
+      model = MODELS[params[:category].to_sym]
       if params[:id]
-        model = MODELS[params[:category].to_sym]
         image.attached_to_by(model.find(params[:id]), current_admin)
       else
         image.attached_by(current_admin)
+        image.update_attribute(:attached_type, model.to_s) 
       end
       logger.debug("image saved. #{image}")
       images = find_image(timestamp, params[:id])
@@ -91,14 +114,14 @@ class ManagementsController < ApplicationController
       render :json => {:result => 1}
     end
   end
-  
+
   def _get_image
     timestamp = params[:timestamp]
     images = find_image(timestamp, params[:id])
     image_ids = images.collect{|i| i.id}
     thumbnails = images.collect{|i| i.thumb_image}
     somethingies = images.collect{|i| i.something}
-    render :json => {:result => 0, :images => image_ids, :thumbnails => thumbnails, :somethingies => somethingies }    
+    render :json => {:result => 0, :images => image_ids, :thumbnails => thumbnails, :somethingies => somethingies }
   end
 
   MODELS = {:p_job => Job,
@@ -114,7 +137,8 @@ class ManagementsController < ApplicationController
     :p_immig => Immigration,
     :p_yellowpage => BusinessClient,
     :p_sponsor => BusinessClient,
-    :p_mypage => Mypage
+    :p_mypage => Mypage,
+    :p_issue => Issue
   }
 
   def _model(category)
@@ -133,26 +157,26 @@ class ManagementsController < ApplicationController
 
   def getPost(model, page, status)
     if status.nil? || status.eql?("valid")
-      post = model.is_valid.order.page page
+    post = model.is_valid.order.page page
     elsif status.eql?("invalid")
-      post = model.is_invalid.order.page page
+    post = model.is_invalid.order.page page
     elsif status.eql?("expired")
-      post = model.expired.order.page page
+    post = model.expired.order.page page
     else
       raise "Bad status #{status}"
     end
     if post.empty? && page.to_i > 1
       if status.nil? || status.eql?("valid")
-        post = model.is_valid.order.page page.to_i - 1
+      post = model.is_valid.order.page page.to_i - 1
       elsif status.eql?("invalid")
-        post = model.is_invalid.order.page page.to_i - 1
+      post = model.is_invalid.order.page page.to_i - 1
       elsif status.eql?("expired")
-         post = model.expired.order.page page.to_i - 1
+      post = model.expired.order.page page.to_i - 1
       end
     end
     post
   end
-  
+
   def find_image(timestamp, id)
     if id
       images = Image.where("attached_by_id = ? AND attached_id = ? AND write_at = ?", current_admin, id, timestamp)

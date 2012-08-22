@@ -82,14 +82,23 @@
 			<%= f.date_select :valid_until, :class => "right" %><%= t('until')%>
 		</div>
 	</div>
-	<div class="group wat-cf">
+	<div claFss="group wat-cf">
 	    <div class="image">
+	        <div class="image_description" style="width:400px;margin:5px;">
 	    	<%= f.label :add_image, t("image") + t("add"), :class => "label left" %>
-	    	<span class="description"><%= t("post_image_upload_description") %></span>
-			<%= text_field_tag :something, '', :placeholder => t("write_something"), :class => "text_field", :id => "something" %>
+	    	<div class="flash"><div class="image_upload_progress"></div>
+	        <span class="description"><%= t("post_image_upload_description") %></span>
+	        <br/>
+			<%= file_field_tag :image, :id => "image" %>
+			<%= text_area_tag :something, '', :placeholder => t("write_something"), :class => "text_area", :id => "something", :style => "resize:none;margin-top:5px;height:60px;text-align:top" %>
+			<%= link_to t("add"), "#", :id => "upload_image_submit", :class => "button", :style => "margin:5px" %>
 			<br/>
-			<%= file_field_tag :image, :id => "image" %><div class="image_upload_status" style="display:none"><%= image_tag("common/loading.gif")%></div>
-			<div class="flash"><div class="image_upload_progress"></div></div>
+			</div>
+			<div style="position:relative;float:left;margin-top:10px">
+			<div class="image_upload_status" style="display:none"><%= image_tag("common/loading.gif")%></div>
+
+			</div>
+			</div>
 			<% script = %Q|
 			    function upload_image() {
 				  if($('\#image').val() != "") {
@@ -107,7 +116,7 @@
       				var xhr = new XMLHttpRequest();
       				xhr.upload.addEventListener("progress", uploadImageProgress, false);
          	        xhr.addEventListener("load", uploadImageComplete, false);
-      				xhr.open("POST", "/sales_managements/upload_image", true);
+      				xhr.open("POST", "upload_image", true);
       				xhr.send(formData);
       			  }
     			};
@@ -143,7 +152,7 @@
                        html += '<div style="position: relative; float: left;margin-left: 5px">';
                        html += '<img src="' + thumbnails[i] + '" title="' + somethingies[i] + '" />';
                        html += '<div style="position: absolute; top: 0px; left:95%;">';
-                       html += '<a href="/sales_managements/delete_image?id=' + ids[i] + '&t=' + $('\#write_at').val()|
+                       html += '<a href="delete_image?id=' + ids[i] + '&t=' + $('\#write_at').val()|
 				       if !@post.id.nil?
 				    	 script += %Q| + '&post_id=#{@post.id}'|
    				       end
@@ -153,7 +162,9 @@
                      $('div.display_image').html(html);
     			 };
     			| %>
-    			<%= _script(%Q|$('\#image').change(function() {upload_image()});| + script) %>
+    			<%= _script(%Q|$('\#upload_image_submit').click(function() {upload_image();return false});
+    			$('\#image').click(function() {$('div.image_upload_progress').html('');});
+    			| + script) %>
 			</div>
 			<div class="group">
 			<div class="display_image" style="margin: 3px;float:left">
@@ -187,7 +198,7 @@
 <% end %>
 <% script = %Q|
 $('div.image_upload_status').css("display","block");
-$.post("| + get_image_sales_managements_path + %Q|", {timestamp: $('\#write_at').val()|
+$.post("| + "get_image" + %Q|", {timestamp: $('\#write_at').val()|
 if !@post.id.nil?
 	script += ", id: #{@post.id}"
 end

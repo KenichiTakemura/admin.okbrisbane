@@ -1,6 +1,1 @@
-<h2 class="title">	<%= t("#{@category}") %> #<%= @post.id %> <%= t('Edit')%></h2>
-<div class="inner">
-	<%= render 'sales_managements/shared/form' %>
-<%= link_to t('Show'), show_category_path(@category, @post, @current_page) %> |
-<%= link_to t('Back'), sales_managements_path(:category => @category, :page => @current_page) %>
-</div>
+<%= render 'sales_managements/shared/edit' %>

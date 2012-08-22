@@ -1,61 +1,22 @@
 AdminOkbrisbane::Application.routes.draw do
+  
+  resources :issues, :only => ['create','update']
 
-  resources :issues
+  resources :legal_services, :only => ['create','update']
 
-  match 'legal_services/:id' => 'legal_services#destroy', :via => :delete, :as => "legal_service_delete"
-  resources :legal_services, :except => 'destroy' do
-    collection do
-      post :upload
-    end
-  end
+  resources :estates, :only => ['create','update']
 
-  resources :estates, :except => ['new','destroy'] do
-    collection do
-      post :upload
-    end
-  end
+  resources :businesses, :only => ['create','update']
 
-  match 'businesses/:id' => 'businesses#destroy', :via => :delete, :as => "business_delete"
-  resources :businesses, :except => 'destroy' do
-    collection do
-      post :upload
-    end
-  end
+  resources :motor_vehicles, :only => ['create','update']
 
-  match 'motor_vehicles/:id' => 'motor_vehicles#destroy', :via => :delete, :as => "motor_vehicle_delete"
-  resources :motor_vehicles, :except => 'destroy' do
-    collection do
-      post :upload
-    end
-  end
+  resources :accommodations, :only => ['create','update']
 
-  match 'accommodations/:id' => 'accommodations#destroy', :via => :delete, :as => "accommodation_delete"
-  resources :accommodations, :except => 'destroy' do
-    collection do
-      post :upload
-    end
-  end
+  resources :studies, :only => ['create','update']
 
-  match 'studies/:id' => 'studies#destroy', :via => :delete, :as => "study_delete"
-  resources :studies, :except => 'destroy' do
-    collection do
-      post :upload
-    end
-  end
+  resources :immigrations, :only => ['create','update']
 
-  match 'immigrations/:id' => 'immigrations#destroy', :via => :delete, :as => "immigration_delete"
-  resources :immigrations, :except => 'destroy' do
-    collection do
-      post :upload
-    end
-  end
-
-  match 'taxes/:id' => 'taxes#destroy', :via => :delete, :as => "tax_delete"
-  resources :taxes, :except => 'destroy' do
-    collection do
-      post :upload
-    end
-  end
+  resources :taxes, :only => ['create','update']
 
   resources :jobs, :except => ['new','destroy']
 
@@ -63,8 +24,11 @@ AdminOkbrisbane::Application.routes.draw do
 
   resources :well_beings, :except => ['new','destroy']
 
-  match 'sales_managements/:id/image' => 'sales_managements#destroy_image', :via => :delete, :as => "sales_managements_delete_image"
-  resources :sales_managements, :only => ["index","destroy"] do
+  match 'issues_managements/:id/upload_image' => 'issues_managements#upload_image', :via => :post
+  match 'issues_managements/:id/get_image' => 'issues_managements#get_image', :via => :post
+  match 'issues_managements/:id/delete_image' => 'issues_managements#delete_image', :via => :delete
+  match 'issues_managements/:id/image' => 'issues_managements#destroy_image', :via => :delete, :as => "issues_managements_delete_image"
+  resources :issues_managements, :only => ["index","destroy","edit","show"] do
     collection do
       get :write
       post :upload_image
@@ -73,11 +37,30 @@ AdminOkbrisbane::Application.routes.draw do
     end
   end
   
-  match 'posts_managements/:id/attachment' => 'posts_managements#destroy_attachment', :via => :delete, :as => "posts_managements_delete_attachment"
-  match 'posts_managements/:id/image' => 'posts_managements#destroy_image', :via => :delete, :as => "posts_managements_delete_image"
-  resources :posts_managements, :only => ["index","destroy"] do
+  match 'sales_managements/:id/upload_image' => 'sales_managements#upload_image', :via => :post
+  match 'sales_managements/:id/get_image' => 'sales_managements#get_image', :via => :post
+  match 'sales_managements/:id/delete_image' => 'sales_managements#delete_image', :via => :delete 
+  match 'sales_managements/:id/image' => 'sales_managements#destroy_image', :via => :delete, :as => "sales_managements_delete_image"
+  resources :sales_managements, :only => ["index","destroy","edit","show"] do
     collection do
       get :write
+      post :upload_image
+      post :get_image
+      delete :delete_image
+    end
+  end
+  
+  match 'posts_managements/:id/upload_image' => 'posts_managements#upload_image', :via => :post
+  match 'posts_managements/:id/get_image' => 'posts_managements#get_image', :via => :post
+  match 'posts_managements/:id/delete_image' => 'posts_managements#delete_image', :via => :delete 
+  match 'posts_managements/:id/attachment' => 'posts_managements#destroy_attachment', :via => :delete, :as => "posts_managements_delete_attachment"
+  match 'posts_managements/:id/image' => 'posts_managements#destroy_image', :via => :delete, :as => "posts_managements_delete_image"
+  resources :posts_managements, :only => ["index","destroy","edit","show"] do
+    collection do
+      get :write
+      post :upload_image
+      post :get_image
+      delete :delete_image
     end
   end
 

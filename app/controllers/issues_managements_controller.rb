@@ -1,5 +1,5 @@
-class SalesManagementsController < ManagementsController
-    
+class IssuesManagementsController < ManagementsController
+  
   def index
     _index
   end
@@ -37,5 +37,6 @@ class SalesManagementsController < ManagementsController
   def get_image
     _get_image
   end
+
 
 end
