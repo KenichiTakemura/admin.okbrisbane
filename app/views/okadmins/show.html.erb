@@ -44,5 +44,5 @@
 			<td><%= @user.unattached_attachment.size %> <%= link_to t("delete"), okadmins_clean_attachment_path(@user), method: :delete, data: { confirm: t("confirm_all_delete") } %></td>
 		</tr>
 		</table>
-		<%= link_to 'Back', okadmins_path %>
+		<%= link_to t('Back'), okadmins_path %>
 </div>

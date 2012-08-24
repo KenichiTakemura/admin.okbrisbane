@@ -45,7 +45,7 @@ class BusinessProfileImagesController < ApplicationController
     @business_profile_image = BusinessProfileImage.new(params[:business_profile_image])
     if @business_profile_image.attached_id
       @business_client = BusinessClient.find_by_id(@business_profile_image.attached_id)
-    end
+    end    
     # mark is_main if the first one
     logger.debug("business_profile_image.size: #{@business_client.business_profile_image.size}")
     if @business_client.business_profile_image.empty?

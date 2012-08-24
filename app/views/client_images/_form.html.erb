@@ -48,14 +48,8 @@
 				<%= f.file_field :avatar, :id => "avatar" %>
 			</div>
 			<span class="description"><%= t("acceptable_extention") %></span>
-		</div>
-		<div class="group wat-cf">
-			<div class="">
-				<%= f.label :original_size, t("image_size"), :class => "label left" %>
-			</div>
-			<div class="">
-				<%= f.select :original_size, options_for_select(@img_resolutions) %>
-			</div>
+			<br/>
+			<span class="description"><%= t("auto_detect_image_size") %></span>
 		</div>
 		<div class="group wat-cf" >
 			<div class="">
@@ -65,7 +59,7 @@
 				<%= f.url_field :source_url, :class => "text_field", :id => "url_field" %>
 			</div>
 			<div id="content_url"></div>
-			<span class="description"><%= t("client_image_leave_blank_to_show_profile") %></span>
+			<span class="description"><%= t("read_image_from_the_url") %></span>
 		</div>
 		<div class="group wat-cf">
 			<div class="">
@@ -76,7 +70,6 @@
 			</div>
 			<span class="description"><%= t("client_image_leave_blank_to_show_profile") %></span>
 		</div>
-
 		<div class="group wat-cf">
 			<div class="">
 				<%= f.label :caption, t("caption"), :class => "label left" %>
@@ -84,7 +77,7 @@
 			<div class="">
 				<%= f.text_field :caption, :class => "text_field" %>
 			</div>
-			<span class="description"><%= t("client_image_leave_blank_to_show_profile") %></span>
+			<span class="description"><%= t("optional") %></span><br/>
 		</div>
 		<div class="group wat-cf">
 			<div class="left">
@@ -100,7 +93,7 @@
 			<%= image_tag(client_image.thumb_image, :size => client_image.thumb_size) %>
 			<%= flash?(@client_image) %>
 			<p>
-				<%= client_image.original_size %>
+				<%= t("image_size") %> <%= client_image.original_size %>
 			</p>
 			<p>
 				<%= client_image.avatar_content_type %>
@@ -124,7 +117,7 @@
 			<%= image_tag(@client_image.original_image, :size => @client_image.original_size) %>
 			<%= flash?(@client_image) %>
 			<p>
-				<%= @client_image.original_size %>
+				<%= t("image_size") %> <%= @client_image.original_size %>
 			</p>
 			<p>
 				<%= @client_image.avatar_content_type %>

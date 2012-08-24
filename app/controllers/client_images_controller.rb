@@ -1,19 +1,8 @@
 class ClientImagesController < ApplicationController
 
-  def _image_map
-    banners  = Banner.all
-    @img_resolutions = Hash.new
-    banners.each do |b|
-      @img_resolutions[b.img_resolution.to_sym] = b.img_resolution if !@img_resolutions[b.img_resolution.to_sym]
-    end
-  end
-
-  # GET /client_images/new
-  # GET /client_images/new.json
   def new
     @current_page = params[:page]
     @client_image = ClientImage.new
-    _image_map
     # Called from BusinessClient
     if(params[:client])
       @business_client = BusinessClient.find_by_id(params[:client])
@@ -28,13 +17,11 @@ class ClientImagesController < ApplicationController
   
   def edit
     @client_image = ClientImage.find(params[:id])
-    _image_map
     @business_client = BusinessClient.find_by_id(@client_image.attached_id)
   end
   
   def update
     @client_image = ClientImage.find(params[:id])
-    _image_map
     @business_client = BusinessClient.find_by_id(@client_image.attached_id)
    respond_to do |format|
       if @client_image.update_attributes(params[:client_image])
@@ -47,9 +34,6 @@ class ClientImagesController < ApplicationController
     end
   end
 
-
-  # POST /client_images
-  # POST /client_images.json
   def create
     _file = params[:client_image][:avatar]
     if _file.content_type.eql? Okvalue::FLASH_CONTENT_TYPE
@@ -71,7 +55,6 @@ class ClientImagesController < ApplicationController
     logger.debug("client_image: #{@client_image}")
     @business_client = BusinessClient.find_by_id(@client_image.attached_id)
     logger.debug("business_client: #{@business_client}")
-    _image_map
     respond_to do |format|  
       if @client_image.save
         logger.debug("client_image saved: #{@client_image.avatar.path(:original)}")
@@ -96,7 +79,6 @@ class ClientImagesController < ApplicationController
     end
   end
 
-  # POST /client_images/1
   def destroy
     @client_image = ClientImage.find(params[:id])
     @business_client = @client_image.attached
@@ -110,7 +92,6 @@ class ClientImagesController < ApplicationController
     end
   end
 
-  # POST /client_images/1/banner
   def dettach
     @client_image = ClientImage.find(params[:id])
     @banner = @client_image.attached

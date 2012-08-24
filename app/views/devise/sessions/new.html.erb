@@ -7,7 +7,7 @@
 			<br />
 			<div class="group wat-cf">
 				<div class="">
-				<%= f.label :email, :class => "label left" %>
+				<%= f.label :email, t("email"), :class => "label left" %>
 				</div>
 				<div class="">
 				<%= f.email_field :email, :class => "text_field" %>
@@ -16,7 +16,7 @@
 
 			<div class="group wat-cf">
 				<div class="">
-				<%= f.label :password, :class => "label left"  %>
+				<%= f.label :password, t("password"), :class => "label left"  %>
 				</div>
 				<div class="">
 				<%= f.password_field :password, :class => "text_field"  %>
@@ -26,14 +26,14 @@
 			<% if devise_mapping.rememberable? -%>
 			<div class="group wat-cf">
 				<div class="right">
-				<%= f.check_box :remember_me, :class => "checkbox" %> <%= f.label :remember_me, :class => "checkbox" %>
+				<%= f.check_box :remember_me, :class => "checkbox" %> <%= f.label :remember_me, t("remember_me"), :class => "checkbox" %>
 				</div>
 			</div>
 			<% end -%>
 
 			<div class="group wat-cf">
 				<div class="right">
-				<%= f.submit t("admin_signin", :default => "Sign in"), :class => "button" %>
+				<%= f.submit t("admin_signin"), :class => "button" %>
 				</div>
 			</div>
 			<% end %>
