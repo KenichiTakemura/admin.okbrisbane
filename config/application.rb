@@ -66,11 +66,11 @@ module AdminOkbrisbane
     end
     
     # Share model from okbrisbane
-    config.autoload_paths += %W( #{Rails.root}/../okbrisbane/app/models )
-    config.autoload_paths += %W(#{Rails.root}/../okbrisbane/app/models/validator)
-    config.autoload_paths += %W( #{Rails.root}/../okbrisbane/app/helpers )
-    config.autoload_paths += %W( #{Rails.root}/../okbrisbane/lib )
-    config.autoload_paths += %W( #{config.root}/../okbrisbane/config/locales/ko.yml )
+    config.autoload_paths += %W( #{Rails.root}/../public_html/app/models )
+    config.autoload_paths += %W(#{Rails.root}/../public_html/app/models/validator)
+    config.autoload_paths += %W( #{Rails.root}/../public_html/app/helpers )
+    config.autoload_paths += %W( #{Rails.root}/../public_html/lib )
+    config.autoload_paths += %W( #{config.root}/../public_html/config/locales/ko.yml )
 
     config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
   end
