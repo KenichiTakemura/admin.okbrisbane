@@ -13,6 +13,7 @@
 			<th><%= t("created_at") %></th>
 			<th><%= t("valid_until") %></th>
 			<th><%= t("image") %></th>
+			<th><%= t("attachment") %></th>
 			<th><%= t("viewed") %></th>
 			<th><%= t("likes") %></th>
 			<th><%= t("dislikes") %></th>
@@ -39,6 +40,9 @@
 			<td><%= Common.date_format(item.valid_until) %></td>
 			<td> <% if item.has_image? %>
 			<%= image_tag("common/IconData2.gif") %><%= item.image.size%>
+			<% end %> </td>
+			<td> <% if item.has_attachment? %>
+			<%= image_tag("common/IconData2.gif") %><%= item.attachment.size%>
 			<% end %> </td>
 			<td><%= item.views %></td>
 			<td><%= item.likes %></td>

@@ -20,15 +20,15 @@ module BannersHelper
   end
   
   def edittable_single_header_banner(a)
-    edittable_single_banner(@page_name.to_sym, :s_header, a)
+    edittable_single_banner(@page_name, :s_header, a)
   end
   
   def edittable_single_body_banner(a)
-    edittable_single_banner(@page_name.to_sym, :s_body, a)
+    edittable_single_banner(@page_name, :s_body, a)
   end
   
   def edittable_multi_body_banner(a)
-    edittable_multi_banner(@page_name.to_sym, :s_body, a)
+    edittable_multi_banner(@page_name, :s_body, a)
   end  
   
   def edittable_single_banner(p, s, a)
@@ -42,7 +42,7 @@ module BannersHelper
   end
   
   def edittable_background_banner(a, lr)
-    p = @page_name.to_sym
+    p = @page_name
     s = :s_background
     b = getBanner(p, s, a)
     raise "Internal Error" if !b

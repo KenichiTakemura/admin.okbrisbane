@@ -17,6 +17,9 @@
 							<%= link_to t("system_management"), "#" %></a>
 						</li>
 						<li>
+							<%= link_to t("change_password"), edit_admin_registration_path, :method => :get, :class => "password_change" %>
+						</li>		
+						<li>
 							<%= link_to t("signout"), destroy_admin_session_path, :method => :delete, :class => "logout", data: { confirm: t('are_you_sure_to_singout') } %>
 						</li>
 					</ul>
@@ -71,9 +74,9 @@
 										<li class="item" id="menu_banner_page_list">
 											<%= t("page") %>
 											<ul class="">
-												<% Style.pages.each do |key,page| %>
+												<% Style.banner_pages.each do |key,page| %>
 												<li class="menu" id="menu_banner_<%= page %>">
-													<%= link_to(t(page), banners_path(:page_id => Style.pageid(key))) %>
+													<%= link_to(t(page), banners_path(:page_id => Style.pageid(page))) %>
 												</li>
 												<% end %>
 											</ul>
@@ -207,7 +210,7 @@
 					<div id="footer">
 						<div class="block">
 							<p>
-								Copyright &copy; <%= Time.now.year %> OKBRISBANE.  <%= version %>
+								Copyright &copy; <%= Time.now.year %> OKBRISBANE.  <%= version %> <%= link_to t("report_issue"), write_posts_managements_path(:category => Style.page(:p_issue)) %>
 							</p>
 						</div>
 					</div>

@@ -16,7 +16,7 @@ def getBanner(p, s, a)
 end
 
 # Main Header #1
-Style.pages.each do |key, value|
+Style.banner_pages.each do |key, value|
   1.upto(2) do |x|
     banner = getBanner(key,:s_header,x)
     client_images = ClientImage.where("original_size = ?", banner.img_resolution)

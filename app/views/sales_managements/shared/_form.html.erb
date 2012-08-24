@@ -1,18 +1,7 @@
 <%= form_for(@post, :html => { :class => "form" }) do |f| %>
 <%= hidden_field_tag :category, @category %>
 <%= f.hidden_field :write_at, :id => "write_at" %>
-<% if @post.errors.any? %>
-<div id="error_explanation">
-	<ul>
-		<% @post.errors.full_messages.each do |field, msg| %>
-		<li>
-			<%= field %>
-		</li>
-		<% end %>
-	</ul>
-</div>
-<br/>
-<% end %>
+<%= admin_error_messages!(@post) %>
 <div class="group wat-cf">
 	<div class="">
 		<%= f.label :author, t("author"), :class => "label left" %>
@@ -25,6 +14,7 @@
 		<% end %>
 	</div>
 </div>
+<% if !@category.eql?(Style.page(:p_issue)) %>
 <div class="group wat-cf">
 	<div class="">
 		<%= f.label :status, t("status"), :class => "label left" %>
@@ -33,6 +23,7 @@
 		<%= f.select :status, options_for_select(@post.status_list, @post.status), :id => "_hide" %>
 	</div>
 </div>
+<% end %>
 <div id="_filter">
 	<div class="group wat-cf">
 		<div class="">
@@ -76,17 +67,21 @@
 	<% end %>
 	<div class="group wat-cf">
 		<div class="">
+			<% if @category.eql?(Style.page(:p_issue)) %>
+			<%= f.label :valid_until, t('due_date'), :class => "label left" %>
+			<% else %>
 			<%= f.label :valid_until, t('valid_until'), :class => "label left" %>
+			<% end %>
 		</div>
 		<div class="">
 			<%= f.date_select :valid_until, :class => "right" %><%= t('until')%>
 		</div>
 	</div>
-	<div claFss="group wat-cf">
+	<div class="group wat-cf">
 	    <div class="image">
 	        <div class="image_description" style="width:400px;margin:5px;">
 	    	<%= f.label :add_image, t("image") + t("add"), :class => "label left" %>
-	    	<div class="flash"><div class="image_upload_progress"></div>
+	    	<div class="flash"><div class="image_upload_progress"></div></div>
 	        <span class="description"><%= t("post_image_upload_description") %></span>
 	        <br/>
 			<%= file_field_tag :image, :id => "image" %>
@@ -96,8 +91,6 @@
 			</div>
 			<div style="position:relative;float:left;margin-top:10px">
 			<div class="image_upload_status" style="display:none"><%= image_tag("common/loading.gif")%></div>
-
-			</div>
 			</div>
 			<% script = %Q|
 			    function upload_image() {
@@ -116,7 +109,7 @@
       				var xhr = new XMLHttpRequest();
       				xhr.upload.addEventListener("progress", uploadImageProgress, false);
          	        xhr.addEventListener("load", uploadImageComplete, false);
-      				xhr.open("POST", "upload_image", true);
+      				xhr.open("POST", "#{controller_path}/upload_image", true);
       				xhr.send(formData);
       			  }
     			};
@@ -134,7 +127,10 @@
                        return false;
                     }
                     data = JSON.parse(event.target.responseText);
-                    if(data.result != 0) {
+                    if(data.result == 2) {
+                    $('div.image_upload_progress').html("<div class=\\"message error\\">"
+                      + "<p><strong>#{t("invalid_file_extention")}</strong></p></div>");
+                    } else if(data.result != 0) {
                     $('div.image_upload_progress').html("<div class=\\"message error\\">"
                       + "<p><strong>#{t("failed_to_upload")}</strong></p></div>");
                     } else {
@@ -149,12 +145,12 @@
                      somethingies = data.somethingies;
                      var html = "";
                      for (var i=0; i<ids.length; i++) {
-                       html += '<div style="position: relative; float: left;margin-left: 5px">';
+                       html += '<div style="position: relative; float: left;margin-left: 5px;maring-right:5px">';
                        html += '<img src="' + thumbnails[i] + '" title="' + somethingies[i] + '" />';
                        html += '<div style="position: absolute; top: 0px; left:95%;">';
-                       html += '<a href="delete_image?id=' + ids[i] + '&t=' + $('\#write_at').val()|
+                       html += '<a href="#{controller_path}/delete_image?a_id=' + ids[i] + '&t=' + $('\#write_at').val()|
 				       if !@post.id.nil?
-				    	 script += %Q| + '&post_id=#{@post.id}'|
+				    	 script += %Q| + '&id=#{@post.id}'|
    				       end
 				       script += %Q| + '" class="delete_x" rel="nofollow" data-remote="true" data-method="delete" data-confirm="#{t('confirm_delete')}" title="#{t('delete')}">' + "#{t('x')}" + "</a>"
                        html += "</div></div>"
@@ -172,9 +168,92 @@
 				<% @timestamp = @post.write_at %>
 				<%= render :partial => 'sales_managements/shared/upload_image_box' %>
 			</div>
-			</div>
 		</div>
-		<div class="clear"></div>
+	</div>
+	<div class="group wat-cf">
+		<div class="attachment">
+			<div class="attachment_description" style="width:400px;margin:5px;">
+	    	<%= f.label :add_attachment, t("attachment") + t("add"), :class => "label left" %>
+			<div class="flash"><div class="attachment_upload_progress"></div></div>
+	    	<span class="description"><%= t("post_attachment_upload_description") %></span>
+	    	<br/>
+			<%= file_field_tag :attachment, :id => "attachment" %>
+			<br/>
+			</div>
+			<div style="position:relative;float:left;margin-top:10px">
+			<div class="attachment_upload_status" style="display:none"><%= image_tag("common/loading.gif")%></div>
+			</div>
+			<% script = %Q|
+                function upload_attachment() {
+				  if($('\#attachment').val() != "") {
+      				$('div.attachment_upload_status').css("display","block");
+     				var formData = new FormData();
+      				formData.append("file", document.getElementById('attachment').files[0]);
+				    formData.append("authenticity_token", $("input[name='authenticity_token']").attr("value"));
+				    formData.append("timestamp", $("\#write_at").attr("value"));
+				    formData.append("category", "#{@category}");|
+			        if !@post.id.nil?
+				    	script += %Q|formData.append("id", #{@post.id});|
+				    end
+				    script += %Q|
+      				var xhr = new XMLHttpRequest();
+      				xhr.upload.addEventListener("progress", uploadAttachmentProgress, false);
+         	        xhr.addEventListener("load", uploadAttachmentComplete, false);
+      				xhr.open("POST", "#{controller_path}/upload_attachment", true);
+      				xhr.send(formData);
+      			  }
+    			};
+    			function uploadAttachmentProgress(event) {
+      				var progress = Math.round((event.loaded / event.total) * 100);
+      				$('div.attachment_upload_progress').html(progress + "%");
+    			};
+    			 function uploadAttachmentComplete(event) {
+    			   $('div.attachment_upload_status').css("display","none");
+    			   $('\#attachment').val('');
+                   if (event.target.status != 200) {
+                     $('div.attachment_upload_progress').html("<div class=\\"message error\\">"
+                       + "<p><strong>#{t("failed_to_upload")}</strong></p></div>");
+                       return false;
+                    }
+                    data = JSON.parse(event.target.responseText);
+                    if(data.result == 2) {
+                    $('div.attachment_upload_progress').html("<div class=\\"message error\\">"
+                      + "<p><strong>#{t("invalid_file_extention")}</strong></p></div>");
+                    } else if(data.result != 0) {
+                    $('div.attachment_upload_progress').html("<div class=\\"message error\\">"
+                      + "<p><strong>#{t("failed_to_upload")}</strong></p></div>");
+                    } else {
+                      $('div.attachment_upload_progress').html("<div class=\\"message notice\\">"
+                      + "<p><strong>#{t("successfully_uploaded")}</strong></p></div>");
+                      showAttachments(data);
+                    }
+    			 };
+    			 function showAttachments(data) {
+                      ids = data.attachments;
+                      filesnames = data.filenames;
+                      var html = "";
+                      for (var i=0; i<ids.length; i++) {
+                        html += '<div style="position: relative; float: left;margin-left: 5px">';
+                        html += '<img src="/assets/common/Icon-Document03-Blue.png" width=50px height=50px title="' + filesnames[i] + '" />';
+                        html += '<div style="position: absolute; top: 0px; left:95%;">';
+                        html += '<a href="#{controller_path}/delete_attachment?a_id=' + ids[i] + '&t=' + $('\#write_at').val()|
+				        if !@post.id.nil?
+				    	  script += %Q| + '&id=#{@post.id}'|
+   				        end
+				        script += %Q| + '" class="delete_x" rel="nofollow" data-remote="true" data-method="delete" data-confirm="#{t('confirm_delete')}" title="#{t('delete')}">' + "#{t('x')}" + "</a>"
+                        html += "</div></div>"
+                      }
+                      $('div.display_attachment').html(html);
+    			 }
+    			| %>
+		    <%= _script(%Q|$('\#attachment').change(function() {upload_attachment();});
+		       $('\#attachment').click(function() {$('div.attachment_upload_progress').html('');});
+		    | + script) %>
+			</div>
+			<div class="group">
+			<div class="display_attachment" style="margin: 3px;float:left"></div>
+		</div>
+	</div>
 	<%= f.fields_for @post.content do |content_form| %>
 	<div class="group wat-cf">
 		<div class="">
@@ -186,7 +265,6 @@
 		<span class="description"><%= t("optional") %></span>
 	</div>
 	<% end %>
-
 </div>
 
 <div class="group wat-cf">
@@ -198,12 +276,22 @@
 <% end %>
 <% script = %Q|
 $('div.image_upload_status').css("display","block");
-$.post("| + "get_image" + %Q|", {timestamp: $('\#write_at').val()|
+$('div.attachment_upload_status').css("display","block");
+$.post("| + controller_path + "/get_image" + %Q|", {timestamp: $('\#write_at').val()|
 if !@post.id.nil?
 	script += ", id: #{@post.id}"
 end
 script += %Q|}, function(data) {
-  $('div.image_upload_status').css("display","none");showImages(data);
-});|
-%>
+  $('div.image_upload_status').css("display","none");
+  showImages(data);
+});
+$.post("| + controller_path + "/get_attachment" + %Q|", {timestamp: $('\#write_at').val()|
+if !@post.id.nil?
+	script += ", id: #{@post.id}"
+end
+script += %Q|}, function(data) {
+  $('div.attachment_upload_status').css("display","none");
+  showAttachments(data);
+});
+|%>
 <%= _script_document_ready(script) %>

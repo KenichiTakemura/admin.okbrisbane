@@ -1,5 +1,5 @@
 <% @images.each do |image| %>
-<div style="position: relative; float: left;margin-left: 5px">
+<div style="position: relative; float: left;margin-left: 5px;">
 	<%= image_tag(image.thumb_image, :title => "#{image.something}") %>
 	<div style="position: absolute; top: 0px; left:95%;">
 		<%= link_to(t('x'), delete_image_management_path(image.id, @timestamp, image.attached_id, image.attached_type), :class => "delete_x", :remote => true, method: :delete, data: { confirm: t('confirm_delete') }) %> 

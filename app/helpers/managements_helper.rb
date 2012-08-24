@@ -1,4 +1,17 @@
 module ManagementsHelper
+  
+  def controller_path
+    if [Style.page(:p_job),Style.page(:p_buy_and_sell),Style.page(:p_well_being)].include? @category
+      return "/posts_managements"
+    elsif [Style.page(:p_issue)].include? @category
+      return "/issues_managements"
+    elsif [Style.page(:p_estate),Style.page(:p_business),Style.page(:p_motor_vehicle),Style.page(:p_accommodation),Style.page(:p_law),Style.page(:p_tax),Style.page(:p_study),Style.page(:p_immig)].include? @category
+      return "/sales_managements"
+    else
+      raise "Bad Category"
+    end
+  end
+  
   def edit_post_path(category, item, current_page)
     case @category
     when Style.page(:p_job)
@@ -109,13 +122,27 @@ module ManagementsHelper
     end
   end
   
-  def delete_image_management_path(image_id, timestanp, post_id, category)
-    if [Style.page(:p_job),Style.page(:p_buy_and_sell),Style.page(:p_well_being)].include? category
-      return delete_image_posts_managements_path(:id => image_id, :t => timestamp, :post_id => post_id)
-    elsif [Style.page(:p_issue)].include? category
-      return delete_image_issues_managements_path(:id => image_id, :t => timestamp, :post_id => post_id)
-    elsif [Style.page(:p_estate),Style.page(:p_business),Style.page(:p_motor_vehicle),Style.page(:p_accommodation),Style.page(:p_law),Style.page(:p_tax),Style.page(:p_study),Style.page(:p_immig)].include? category
-      return delete_image_sales_managements_path(:id => image_id, :t => timestamp, :post_id => post_id)
+  def delete_image_management_path(image_id, timestamp, post_id, category)
+    logger.debug("delete_image_management_path category: #{category}")
+    if [:p_job,:p_buy_and_sell,:p_well_being].include? Style.m2s(category)
+      return delete_image_posts_managements_path(:a_id => image_id, :t => timestamp, :id => post_id)
+    elsif [:p_issue].include? Style.m2s(category)
+      return delete_image_issues_managements_path(:a_id => image_id, :t => timestamp, :id => post_id)
+    elsif [:p_estate,:p_business,:p_motor_vehicle,:p_accommodation,:p_law,:p_tax,:p_study,:p_immig].include? Style.m2s(category)
+      return delete_image_sales_managements_path(:a_id => image_id, :t => timestamp, :id => post_id)
+    else
+      raise "Bad Category"
+    end
+  end
+  
+  def delete_attachment_management_path(image_id, timestamp, post_id, category)
+    logger.debug("delete_attachment_management_path category: #{category}")
+    if [:p_job,:p_buy_and_sell,:p_well_being].include? Style.m2s(category)
+      return delete_attachment_posts_managements_path(:a_id => image_id, :t => timestamp, :id => post_id)
+    elsif [:p_issue].include? Style.m2s(category)
+      return delete_attachment_issues_managements_path(:a_id => image_id, :t => timestamp, :id => post_id)
+    elsif [:p_estate,:p_business,:p_motor_vehicle,:p_accommodation,:p_law,:p_tax,:p_study,:p_immig].include? Style.m2s(category)
+      return delete_attachment_sales_managements_path(:a_id => image_id, :t => timestamp, :id => post_id)
     else
       raise "Bad Category"
     end

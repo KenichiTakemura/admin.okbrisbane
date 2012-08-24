@@ -31,7 +31,7 @@ class PostsController < ApplicationController
           image.attached_to_by(@post, current_admin)
         end
         get_attachment(@post.write_at).each do |attachment|
-          attachment.attached_to_by(@post, current_user)
+          attachment.attached_to_by(@post, current_admin)
         end
         flash[:notice] = I18n.t("successfully_created")
         respond_to do |format|
@@ -75,6 +75,7 @@ class PostsController < ApplicationController
         end
         format.json { head :no_content }
       else
+        flash[:warning] = I18n.t("failed_to_create")
         format.html { render :template => "#{@@management_path}/edit" }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end

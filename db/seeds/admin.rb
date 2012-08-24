@@ -7,6 +7,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 Admin.delete_all
+# THIS SHOULD BE REMOVED AND DONE IN RAILS CONSOLE
 # Administrators
 Admin.create(:email => "kenichi_takemura1976@yahoo.com", :password => "sarang1107", :password_confirmation => "sarang1107",  :is_special => true)
 Admin.create(:email => "mootal@hanmail.net", :password => 'kristaadams1', :password_confirmation => "kristaadams1",  :is_special => true)

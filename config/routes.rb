@@ -23,47 +23,21 @@ AdminOkbrisbane::Application.routes.draw do
   resources :buy_and_sells, :except => ['new','destroy']
 
   resources :well_beings, :except => ['new','destroy']
-
-  match 'issues_managements/:id/upload_image' => 'issues_managements#upload_image', :via => :post
-  match 'issues_managements/:id/get_image' => 'issues_managements#get_image', :via => :post
-  match 'issues_managements/:id/delete_image' => 'issues_managements#delete_image', :via => :delete
-  match 'issues_managements/:id/image' => 'issues_managements#destroy_image', :via => :delete, :as => "issues_managements_delete_image"
-  resources :issues_managements, :only => ["index","destroy","edit","show"] do
-    collection do
+  
+  [:sales_managements,:posts_managements,:issues_managements].each do |m|
+    resources m, :only => ["index","destroy","edit","show"] do
+      collection do
       get :write
       post :upload_image
       post :get_image
       delete :delete_image
-    end
+      post :upload_attachment
+      post :get_attachment
+      delete :delete_attachment
+      end
+   end
   end
   
-  match 'sales_managements/:id/upload_image' => 'sales_managements#upload_image', :via => :post
-  match 'sales_managements/:id/get_image' => 'sales_managements#get_image', :via => :post
-  match 'sales_managements/:id/delete_image' => 'sales_managements#delete_image', :via => :delete 
-  match 'sales_managements/:id/image' => 'sales_managements#destroy_image', :via => :delete, :as => "sales_managements_delete_image"
-  resources :sales_managements, :only => ["index","destroy","edit","show"] do
-    collection do
-      get :write
-      post :upload_image
-      post :get_image
-      delete :delete_image
-    end
-  end
-  
-  match 'posts_managements/:id/upload_image' => 'posts_managements#upload_image', :via => :post
-  match 'posts_managements/:id/get_image' => 'posts_managements#get_image', :via => :post
-  match 'posts_managements/:id/delete_image' => 'posts_managements#delete_image', :via => :delete 
-  match 'posts_managements/:id/attachment' => 'posts_managements#destroy_attachment', :via => :delete, :as => "posts_managements_delete_attachment"
-  match 'posts_managements/:id/image' => 'posts_managements#destroy_image', :via => :delete, :as => "posts_managements_delete_image"
-  resources :posts_managements, :only => ["index","destroy","edit","show"] do
-    collection do
-      get :write
-      post :upload_image
-      post :get_image
-      delete :delete_image
-    end
-  end
-
   devise_for :admins
 
   resources :business_categories

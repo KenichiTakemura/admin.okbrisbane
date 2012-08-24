@@ -1,8 +1,8 @@
 class ManagementsController < ApplicationController
 
-  before_filter :checkCategory, :only => [:write, :edit, :show, :destroy_image,:destroy]
-
+  before_filter :checkCategory, :only => [:write, :edit, :show, :destroy_image,:destroy, :upload_image, :upload_attachment]
   def checkCategory
+    logger.debug("checkCategory: #{params[:category]}")
     @category = params[:category]
     raise "Bad Category" if @category.nil?
   end
@@ -43,12 +43,12 @@ class ManagementsController < ApplicationController
     @managements_path = @@management_path
     post
   end
-  
+
   def _edit
     post = _model(@category).find(params[:id])
     post
   end
-  
+
   def _show
     post = _model(@category).find(params[:id])
     post
@@ -58,21 +58,13 @@ class ManagementsController < ApplicationController
     @post = _model(@category).find(params[:id])
     @post.destroy
     respond_to do |format|
-      if @@management_path.eql? "sales_managements"
-        format.html { redirect_to sales_managements_url(:category => @category, :page => @current_page) }
-      elsif @@management_path.eql? "posts_managements"
-        format.html { redirect_to posts_managements_url(:category => @category, :page => @current_page) }
-      elsif @@management_path.eql? "issues_managements"
-        format.html { redirect_to issues_managements_url(:category => @category, :page => @current_page) }
-      else
-        raise "Bad management_path #{@@management_path}"
-      end
+      format.html { redirect_to management_path(@category, @current_page) }
       format.json { head :no_content }
     end
   end
 
   # ajax request
-  # Delete an image
+  # Image
   def _destroy_image
     @post = _model(@category).find(params[:id])
     image = Image.find(params[:image])
@@ -82,10 +74,10 @@ class ManagementsController < ApplicationController
 
   def _delete_image
     logger.debug("_delete_image")
-    image = Image.find(params[:id])
+    image = Image.find(params[:a_id])
     @timestamp = params[:t]
     image.destroy
-    @images = find_image(@timestamp, params[:post_id])
+    @images = find_image(@timestamp, params[:id])
   end
 
   def _upload_image
@@ -96,12 +88,11 @@ class ManagementsController < ApplicationController
     if image.thumbnailable?
       image.write_at = timestamp;
       image.something = params[:something]
-      model = MODELS[params[:category].to_sym]
       if params[:id]
-        image.attached_to_by(model.find(params[:id]), current_admin)
+        image.attached_to_by(_model(@category).find(params[:id]), current_admin)
       else
         image.attached_by(current_admin)
-        image.update_attribute(:attached_type, model.to_s) 
+        image.update_attribute(:attached_type, _model(@category).to_s)
       end
       logger.debug("image saved. #{image}")
       images = find_image(timestamp, params[:id])
@@ -111,7 +102,7 @@ class ManagementsController < ApplicationController
       render :json => {:result => 0, :images => image_ids, :thumbnails => thumbnails, :somethingies => somethingies }
     else
       logger.debug("not thumbnailable? #{image}")
-      render :json => {:result => 1}
+      render :json => {:result => 2}
     end
   end
 
@@ -122,6 +113,47 @@ class ManagementsController < ApplicationController
     thumbnails = images.collect{|i| i.thumb_image}
     somethingies = images.collect{|i| i.something}
     render :json => {:result => 0, :images => image_ids, :thumbnails => thumbnails, :somethingies => somethingies }
+  end
+
+  # Attachment
+  
+  def _delete_attachment
+    logger.debug("_delete_attachment")
+    attachment = Attachment.find(params[:a_id])
+    @timestamp = params[:t]
+    attachment.destroy
+    @attachments = find_attachment(@timestamp, params[:id])
+  end
+
+  def _upload_attachment
+    logger.debug("_upload_attachment")
+    file = params[:file]
+    timestamp = params[:timestamp]
+    attachment = Attachment.new(:avatar => file)
+    if attachment.attachmentable?
+      attachment.write_at = timestamp;
+      if params[:id]
+        attachment.attached_to_by(_model(@category).find(params[:id]), current_admin)
+      else
+        attachment.attached_by(current_admin)
+        attachment.update_attribute(:attached_type, _model(@category).to_s)
+      end
+      logger.debug("attachment saved. #{attachment}")
+      _get_attachment(timestamp)
+    else
+      logger.debug("not attachmentable? #{attachment}")
+      render :json => {:result => 2}
+    end
+    #rescue
+    #render :json => {:result => 1}
+    #end
+  end
+
+  def _get_attachment(timestamp)
+    attachments = find_attachment(timestamp, params[:id])
+    attachment_ids = attachments.collect{|i| i.id}
+    attachment_filenames = attachments.collect{|i| i.filename}
+    render :json => {:result => 0, :attachments => attachment_ids, :filenames => attachment_filenames }
   end
 
   MODELS = {:p_job => Job,
@@ -142,7 +174,9 @@ class ManagementsController < ApplicationController
   }
 
   def _model(category)
-    model = MODELS[category.to_sym]
+    logger.debug("_model category: #{category}")
+    model = MODELS[Style.m2s(category)]
+    logger.debug("_model model: #{model}")
     raise "Bad Request for MODEL #{category}" if model.nil?
     model
   end
@@ -179,9 +213,29 @@ class ManagementsController < ApplicationController
 
   def find_image(timestamp, id)
     if id
-      images = Image.where("attached_by_id = ? AND attached_id = ? AND write_at = ?", current_admin, id, timestamp)
+      Image.where("attached_by_id = ? AND attached_id = ? AND write_at = ?", current_admin, id, timestamp)
     else
-      images = Image.where("attached_by_id = ? AND attached_id is NULL AND write_at = ?", current_admin, timestamp)
+      Image.where("attached_by_id = ? AND attached_id is NULL AND write_at = ?", current_admin, timestamp)
+    end
+  end
+  
+  def find_attachment(timestamp, id)
+    if id
+      Attachment.where("attached_by_id = ? AND attached_id = ? AND write_at = ?", current_admin, id, timestamp)
+    else
+      Attachment.where("attached_by_id = ? AND attached_id is NULL AND write_at = ?", current_admin, timestamp)
+    end
+  end
+  
+  def management_path(category, page)
+    if [Style.page(:p_job),Style.page(:p_buy_and_sell),Style.page(:p_well_being)].include? @category
+      return posts_managements_path(:category => @category, :page => @current_page)
+    elsif [Style.page(:p_issue)].include? @category
+      return issues_managements_path(:category => @category, :page => @current_page)
+    elsif [Style.page(:p_estate),Style.page(:p_business),Style.page(:p_motor_vehicle),Style.page(:p_accommodation),Style.page(:p_law),Style.page(:p_tax),Style.page(:p_study),Style.page(:p_immig)].include? @category
+      return sales_managements_path(:category => @category, :page => @current_page)
+    else
+      raise "Bad Category"
     end
   end
 

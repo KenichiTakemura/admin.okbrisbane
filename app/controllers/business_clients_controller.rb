@@ -53,6 +53,7 @@ class BusinessClientsController < ApplicationController
         format.html { redirect_to @business_client, notice: t("successfully_created") }
         format.json { render json: @business_client, status: :created, location: @business_client }
       else
+        flash[:warning] = I18n.t("failed_to_create")
         format.html { render action: "new" }
         format.json { render json: @business_client.errors, status: :unprocessable_entity }
       end
@@ -69,6 +70,7 @@ class BusinessClientsController < ApplicationController
         format.html { redirect_to @business_client, notice: t("successfully_updated") }
         format.json { head :no_content }
       else
+        flash[:warning] = I18n.t("failed_to_create")
         format.html { render action: "edit" }
         format.json { render json: @business_client.errors, status: :unprocessable_entity }
       end

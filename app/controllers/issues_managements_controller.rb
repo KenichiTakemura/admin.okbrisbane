@@ -38,5 +38,16 @@ class IssuesManagementsController < ManagementsController
     _get_image
   end
 
+  def delete_attachment
+    _delete_attachment
+  end
 
+  def upload_attachment
+    _upload_attachment
+  end
+  
+  def get_attachment
+    _get_attachment(params[:timestamp])
+  end
+  
 end

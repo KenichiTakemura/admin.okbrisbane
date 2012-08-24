@@ -32,11 +32,16 @@
 		<tr class="odd">
 			<td><%= label_tag :avatar, t("image"), :class => "label left" %> </td>
 			<td>
-			<div id="thumbnail_box_<%=@post.id%>">
 				<%= render :partial => 'sales_managements/shared/image_box' %>
-			</div></td>
+			</td>
 		</tr>
 		<tr class="even">
+			<td><%= label_tag :avatar, t("attachment"), :class => "label left" %> </td>
+			<td>
+				<%= render :partial => 'sales_managements/shared/attachment_box' %>
+			</td>
+		</tr>
+		<tr class="odd">
 			<td><%= label_tag :context, t("content_body"), :class => "label left" %> </td>
 			<td><%= raw @post.content.body if !@post.content.nil? %> </td>
 		</tr>

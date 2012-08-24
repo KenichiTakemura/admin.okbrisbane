@@ -44,4 +44,8 @@ class Admin < ActiveRecord::Base
   def unattached_attachment
     Attachment.where("attached_by_id = ? AND attached_id is NULL AND write_at is not NULL", self.id)
   end
+  
+  def to_s
+    "#{id} #{email} #{is_special}"
+  end
 end
