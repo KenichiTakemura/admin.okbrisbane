@@ -24,29 +24,31 @@
 }
 
 @font-face {
-  font-family: "NanumBrush";
-  src: url("fonts/NanumBrush.ttf");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
   font-family: "NanumGothic";
-  src: url("fonts/NanumGothic.ttf");
+  src: url("fonts/NanumGothic.eot");
+  src: local("☺"),
+    url("fonts/NanumGothic.ttf") format("truetype"),
+    url("type/NanumGothic.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "NanumGothicBold";
-  src: url("fonts/NanumGothicBold.ttf");
+  src: url("fonts/NanumGothicBold.eot");
+  src: local("☺"),
+  	url("fonts/NanumGothicBold.ttf") format("truetype"),
+    url("type/NanumGothicBold.otf") format("opentype");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "NanumGothicExtraBold";
-  src: url("fonts/NanumGothicExtraBold.ttf");
+  src: url("fonts/NanumGothicExtraBold.eot");
+  src: local("☺"),
+  	url("fonts/NanumGothicExtraBold.ttf") format("truetype"),
+  	url("type/NanumGothicExtraBold.otf") format("opentype");
   font-weight: bold;
   font-style: normal;
 }
