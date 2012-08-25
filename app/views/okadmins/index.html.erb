@@ -26,7 +26,7 @@
 					<td><%= user.mypage.num_of_post %></td>
 					<td><%= link_to t('Show'), okadmin_path(user) %> | 
 					<% if !user.is_special %>
-					<%= link_to t('Delete'), okadmin_path(user), method: :delete, data: { confirm: t("confirm_delete") } %>
+					<%= link_to t('Delete'), okadmin_path(user), :method => :delete, :data => { :confirm => t("confirm_delete") } %>
 					<% end %>
 					</td>
 				</tr>

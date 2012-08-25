@@ -31,7 +31,7 @@ class ManagementsController < ApplicationController
     end
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @post }
+      format.json { render :json => @post }
     end
   end
 

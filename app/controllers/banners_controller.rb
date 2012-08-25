@@ -9,7 +9,7 @@ class BannersController < ApplicationController
     end
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @banners }
+      format.json { render :json => @banners }
     end
   end
   
@@ -44,7 +44,7 @@ class BannersController < ApplicationController
     logger.debug("show @banner: #{@banner}")
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @banner }
+      format.json { render :json => @banner }
     end
   end
 
@@ -59,11 +59,11 @@ class BannersController < ApplicationController
     _page
     respond_to do |format|
       if @banner.update_attributes(params[:banner])
-        format.html { redirect_to banner_path(@banner, :page_id => @page_id), notice: t('successfully_updated') }
+        format.html { redirect_to banner_path(@banner, :page_id => @page_id), :notice => t('successfully_updated') }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @banner.errors, status: :unprocessable_entity }
+        format.html { render :action => "edit" }
+        format.json { render :json => @banner.errors, :status => :unprocessable_entity }
       end
     end
   end

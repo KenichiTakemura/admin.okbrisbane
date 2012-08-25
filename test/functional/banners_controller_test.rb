@@ -7,21 +7,24 @@ class BannersControllerTest < ActionController::TestCase
     @request.env["devise.mapping"] = Devise.mappings[:admin]
     sign_in admins(:admin1)
     @pages = Style.banner_pages
+    Style.create_banners
   end
 
   test "should get index" do
     get :index
     assert_response :success
     assert_nil assigns(:banners)
-    get(:index, {"page_id" => "1"})
-    assert_response :success
-    assert_nil assigns(:banners)
+    Style.banner_pages.each do |key,value|
+      get(:index, {"page_id" => Style.pageid_key(key)})
+      assert_response :success
+      assert assigns(:banners), "Not assigned page: #{value} page_id: #{Style.pageid_key(key)}"
+    end
   end
 
-  test "should not get new" do
-    get :new
-    assert_response :errors
-  end
+  #test "should not get new" do
+  #  get :new
+  #  assert_response :errors
+  #end
 
   # test "should create banner" do
     # assert_difference('Banner.count') do

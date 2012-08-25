@@ -8,7 +8,7 @@ class BusinessClientsController < ApplicationController
     end
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @business_clients }
+      format.json { render :json => @business_clients }
     end
   end
 
@@ -20,7 +20,7 @@ class BusinessClientsController < ApplicationController
     @current_page = params[:page]
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @business_client }
+      format.json { render :json => @business_client }
     end
   end
 
@@ -32,7 +32,7 @@ class BusinessClientsController < ApplicationController
     logger.debug("@business_client: #{@business_client}")
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @business_client }
+      format.json { render :json => @business_client }
     end
   end
 
@@ -50,12 +50,12 @@ class BusinessClientsController < ApplicationController
    @business_client.business_category = business_category
     respond_to do |format|
       if @business_client.save
-        format.html { redirect_to @business_client, notice: t("successfully_created") }
-        format.json { render json: @business_client, status: :created, location: @business_client }
+        format.html { redirect_to @business_client, :notice => t("successfully_created") }
+        format.json { render :json => @business_client, :status => :created, :location => @business_client }
       else
         flash[:warning] = I18n.t("failed_to_create")
-        format.html { render action: "new" }
-        format.json { render json: @business_client.errors, status: :unprocessable_entity }
+        format.html { render :action => "new" }
+        format.json { render :json => @business_client.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -67,12 +67,12 @@ class BusinessClientsController < ApplicationController
 
     respond_to do |format|
       if @business_client.update_attributes(params[:business_client])
-        format.html { redirect_to @business_client, notice: t("successfully_updated") }
+        format.html { redirect_to @business_client, :notice => t("successfully_updated") }
         format.json { head :no_content }
       else
         flash[:warning] = I18n.t("failed_to_create")
-        format.html { render action: "edit" }
-        format.json { render json: @business_client.errors, status: :unprocessable_entity }
+        format.html { render :action => "edit" }
+        format.json { render :json => @business_client.errors, :status => :unprocessable_entity }
       end
     end
   end

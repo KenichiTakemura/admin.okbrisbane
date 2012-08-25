@@ -6,7 +6,7 @@ class BusinessProfileImagesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @business_profile_images }
+      format.json { render :json =>  @business_profile_images }
     end
   end
 
@@ -17,7 +17,7 @@ class BusinessProfileImagesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @business_profile_image }
+      format.json { render :json =>  @business_profile_image }
     end
   end
 
@@ -30,7 +30,7 @@ class BusinessProfileImagesController < ApplicationController
     #Do not attach in here since table is created.
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @business_profile_image }
+      format.json { render :json =>  @business_profile_image }
     end
   end
 
@@ -55,11 +55,11 @@ class BusinessProfileImagesController < ApplicationController
     @business_profile_image.attached_to(@business_client)
     respond_to do |format|
       if @business_profile_image.save
-        format.html { redirect_to @business_client, notice: t('successfully_created') }
-        format.json { render json: @business_profile_image, status: :created, location: @business_profile_image }
+        format.html { redirect_to @business_client, :notice => t('successfully_created') }
+        format.json { render :json =>  @business_profile_image, :status =>  :created, :location => @business_profile_image }
       else
-        format.html { render action: "new" }
-        format.json { render json: @business_client.errors, status: :unprocessable_entity }
+        format.html { render :action =>  "new" }
+        format.json { render :json =>  @business_client.errors, :status =>  :unprocessable_entity }
       end
     end
   end
@@ -71,11 +71,11 @@ class BusinessProfileImagesController < ApplicationController
 
     respond_to do |format|
       if @business_profile_image.update_attributes(params[:business_profile_image])
-        format.html { redirect_to @business_profile_image, notice: t('successfully_updated.') }
+        format.html { redirect_to @business_profile_image, :notice => t('successfully_updated.') }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @business_profile_image.errors, status: :unprocessable_entity }
+        format.html { render :action =>  "edit" }
+        format.json { render :json =>  @business_profile_image.errors, :status =>  :unprocessable_entity }
       end
     end
   end

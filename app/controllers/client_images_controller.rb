@@ -11,7 +11,7 @@ class ClientImagesController < ApplicationController
     logger.debug(@client_image)
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @client_image }
+      format.json { render :json => @client_image }
     end
   end
   
@@ -25,11 +25,11 @@ class ClientImagesController < ApplicationController
     @business_client = BusinessClient.find_by_id(@client_image.attached_id)
    respond_to do |format|
       if @client_image.update_attributes(params[:client_image])
-        format.html { redirect_to @business_client, notice: t('successfully_updated') }
+        format.html { redirect_to @business_client, :notice => t('successfully_updated') }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @client_image.errors, status: :unprocessable_entity }
+        format.html { render :action => "edit" }
+        format.json { render :json => @client_image.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -69,12 +69,12 @@ class ClientImagesController < ApplicationController
         @business_client = BusinessClient.find_by_id(@client_image.attached_id)
         flash[:notice] = t("successfully_created")
         @client_image = ClientImage.new
-        format.html { render action: "new" }
-        format.json { render json: @client_image, status: :created, location: @client_image }
+        format.html { render :action => "new" }
+        format.json { render :json => @client_image, :status => :created, :location => @client_image }
       else
         @client_image = ClientImage.new
-        format.html { render action: "new" }
-        format.json { render json: @client_image.errors, status: :unprocessable_entity }
+        format.html { render :action => "new" }
+        format.json { render :json => @client_image.errors, :status => :unprocessable_entity }
       end
     end
   end

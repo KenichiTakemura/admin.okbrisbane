@@ -77,7 +77,7 @@
 							</li>
 						</ul>
 						<span>
-							<%= link_to(t('delete'), client_image, method: :delete, data: { confirm: t('confirm_delete') }) %> | 
+							<%= link_to(t('delete'), client_image, :method => :delete, :data => { :confirm => t('confirm_delete') }) %> | 
 							<%= link_to(t('Edit'), edit_client_image_path(client_image)) %>
 						</span>
 					</div>

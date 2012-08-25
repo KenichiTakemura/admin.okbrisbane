@@ -2,6 +2,17 @@
 <%= hidden_field_tag :category, @category %>
 <%= f.hidden_field :write_at, :id => "write_at" %>
 <%= admin_error_messages!(@post) %>
+
+<% if @category.eql?(Style.page(:p_issue)) %>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :issue_report_to, t("send_email_to"), :class => "label left" %>
+	</div>
+	<div class="">
+		To : <%= Okvalue::ISSUE_REPORT_TO %>
+	</div>
+</div>
+<% end %>
 <div class="group wat-cf">
 	<div class="">
 		<%= f.label :author, t("author"), :class => "label left" %>

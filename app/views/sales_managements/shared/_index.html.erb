@@ -54,7 +54,7 @@
 			<br/>
 			<%= link_to t('Edit'), edit_management_path(item, @category, @post.current_page) %>
 			<br/>
-			<%= link_to t("Delete"), delete_management_path(item, @category, @post.current_page), method: :delete, data: { confirm: t('confirm_delete') } %></td>
+			<%= link_to t("Delete"), delete_management_path(item, @category, @post.current_page), :method => :delete, :data => { :confirm => t('confirm_delete') } %></td>
 		</tr>
 		<% end %>
 		<% end %>

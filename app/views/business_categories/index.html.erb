@@ -30,7 +30,7 @@
 			<br/>
 			<%= link_to t('Edit'), edit_business_category_path(business_category) %>
 			<br/>
-			<%= link_to t('Delete'), business_category, method: :delete, data: { confirm: t('confirm_delete') } %>
+			<%= link_to t('Delete'), business_category, :method => :delete, :data => { :confirm => t('confirm_delete') } %>
 		</tr>
 		<% end %>
 	</table>

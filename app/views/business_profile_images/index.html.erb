@@ -11,7 +11,7 @@
   <tr>
     <td><%= link_to 'Show', business_profile_image %></td>
     <td><%= link_to 'Edit', edit_business_profile_image_path(business_profile_image) %></td>
-    <td><%= link_to 'Destroy', business_profile_image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Destroy', business_profile_image, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

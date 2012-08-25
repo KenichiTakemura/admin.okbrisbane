@@ -47,7 +47,10 @@ module BannersHelper
     b = getBanner(p, s, a)
     raise "Internal Error" if !b
     div_id = Style.create_banner_div(p, s, a)
-    b.style =~ /^*top:[0-9]*/
+    # Ruby 1.8.7
+    b.style =~ /^.*top:[0-9]*/
+    # ruby 1.9
+    #b.style =~ /^*top:[0-9]*/
     top = $~.to_s.split(':').last.to_i  
     html = %Q|<div class="edittable_background_banner" id="banner_edit_#{div_id}" style="">|
     html += single_banner(p, s, a)
@@ -68,7 +71,7 @@ module BannersHelper
   
   def getBanner(p,s,a)
     @banners.each do |banner|
-      if banner.page_id == Style.pageid(p) && banner.section_id == Style.sectionid(s) && banner.position_id.to_i == a.to_i
+      if banner.page_id == Style.pageid_value(p) && banner.section_id == Style.sectionid(s) && banner.position_id.to_i == a.to_i
         return banner
       end
     end

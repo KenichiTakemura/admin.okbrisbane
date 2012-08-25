@@ -20,7 +20,7 @@
 							<%= link_to t("change_password"), edit_admin_registration_path, :method => :get, :class => "password_change" %>
 						</li>		
 						<li>
-							<%= link_to t("signout"), destroy_admin_session_path, :method => :delete, :class => "logout", data: { confirm: t('are_you_sure_to_singout') } %>
+							<%= link_to t("signout"), destroy_admin_session_path, :method => :delete, :class => "logout", :data => { :confirm => t('are_you_sure_to_singout') } %>
 						</li>
 					</ul>
 				</div>
@@ -76,7 +76,7 @@
 											<ul class="">
 												<% Style.banner_pages.each do |key,page| %>
 												<li class="menu" id="menu_banner_<%= page %>">
-													<%= link_to(t(page), banners_path(:page_id => Style.pageid(page))) %>
+													<%= link_to(t(page), banners_path(:page_id => Style.pageid_key(key))) %>
 												</li>
 												<% end %>
 											</ul>

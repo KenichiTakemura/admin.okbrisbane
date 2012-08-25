@@ -44,7 +44,7 @@ class PostsController < ApplicationController
           else
             raise "Bad management_path #{@@management_path}"
           end
-          format.json { render json: @post, status: :created }
+          format.json { render :json => @post, :status => :created }
         end
       else
         flash[:warning] = I18n.t("failed_to_create")
@@ -53,7 +53,7 @@ class PostsController < ApplicationController
         end
         respond_to do |format|
           format.html { render :template => "#{@@management_path}/write" }
-          format.json { render json: @post.errors, status: :unprocessable_entity }
+          format.json { render :json => @post.errors, :status => :unprocessable_entity }
         end
       end
     end
@@ -65,11 +65,11 @@ class PostsController < ApplicationController
       if @post.update_attributes(params[model_symbol])
         @post.updated_by(current_admin)
         if @@management_path.eql? "sales_managements"
-          format.html { redirect_to sales_managements_url(:category => @category), notice: I18n.t('successfully_updated') }
+          format.html { redirect_to sales_managements_url(:category => @category), :notice => I18n.t('successfully_updated') }
         elsif @@management_path.eql? "posts_managements"
-          format.html { redirect_to posts_managements_url(:category => @category), notice: I18n.t('successfully_updated') }
+          format.html { redirect_to posts_managements_url(:category => @category), :notice => I18n.t('successfully_updated') }
         elsif @@management_path.eql? "issues_managements"
-          format.html { redirect_to issues_managements_url(:category => @category), notice: I18n.t('successfully_updated') }
+          format.html { redirect_to issues_managements_url(:category => @category), :notice => I18n.t('successfully_updated') }
         else
           raise "Bad management_path #{@@management_path}"
         end
@@ -77,7 +77,7 @@ class PostsController < ApplicationController
       else
         flash[:warning] = I18n.t("failed_to_create")
         format.html { render :template => "#{@@management_path}/edit" }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
+        format.json { render :json => @post.errors, :status => :unprocessable_entity }
       end
     end
   end

@@ -46,7 +46,7 @@ gem 'rb-readline'
 # Theme
 gem 'web-app-theme'
 # Paperclip
-gem "paperclip", "~> 3.0"
+gem "paperclip", "~> 2.7"
 # Kaminari
 gem 'kaminari'
 # WYSIWYG
