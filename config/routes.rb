@@ -24,6 +24,8 @@ AdminOkbrisbane::Application.routes.draw do
 
   resources :well_beings, :except => ['new','destroy']
   
+  resources :comments, :only => ['index',"create"]
+  
   [:sales_managements,:posts_managements,:issues_managements].each do |m|
     resources m, :only => ["index","destroy","edit","show"] do
       collection do

@@ -88,15 +88,21 @@
 			<%= f.date_select :valid_until, :class => "right" %><%= t('until')%>
 		</div>
 	</div>
+	<% if !@category.eql?(Style.page(:p_issue)) %>
 	<div class="group wat-cf">
-	    <div class="image">
-	        <div class="image_description" style="width:400px;margin:5px;">
+	    <div class="image" style="position:relative;border: 3px solid #8FDA71;float:left">
+	        <div class="image_description" style="width:500px;margin:5px;">
 	    	<%= f.label :add_image, t("image") + t("add"), :class => "label left" %>
 	    	<div class="flash"><div class="image_upload_progress"></div></div>
 	        <span class="description"><%= t("post_image_upload_description") %></span>
 	        <br/>
 			<%= file_field_tag :image, :id => "image" %>
 			<%= text_area_tag :something, '', :placeholder => t("write_something"), :class => "text_area", :id => "something", :style => "resize:none;margin-top:5px;height:60px;text-align:top" %>
+			<%= f.label :link_to_url, t("link_to_url"), :class => "label left" %>
+			<span class="description"><%= t("link_on_image_click") %></span>
+			<br/>
+			<%= url_field_tag :link_to_url, nil, :placeholder => t("write_link_to_url"), :id => "link_to_url", :class => "text_field"  %>
+			<br/>
 			<%= link_to t("add"), "#", :id => "upload_image_submit", :class => "button", :style => "margin:5px" %>
 			<br/>
 			</div>
@@ -112,6 +118,7 @@
       				formData.append("something",$("\#something").attr("value"));
 				    formData.append("authenticity_token", $("input[name='authenticity_token']").attr("value"));
 				    formData.append("timestamp", $("\#write_at").attr("value"));
+				    formData.append("link_to_url", $("\#link_to_url").attr("value"));
 				    formData.append("category", "#{@category}");|
 				    if !@post.id.nil?
 				    	script += %Q|formData.append("id", #{@post.id});|
@@ -181,6 +188,7 @@
 			</div>
 		</div>
 	</div>
+	<% end %>
 	<div class="group wat-cf">
 		<div class="attachment">
 			<div class="attachment_description" style="width:400px;margin:5px;">
@@ -285,9 +293,11 @@
 </div>
 
 <% end %>
-<% script = %Q|
+<% script = ""%>
+<% if !@category.eql?(Style.page(:p_issue)) %>
+<% script += %Q|
 $('div.image_upload_status').css("display","block");
-$('div.attachment_upload_status').css("display","block");
+
 $.post("| + controller_path + "/get_image" + %Q|", {timestamp: $('\#write_at').val()|
 if !@post.id.nil?
 	script += ", id: #{@post.id}"
@@ -296,6 +306,10 @@ script += %Q|}, function(data) {
   $('div.image_upload_status').css("display","none");
   showImages(data);
 });
+|%>
+<% end %>
+<% script += %Q|
+$('div.attachment_upload_status').css("display","block");
 $.post("| + controller_path + "/get_attachment" + %Q|", {timestamp: $('\#write_at').val()|
 if !@post.id.nil?
 	script += ", id: #{@post.id}"
@@ -305,4 +319,5 @@ script += %Q|}, function(data) {
   showAttachments(data);
 });
 |%>
+
 <%= _script_document_ready(script) %>

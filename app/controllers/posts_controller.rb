@@ -24,11 +24,16 @@ class PostsController < ApplicationController
     else
       @post.z_index = Okvalue::ADMIN_POST_Z_INDEX
     end
-        ActiveRecord::Base.transaction do
+    ActiveRecord::Base.transaction do
       if @post.save
         @post.set_user(current_admin)
         get_image(@post.write_at).each do |image|
           image.attached_to_by(@post, current_admin)
+        end
+        # Delete unsaved images if any
+        get_unsaved_image(@post.write_at).each do |image|
+          logger.info("Image to be deleted. #{image}")
+          image.destroy
         end
         get_attachment(@post.write_at).each do |attachment|
           attachment.attached_to_by(@post, current_admin)
@@ -87,7 +92,11 @@ class PostsController < ApplicationController
   def get_image(timestamp)
     Image.where("attached_by_id = ? AND attached_id is NULL AND write_at = ?", current_admin, timestamp)
   end
-
+  
+  def get_unsaved_image(timestamp)
+    Image.where("attached_by_id = ? AND attached_id is NULL AND write_at != ?", current_admin, timestamp)
+  end
+  
   def get_attachment(timestamp)
     Attachment.where("attached_by_id = ? AND attached_id is NULL AND write_at = ?", current_admin, timestamp)
   end

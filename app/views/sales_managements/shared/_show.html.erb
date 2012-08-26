@@ -31,19 +31,37 @@
 		</tr>
 		<tr class="odd">
 			<td><%= label_tag :avatar, t("image"), :class => "label left" %> </td>
-			<td>
-				<%= render :partial => 'sales_managements/shared/image_box' %>
-			</td>
+			<td> <%= render :partial => 'sales_managements/shared/image_box' %> </td>
 		</tr>
 		<tr class="even">
 			<td><%= label_tag :avatar, t("attachment"), :class => "label left" %> </td>
-			<td>
-				<%= render :partial => 'sales_managements/shared/attachment_box' %>
-			</td>
+			<td> <%= render :partial => 'sales_managements/shared/attachment_box' %> </td>
 		</tr>
 		<tr class="odd">
 			<td><%= label_tag :context, t("content_body"), :class => "label left" %> </td>
 			<td><%= raw @post.content.body if !@post.content.nil? %> </td>
+		</tr>
+		<tr class="even">
+			<td><%= label_tag :comment, t("comment"), :class => "label left" %> </td>
+			<td><!-- Comment Area -->
+			<div class="post_comment">
+				<% @post.comment.each do |comment| %>
+				<div class="comment">
+					<%= comment.body %>
+				</div>
+				<% end %>
+				<div class="new_comment">
+					<%= form_for(@comment, :method => :post, :html => { :class => "form" }) do |f| %>
+						<%= hidden_field_tag :commented_id, @post.id %>
+						<%= hidden_field_tag :commented_type, @category %>
+						<%= hidden_field_tag :page, @current_page %>
+						<%= f.text_area :body, :class => "text_area", :rows => 10, :cols => 10 %>
+						<br/>
+						<%= f.submit t("add"), :class => "button"%>
+					<% end %>
+				</div>
+			</div></td>
+
 		</tr>
 	</table>
 	<%= link_to t('Edit'), edit_management_path(@post, @category, @current_page) %> |

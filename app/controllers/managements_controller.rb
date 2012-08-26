@@ -51,6 +51,7 @@ class ManagementsController < ApplicationController
 
   def _show
     post = _model(@category).find(params[:id])
+    @comment = Comment.new if(@category.eql?(Style.page(:p_issue)))
     post
   end
 
@@ -88,6 +89,8 @@ class ManagementsController < ApplicationController
     if image.thumbnailable?
       image.write_at = timestamp;
       image.something = params[:something]
+      image.link_to_url = params[:link_to_url]
+      image.save
       if params[:id]
         image.attached_to_by(_model(@category).find(params[:id]), current_admin)
       else
