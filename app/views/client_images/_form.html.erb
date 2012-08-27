@@ -13,18 +13,7 @@
 <div id="form_image_content">
 	<div id="form_content">
 		<%= form_for(@client_image, :html => { :class => "form" }) do |f| %>
-		<% if @client_image.errors.any? %>
-		<div id="error_explanation">
-			<h2><%= pluralize(@client_image.errors.count, "error") %> prohibited this client_image from being saved:</h2>
-			<ul>
-				<% @client_image.errors.full_messages.each do |msg| %>
-				<li>
-					<%= msg %>
-				</li>
-				<% end %>
-			</ul>
-		</div>
-		<% end %>
+		<%= admin_error_messages!(@client_image) %>
 		<div class="group wat-cf">
 			<div class="">
 				<%= f.label :attached_id, t("business_client"), :class => "label left" %>
@@ -40,27 +29,47 @@
 			<br/>
 			<span class="description"><%= link_to t("not_listed"), new_business_client_path %></span>
 		</div>
-		<div class="group wat-cf">
-			<div class="">
-				<%= f.label :avatar, t("client_banner_image"), :class => "label left" %>
+
+		<div id="image_tabs">
+			<ul>
+				<li>
+					<a href="#image_tabs_upload"><%= t("upload")%></a>
+				</li>
+				<li>
+					<a href="#image_tabs_link"><%= t("link")%></a>
+				</li>
+			</ul>
+			<div id="image_tabs_upload" style="margin:5px;">
+
+				<div class="group wat-cf">
+					<div class="">
+						<%= f.label :avatar, t("client_banner_image"), :class => "label left" %>
+					</div>
+					<div class="">
+						<%= f.file_field :avatar, :id => "avatar" %>
+					</div>
+					<span class="description"><%= t("acceptable_extention") %></span>
+					<br/>
+					<span class="description"><%= t("auto_detect_image_size") %></span>
+				</div>
 			</div>
-			<div class="">
-				<%= f.file_field :avatar, :id => "avatar" %>
+
+			<div id="image_tabs_link" style="position:relative;margin:5px;">
+
+				<div class="group wat-cf" >
+					<div class="">
+						<%= f.label :source_url, t("client_image_source_url"), :class => "label left" %>
+					</div>
+					<div id="source_url" class="">
+						<%= f.url_field :source_url, :class => "text_field", :id => "source_url_field" %>
+					</div>
+					<div id="content_url"></div>
+					<span class="description"><%= t("read_image_from_the_url") %></span>
+				</div>
+
 			</div>
-			<span class="description"><%= t("acceptable_extention") %></span>
-			<br/>
-			<span class="description"><%= t("auto_detect_image_size") %></span>
 		</div>
-		<div class="group wat-cf" >
-			<div class="">
-				<%= f.label :source_url, t("client_image_source_url"), :class => "label left" %>
-			</div>
-			<div id="source_url" class="">
-				<%= f.url_field :source_url, :class => "text_field", :id => "url_field" %>
-			</div>
-			<div id="content_url"></div>
-			<span class="description"><%= t("read_image_from_the_url") %></span>
-		</div>
+
 		<div class="group wat-cf">
 			<div class="">
 				<%= f.label :link_to_url, t("link_to_url"), :class => "label left" %>
@@ -77,9 +86,11 @@
 			<div class="">
 				<%= f.text_field :caption, :class => "text_field" %>
 			</div>
-			<span class="description"><%= t("optional") %></span><br/>
+			<span class="description"><%= t("optional") %></span>
+			<br/>
 		</div>
-		<div class="group wat-cf">
+
+		<div class="group wat-cf" style="margin-top:5px">
 			<div class="left">
 				<%= f.submit t("add"), :class => "button" %>
 			</div>
@@ -114,24 +125,31 @@
 	</div>
 	<% elsif %>
 	<div style="position: relative; float: left; padding: 5px; width: 150px">
-			<%= image_tag(@client_image.original_image, :size => @client_image.original_size) %>
-			<%= flash?(@client_image) %>
-			<p>
-				<%= t("image_size") %> <%= @client_image.original_size %>
-			</p>
-			<p>
-				<%= @client_image.avatar_content_type %>
-				<%= t("banner_page") %>
-				<% if @client_image.banner.empty? %>
-				<br/>
-				<%= t("not_present") %>
-				<% elsif %>
-				<br/>
-				<% @client_image.banner.each do |banner| %>
-				<%= link_to banner.name, banner_path(banner) %>
-				<% end %>
-				<% end %>
-			</p>
-		</div>
+		<%= image_tag(@client_image.original_image, :size => @client_image.original_size) %>
+		<%= flash?(@client_image) %>
+		<p>
+			<%= t("image_size") %> <%= @client_image.original_size %>
+		</p>
+		<p>
+			<%= @client_image.avatar_content_type %>
+			<%= t("banner_page") %>
+			<% if @client_image.banner.empty? %>
+			<br/>
+			<%= t("not_present") %>
+			<% elsif %>
+			<br/>
+			<% @client_image.banner.each do |banner| %>
+			<%= link_to banner.name, banner_path(banner) %>
+			<% end %>
+			<% end %>
+		</p>
+	</div>
 	<% end %>
 </div>
+<% script = %Q|
+$('\#image_tabs').tabs();
+$('#avatar').click(function() {$('\#source_url_field').val('');});
+$('#source_url_field').click(function() {$('\#avatar').val('');});
+
+|%>
+<%= _script_document_ready(script) %>

@@ -3,54 +3,66 @@
 	<table class="table">
 		<th class="first"><%= t("item") %></th>
 		<th class="last"><%= t("content") %></th>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :status, t("status"), :class => "label left" %> </td>
 			<td><%= t("#{@post.status}") %></td>
 		</tr>
-		<tr class="even">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :posted_by, t("author"), :class => "label left" %> </td>
 			<td><%= @post.posted_by.email %></td>
 		</tr>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :category, t("category"), :class => "label left" %> </td>
 			<td><%= t("#{@post.category}") %></td>
 		</tr>
-		<tr class="even">
-			<% if @post.respond_to? :price %>
+		<% if @post.respond_to? :price %>
+		<tr class="<%= cycle("odd", "even") %>">
+
 			<td><%= label_tag :price, t("author"), :class => "label left" %> </td>
 			<td><%= @post.price %></td>
-			<% end %>
 		</tr>
-		<tr class="odd">
+		<% end %>
+		<tr class="<%= cycle("odd", "even") %>">
+			<% if !@category.eql?(Style.page(:p_issue)) %>
 			<td><%= label_tag :valid_until, t("valid_until"), :class => "label left" %> </td>
+			<% else %>
+			<td><%= label_tag :valid_until, t("due_date"), :class => "label left" %> </td>
+			<% end %>
 			<td><%= Common.date_format(@post.valid_until) %></td>
 		</tr>
-		<tr class="even">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :subject, t("subject"), :class => "label left" %> </td>
 			<td><%= @post.subject %></td>
 		</tr>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :avatar, t("image"), :class => "label left" %> </td>
 			<td> <%= render :partial => 'sales_managements/shared/image_box' %> </td>
 		</tr>
-		<tr class="even">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :avatar, t("attachment"), :class => "label left" %> </td>
 			<td> <%= render :partial => 'sales_managements/shared/attachment_box' %> </td>
 		</tr>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :context, t("content_body"), :class => "label left" %> </td>
 			<td><%= raw @post.content.body if !@post.content.nil? %> </td>
 		</tr>
-		<tr class="even">
+		<% if(@category.eql?(Style.page(:p_issue))) %>
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :comment, t("comment"), :class => "label left" %> </td>
 			<td><!-- Comment Area -->
 			<div class="post_comment">
-				<% @post.comment.each do |comment| %>
+				<% @post.comment.each_with_index do |comment,i| %>
+				<div class="comment_attr">
+				#<%= i+1 %> <%= comment.postedDate%> <%= comment_author(comment) %>
+				</div>
 				<div class="comment">
-					<%= comment.body %>
+					<%= simple_format(comment.body) %>
 				</div>
 				<% end %>
 				<div class="new_comment">
+					<div class="comment_attr">
+						#<%= (@post.comment.size) +1 %>
+					</div>
 					<%= form_for(@comment, :method => :post, :html => { :class => "form" }) do |f| %>
 						<%= hidden_field_tag :commented_id, @post.id %>
 						<%= hidden_field_tag :commented_type, @category %>
@@ -61,8 +73,8 @@
 					<% end %>
 				</div>
 			</div></td>
-
 		</tr>
+		<% end %>
 	</table>
 	<%= link_to t('Edit'), edit_management_path(@post, @category, @current_page) %> |
 	<%= link_to t('List'), management_path(@category, @current_page) %>

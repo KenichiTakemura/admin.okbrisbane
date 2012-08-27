@@ -1,3 +1,3 @@
 #!/bin/bash
 DATE=`date +%Y%m%d`
-tar jcvf adim_okbrisbane_$DATE.tar.bz2 app config* db Gemfile* init_db.sh lib Rakefile script vendor public/*.html public/favicon.ico public/robots.txt
+tar jcvf adim_okbrisbane_$DATE.tar.bz2 app config/locales config/routes.rb db Gemfile lib

@@ -3,43 +3,43 @@
 	<table class="table">
 		<th class="first"><%= t("item") %></th>
 		<th class="last"><%= t("content") %></th>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :business_name, t("business_name"), :class => "label left" %> </td>
 			<td><%= @business_client.business_name %></td>
 		</tr>
-		<tr class="even">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :contact_name, t("contact_name"), :class => "label left" %> </td>
 			<td><%= @business_client.contact_name %></td>
 		</tr>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :business_category, t("business_category"), :class => "label left" %> </td>
 			<td><%= @business_client.business_category %></td>
 		</tr>
-		<tr class="even">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :search_keyword, t("search_keyword"), :class => "label left" %> </td>
 			<td><%= @business_client.search_keyword %></td>
 		</tr>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :business_abn, t("business_abn"), :class => "label left" %> </td>
 			<td><%= @business_client.business_abn %></td>
 		</tr>
-		<tr class="even">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :business_url, t("business_url"), :class => "label left" %> </td>
 			<td><%= @business_client.business_url %></td>
 		</tr>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :business_phone, t("business_phone"), :class => "label left" %> </td>
 			<td><%= @business_client.business_phone %></td>
 		</tr>
-		<tr class="even">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :business_fax, t("business_fax"), :class => "label left" %> </td>
 			<td><%= @business_client.business_fax %></td>
 		</tr>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :business_email, t("email"), :class => "label left" %> </td>
 			<td><%= @business_client.business_email %></td>
 		</tr>
-		<tr class="even">
+		<tr class="<%= cycle("odd", "even") %>">
 			<div id="business_client_banner_images">
 				<td><%= label_tag :client_image, t("client_banner_image"), :class => "label left" %>
 				<br/>
@@ -87,7 +87,7 @@
 					<% end %>
 				</div></td>
 		</tr>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :business_profile_image, t("business_profile_image"), :class => "label left" %>
 			<br/>
 			<%= link_to t('add'), new_business_profile_image_path(:client => @business_client, :page => @current_page) %> </td>
@@ -112,11 +112,11 @@
 				<% end %>
 			</div></td>
 		</tr>
-		<tr class="even">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :business_profile_head, t("business_profile_head"), :class => "label left" %> </td>
 			<td><%= raw @business_client.business_profile.head %> </td>
 		</tr>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :business_profile, t("business_profile"), :class => "label left" %> </td>
 			<td><%= raw @business_client.business_profile.body %> </td>
 		</tr>

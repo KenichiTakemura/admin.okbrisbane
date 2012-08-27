@@ -3,43 +3,43 @@
 	<table class="table">
 		<th class="first"><%= t("item") %></th>
 		<th class="last"><%= t("content") %></th>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :name, t("name"), :class => "label left" %> </td>
 			<td><%= @user.name %></td>
 		</tr>
-		<tr class="even">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :email, t("email"), :class => "label left" %> </td>
 			<td><%= @user.email %></td>
 		</tr>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :job_post, t("num_of_job_post"), :class => "label left" %> </td>
 			<td><%= link_to @user.job.size, posts_managements_path(:category => Style.page(:p_job), :user => @user) %></td>
 		</tr>
-		<tr class="even">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :buy_and_sell_post, t("num_of_buy_and_sell_post"), :class => "label left" %> </td>
 			<td><%= @user.buy_and_sell.size %></td>
 		</tr>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :well_being_post, t("num_of_wellbeing_post"), :class => "label left" %> </td>
 			<td><%= @user.well_being.size %></td>
 		</tr>
-		<tr class="even">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :comment, t("num_of_comment"), :class => "label left" %> </td>
 			<td><%= @user.comment.size %></td>
 		</tr>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :image, t("num_of_image"), :class => "label left" %> </td>
 			<td><%= @user.image.size %></td>
 		</tr>
-		<tr class="even">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :attachment, t("num_of_attachment"), :class => "label left" %> </td>
 			<td><%= @user.attachment.size %></td>
 		</tr>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :unattached_image, t("num_of_unattached_image"), :class => "label left" %> </td>
 			<td><%= @user.unattached_image.size %> <%= link_to t("delete"), users_clean_image_path(@user), :method => :delete, :data => { :confirm => t("confirm_all_delete") } %></td>
 		</tr>
-		<tr class="even">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :unattached_attachment, t("num_of_unattached_attachment"), :class => "label left" %> </td>
 			<td><%= @user.unattached_attachment.size %> <%= link_to t("delete"), users_clean_attachment_path(@user), :method => :delete, :data => { :confirm => t("confirm_all_delete") } %></td>
 		</tr>

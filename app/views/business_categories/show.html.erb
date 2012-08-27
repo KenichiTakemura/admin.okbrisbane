@@ -3,15 +3,15 @@
 	<table class="table">
 		<th class="first"><%= t("item") %></th>
 		<th class="last"><%= t("content") %></th>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :en_name, t("en_name"), :class => "label left" %> </td>
 			<td><%= @business_category.en_name %></td>
 		</tr>
-		<tr class="even">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :display_name, t("display_name"), :class => "label left" %> </td>
 			<td><%= @business_category.display_name %></td>
 		</tr>
-		<tr class="odd">
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :search_keyword, t("search_keyword"), :class => "label left" %> </td>
 			<td><%= @business_category.search_keyword %></td>
 		</tr>

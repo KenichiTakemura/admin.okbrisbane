@@ -3,7 +3,6 @@
 <% if @business_profile_image.errors.any? %>
 <div id="error_explanation">
 	<h2><%= pluralize(@business_profile_image.errors.count, "error") %> prohibited this business_profile_image from being saved:</h2>
-
 	<ul>
 		<% @business_profile_image.errors.full_messages.each do |msg| %>
 		<li>

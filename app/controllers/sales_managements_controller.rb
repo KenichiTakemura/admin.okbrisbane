@@ -34,6 +34,14 @@ class SalesManagementsController < ManagementsController
     _upload_image
   end
   
+  def read_image_from_url
+    _read_image_from_url
+  end
+  
+  def upload_image_from_url
+    _upload_image_from_url
+  end
+  
   def get_image
     _get_image
   end

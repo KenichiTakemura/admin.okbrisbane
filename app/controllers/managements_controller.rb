@@ -1,6 +1,6 @@
 class ManagementsController < ApplicationController
 
-  before_filter :checkCategory, :only => [:write, :edit, :show, :destroy_image,:destroy, :upload_image, :upload_attachment]
+  before_filter :checkCategory, :only => [:write, :edit, :show, :destroy_image,:destroy, :upload_image, :upload_image_from_url, :upload_attachment]
   def checkCategory
     logger.debug("checkCategory: #{params[:category]}")
     @category = params[:category]
@@ -51,6 +51,7 @@ class ManagementsController < ApplicationController
 
   def _show
     post = _model(@category).find(params[:id])
+    # Only Issue can have comment
     @comment = Comment.new if(@category.eql?(Style.page(:p_issue)))
     post
   end
@@ -98,24 +99,53 @@ class ManagementsController < ApplicationController
         image.update_attribute(:attached_type, _model(@category).to_s)
       end
       logger.debug("image saved. #{image}")
-      images = find_image(timestamp, params[:id])
-      image_ids = images.collect{|i| i.id}
-      thumbnails = images.collect{|i| i.thumb_image}
-      somethingies = images.collect{|i| i.something}
-      render :json => {:result => 0, :images => image_ids, :thumbnails => thumbnails, :somethingies => somethingies }
+      _get_image
     else
       logger.debug("not thumbnailable? #{image}")
       render :json => {:result => 2}
     end
   end
+  
+  def _read_image_from_url
+    logger.debug("_upload_image_from_url")
+    render :json => {:result => _validate_url(params[:source_url])}
+  end
+
+  def _upload_image_from_url
+    logger.debug("_upload_image_from_url")
+    result = _validate_url(params[:source_url])
+    if result == 0 
+      source_url = params[:source_url]
+      timestamp = params[:timestamp]
+      image = Image.new(:source_url => source_url)
+      image.write_at = timestamp;
+      image.something = params[:something]
+      image.link_to_url = params[:link_to_url]
+      image.save
+      if params[:id]
+        image.attached_to_by(_model(@category).find(params[:id]), current_admin)
+      else
+        image.attached_by(current_admin)
+        image.update_attribute(:attached_type, _model(@category).to_s)
+      end
+      logger.debug("image saved. #{image}")
+      _get_image
+    else
+      logger.debug("not thumbnailable? #{image}")
+      render :json => {:result => result}
+    end
+  end
+
 
   def _get_image
     timestamp = params[:timestamp]
     images = find_image(timestamp, params[:id])
     image_ids = images.collect{|i| i.id}
     thumbnails = images.collect{|i| i.thumb_image}
+    widths = images.collect{|i| i.width}
+    heights = images.collect{|i| i.height}
     somethingies = images.collect{|i| i.something}
-    render :json => {:result => 0, :images => image_ids, :thumbnails => thumbnails, :somethingies => somethingies }
+    render :json => {:result => 0, :images => image_ids, :thumbnails => thumbnails, :widths => widths, :heights => heights, :somethingies => somethingies }
   end
 
   # Attachment
@@ -147,9 +177,6 @@ class ManagementsController < ApplicationController
       logger.debug("not attachmentable? #{attachment}")
       render :json => {:result => 2}
     end
-    #rescue
-    #render :json => {:result => 1}
-    #end
   end
 
   def _get_attachment(timestamp)
@@ -239,6 +266,24 @@ class ManagementsController < ApplicationController
       return sales_managements_path(:category => @category, :page => @current_page)
     else
       raise "Bad Category"
+    end
+  end
+  
+  def _validate_url(source_url)
+    require 'open-uri'
+    begin
+      io = open(source_url)
+      status = io.status
+      logger.debug("#{source_url} status: #{status} content_type #{io.content_type}")
+      if Okvalue::FLASH_THUMBNAILABLE.include?(io.content_type) 
+        return 0
+      else
+        logger.info("Not accessible content_type #{io.content_type}")
+        return 1
+      end
+    rescue
+      logger.info("Not accessible link #{source_url}")
+      return 2
     end
   end
 

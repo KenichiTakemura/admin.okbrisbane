@@ -2,14 +2,13 @@
 <%= hidden_field_tag :category, @category %>
 <%= f.hidden_field :write_at, :id => "write_at" %>
 <%= admin_error_messages!(@post) %>
-
 <% if @category.eql?(Style.page(:p_issue)) %>
 <div class="group wat-cf">
 	<div class="">
 		<%= f.label :issue_report_to, t("send_email_to"), :class => "label left" %>
 	</div>
 	<div class="">
-		To : <%= Okvalue::ISSUE_REPORT_TO %>
+		To : <%= SystemSetting.first.issue_report_to %>
 	</div>
 </div>
 <% end %>
@@ -18,14 +17,10 @@
 		<%= f.label :author, t("author"), :class => "label left" %>
 	</div>
 	<div class="">
-		<% if @post.posted_by %>
-		<%= @post.posted_by.name %>
-		<% else %>
-		<%= current_admin.name %>
-		<% end %>
+		<%= post_author(@post) %>
 	</div>
 </div>
-<% if !@category.eql?(Style.page(:p_issue)) %>
+<% if (!@category.eql?(Style.page(:p_issue)) || !@post.id.nil?) %>
 <div class="group wat-cf">
 	<div class="">
 		<%= f.label :status, t("status"), :class => "label left" %>
@@ -90,12 +85,19 @@
 	</div>
 	<% if !@category.eql?(Style.page(:p_issue)) %>
 	<div class="group wat-cf">
-	    <div class="image" style="position:relative;border: 3px solid #8FDA71;float:left">
-	        <div class="image_description" style="width:500px;margin:5px;">
+	    <div class="image" style="position:relative;float:left;width:700px;">
 	    	<%= f.label :add_image, t("image") + t("add"), :class => "label left" %>
+	    	<!-- Progress -->
 	    	<div class="flash"><div class="image_upload_progress"></div></div>
-	        <span class="description"><%= t("post_image_upload_description") %></span>
-	        <br/>
+			<div class="image_upload_status" style="display:none"><%= image_tag("common/loading.gif")%></div>
+	    	<div id="image_tabs">
+	    		<ul>
+				<li><a href="#image_tabs_upload"><%=t("upload")%></a></li>
+				<li><a href="#image_tabs_link"><%=t("link")%></a></li>
+				</ul>
+				<div id="image_tabs_upload" style="height:200px;margin:5px;">
+					<span class="description"><%= t("post_image_upload_description") %></span>
+					<br/>
 			<%= file_field_tag :image, :id => "image" %>
 			<%= text_area_tag :something, '', :placeholder => t("write_something"), :class => "text_area", :id => "something", :style => "resize:none;margin-top:5px;height:60px;text-align:top" %>
 			<%= f.label :link_to_url, t("link_to_url"), :class => "label left" %>
@@ -105,10 +107,6 @@
 			<br/>
 			<%= link_to t("add"), "#", :id => "upload_image_submit", :class => "button", :style => "margin:5px" %>
 			<br/>
-			</div>
-			<div style="position:relative;float:left;margin-top:10px">
-			<div class="image_upload_status" style="display:none"><%= image_tag("common/loading.gif")%></div>
-			</div>
 			<% script = %Q|
 			    function upload_image() {
 				  if($('\#image').val() != "") {
@@ -137,6 +135,8 @@
     			};
     			function uploadImageComplete(event) {
     			   $('div.image_upload_status').css("display","none");
+    			   $('div.display_url_image').html('');
+    			   $("\#source_url").val('');
     			   $('\#image').val('');
     			   $('\#something').val('');
                    if (event.target.status != 200) {
@@ -161,10 +161,12 @@
     			 	 ids = data.images;
                      thumbnails = data.thumbnails;
                      somethingies = data.somethingies;
+                     ws = data.widths;
+                     hs = data.heights;
                      var html = "";
                      for (var i=0; i<ids.length; i++) {
                        html += '<div style="position: relative; float: left;margin-left: 5px;maring-right:5px">';
-                       html += '<img src="' + thumbnails[i] + '" title="' + somethingies[i] + '" />';
+                       html += '<img src="' + thumbnails[i] + '" width=' + ws[i] + 'px height=' + hs[i] + 'px title="' + somethingies[i] + '" />';
                        html += '<div style="position: absolute; top: 0px; left:95%;">';
                        html += '<a href="#{controller_path}/delete_image?a_id=' + ids[i] + '&t=' + $('\#write_at').val()|
 				       if !@post.id.nil?
@@ -180,13 +182,90 @@
     			$('\#image').click(function() {$('div.image_upload_progress').html('');});
     			| + script) %>
 			</div>
+			<div id="image_tabs_link" style="position:relative;height:280px;margin:5px;">
+				<div style="float:left;position:relative;width:100%">
+				<span class="description"><%= t("post_image_upload_description") %></span>
+				<br/>
+				<%= url_field_tag :source_url, nil, :placeholder => t("enter_url"), :id => "source_url", :class => "text_field" %>
+				<br/>
+				<%= link_to t("show_image"), "#", :id => "source_url_image_read", :class => "button", :style => "margin:5px" %>
+				<br/>
+				<div class="image_read_status" style="display:none"><%= image_tag("common/loading.gif")%></div>
+				<div class="display_url_image" style="float:left"></div>
+				</div>
+				<div style="position:relative;float:left;width:100%">
+			    <%= text_area_tag :something, '', :placeholder => t("write_something"), :class => "text_area", :id => "something", :style => "resize:none;margin-top:5px;height:60px;text-align:top" %>
+				<%= f.label :link_to_url, t("link_to_url"), :class => "label left" %>
+				<span class="description"><%= t("link_on_image_click") %></span>
+				<br/>
+				<%= url_field_tag :link_to_url, nil, :placeholder => t("write_link_to_url"), :id => "link_to_url", :class => "text_field"  %>
+				<br/>
+				<%= link_to t("add"), "#", :id => "source_url_image_submit", :class => "button", :style => "margin:5px" %>
+				<br/>
+				</div>
+				<% script = %Q|
+				function readImageComplete(event) {
+    			   $('div.image_read_status').css("display","none");
+                   if (event.target.status != 200) {
+                     $('div.image_upload_progress').html("<div class=\\"message error\\">"
+                       + "<p><strong>#{t("failure")}</strong></p></div>");
+                       return false;
+                    }
+                    data = JSON.parse(event.target.responseText);
+                    if(data.result != 0) {
+                    $('div.image_upload_progress').html("<div class=\\"message error\\">"
+                      + "<p><strong>#{t("failure")}</strong></p></div>");
+                    } else {
+       					$('div.display_url_image').html('<img src="'  + $("\#source_url").attr("value") + '" width=80px height=80px/>');
+                    }
+    			 };
+				function read_image() {
+				  if($('\#source_url').val() != "") {
+      				$('div.image_read_status').css("display","block");
+      				var formData = new FormData();
+				    formData.append("authenticity_token", $("input[name='authenticity_token']").attr("value"));
+				    formData.append("source_url", $("\#source_url").attr("value"));
+				    var xhr = new XMLHttpRequest();
+         	        xhr.addEventListener("load", readImageComplete, false);
+      			    xhr.open("POST", "#{controller_path}/read_image_from_url", true);
+      			    xhr.send(formData);
+      				}
+      			}
+      			function upload_image_from_url() {
+				  if($('\#source_url').val() == "") return;
+      			  $('div.image_upload_status').css("display","block");
+     			  var formData = new FormData();
+				  formData.append("authenticity_token", $("input[name='authenticity_token']").attr("value"));
+				  formData.append("something",$("\#something").attr("value"));
+				  formData.append("timestamp", $("\#write_at").attr("value"));
+				  formData.append("source_url", $("\#source_url").attr("value"));
+				  formData.append("link_to_url", $("\#link_to_url").attr("value"));
+				  formData.append("category", "#{@category}");|
+				  if !@post.id.nil?
+				    script += %Q|formData.append("id", #{@post.id});|
+				  end
+				  script += %Q|
+      			  var xhr = new XMLHttpRequest();
+         	      xhr.addEventListener("load", uploadImageComplete, false);
+      			  xhr.open("POST", "#{controller_path}/upload_image_from_url", true);
+      			  xhr.send(formData);
+    			};
+      			| %>
+				<%= _script(%Q|$('\#source_url_image_read').click(function() {read_image();return false});
+				$('\#source_url_image_submit').click(function() {upload_image_from_url();return false});
+				| + script) %>
+			</div>
+
+			</div>
+
+			</div>
 			<div class="group">
 			<div class="display_image" style="margin: 3px;float:left">
 				<% @images = @post.image %>
 				<% @timestamp = @post.write_at %>
 				<%= render :partial => 'sales_managements/shared/upload_image_box' %>
-			</div>
-		</div>
+			</div>			
+		</div>				
 	</div>
 	<% end %>
 	<div class="group wat-cf">
@@ -273,6 +352,7 @@
 			<div class="display_attachment" style="margin: 3px;float:left"></div>
 		</div>
 	</div>
+	<% if @post.id.nil? || (!@category.eql?(Style.page(:p_issue)) && !@post.id.nil?) %>
 	<%= f.fields_for @post.content do |content_form| %>
 	<div class="group wat-cf">
 		<div class="">
@@ -282,6 +362,16 @@
 			<%= content_form.cktext_area :body, :toolbar => 'Full' %>
 		</div>
 		<span class="description"><%= t("optional") %></span>
+	</div>
+	<% end %>
+	<% else %>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :body, t("content"), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= raw @post.content.body %>
+		</div>
 	</div>
 	<% end %>
 </div>
@@ -319,5 +409,9 @@ script += %Q|}, function(data) {
   showAttachments(data);
 });
 |%>
-
+<% script += %Q|
+$('\#image_tabs').tabs();
+$('#image').click(function() {$('\#source_url').val('');});
+$('#source_url').click(function() {$('\#image').val('');});
+|%>
 <%= _script_document_ready(script) %>

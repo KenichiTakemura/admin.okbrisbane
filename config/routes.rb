@@ -31,6 +31,8 @@ AdminOkbrisbane::Application.routes.draw do
       collection do
       get :write
       post :upload_image
+      post :read_image_from_url
+      post :upload_image_from_url
       post :get_image
       delete :delete_image
       post :upload_attachment

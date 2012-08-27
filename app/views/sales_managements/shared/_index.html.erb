@@ -34,7 +34,7 @@
 			<td><%= item.id %></td>
 			<td><%= t("#{item.status}") %></td>
 			<td><%= t("#{item.category}") %></td>
-			<td><%= author_name(item) %></td>
+			<td><%= post_author(item) %></td>
 			<td><%= item.subject %></td>
 			<td><%= Common.date_format(item.created_at) %></td>
 			<td><%= Common.date_format(item.valid_until) %></td>

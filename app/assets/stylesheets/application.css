@@ -104,20 +104,27 @@ ul.error {
 	list-style-type: none;
 }
 
-div.comment {
+div.comment_attr {
 	position: relative;
-	border: 1px solid #e0e0e0;
 	float: left;
 	width: 100%;
-	height: 30px;
+	height: 20px;
+	color: #4479BA;
+	font-size: 14px;
+}
+
+div.comment {
+	position: relative;
+	border: 2px solid #e0e0e0;
+	float: left;
+	width: 100%;
 	background: #fff;
-    -moz-box-shadow: 0 0 5px rgba(0,0,0,0.5);
-	-webkit-box-shadow: 0 0 5px rgba(0,0,0,0.5);
-	box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0 0 5px rgba(0,0,0,0.7);
+	-webkit-box-shadow: 0 0 5px rgba(0,0,0,0.7);
+	box-shadow: 0 0 5px rgba(0,0,0,0.7);
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 	margin-top: 10px;
 	margin-bottom: 10px;
-
 }
