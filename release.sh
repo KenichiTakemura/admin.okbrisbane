@@ -1,3 +1,20 @@
 #!/bin/bash
 DATE=`date +%Y%m%d`
-tar jcvf okbrisbane_$DATE.tar.bz2 app config/locales config/environments/production.rb config/routes.rb config/application.rb config/boot.rb config/environment.rb db Gemfile lib seed_db.sh
+tar jcvf okbrisbane_$DATE.tar.bz2\
+ app/controllers\
+ app/helpers\
+ app/mailers\
+ app/models\
+ app/views\
+ config/locales\
+ config/routes.rb\
+ config/application.rb\
+ config/boot.rb\
+ config/environment.rb\
+ db\
+ lib\
+ seed_db.sh\
+ public/*html\
+ public/favicon.ico\
+ public/assets\
+ public/robots.txt
