@@ -5,7 +5,7 @@
 <% if @category.eql?(Style.page(:p_issue)) %>
 <div class="group wat-cf">
 	<div class="">
-		<%= f.label :issue_report_to, t("send_email_to"), :class => "label left" %>
+		<%= f.label :issue_report_to, t("issue_report_to"), :class => "label left" %>
 	</div>
 	<div class="">
 		To : <%= SystemSetting.first.issue_report_to %>

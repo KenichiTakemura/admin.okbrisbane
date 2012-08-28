@@ -48,6 +48,8 @@ AdminOkbrisbane::Application.routes.draw do
 
   resources :business_profile_images
 
+  resources :system_settings, :only => ["index","edit","update"]
+
   mount Ckeditor::Engine => '/ckeditor'
 
   match 'client_images/:id' => 'client_images#destroy', :via => :post

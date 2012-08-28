@@ -1,0 +1,24 @@
+<h2 class="title"><%= t("listing_system_settings") %></h2>
+
+<div class="inner">
+	<table class="table">
+		<tr>
+			<th><%= t("post_expiry_length") %></th>
+			<th><%= t("socialable") %></th>
+			<th><%= t("issue_report_to")%></th>
+			<th><%= t("admin_email")%></th>
+			<th class="last"></th>
+		</tr>
+		<% @system_settings.each do |system_setting| %>
+		<tr class="<%= cycle("odd", "even") %>" >
+			<td><%= t("#{system_setting.post_expiry_length}") << " " << t("day") %></td>
+			<td><%= t("#{!system_setting.socialable}") %></td>
+			<td><%= system_setting.issue_report_to %></td>
+			<td><%= system_setting.admin_email %></td>
+			</td>
+			<td>
+			<%= link_to t('Edit'), edit_system_setting_path(system_setting) %>
+		</tr>
+		<% end %>
+	</table>
+</div>

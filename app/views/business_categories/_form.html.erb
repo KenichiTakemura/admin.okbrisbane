@@ -1,18 +1,5 @@
 <%= form_for(@business_category, :html => { :class => "form" }) do |f| %>
-
-<% if @business_category.errors.any? %>
-<div id="error_explanation">
-	<h2><%= pluralize(@business_category.errors.count, "error") %> prohibited this business_category from being saved:</h2>
-
-	<ul>
-		<% @business_category.errors.full_messages.each do |msg| %>
-		<li>
-			<%= msg %>
-		</li>
-		<% end %>
-	</ul>
-</div>
-<% end %>
+<%= admin_error_messages!(@business_category) %>
 
 <div class="group wat-cf">
 	<div class="">

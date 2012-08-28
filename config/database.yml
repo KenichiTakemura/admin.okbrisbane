@@ -12,7 +12,6 @@ development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  #database: admin.okbrisbane_development
   database: okbrisbane_development
   pool: 5
   username: root
@@ -26,7 +25,6 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  #database: admin.okbrisbane_test
   database: okbrisbane_test
   pool: 5
   username: root
@@ -37,8 +35,8 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: admin.okbrisbane_production
+  database: okbrisba_okbrisbane
   pool: 5
-  username: root
-  password:
+  username: okbrisba_prod
+  password: Mv36ucP9BiPKiXH1v
   socket: /var/lib/mysql/mysql.sock

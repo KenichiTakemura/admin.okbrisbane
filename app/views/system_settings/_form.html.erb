@@ -1,0 +1,45 @@
+<%= form_for(@system_setting, :html => { :class => "form" }) do |f| %>
+<%= admin_error_messages!(@system_setting) %>
+
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :post_expiry_length, "#{t("post_expiry_length")} #{t("day")}", :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.number_field :post_expiry_length, :class => "text_field" %>
+	</div>
+	<span class="description"><%= t("must_be_filled") %></span>
+	<br/>
+	<span class="description"><%= t("must_be_numbers") %></span>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :socialable, t("socialable"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.check_box :socialable, :class => "text_field" %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :issue_report_to, t("issue_report_to"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.email_field, :issue_report_to, :class => "text_field" %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :admin_email, t("admin_email"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.email_field, :admin_email, :class => "text_field" %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="left">
+		<%= f.submit t("create"), :class => "button" %>
+	</div>
+</div>
+<% end %>
+
