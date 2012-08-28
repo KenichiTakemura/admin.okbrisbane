@@ -1,6 +1,6 @@
 #!/bin/bash
 DATE=`date +%Y%m%d`
-tar jcvf okbrisbane_$DATE.tar.bz2\
+tar jcvf admin_okbrisbane_$DATE.tar.bz2\
  app/controllers\
  app/helpers\
  app/mailers\
