@@ -45,10 +45,54 @@
 			<%= f.label :category, t("category"), :class => "label left" %>
 		</div>
 		<div class="">
-			<%= f.select :category, options_for_select(@post.category_list, @post.category) %>
+			<%= f.select :category, options_for_select(@post.admin_category_list, @post.category) %>
 		</div>
 		<span class="description"><%= t("must_be_selected") %></span>
 	</div>
+	<% if @post.respond_to? :address %>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :address, t(:address), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.text_field :address, :class => "text_field" %>
+		</div>
+		<span class="description"><%= t("must_be_selected") %></span>
+	</div>
+	<% end%>
+	<% if @post.respond_to? :bed %>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :bed, t(:bed), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.select :bed, options_for_select(Okvalue::BED_LIST, 0) %>
+		</div>
+		<span class="description"><%= t("must_be_selected") %></span>
+	</div>
+	<% end%>
+	<% if @post.respond_to? :bath %>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :bath, t(:bath), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.select :bath, options_for_select(Okvalue::BATH_LIST, 0) %>
+		</div>
+		<span class="description"><%= t("must_be_selected") %></span>
+	</div>
+	<% end%>
+	<% if @post.respond_to? :garage %>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :garage, t(:garage), :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.select :garage, options_for_select(Okvalue::GARAGE_LIST, 0) %>
+		</div>
+		<span class="description"><%= t("must_be_selected") %></span>
+	</div>
+	<% end%>
 	<% if @post.respond_to? :room_type %>
 	<div class="group wat-cf">
 		<div class="">

@@ -1,8 +1,10 @@
 <%= noimage?(@post) %>
 <% @post.image.each do |image| %>
 	<div style="position: relative; float: left;margin-left: 5px;margin-right: 5px">
-	<%= link_to image_tag(image.thumb_image, :title => "#{image.something}"), image.original_image, :target => "_blank" %>
+	<%= link_to image_tag(image.thumb_image, :title => "#{image.something}", :size => image.thumb_size), image.original_image, :target => "_blank" %>
 	<br/>
+	<% if !image.avatar_file_size.nil? %>
 	<%= image.avatar_file_size %> byte
+	<% end %>
 	</div>
 <% end %>

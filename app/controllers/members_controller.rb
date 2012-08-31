@@ -17,8 +17,8 @@ class MembersController < ApplicationController
 
   # DELETE /users/1
   # DELETE /users/1.json
-  def _destroy
-    @user = User.find(params[:id])
+  def _destroy(model)
+    @user = model.find(params[:id])
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url }

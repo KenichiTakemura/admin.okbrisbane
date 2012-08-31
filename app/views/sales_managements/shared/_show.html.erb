@@ -22,6 +22,27 @@
 			<td><%= @post.price %></td>
 		</tr>
 		<% end %>
+		<% if @post.respond_to? :bed %>
+		<tr class="<%= cycle("odd", "even") %>">
+
+			<td><%= label_tag :bed, t(:bed), :class => "label left" %> </td>
+			<td><%= @post.bed %></td>
+		</tr>
+		<% end %>
+		<% if @post.respond_to? :bath %>
+		<tr class="<%= cycle("odd", "even") %>">
+
+			<td><%= label_tag :bath, t(:bath), :class => "label left" %> </td>
+			<td><%= @post.bath %></td>
+		</tr>
+		<% end %>
+		<% if @post.respond_to? :garage %>
+		<tr class="<%= cycle("odd", "even") %>">
+
+			<td><%= label_tag :garage, t(:garage), :class => "label left" %> </td>
+			<td><%= @post.garage %></td>
+		</tr>
+		<% end %>
 		<tr class="<%= cycle("odd", "even") %>">
 			<% if !@category.eql?(Style.page(:p_issue)) %>
 			<td><%= label_tag :valid_until, t("valid_until"), :class => "label left" %> </td>
