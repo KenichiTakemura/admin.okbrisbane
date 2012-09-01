@@ -117,5 +117,70 @@ link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=55"
 Image.create(:source_url => "http://www.qoq.com.au/_data/property/55_20120702131527.jpg", :link_to_url => link_url).attached_to(post)
 Image.create(:source_url => "http://www.qoq.com.au/_data/property/_20120702131614.jpg", :link_to_url => link_url).attached_to(post)
 Image.create(:source_url => "http://www.qoq.com.au/_data/property/_20120702131635.jpg", :link_to_url => link_url).attached_to(post)
-
-
+####
+post = Business.new(:category => Business::Categories[:for_sale], :subject => "Toombul, 웬디스 아이스크림!")
+body = <<-HTML
+브리즈번 공항 근처 대형 쇼핑센터 Toombul에 웬디스 아이스크림 프랜차이즈입니다. <br/>
+유동인구가 충분히 확보되어 있으며 호주인들에게 친숙한 맛의 아이스크림입니다. <br/>
+소자본, 쉬운 영업을 찾는 분이라면 전화 주십시오. <br/>
+ <br/>
+HTML
+content = post.build_content(:body => body)
+post.price = "$45,000Neg."
+post.address = "Toombul, Brisbane, QLD"
+post.valid_until = post_expiry
+post.set_user(admin)
+post.save
+content.save
+link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=54"
+Image.create(:source_url => "http://qoq.com.au/_data/property/54_20120627101511.jpg", :link_to_url => link_url).attached_to(post)
+####
+post = Business.new(:category => Business::Categories[:for_sale], :subject => "Coopers Plains, 스낵바")
+body = <<-HTML
+써니뱅크 근처 쿠퍼스 플레인에 위치한 스낵바입니다. <br/>
+샌드위치, 휘시앤칩스, 버거 등을 판매하며 무엇보다 저렴한 렌트가 장점입니다. <br/>
+더불어 항상 사람들로 붐비는 공업단지에 위치해 많은 잠재력을 갖추고 있습니다. <br/>
+ <br/>
+HTML
+content = post.build_content(:body => body)
+post.price = "$40,000WIWO"
+post.address = "Coopers Plains, QLD"
+post.valid_until = post_expiry
+post.set_user(admin)
+post.save
+content.save
+link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=53"
+Image.create(:source_url => "http://qoq.com.au/_data/property/53_20120625131749.jpg", :link_to_url => link_url).attached_to(post)
+####
+post = Business.new(:category => Business::Categories[:for_sale], :subject => "브리즈번의 홍대거리, 웨스트엔드 미용실")
+body = <<-HTML
+브리즈번의 떠오르는 젊음의 거리, 웨스트엔드 중 가장 번화가에 위치한 미용실입니다. <br/>
+100% 호주인 로컬을 상대로 영업하고 있으며 모던한 인테리어 저렴한 렌트비로 좋은 수익이 나는 미용실입니다. <br/>
+ <br/>
+HTML
+content = post.build_content(:body => body)
+post.price = "$89,000+STOCK"
+post.address = "Westend, Brisbane QLD"
+post.valid_until = post_expiry
+post.set_user(admin)
+post.save
+content.save
+link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=52"
+Image.create(:source_url => "http://qoq.com.au/_data/property/_20120625120705.jpg", :link_to_url => link_url).attached_to(post)
+####
+post = Business.new(:category => Business::Categories[:for_sale], :subject => "런컨, 성업중인 치킨 & 피쉬")
+body = <<-HTML
+런컨 지역에서 성업중인 치킨 & 피쉬 가게입니다. <br/>
+테이크어웨이, Dine-in 모두 가능합니다. <br/>
+공격적인 마케팅으로 점차 매출이 오르는 중이며 입소문이 나 있는 가게입니다. <br/>
+ <br/>
+HTML
+content = post.build_content(:body => body)
+post.price = "$139,000"
+post.address = "Runcorn, QLD"
+post.valid_until = post_expiry
+post.set_user(admin)
+post.save
+content.save
+link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=51"
+Image.create(:source_url => "http://qoq.com.au/_data/property/51_20120625114740.jpg", :link_to_url => link_url).attached_to(post)

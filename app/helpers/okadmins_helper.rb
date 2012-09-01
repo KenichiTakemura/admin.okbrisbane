@@ -8,10 +8,4 @@ module OkadminsHelper
     end
   end
 
-  def comment_author(comment)
-    if comment.commented_by
-       return comment.commented_by.name
-    end
-    t("unknown_user")
-  end
 end
