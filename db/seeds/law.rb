@@ -13,8 +13,10 @@ Law.delete_all
 # Not for Production
 admin = Admin.first
 
+expiry = Time.now.utc + 30.days
+
 1.upto(7) do |x|
-  post = Law.new(:category => "for_traffic_accident", :subject => "[시티]공원속의 라이프스타일 #{x}")
+  post = Law.new(:category => "for_traffic_accident", :subject => "[시티]공원속의 라이프스타일 #{x}", :valid_until => expiry)
   post.build_content
   post.content(:body => "[시티]공원속의 라이프스타일 #{x}")
   post.valid_until = Time.utc(2012,7,"#{x}")

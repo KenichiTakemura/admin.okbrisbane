@@ -67,7 +67,26 @@
 			<td><%= label_tag :context, t("content_body"), :class => "label left" %> </td>
 			<td><%= raw @post.content.body if !@post.content.nil? %> </td>
 		</tr>
-		<% if(@category.eql?(Style.page(:p_issue))) %>
+		<tr class="<%= cycle("odd", "even") %>">
+			<td><%= label_tag :views, t(:viewed), :class => "label left" %> </td>
+			<td><%= @post.views %></td>
+		</tr>
+		<tr class="<%= cycle("odd", "even") %>">
+			<td><%= label_tag :likes, t(:likes), :class => "label left" %> </td>
+			<td><%= @post.likes %></td>
+		</tr>
+		<tr class="<%= cycle("odd", "even") %>">
+			<td><%= label_tag :dislikes, t(:dislikes), :class => "label left" %> </td>
+			<td><%= @post.dislikes %></td>
+		</tr>
+		<tr class="<%= cycle("odd", "even") %>">
+			<td><%= label_tag :rank, t(:rank), :class => "label left" %> </td>
+			<td><%= @post.rank %></td>
+		</tr>
+		<tr class="<%= cycle("odd", "even") %>">
+			<td><%= label_tag :abuse, t(:abuse), :class => "label left" %> </td>
+			<td><%= @post.abuse %></td>
+		</tr>
 		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :comment, t("comment"), :class => "label left" %> </td>
 			<td><!-- Comment Area -->
@@ -75,11 +94,20 @@
 				<% @post.comment.each_with_index do |comment,i| %>
 				<div class="comment_attr">
 				#<%= i+1 %> <%= comment.postedDate%> <%= comment_author(comment) %>
+				<div style="float:right">
+					<%= label_tag :likes, t(:likes), :class => "label left" %>
+					<%= comment.likes %>
+					<%= label_tag :dislikes, t(:dislikes), :class => "label left" %>
+					<%= comment.dislikes %>
+					<%= label_tag :abuse, t(:abuse), :class => "label left" %>
+					<%= comment.abuse %>
+				</div>
 				</div>
 				<div class="comment">
 					<%= simple_format(comment.body) %>
 				</div>
 				<% end %>
+				<% if(@category.eql?(Style.page(:p_issue))) %>
 				<div class="new_comment">
 					<div class="comment_attr">
 						#<%= (@post.comment.size) +1 %>
@@ -93,9 +121,10 @@
 						<%= f.submit t("add"), :class => "button"%>
 					<% end %>
 				</div>
+					<% end %>
 			</div></td>
 		</tr>
-		<% end %>
+	
 	</table>
 	<%= link_to t('Edit'), edit_management_path(@post, @category, @current_page) %> |
 	<%= link_to t('List'), management_path(@category, @current_page) %>
