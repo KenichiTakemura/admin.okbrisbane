@@ -15,20 +15,27 @@ user = User.first
 
 expiry = Time.now.utc + 30.days
 
-2010.upto(2050) do |x|
-  post = Job.new(:category => "seeking", :subject => "안녕 하세요 #{x}", :valid_until => expiry);
-  post.valid_until = Time.now
+1.upto(2) do |x|
+  post = Job.new(:category => Job::Categories[:seek], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
   content = post.build_content(:body => "안녕 하세요")
-  post.set_user(user)
   post.save
+  post.set_user(user)
   content.save
 end
 
-2100.upto(2150) do |x|
-  post = Job.new(:category => "hiring", :subject => "어서 오세요 #{x}", :valid_until => expiry);
-  post.valid_until = Time.now
+expiry = Time.now.utc + 1.days
+post = Job.new(:category => Job::Categories[:seek], :subject => "안녕 하세요 #3", :valid_until => expiry);
+content = post.build_content(:body => "안녕 하세요")
+post.save
+post.set_user(user)
+content.save
+Image.create(:avatar => File.new("test/fixtures/business/b1.jpg")).attached_to_by(post,user)  
+
+
+1.upto(3) do |x|
+  post = Job.new(:category => Job::Categories[:hire], :subject => "어서 오세요 #{x}", :valid_until => expiry);
   content = post.build_content(:body => "어서 오세요")
-  post.set_user(user)
   post.save
+  post.set_user(user)
   content.save
 end
