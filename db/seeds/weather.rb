@@ -14,9 +14,9 @@ Weather.delete_all
 issuedOn = Time.now.utc - 1.day
 
 WeatherConfig::AUSCityOrderList.each do |l|
-  Weather.create(:issuedOn => issuedOn, :dateOn => Common.today, :location => l, :country => Okvalue::AUS, :forecast => "sunny", :max => 10, :min => 0)
+  Weather.create(:issuedOn => issuedOn, :dateOn => Common.today, :location => l, :country => Okvalue::AU, :forecast => "sunny", :max => 10, :min => 0)
 end
 
 WeatherConfig::KORCityOrderList.each do |l|
-  Weather.create(:issuedOn => issuedOn, :dateOn => Common.today, :location => l, :country => Okvalue::KOR, :forecast => "mostly_cloudy", :max => 10, :min => 0)
+  Weather.create(:issuedOn => issuedOn, :dateOn => Common.today, :location => l, :country => Okvalue::KR, :forecast => "mostly_cloudy", :max => 10, :min => 0)
 end

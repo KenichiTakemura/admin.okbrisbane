@@ -5,3 +5,4 @@
 #rake db:seed:job --trace
 #rake db:seed:buy_and_sell --trace
 rake db:seed:weather --trace
+rake db:seed:rate --trace
