@@ -49,6 +49,8 @@ AdminOkbrisbane::Application.routes.draw do
   resources :business_profile_images
 
   resources :system_settings, :only => ["index","edit","update"]
+  
+  resources :statistics, :only => ["index"]
 
   mount Ckeditor::Engine => '/ckeditor'
 

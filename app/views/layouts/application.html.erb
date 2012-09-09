@@ -7,8 +7,6 @@
 		</script>
 		<%= stylesheet_link_tag "application", :cache => false %>
 		<%= javascript_include_tag "application", :cache => false %>
-		<%= javascript_include_tag 'slides.min.jquery.js' %>
-		<%= javascript_include_tag 'jquery-ui-1.8.23.custom.min.js' %>
 		<%= csrf_meta_tag %>
 	</head>
 	<body>
@@ -166,15 +164,31 @@
 									</ul>
 								</div></span>
 						</li>
-						<li>
+						<li id="navigation_management">
 							<%= link_to t("site_statistics"), "#" %>
+							<span class="management_menu">
+								<div class="">
+									<ul class="">
+										<li class="item" id="menu_issue">
+											<%= t(:statistics) %>
+											<ul class="">
+												<li class="menu" id="menu_issue_list">
+													<%= link_to t(:daily_statistics), statistics_path(:status => Okvalue::SITE_STATISTICS_DAILY) %>
+												</li>
+												<li class="menu" id="menu_new_issue">
+													<%= link_to t(:monthly_statistics), statistics_path(:status => Okvalue::SITE_STATISTICS_MONTHLY) %>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</div> </span>
 						</li>
 						<li id="navigation_management">
 							<%= link_to t("issue_management"), "#" %>
 							<span class="management_menu">
 								<div class="">
 									<ul class="">
-										<% [:p_issue,].each do |page| %>
+										<% [:p_issue].each do |page| %>
 										<li class="item" id="menu_issue">
 											<%= t("issue") %>
 											<ul class="">

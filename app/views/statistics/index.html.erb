@@ -1,0 +1,18 @@
+<h2 class="title"><%= t(:site_statistics) %></h2>
+
+<div class="inner">
+	<table class="table">
+		<tr>
+			<th><%= t(:statistics_date) %></th>
+			<th><%= t(:visitor) %></th>
+			<th><%= t(:user_visitor)%></th>
+		</tr>
+		<% @hits.each do |hit| %>
+		<tr class="<%= cycle("odd", "even") %>" >
+			<td><%= Common.date_format(hit.day) %></td>
+			<td><%= hit.hit %></td>
+			<td><%= hit.user_hit %></td>
+		</tr>
+		<% end %>
+	</table>
+</div>
