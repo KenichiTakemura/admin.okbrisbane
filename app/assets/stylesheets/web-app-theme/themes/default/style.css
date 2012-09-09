@@ -1,4 +1,5 @@
 /* Activo 2 by David Francisco (activo.dmfranc.com) - tiny version for web-app-theme */
+/* 
 @font-face {
   font-family: "MuseoSans500";
   src: url("fonts/museosans_500-webfont.eot");
@@ -22,49 +23,20 @@
   font-weight: normal;
   font-style: normal;
 }
-
-@font-face {
-  font-family: "NanumGothic";
-  src: url("fonts/NanumGothic.eot");
-  src: local("☺"),
-    url("fonts/NanumGothic.ttf") format("truetype"),
-    url("type/NanumGothic.otf") format("opentype");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "NanumGothicBold";
-  src: url("fonts/NanumGothicBold.eot");
-  src: local("☺"),
-  	url("fonts/NanumGothicBold.ttf") format("truetype"),
-    url("type/NanumGothicBold.otf") format("opentype");
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "NanumGothicExtraBold";
-  src: url("fonts/NanumGothicExtraBold.eot");
-  src: local("☺"),
-  	url("fonts/NanumGothicExtraBold.ttf") format("truetype"),
-  	url("type/NanumGothicExtraBold.otf") format("opentype");
-  font-weight: bold;
-  font-style: normal;
-}
-
-
+*/
 body {
   color: #111111;
   background: #c4c4c4 url("images/bgd.jpg");
-  font-family: "NanumGothic", "MuseoSans500", helvetica, arial, sans-serif;
+  /* font-family: "NanumGothic", "MuseoSans500", helvetica, arial, sans-serif; */
+ font-family: "NanumGothic";
 }
 
 
 h1, h2, h3 {
   color: #111111;
   font-weight: normal;
-  font-family: "NanumGothic", "Museo700", helvetica, arial, sans-serif;
+  /* font-family: "NanumGothic", "Museo700", helvetica, arial, sans-serif; */
+  font-family: "NanumGothic";
 }
 
 a:link, a:visited, a:hover, a:active {
