@@ -1,6 +1,8 @@
 #!/bin/bash
+rm -rf public/assets
+rake assets:precompile --trace RAILS_ENV=production
 DATE=`date +%Y%m%d`
-tar jcvf admin_okbrisbane_$DATE.tar.bz2\
+tar jcvf ../admin_okbrisbane_$DATE.tar.bz2\
  app/controllers\
  app/helpers\
  app/mailers\
@@ -13,8 +15,8 @@ tar jcvf admin_okbrisbane_$DATE.tar.bz2\
  config/environment.rb\
  db\
  lib\
- seed_db.sh\
  public/*html\
  public/favicon.ico\
  public/assets\
  public/robots.txt
+rm -rf public/assets

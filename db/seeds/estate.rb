@@ -15,8 +15,8 @@ def post_expiry
   system_setting = SystemSetting.first
   Time.now + system_setting.post_expiry_length.days
 end
-
-post = Estate.new(:category => Estate::Categories[:for_sale], :subject => "미래를 내다보는 투자, Greenbank!")
+subject = "미래를 내다보는 투자, Greenbank!"
+post = Estate.new(:category => Estate::Categories[:for_sale], :subject => subject)
 body = <<-HTML
 브리즈번 최고의 계획도시.<br/>
 Springfield Lake에서 차로 10분 거리에 모두가 주목하는 Greenbank입니다.<br/>
@@ -35,7 +35,7 @@ post.set_user(admin)
 post.save
 content.save
 link_to = "http://qoq.com.au/korean/property/property_view.php?num=60"
-Image.create(:source_url => "http://qoq.com.au/_data/property/60_20120723142514.jpg", :link_to_url => link_to).attached_to(post)
+Image.create(:source_url => "http://qoq.com.au/_data/property/60_20120723142514.jpg", :link_to_url => link_to, :something => "This is a test message").attached_to(post)
 Image.create(:source_url => "http://qoq.com.au/_data/property/_20120723142635.jpg", :link_to_url => link_to).attached_to(post)
 Image.create(:source_url => "http://qoq.com.au/_data/property/_20120723142731.jpg", :link_to_url => link_to).attached_to(post)
 Image.create(:source_url => "http://qoq.com.au/_data/property/_20120723142817.jpg", :link_to_url => link_to).attached_to(post)
