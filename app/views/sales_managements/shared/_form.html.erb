@@ -1,6 +1,6 @@
 <%= form_for(@post, :html => { :class => "form" }) do |f| %>
 <%= hidden_field_tag :category, @category %>
-<%= f.hidden_field :write_at, :id => "write_at" %>
+<%= hidden_field_tag :write_at, @post.write_at, :id => "write_at" %>
 <%= admin_error_messages!(@post) %>
 <% if @category.eql?(Style.page(:p_issue)) %>
 <div class="group wat-cf">
@@ -45,7 +45,11 @@
 			<%= f.label :category, t("category"), :class => "label left" %>
 		</div>
 		<div class="">
-			<%= f.select :category, options_for_select(@post.admin_category_list, @post.category) %>
+			<% if @category.eql?(Style.page(:p_issue)) %>
+				<%= f.select :category, options_for_select(@post.category_list, @post.category) %>
+			<% else %>
+				<%= f.select :category, options_for_select(@post.admin_category_list, @post.category) %>
+			<% end %>
 		</div>
 		<span class="description"><%= t("must_be_selected") %></span>
 	</div>
@@ -66,7 +70,7 @@
 			<%= f.label :bed, t(:bed), :class => "label left" %>
 		</div>
 		<div class="">
-			<%= f.select :bed, options_for_select(Okvalue::BED_LIST, 0) %>
+			<%= f.select :bed, options_for_select(Okvalue::BED_LIST, @post.bed) %>
 		</div>
 		<span class="description"><%= t("must_be_selected") %></span>
 	</div>
@@ -77,7 +81,7 @@
 			<%= f.label :bath, t(:bath), :class => "label left" %>
 		</div>
 		<div class="">
-			<%= f.select :bath, options_for_select(Okvalue::BATH_LIST, 0) %>
+			<%= f.select :bath, options_for_select(Okvalue::BATH_LIST, @post.bath) %>
 		</div>
 		<span class="description"><%= t("must_be_selected") %></span>
 	</div>
@@ -88,7 +92,7 @@
 			<%= f.label :garage, t(:garage), :class => "label left" %>
 		</div>
 		<div class="">
-			<%= f.select :garage, options_for_select(Okvalue::GARAGE_LIST, 0) %>
+			<%= f.select :garage, options_for_select(Okvalue::GARAGE_LIST, @post.garage) %>
 		</div>
 		<span class="description"><%= t("must_be_selected") %></span>
 	</div>
@@ -131,7 +135,7 @@
 	<div class="group wat-cf">
 	    <div class="image" style="position:relative;float:left;width:700px;">
 	    	<%= f.label :add_image, t("image") + t("add"), :class => "label left" %>
-	    	<!-- Progress -->
+
 	    	<div class="flash"><div class="image_upload_progress"></div></div>
 			<div class="image_upload_status" style="display:none"><%= image_tag("common/loading.gif")%></div>
 	    	<div id="image_tabs">
@@ -299,17 +303,15 @@
 				$('\#source_url_image_submit').click(function() {upload_image_from_url();return false});
 				| + script) %>
 			</div>
-
 			</div>
-
 			</div>
-			<div class="group">
-			<div class="display_image" style="margin: 3px;float:left">
-				<% @images = @post.image %>
-				<% @timestamp = @post.write_at %>
-				<%= render :partial => 'sales_managements/shared/upload_image_box' %>
-			</div>			
-		</div>				
+			</div>
+	<div class="group wat-cf">
+		<div class="display_image" style="margin: 3px;float:left">
+			<% @images = @post.image %>
+			<% @timestamp = @post.write_at %>
+			<%= render :partial => 'sales_managements/shared/upload_image_box' %>
+		</div>			
 	</div>
 	<% end %>
 	<div class="group wat-cf">

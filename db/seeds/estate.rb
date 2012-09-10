@@ -6,10 +6,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-TopFeedList.category_feed(Estate.name).delete_all
-Estate.delete_all
+TopFeedList.category_feed(Estate.name).destroy_all
+Estate.destroy_all
+Image.where("attached_type = 'Estate'").destroy_all
+Attachment.where("attached_type = 'Estate'").destroy_all
 
-admin = Admin.first
+admin = Admin.find_by_email(Okvalue::POST_ADMIN)
 
 def post_expiry
   system_setting = SystemSetting.first
@@ -35,14 +37,14 @@ post.set_user(admin)
 post.save
 content.save
 link_to = "http://qoq.com.au/korean/property/property_view.php?num=60"
-Image.create(:source_url => "http://qoq.com.au/_data/property/60_20120723142514.jpg", :link_to_url => link_to, :something => "This is a test message").attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120723142635.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120723142731.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120723142817.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120723142954.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120723143046.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120723143130.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120723143344.jpg", :link_to_url => link_to).attached_to(post)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/60_20120723142514.jpg", :link_to_url => link_to, :something => "This is a test message 1").attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120723142635.jpg", :link_to_url => link_to, :something => "This is a test message 2").attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120723142731.jpg", :link_to_url => link_to, :something => "This is a test message 3").attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120723142817.jpg", :link_to_url => link_to, :something => "This is a test message 4").attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120723142954.jpg", :link_to_url => link_to).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120723143046.jpg", :link_to_url => link_to, :something => "This is a test message 6").attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120723143130.jpg", :link_to_url => link_to).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120723143344.jpg", :link_to_url => link_to, :something => "This is a test message 8").attached_to_by(post, admin)
 
 post = Estate.new(:category => Estate::Categories[:for_sale], :subject => "써니뱅크 Banoon역 도보거리")
 body = <<-HTML
@@ -51,7 +53,6 @@ body = <<-HTML
 아담한 뒷마당은 쉬운 관리로 집에 넉넉한 여유를 가지게 합니다.<br/>
 OPEN HOUSE는 6월 23일 토요일 오전 11시이지만, 약속을 미리 잡으시면 다른 시간에도 가능합니다.<br/>
 <br/>
-Ted Kim 0433 707 283<br/>
 HTML
 content = post.build_content(:body => body)
 post.price = "$399,000"
@@ -64,15 +65,15 @@ post.set_user(admin)
 post.save
 content.save
 link_to = "http://qoq.com.au/korean/property/property_view.php?num=47"
-Image.create(:source_url => "http://qoq.com.au/_data/property/47_20120622135306.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120622135455.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120622135525.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120622135543.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120622135558.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120622135615.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120622135631.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120622135642.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120622135700.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120622135717.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120622135736.jpg", :link_to_url => link_to).attached_to(post)
-Image.create(:source_url => "http://qoq.com.au/_data/property/_20120622135752.jpg", :link_to_url => link_to).attached_to(post)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/47_20120622135306.jpg", :link_to_url => link_to).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120622135455.jpg", :link_to_url => link_to).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120622135525.jpg", :link_to_url => link_to).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120622135543.jpg", :link_to_url => link_to).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120622135558.jpg", :link_to_url => link_to).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120622135615.jpg", :link_to_url => link_to).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120622135631.jpg", :link_to_url => link_to).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120622135642.jpg", :link_to_url => link_to).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120622135700.jpg", :link_to_url => link_to).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120622135717.jpg", :link_to_url => link_to).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120622135736.jpg", :link_to_url => link_to).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120622135752.jpg", :link_to_url => link_to).attached_to_by(post, admin)

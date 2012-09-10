@@ -37,7 +37,7 @@ class ManagementsController < ApplicationController
 
   def _write_post
     post = _model(@category).new
-    post.write_at = Time.now.utc.to_i
+    post.write_at = Time.now.to_i
     post.build_content
     post.valid_until = post_expiry
     @managements_path = @@management_path
@@ -243,7 +243,7 @@ class ManagementsController < ApplicationController
 
   def find_image(timestamp, id)
     if id
-      Image.where("attached_by_id = ? AND attached_id = ? AND write_at = ?", current_admin, id, timestamp)
+      Image.where("attached_id = ? AND write_at = ?", id, timestamp)
     else
       Image.where("attached_by_id = ? AND attached_id is NULL AND write_at = ?", current_admin, timestamp)
     end
@@ -251,7 +251,7 @@ class ManagementsController < ApplicationController
   
   def find_attachment(timestamp, id)
     if id
-      Attachment.where("attached_by_id = ? AND attached_id = ? AND write_at = ?", current_admin, id, timestamp)
+      Attachment.where("attached_id = ? AND write_at = ?", id, timestamp)
     else
       Attachment.where("attached_by_id = ? AND attached_id is NULL AND write_at = ?", current_admin, timestamp)
     end
