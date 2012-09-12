@@ -1,6 +1,6 @@
 <%= form_for(@post, :html => { :class => "form" }) do |f| %>
 <%= hidden_field_tag :category, @category %>
-<%= hidden_field_tag :write_at, @post.write_at, :id => "write_at" %>
+<%= f.hidden_field :write_at, :id => "write_at" %>
 <%= admin_error_messages!(@post) %>
 <% if @category.eql?(Style.page(:p_issue)) %>
 <div class="group wat-cf">
@@ -61,7 +61,7 @@
 		<div class="">
 			<%= f.text_field :address, :class => "text_field" %>
 		</div>
-		<span class="description"><%= t("must_be_selected") %></span>
+		<span class="description"><%= t("optional") %></span>
 	</div>
 	<% end%>
 	<% if @post.respond_to? :bed %>
@@ -70,10 +70,10 @@
 			<%= f.label :bed, t(:bed), :class => "label left" %>
 		</div>
 		<div class="">
-			<%= f.select :bed, options_for_select(Okvalue::BED_LIST, @post.bed) %>
+			<%= f.select :bed, options_for_select(Okvalue::BED_LIST, @post.bed), :include_blank => true %>
 		</div>
-		<span class="description"><%= t("must_be_selected") %></span>
-	</div>
+		<span class="description"><%= t("optional") %></span>
+		</div>
 	<% end%>
 	<% if @post.respond_to? :bath %>
 	<div class="group wat-cf">
@@ -81,10 +81,10 @@
 			<%= f.label :bath, t(:bath), :class => "label left" %>
 		</div>
 		<div class="">
-			<%= f.select :bath, options_for_select(Okvalue::BATH_LIST, @post.bath) %>
+			<%= f.select :bath, options_for_select(Okvalue::BATH_LIST, @post.bath), :include_blank => true %>
 		</div>
-		<span class="description"><%= t("must_be_selected") %></span>
-	</div>
+		<span class="description"><%= t("optional") %></span>
+		</div>
 	<% end%>
 	<% if @post.respond_to? :garage %>
 	<div class="group wat-cf">
@@ -92,10 +92,10 @@
 			<%= f.label :garage, t(:garage), :class => "label left" %>
 		</div>
 		<div class="">
-			<%= f.select :garage, options_for_select(Okvalue::GARAGE_LIST, @post.garage) %>
+			<%= f.select :garage, options_for_select(Okvalue::GARAGE_LIST, @post.garage), :include_blank => true %>
 		</div>
-		<span class="description"><%= t("must_be_selected") %></span>
-	</div>
+		<span class="description"><%= t("optional") %></span>
+		</div>
 	<% end%>
 	<% if @post.respond_to? :room_type %>
 	<div class="group wat-cf">
@@ -407,7 +407,7 @@
 		<div class="">
 			<%= content_form.cktext_area :body, :toolbar => 'Full' %>
 		</div>
-		<span class="description"><%= t("optional") %></span>
+		<span class="description"><%= t("must_be_filled") %></span>
 	</div>
 	<% end %>
 	<% else %>
@@ -418,6 +418,53 @@
 		<div class="">
 			<%= raw @post.content.body %>
 		</div>
+	</div>
+	<% end %>
+	<% if !@category.eql?(Style.page(:p_issue)) %>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :views, "#{t(:viewed)} #{t(:number_of)}", :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.text_field :views, :class => "text_field" %>
+		</div>
+		<span class="description"><%= t(:set_zero_to_reset) %></span>
+	</div>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :likes, "#{t(:likes)} #{t(:number_of)}", :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.text_field :likes, :class => "text_field" %>
+		</div>
+		<span class="description"><%= t(:set_zero_to_reset) %></span>
+	</div>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :dislikes, "#{t(:dislikes)} #{t(:number_of)}", :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.text_field :dislikes, :class => "text_field" %>
+		</div>
+		<span class="description"><%= t(:set_zero_to_reset) %></span>
+	</div>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :abuse, "#{t(:abuse)} #{t(:number_of)}", :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.text_field :abuse, :class => "text_field" %>
+		</div>
+		<span class="description"><%= t(:set_zero_to_reset) %></span>
+	</div>
+	<div class="group wat-cf">
+		<div class="">
+			<%= f.label :rank, "#{t(:rank)} #{t(:number_of)}", :class => "label left" %>
+		</div>
+		<div class="">
+			<%= f.text_field :rank, :class => "text_field" %>
+		</div>
+		<span class="description"><%= t(:set_zero_to_reset) %></span>
 	</div>
 	<% end %>
 </div>

@@ -114,10 +114,11 @@ class BannersController < ApplicationController
 
   def _business_client(id)  
     @business_client = BusinessClient.find(id)
+    @banner = Banner.find(params[:banner]) 
     if !params[:size] || params[:size].empty?
       return @business_client
     end
-    @banner = Banner.find(params[:size]) 
+
     @business_client.client_image.each_with_index do |image,i|
       logger.debug("image.attached_id: #{image.attached}")
       if image.original_size != @banner.img_resolution

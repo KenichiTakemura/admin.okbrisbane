@@ -11,7 +11,7 @@ Weather.destroy_all
 # Sample Data
 # Not for Production
 
-issuedOn = Time.now.utc - 1.day
+issuedOn = Common.current_time - 1.day
 
 WeatherConfig::AUSCityOrderList.each do |l|
   Weather.create(:issuedOn => issuedOn, :dateOn => Common.today, :location => l, :country => Okvalue::AU, :forecast => "sunny", :max => 10, :min => 0)

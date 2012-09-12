@@ -13,7 +13,7 @@ Job.delete_all
 # Not for Production
 user = User.first
 
-expiry = Time.now.utc + 30.days
+expiry = Common.current_time + 30.days
 
 1.upto(2) do |x|
   post = Job.new(:category => Job::Categories[:seek], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
@@ -23,7 +23,7 @@ expiry = Time.now.utc + 30.days
   content.save
 end
 
-expiry = Time.now.utc + 1.days
+expiry = Common.current_time + 1.days
 post = Job.new(:category => Job::Categories[:seek], :subject => "안녕 하세요 #3", :valid_until => expiry);
 content = post.build_content(:body => "안녕 하세요")
 post.save

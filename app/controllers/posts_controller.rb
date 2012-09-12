@@ -52,6 +52,7 @@ class PostsController < ApplicationController
           format.json { render :json => @post, :status => :created }
         end
       else
+        logger.info("Post creation failed at #{@post.write_at}")
         flash[:warning] = I18n.t("failed_to_create")
         @post.errors.full_messages.each do |msg|
           logger.warn("@post.errors: #{msg}")

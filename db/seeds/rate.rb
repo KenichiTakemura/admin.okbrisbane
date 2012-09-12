@@ -11,7 +11,7 @@ Rate.destroy_all
 # Sample Data
 # Not for Production
 
-issuedOn = Time.now.utc - 1.day
+issuedOn = Common.current_time - 1.day
 
 Rate.create(:issuedOn => issuedOn, :dateOn => Common.today, :currency_from => Okvalue::AU, :currency_to => Okvalue::KR, :buy_or_sell => RateConfig::BUY, :rate_a => 1111.11, :rate_b => 2222.22, :rate_c => 3333.33)
 Rate.create(:issuedOn => issuedOn, :dateOn => Common.today, :currency_from => Okvalue::NZ, :currency_to => Okvalue::KR, :buy_or_sell => RateConfig::BUY, :rate_a => 1111.11, :rate_b => 2222.22, :rate_c => 3333.33)

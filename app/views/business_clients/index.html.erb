@@ -8,6 +8,7 @@
 		<tr>
 			<th class="first"><%= t("Id") %></th>
 			<th><%= t("business_name") %></th>
+			<th><%= t("business_category") %></th>
 			<th><%= t("business_profile_image") %></th>
 			<th><%= t("contact_name")%></th>
 			<th><%= t("business_abn")%></th>
@@ -18,12 +19,11 @@
 		<tr class="<%= cycle("odd", "even") %>" >
 			<td><%= business_client.id %></td>
 			<td><%= link_to business_client.business_name, business_client_path(:id => business_client, :page => @business_clients.current_page) %></td>
+			<td><%= business_client.business_category %></td>
 			<td> <% if business_client.business_profile_image.empty? %>
 			<%= noimage %>
 			<% elsif %>
-
 			<%= image_tag(business_client.main_profile_image.avatar.url(:thumb), :style => "width:50px;height:50px") %>
-
 			<% end %> </td>
 			<td><%= business_client.contact_name %></td>
 			<td><%= business_client.business_abn %></td>

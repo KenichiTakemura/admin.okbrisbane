@@ -13,11 +13,11 @@ BuyAndSell.delete_all
 # Not for Production
 user = User.first
 
-expiry = Time.now.utc + 30.days
+expiry = Common.current_time + 30.days
 
 2010.upto(2050) do |x|
   post = BuyAndSell.new(:category => "buying", :subject => "안녕 하세요 #{x}", :valid_until => expiry, :price => "AUD 9999.99");
-  post.valid_until = Time.now
+  post.valid_until = Common.current_time
   content = post.build_content(:body => "안녕 하세요")
   post.set_user(user)
   post.save
@@ -26,7 +26,7 @@ end
 
 2100.upto(2150) do |x|
   post = BuyAndSell.new(:category => "selling", :subject => "어서 오세요 #{x}", :valid_until => expiry, :price => "AUD 9999.99");
-  post.valid_until = Time.now
+  post.valid_until = Common.current_time
   content = post.build_content(:body => "어서 오세요")
   post.set_user(user)
   post.save

@@ -15,7 +15,7 @@ admin = Admin.find_by_email(Okvalue::POST_ADMIN)
 
 def post_expiry
   system_setting = SystemSetting.first
-  Time.now + system_setting.post_expiry_length.days
+  Common.current_time + system_setting.post_expiry_length.days
 end
 ####
 post = Business.new(:category => Business::Categories[:for_sale], :subject => "브리즈번 베스트 이글보이즈 차이나타운!")
@@ -31,9 +31,9 @@ post.set_user(admin)
 post.save
 content.save
 link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=61"
-Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/61_20120725100055.jpg", :link_to_url => link_url).attached_to_by(post, admin)
-Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120725100201.jpg", :link_to_url => link_url).attached_to_by(post, admin)
-Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120725100300.jpg", :link_to_url => link_url).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/61_20120725100055.jpg", :link_to_url => link_url).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120725100201.jpg", :link_to_url => link_url).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120725100300.jpg", :link_to_url => link_url).attached_to_by(post, admin)
 ####
 post = Business.new(:category => Business::Categories[:for_sale], :subject => "편의점, 웨스트엔드")
 body = <<-HTML
@@ -135,7 +135,7 @@ post.set_user(admin)
 post.save
 content.save
 link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=54"
-Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/54_20120627101511.jpg", :link_to_url => link_url).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/54_20120627101511.jpg", :link_to_url => link_url).attached_to_by(post, admin)
 ####
 post = Business.new(:category => Business::Categories[:for_sale], :subject => "Coopers Plains, 스낵바")
 body = <<-HTML
@@ -152,7 +152,7 @@ post.set_user(admin)
 post.save
 content.save
 link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=53"
-Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/53_20120625131749.jpg", :link_to_url => link_url).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/53_20120625131749.jpg", :link_to_url => link_url).attached_to_by(post, admin)
 ####
 post = Business.new(:category => Business::Categories[:for_sale], :subject => "브리즈번의 홍대거리, 웨스트엔드 미용실")
 body = <<-HTML
@@ -168,7 +168,7 @@ post.set_user(admin)
 post.save
 content.save
 link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=52"
-Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/_20120625120705.jpg", :link_to_url => link_url).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120625120705.jpg", :link_to_url => link_url).attached_to_by(post, admin)
 ####
 post = Business.new(:category => Business::Categories[:for_sale], :subject => "런컨, 성업중인 치킨 & 피쉬")
 body = <<-HTML
@@ -185,7 +185,7 @@ post.set_user(admin)
 post.save
 content.save
 link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=51"
-Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/51_20120625114740.jpg", :link_to_url => link_url).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/51_20120625114740.jpg", :link_to_url => link_url).attached_to_by(post, admin)
 ####
 post = Business.new(:category => Business::Categories[:for_sale], :subject => "시티인근 핫스팟, 피자레스토랑")
 body = <<-HTML
@@ -201,7 +201,7 @@ post.set_user(admin)
 post.save
 content.save
 link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=50"
-Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/50_20120625101942.jpg", :link_to_url => link_url).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/50_20120625101942.jpg", :link_to_url => link_url).attached_to_by(post, admin)
 ####
 post = Business.new(:category => Business::Categories[:for_sale], :subject => "Logan근처, 대형마트 빅찬스")
 body = <<-HTML
@@ -218,7 +218,7 @@ post.set_user(admin)
 post.save
 content.save
 link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=49"
-Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/49_20120625100856.jpg", :link_to_url => link_url).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/49_20120625100856.jpg", :link_to_url => link_url).attached_to_by(post, admin)
 ####
 post = Business.new(:category => Business::Categories[:for_sale], :subject => "시티 최강 테이크어웨이")
 body = <<-HTML
@@ -235,7 +235,7 @@ post.set_user(admin)
 post.save
 content.save
 link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=48"
-Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/48_20120625093138.jpg", :link_to_url => link_url).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/48_20120625093138.jpg", :link_to_url => link_url).attached_to_by(post, admin)
 ####
 post = Business.new(:category => Business::Categories[:for_sale], :subject => "Sushi프렌차이즈, 시티 인근")
 body = <<-HTML
@@ -252,7 +252,7 @@ post.set_user(admin)
 post.save
 content.save
 link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=46"
-Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/46_20120622132535.jpg", :link_to_url => link_url).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/46_20120622132535.jpg", :link_to_url => link_url).attached_to_by(post, admin)
 ####
 post = Business.new(:category => Business::Categories[:for_sale], :subject => "이탈리아 레스토랑 & 카페")
 body = <<-HTML
@@ -269,7 +269,7 @@ post.set_user(admin)
 post.save
 content.save
 link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=45"
-Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/45_20120622130432.jpg", :link_to_url => link_url).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/45_20120622130432.jpg", :link_to_url => link_url).attached_to_by(post, admin)
 ####
 post = Business.new(:category => Business::Categories[:for_sale], :subject => "Fish & Chips, 브리즈번 북부지역")
 body = <<-HTML
@@ -286,7 +286,7 @@ post.set_user(admin)
 post.save
 content.save
 link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=44"
-Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/44_20120622123651.jpg", :link_to_url => link_url).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/44_20120622123651.jpg", :link_to_url => link_url).attached_to_by(post, admin)
 ####
 post = Business.new(:category => Business::Categories[:for_sale], :subject => "Eagle Boys Pizza Franchise")
 body = <<-HTML
@@ -302,4 +302,4 @@ post.set_user(admin)
 post.save
 content.save
 link_url = "http://www.qoq.com.au/korean/property/property_view.php?num=43"
-Image.create(:write_at => post.write_at, :source_url => "http://qoq.com.au/_data/property/43_20120622121913.jpg", :link_to_url => link_url).attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/43_20120622121913.jpg", :link_to_url => link_url).attached_to_by(post, admin)

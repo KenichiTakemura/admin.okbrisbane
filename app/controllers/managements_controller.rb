@@ -2,9 +2,10 @@ class ManagementsController < ApplicationController
 
   before_filter :checkCategory, :only => [:write, :edit, :show, :destroy_image,:destroy, :upload_image, :upload_image_from_url, :upload_attachment]
   def checkCategory
-    logger.debug("checkCategory: #{params[:category]}")
     @category = params[:category]
     raise "Bad Category" if @category.nil?
+    @@page = params[:page]
+    @current_page = @@page.to_s if !@@page.nil?
   end
 
   protected
@@ -13,7 +14,6 @@ class ManagementsController < ApplicationController
 
   def _index
     @category = params[:category]
-    logger.debug("PostsManagementsController.index @category: #{@category}")
     if !@category || @category.empty?
       logger.debug("@category is empty")
       respond_to do |format|
@@ -22,7 +22,6 @@ class ManagementsController < ApplicationController
       end
     end
     @@page = params[:page]
-    logger.debug("category: #{@category} page: #{@@page}")
     @current_page = @@page.to_s
     if params[:user]
       @post = getPostByUser(_model(@category), @@page, params[:user])
@@ -37,7 +36,7 @@ class ManagementsController < ApplicationController
 
   def _write_post
     post = _model(@category).new
-    post.write_at = Time.now.to_i
+    post.write_at ||= Common.current_time.to_i
     post.build_content
     post.valid_until = post_expiry
     @managements_path = @@management_path
@@ -153,8 +152,9 @@ class ManagementsController < ApplicationController
   def _delete_attachment
     logger.debug("_delete_attachment")
     attachment = Attachment.find(params[:a_id])
-    @timestamp = params[:t]
+    logger.debug("attachment #{attachment}")
     attachment.destroy
+    @timestamp = params[:t]
     @attachments = find_attachment(@timestamp, params[:id])
   end
 
@@ -242,7 +242,8 @@ class ManagementsController < ApplicationController
   end
 
   def find_image(timestamp, id)
-    if id
+    logger.debug("find_image by #{timestamp} and #{id}")
+    if !id.nil?
       Image.where("attached_id = ? AND write_at = ?", id, timestamp)
     else
       Image.where("attached_by_id = ? AND attached_id is NULL AND write_at = ?", current_admin, timestamp)
@@ -250,7 +251,8 @@ class ManagementsController < ApplicationController
   end
   
   def find_attachment(timestamp, id)
-    if id
+    logger.debug("find_attachment by #{timestamp} and #{id}")
+    if !id.nil?
       Attachment.where("attached_id = ? AND write_at = ?", id, timestamp)
     else
       Attachment.where("attached_by_id = ? AND attached_id is NULL AND write_at = ?", current_admin, timestamp)

@@ -64,7 +64,10 @@ class BusinessClientsController < ApplicationController
   # PUT /business_clients/1.json
   def update
     @business_client = BusinessClient.find(params[:id])
-
+    logger.debug("Business_client update #{@business_client}")
+    business_category = BusinessCategory.find(params[:business_client][:business_category])
+    params[:business_client].delete :business_category
+   @business_client.business_category = business_category
     respond_to do |format|
       if @business_client.update_attributes(params[:business_client])
         format.html { redirect_to @business_client, :notice => t("successfully_updated") }

@@ -24,7 +24,7 @@
 			</li>
 			<li>
 				<%= t("banner_page") %><br/>
-				<% if client_image.banner.empty? %>
+				<% if client_image.banner.present? %>
 					<%= t("not_present") %>
 				<% elsif %>
 					<% client_image.banner.each do |banner| %>

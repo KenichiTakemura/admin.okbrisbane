@@ -92,7 +92,11 @@
 
 		<div class="group wat-cf" style="margin-top:5px">
 			<div class="left">
-				<%= f.submit t("add"), :class => "button" %>
+				<%= f.submit t("add"), :class => "button", :id => "banner_add_submit" %>
+				<div id="banner_upload_status" style="display:none">
+					<%= image_tag ("loading.gif")%>
+				</div>
+				<%= _script(%Q|$('\#banner_add_submit').click(function() {$('\#banner_upload_status').toggle();})|) %>
 			</div>
 		</div>
 		<% end %>
@@ -107,6 +111,8 @@
 				<%= t("image_size") %> <%= client_image.original_size %>
 			</p>
 			<p>
+				<%= client_image.avatar_file_name %>
+				<br/>
 				<%= client_image.avatar_content_type %>
 				<br/>
 				<%= t("banner_page") %>
