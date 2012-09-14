@@ -16,7 +16,7 @@ class Admin < ActiveRecord::Base
   has_many :comment, :as => :commented_by, :class_name => 'Comment', :dependent => :destroy
   has_many :attachment, :as => :attached_by, :class_name => 'Attachment', :dependent => :destroy
   has_many :image, :as  => :attached_by, :class_name => 'Image', :dependent => :destroy
-  has_many :issue, :as => :issued, :class_name => "Issue", :dependent => :nullify
+  has_many :issue, :as => :posted_by, :class_name => "Issue", :dependent => :nullify
 
   after_create :create_mypage, :init_role
 
@@ -28,8 +28,26 @@ class Admin < ActiveRecord::Base
   
   def init_role
     [:p_job,:p_buy_and_sell,:p_well_being].each do |page|
-    role = Role.new(:role_name => Style.page(page), :role_value => Role::R[:user_all] | Role::R[:other_all] | Role::R[:group_all] )
-    role.assign(self)
+      role = Role.new(:role_name => Style.page(page), :role_value => Role::R[:all] )
+      role.assign(self)
+    end
+    Style.admin_roles.each do |key,value|
+      role = Role.new(:role_name => value,  :role_value => Role::R[:all] )
+      role.assign(self)
+    end
+  end
+  
+  def can_view_for?(o)
+    logger.debug("can_view_for? #{o}")
+    self.role.each do |role|
+      return true if role.role_name.eql?(Style.admin_role(o)) && role.has_role?(Role::R[:user_r])
+    end
+    false
+  end
+  
+  def disable_role(o)
+    self.role.each do |role|
+      role.role_name.eql?(Style.admin_role(o)) && role.disable_role
     end
   end
   

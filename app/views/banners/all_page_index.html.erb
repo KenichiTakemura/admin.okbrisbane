@@ -1,26 +1,68 @@
-<%= render :partial => 'banners/shared/head' %>
-<h2 class="title"><%= t("banner") %> <%= t("page") %> <%= t("listing") %></h2>
+<%= render :partial => 'banners/shared/head' %> <h2 class="title"><%= t("banner") %> <%= t("page") %> <%= t("listing") %></h2>
 <div class="inner">
 	<table class="table">
 		<thead>
 			<tr>
-			<th class="first"><%= t("Id") %></th>
-			<th><%= t("page") %></th>
-			<th><%= t("div_size") %></th>
-			<th class="last"><%= t("image_size") %></th>
+				<th class="first"><%= t(:page) %></th>
+				<% 1.upto(@position_id_max[:s_header]) { |p| %>
+				<th><%= "#{t(:s_header)}\##{p}" %></th>
+				<% } %>
+				<% 1.upto(@position_id_max[:s_background]) { |p| %>
+				<th><%= "#{t(:s_background)}\##{p}" %></th>
+				<% } %>
+				<% 1.upto(@position_id_max[:s_body]) { |p| %>
+				<th><%= "#{t(:s_body)}\##{p}" %></th>
+				<% } %>
 			</tr>
 		</thead>
 		<tbody>
-		<% i = 1 %>
-		<% @banners.each do |banner| %>
-		  <tr class="<%= cycle("odd", "even") %>" >
-		  	<td><%= i %></td>
-			<td><%= banner.name %></td>
-			<td><%= banner.div_resolution %></td>
-			<td><%= banner.img_resolution %></td>
-		  </tr>
-		  <% i += 1 %>
-		<% end %>
+			<% @allpages.each do |page, banners| %>
+			<tr class="<%= cycle("odd", "even") %>" >
+				<td><%= link_to t(Style.page(page)), banners_path(:page_id => Style.pageid_key(page)) %></td>
+				<% banner = banners[:s_header] %>
+				<% i = 1 %>
+				<% banner.each do |e| %>
+				<% if e.is_disabled%>
+				<td></td>
+				<% else %>
+				<td><%= e.img_resolution %></td>
+				<% end %>
+				<% i += 1%>
+				<% end %>
+				<% i.upto(@position_id_max[:s_header]) { |p| %>
+					<td></td>
+				<% } %>
+				
+				<% banner = banners[:s_background] %>
+				<% i = 1 %>
+				<% banner.each do |e| %>
+				<% if e.is_disabled%>
+				<td></td>
+				<% else %>
+				<td><%= e.img_resolution %></td>
+				<% end %>
+				<% i += 1%>
+				<% end %>
+				<% i.upto(@position_id_max[:s_background]) { |p| %>
+					<td></td>
+				<% } %>
+				
+				<% banner = banners[:s_body] %>
+				<% i = 1 %>
+				<% banner.each do |e| %>
+				<% if e.is_disabled%>
+				<td></td>
+				<% else %>
+				<td><%= e.img_resolution %></td>
+				<% end %>
+				<% i += 1%>
+				<% end %>
+				<% i.upto(@position_id_max[:s_body]) { |p| %>
+					<td></td>
+				<% } %>
+			</tr>
+
+			<% end %>
 		</tbody>
 	</table>
 </div>

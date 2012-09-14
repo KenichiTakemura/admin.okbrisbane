@@ -1,5 +1,5 @@
 /* Activo 2 by David Francisco (activo.dmfranc.com) - tiny version for web-app-theme */
-/* 
+
 @font-face {
   font-family: "MuseoSans500";
   src: url("fonts/museosans_500-webfont.eot");
@@ -23,20 +23,19 @@
   font-weight: normal;
   font-style: normal;
 }
-*/
+
 body {
-  color: #111111;
-  background: #c4c4c4 url("images/bgd.jpg");
-  /* font-family: "NanumGothic", "MuseoSans500", helvetica, arial, sans-serif; */
- font-family: "NanumGothic";
+ color: #111111;
+ background: #c4c4c4 url("images/bgd.jpg");
+ font-family: "NanumGothic", "MuseoSans500", helvetica, arial, sans-serif;
+
 }
 
 
 h1, h2, h3 {
   color: #111111;
   font-weight: normal;
-  /* font-family: "NanumGothic", "Museo700", helvetica, arial, sans-serif; */
-  font-family: "NanumGothic";
+  font-family: "NanumGothic", "Museo700", helvetica, arial, sans-serif;
 }
 
 a:link, a:visited, a:hover, a:active {

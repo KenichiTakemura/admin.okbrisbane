@@ -62,7 +62,10 @@ module AdminOkbrisbane
     config.assets.paths << "#{Rails.root}/app/assets/stylesheets/fonts"
     config.assets.paths << "#{Rails.root}/app/assets/stylesheets/images"
     config.assets.paths << "#{Rails.root}/app/assets/stylesheets/web-app-theme"
-    
+    config.assets.paths << "#{Rails.root}/app/assets/stylesheets/web-app-theme/themes/"
+    config.assets.paths << "#{Rails.root}/app/assets/stylesheets/web-app-theme/themes/default"
+    config.assets.paths << "#{Rails.root}/app/assets/stylesheets/web-app-theme/themes/default/fonts"
+    config.assets.paths << "#{Rails.root}/app/assets/stylesheets/web-app-theme/themes/default/images"
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 

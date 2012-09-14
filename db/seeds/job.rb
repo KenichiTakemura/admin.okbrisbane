@@ -7,35 +7,48 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 TopFeedList.category_feed(Job.name).delete_all
-Job.delete_all
+Job.destroy_all
 
 # Sample Data
 # Not for Production
 user = User.first
 
-expiry = Common.current_time + 30.days
+expiry = Common.current_time + 60.days
 
-1.upto(2) do |x|
+59.downto(0) { |x|
   post = Job.new(:category => Job::Categories[:seek], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
+  post.created_at = Common.current_time - x.days
   content = post.build_content(:body => "안녕 하세요")
   post.save
   post.set_user(user)
   content.save
-end
+}
 
-expiry = Common.current_time + 1.days
-post = Job.new(:category => Job::Categories[:seek], :subject => "안녕 하세요 #3", :valid_until => expiry);
-content = post.build_content(:body => "안녕 하세요")
-post.save
-post.set_user(user)
-content.save
-Image.create(:avatar => File.new("test/fixtures/business/b1.jpg")).attached_to_by(post,user)  
-
-
-1.upto(3) do |x|
-  post = Job.new(:category => Job::Categories[:hire], :subject => "어서 오세요 #{x}", :valid_until => expiry);
-  content = post.build_content(:body => "어서 오세요")
+60.upto(100) { |x|
+  post = Job.new(:category => Job::Categories[:seek], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
+  post.created_at = Common.current_time
+  content = post.build_content(:body => "안녕 하세요")
   post.save
   post.set_user(user)
   content.save
-end
+}
+
+59.downto(0) { |x|
+  post = Job.new(:category => Job::Categories[:hire], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
+  post.created_at = Common.current_time - x.days
+  content = post.build_content(:body => "안녕 하세요")
+  post.save
+  post.set_user(user)
+  content.save
+}
+
+60.upto(100) { |x|
+  post = Job.new(:category => Job::Categories[:hire], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
+  post.created_at = Common.current_time
+  content = post.build_content(:body => "안녕 하세요")
+  post.save
+  post.set_user(user)
+  content.save
+}
+
+

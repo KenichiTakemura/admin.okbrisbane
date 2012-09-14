@@ -37,5 +37,10 @@ AdminOkbrisbane::Application.configure do
   config.assets.debug = true
 
   config.serve_static_assets = true
+  
+  # Disable assets log
+  config.assets.logger = false
+  
+  config.ok_debug = true
 
 end

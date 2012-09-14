@@ -6,7 +6,6 @@
 <div class="inner">
 	<table class="table">
 		<tr>
-			<th class="first"><%= t("Id") %></th>
 			<th><%= t("en_name") %></th>
 			<th><%= t("display_name") %></th>
 			<th><%= t("search_keyword")%></th>
@@ -15,7 +14,6 @@
 		</tr>
 		<% @business_categories.each do |business_category| %>
 		<tr class="<%= cycle("odd", "even") %>" >
-			<td><%= business_category.id %></td>
 			<td><%= business_category.en_name %></td>
 			<td><%= business_category.display_name %></td>
 			<td><%= business_category.search_keyword %></td>
@@ -26,10 +24,7 @@
 				<% end %>
 			</td>
 			<td>
-			<%= link_to t('Show'), business_category %>
-			<br/>
-			<%= link_to t('Edit'), edit_business_category_path(business_category) %>
-			<br/>
+			<%= link_to t('Edit'), edit_business_category_path(business_category) %> |
 			<%= link_to t('Delete'), business_category, :method => :delete, :data => { :confirm => t('confirm_delete') } %>
 		</tr>
 		<% end %>

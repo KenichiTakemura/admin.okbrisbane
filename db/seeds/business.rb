@@ -6,10 +6,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-TopFeedList.category_feed(Business.name).delete_all
+TopFeedList.category_feed(Business.name).destroy_all
 Business.destroy_all
-Image.where("attached_type = 'Business'").destroy_all
-Attachment.where("attached_type = 'Business'").destroy_all
 
 admin = Admin.find_by_email(Okvalue::POST_ADMIN)
 

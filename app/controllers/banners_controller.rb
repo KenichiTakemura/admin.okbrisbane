@@ -16,8 +16,8 @@ class BannersController < ApplicationController
   def image_size_index
     banners  = Banner.where("is_disabled = false")
     @style_class = "image_size_list"
-    img_resolutions = Hash.new
-    @image_size_map = Hash.new
+    img_resolutions = Common.new_orderd_hash
+    @image_size_map = Common.new_orderd_hash
     banners.each do |b|
       if !img_resolutions[b.img_resolution.to_sym]
         img_resolutions[b.img_resolution.to_sym] = b.img_resolution 
@@ -33,7 +33,18 @@ class BannersController < ApplicationController
   end
   
   def all_page_index
-    @banners  = Banner.where("is_disabled = false").order("page_id, section_id")
+    @allpages = Common.new_orderd_hash
+    @position_id_max = Common.new_orderd_hash
+    @position_id_max[:s_header] = Banner.where("section_id = ?",Style.sectionid(:s_header)).maximum("position_id")
+    @position_id_max[:s_background] = Banner.where("section_id = ?",Style.sectionid(:s_background)).maximum("position_id")
+    @position_id_max[:s_body] = Banner.where("section_id = ?",Style.sectionid(:s_body)).maximum("position_id")
+    Style.banner_pages.each do |key,value|
+      banners = Common.new_orderd_hash
+      banners[:s_header] = Banner.where("page_id = ? and section_id = ?", Style.pageid_key(key), Style.sectionid(:s_header)).order("position_id")
+      banners[:s_background] = Banner.where("page_id = ? and section_id = ?", Style.pageid_key(key), Style.sectionid(:s_background)).order("position_id")
+      banners[:s_body] = Banner.where("page_id = ? and section_id = ?", Style.pageid_key(key), Style.sectionid(:s_body)).order("position_id")
+      @allpages[key] = banners
+    end
     @style_class = "all_page_list"
   end
 

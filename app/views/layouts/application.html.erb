@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<% if AdminOkbrisbane::Application.config.ok_debug %>
+		<title>ADMIN OKBRISBANE DEBUG</title>
+		<% _cache = false %>
+		<% else %>
 		<title>ADMIN OKBRISBANE</title>
+		<% _cache = true %>
+		<% end %>
 		<script type="text/javascript">
 			var CKEDITOR_BASEPATH = '/assets/ckeditor/';
 		</script>
-		<%= stylesheet_link_tag "application", :cache => false %>
-		<%= javascript_include_tag "application", :cache => false %>
+		<%= stylesheet_link_tag "application", :cache => _cache %>
+		<%= javascript_include_tag "application", :cache => _cache %>
+		<%= csrf_meta_tag %>
 		<%= csrf_meta_tag %>
 	</head>
 	<body>
@@ -15,19 +22,51 @@
 				<h1><a href="/">OKBRISBANE</a></h1>
 				<div id="user-navigation">
 					<ul class="wat-cf">
-						<li>
-							<%= link_to t("system_management"), system_settings_path %></a>
+						<% if current_admin.can_view_for?(:m_system_setting) %>
+						<li id="navigation_management">
+							<%= t(:system_management) %>
+							<span class="management_menu">
+								<div class="">
+									<ul class="">
+										<li class="item" id="menu_system_setting">
+											<%= t(:system_management) %>
+											<ul class="">
+												<li class="menu" id="menu_system_setting_list">
+													<%= link_to t("listing"), system_settings_path %>
+												</li>
+											</ul>
+										</li>
+										<li class="item" id="menu_weather_information">
+											<%= t(:weather_information) %>
+											<ul class="">
+												<li class="menu" id="menu_weather_list">
+													<%= link_to t("listing"), "#" %>
+												</li>
+											</ul>
+										</li>
+										<li class="item" id="menu_rate_information">
+											<%= t(:rate_information) %>
+											<ul class="">
+												<li class="menu" id="menu_rate_list">
+													<%= link_to t("listing"), rates_path %>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</div></span>
 						</li>
+						<% end %>
 						<li>
 							<%= link_to t("change_password"), edit_admin_registration_path, :method => :get, :class => "password_change" %>
-						</li>		
+						</li>
 						<li>
 							<%= link_to t("signout"), destroy_admin_session_path, :method => :delete, :class => "logout", :data => { :confirm => t('are_you_sure_to_singout') } %>
 						</li>
 					</ul>
 				</div>
 				<div id="main-navigation">
-					<ul>
+					<ul class="wat-cf">
+						<% if current_admin.can_view_for?(:m_business_client) %>
 						<li id="navigation_management">
 							<%= link_to t("client_management"), "#" %>
 							<span class="management_menu">
@@ -58,6 +97,8 @@
 									</ul>
 								</div></span>
 						</li>
+						<% end %>
+						<% if current_admin.can_view_for?(:m_banner) %>
 						<li id="navigation_management">
 							<%= link_to t("banner_management"), banners_path %>
 							<span class="management_menu">
@@ -86,6 +127,8 @@
 									</ul>
 								</div></span>
 						</li>
+						<% end %>
+						<% if current_admin.can_view_for?(:m_sales) %>
 						<li id="navigation_management">
 							<%= link_to t("sales_management"), "#" %>
 							<span class="management_menu">
@@ -113,6 +156,8 @@
 									</ul>
 								</div></span>
 						</li>
+						<% end %>
+						<% if current_admin.can_view_for?(:m_post) %>
 						<li id="navigation_management">
 							<%= link_to t("post_management"), "#" %>
 							<span class="management_menu">
@@ -140,6 +185,8 @@
 									</ul>
 								</div></span>
 						</li>
+						<% end %>
+						<% if current_admin.can_view_for?(:m_user) %>
 						<li id="navigation_management">
 							<%= link_to t("member_management"), "#" %>
 							<span class="management_menu">
@@ -164,6 +211,8 @@
 									</ul>
 								</div></span>
 						</li>
+						<% end %>
+						<% if current_admin.can_view_for?(:m_site) %>
 						<li id="navigation_management">
 							<%= link_to t("site_statistics"), "#" %>
 							<span class="management_menu">
@@ -183,6 +232,8 @@
 									</ul>
 								</div> </span>
 						</li>
+						<% end %>
+						<% if current_admin.can_view_for?(:m_issue) %>
 						<li id="navigation_management">
 							<%= link_to t("issue_management"), "#" %>
 							<span class="management_menu">
@@ -204,6 +255,7 @@
 									</ul>
 								</div> </span>
 						</li>
+						<% end %>
 					</ul>
 					<div class="clear"></div>
 				</div>
