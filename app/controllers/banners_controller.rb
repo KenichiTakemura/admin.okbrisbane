@@ -124,19 +124,22 @@ class BannersController < ApplicationController
   end
 
   def _business_client(id)  
-    @business_client = BusinessClient.find(id)
     @banner = Banner.find(params[:banner]) 
-    if !params[:size] || params[:size].empty?
-      return @business_client
-    end
-
-    @business_client.client_image.each_with_index do |image,i|
-      logger.debug("image.attached_id: #{image.attached}")
-      if image.original_size != @banner.img_resolution
-        logger.debug("original_size: #{image.original_size} is filtered out")
-        image.is_deleted = true
+    @business_client = BusinessClient.find(id)
+    if params[:size].eql?("not_selected")
+      @business_client.client_image.each_with_index do |image,i|
+        if image.banner.present?
+          image.is_deleted = true
+        end
       end
+    elsif params[:size].eql?("specific")
+      @business_client.client_image.each_with_index do |image,i|
+        if image.original_size != @banner.img_resolution
+          image.is_deleted = true
+        end
+     end
     end
+    
     @business_client
   end
 end

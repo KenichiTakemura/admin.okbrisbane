@@ -31,7 +31,7 @@
 			<td> <%= @banner.effect_speed %> </td>
 		</tr>
 		<tr class="<%= cycle("odd", "even") %>" style="<%= style%>">
-			<td><%= label_tag :is_random, t("is_random"), :class => "label left" %> </td>
+			<td><%= label_tag :is_random, t(:random), :class => "label left" %> </td>
 			<td> <%= t("#{!@banner.is_random}") %> </td>
 		</tr>
 		<tr class="<%= cycle("odd", "even") %>" style="<%= style%>">
@@ -68,6 +68,7 @@
 </div>
 </table>
 
-<%= link_to t('Edit'), edit_banner_path(@banner, :page_id => @page_id) %> |
-<%= link_to t('Back'), banners_path(:page_id => @page_id) %>
+<%= link_to t('Edit'), edit_banner_path(@banner, :page_id => @banner.page_id) %> |
+<%= link_to(t(:select_image), select_banners_path(:banner => @banner, :page_id => @banner.page_id)) %> |
+<%= link_to t('Back'), banners_path(:page_id => @banner.page_id) %> 
 </div>

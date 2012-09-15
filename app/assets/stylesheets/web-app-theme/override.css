@@ -5,10 +5,12 @@
 #box .block .content .inner {
   padding: 0 15px 15px;  
 }
+
 img.opacity {
-	opacity: 0.5;
-	filter: alpha(opacity=50);
+	opacity: 0.4;
+	filter: alpha(opacity=40);
 }
+
 .title {
 	text-decoration: none;
     padding: 1px 1px;

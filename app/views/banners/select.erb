@@ -68,11 +68,18 @@
 				$("\#_select_" + target + "_size").attr("style", "color:rgb(15, 99, 30);font-size:medium;font-weight:bold");
 				if(target == "all") {
 					$('\#_select_specific_size').attr("style","");
-					$('\#_selected_size').val("");
+					$('\#_select_not_selected_size').attr("style","");
+					$('\#_selected_size').val("all");
 				}
-				else {
+				else if(target == "specific" ){
 					$('\#_select_all_size').attr("style","");
-					$('\#_selected_size').val($('\#banner_select').val());
+					$('\#_select_not_selected_size').attr("style","");
+					$('\#_selected_size').val("specific");
+				}
+				else if(target == "not_selected" ){
+					$('\#_select_all_size').attr("style","");
+					$('\#_select_specific_size').attr("style","");
+					$('\#_selected_size').val("not_selected");
 				}
 			}
 			|) %>
@@ -83,6 +90,7 @@
 			$('\#business_client_select').change(function() { filter_size("specific"); populate_image('business_client'); })
 			$('\#_select_specific_size').click(function() {filter_size("specific");populate_image('business_client'); return false;})
 			$('\#_select_all_size').click(function() {filter_size("all");populate_image('business_client'); return false;})
+			$('\#_select_not_selected_size').click(function() {filter_size("not_selected");populate_image('business_client'); return false;})
 			|) %>
 			<div class="group wat-cf">
 				<div id="_business_client_loading" style="display:none">
@@ -91,6 +99,7 @@
 				<div id="select_size">
 					<%= hidden_field_tag :_size, '', :id => "_selected_size"%>
 					<%= link_to t("select_specific_size"), '#', :id => "_select_specific_size", :class => "button"%>
+					<%= link_to t("select_not_selected_size"), '#', :id => "_select_not_selected_size", :class => "button"%>
 					<%= link_to t("select_all_size"), '#', :id => "_select_all_size", :class => "button"%>
 				</div>
 				<div id="_business_client_image"></div>
@@ -99,7 +108,7 @@
 		<div id="banner_content">
 			<h3><%= t("client_banner_image") %> <%= t('size') %> :
 			<div id="_banner_image_size">	<%= @banner.img_resolution %></div></h3>
-			<%= select_tag :banner, options_from_collection_for_select(@banners, "id", "name", @banner.id), :include_blank => false, :id => "banner_select" %>
+			<%= select_tag :banner, options_from_collection_for_select(@banners, "id", "name_with_img_resolution", @banner.id), :include_blank => false, :id => "banner_select" %>
 			<%= _script_document_ready(%Q|populate_image('banner');
 			$('\#banner_select').change(function() {filter_size("specific");populate_image('banner');populate_image('business_client')})|) %>
 			<div class="group wat-cf">
