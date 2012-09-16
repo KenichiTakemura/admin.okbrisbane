@@ -38,7 +38,10 @@
 											<%= t(:weather_information) %>
 											<ul class="">
 												<li class="menu" id="menu_weather_list">
-													<%= link_to t("listing"), "#" %>
+													<%= link_to t("listing"), weathers_path %>
+												</li>
+												<li class="menu" id="menu_weather_collect">
+													<%= link_to(t(:collect_information), collect_weathers_path)%>
 												</li>
 											</ul>
 										</li>
@@ -47,6 +50,9 @@
 											<ul class="">
 												<li class="menu" id="menu_rate_list">
 													<%= link_to t("listing"), rates_path %>
+												</li>
+												<li class="menu" id="menu_rate_collect">
+													<%= link_to(t(:collect_information), collect_rates_path)%>
 												</li>
 											</ul>
 										</li>

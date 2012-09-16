@@ -6,6 +6,12 @@ AdminOkbrisbane::Application.routes.draw do
     end
   end
   
+  resources :weathers, :only => ['index'] do
+    collection do
+      get :collect
+    end
+  end
+  
   resources :issues, :only => ['create','update']
 
   resources :legal_services, :only => ['create','update']
