@@ -1,4 +1,4 @@
-<p class="city">
+<p class="title">
 	<%= t(:weather_forecast_for) %> <%= @au_dateOn %>
 </p>
 <table class="ui-widget information_table" style="opacity:0.95;filter:alpha(opacity=95);">
@@ -17,7 +17,7 @@
 			<td colspan="4"><%= t(:no_information) %> </td>
 		</tr>
 		<% else %>
-		<% !@au_weather.each do |w| %>
+		<% !@au_weather.reverse_each do |w| %>
 		<% next if !WeatherConfig::AUSCityVisibleMap[w.location.to_sym] %>
 		<tr>
 			<td class="city"><%= link_to(t(w.location), WeatherConfig::AUSCityMap[w.location.to_sym], :target => "_blank") %></td>

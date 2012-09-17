@@ -9,7 +9,7 @@ class WeathersController < ApplicationController
   
   def collect
     ActiveRecord::Base.transaction do
-      WeatherConfig.saveWeather
+      WeatherConfig.saveWeather      
     end
     get_information
     respond_to do |format|
