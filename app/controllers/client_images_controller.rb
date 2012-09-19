@@ -65,6 +65,7 @@ class ClientImagesController < ApplicationController
           File.new(target).chmod(0644)
         end
         @client_image.attached_to(@business_client)
+        @client_image.attached_by(current_admin)
         # This must be down to update images in another new view
         @business_client = BusinessClient.find_by_id(@client_image.attached_id)
         flash[:notice] = t("successfully_created")
@@ -104,4 +105,17 @@ class ClientImagesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  # Ajax
+    def image_size_for
+    file = params[:file]
+    image = Image.new(:avatar => file)
+    if image.thumbnailable?
+       render :json => {:result => 0, :file => image.avatar_file_name, :image_size => image.original_size, :type => image.avatar_content_type, :size => image.avatar_file_size}
+    else
+      logger.debug("not thumbnailable? #{image}")
+      render :json => {:result => 2}
+    end
+  end
+  
 end

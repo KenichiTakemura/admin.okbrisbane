@@ -32,7 +32,6 @@
 			<% elsif %>
 			<div class="banner_image_thumbnail">
 				<% business_client.client_image.each do |client_image| %>
-
 				<div class="banner_image_thumbnail_each">
 					<%= link_to image_tag(client_image.thumb_image, :style => "width:50px;height:50px"), client_image.medium_image, :target => "_blank" %>
 					<span><%= link_to t('Edit'), edit_client_image_path(client_image) %> </span>

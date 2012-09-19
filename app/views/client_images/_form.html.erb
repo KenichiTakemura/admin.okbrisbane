@@ -29,7 +29,6 @@
 			<br/>
 			<span class="description"><%= link_to t("not_listed"), new_business_client_path %></span>
 		</div>
-
 		<div id="image_tabs">
 			<ul>
 				<li>
@@ -40,7 +39,8 @@
 				</li>
 			</ul>
 			<div id="image_tabs_upload" style="margin:5px;">
-
+	    		<div class="flash"><div class="image_upload_progress"></div></div>
+				<div class="image_upload_status" style="display:none"><%= image_tag("common/loading.gif")%></div>
 				<div class="group wat-cf">
 					<div class="">
 						<%= f.label :avatar, t("client_banner_image"), :class => "label left" %>
@@ -51,9 +51,51 @@
 					<span class="description"><%= t("acceptable_extention") %> <%= @client_image.attachable_list %></span>
 					<br/>
 					<span class="description"><%= t("auto_detect_image_size") %></span>
+					<div class="image_description"></div>
 				</div>
 			</div>
-
+			<% script = %Q|
+			    function upload_image() {
+				  if($('\#avatar').val() != "") {
+      				$('div.image_upload_status').css("display","block");
+     				var formData = new FormData();
+      				formData.append("file", document.getElementById('avatar').files[0]);
+				    formData.append("authenticity_token", $("input[name='authenticity_token']").attr("value"));
+      				var xhr = new XMLHttpRequest();
+      				xhr.upload.addEventListener("progress", uploadImageProgress, false);
+         	        xhr.addEventListener("load", uploadImageComplete, false);
+      				xhr.open("POST", "#{image_size_for_client_images_path}", true);
+      				xhr.send(formData);
+      			  }
+    			};
+    			function uploadImageProgress(event) {
+      				var progress = Math.round((event.loaded / event.total) * 100);
+      				$('div.image_upload_progress').html(progress + "%");
+    			};
+    			function uploadImageComplete(event) {
+    			   $('div.image_upload_status').css("display","none");
+    			   $('\#image').val('');
+                   if (event.target.status != 200) {
+                     $('div.image_upload_progress').html("<div class=\\"message error\\">"
+                       + "<p><strong>#{t("failed_to_upload")}</strong></p></div>");
+                       return false;
+                    }
+                    data = JSON.parse(event.target.responseText);
+                    if(data.result == 2) {
+                    $('div.image_upload_progress').html("<div class=\\"message error\\">"
+                      + "<p><strong>#{t("invalid_file_extention")}</strong></p></div>");
+                    } else if(data.result != 0) {
+                    $('div.image_upload_progress').html("<div class=\\"message error\\">"
+                      + "<p><strong>#{t("failed_to_upload")}</strong></p></div>");
+                    } else {
+                      $('div.image_upload_progress').html("");
+                      $('div.image_description').html(data.file + "<br/>" + data.image_size + "<br/>" + data.type + "<br/>" + data.size + " byte");
+                    }
+    			 };
+    			| %>
+    			<%= _script(%Q|$('\#avatar').change(function() {upload_image();return false});
+    			$('\#avatar').click(function() {$('div.image_upload_progress').html('');});
+    			| + script) %>
 			<div id="image_tabs_link" style="position:relative;margin:5px;">
 
 				<div class="group wat-cf" >
@@ -66,7 +108,6 @@
 					<div id="content_url"></div>
 					<span class="description"><%= t("read_image_from_the_url") %></span>
 				</div>
-
 			</div>
 		</div>
 

@@ -9,7 +9,6 @@
 			<th class="small"><%= t(:issuedOn)%></th>
 			<th class="small"><%= t(:minTemp)%></th>
 			<th class="small"><%= t(:maxTemp)%></th>
-			<th class="small"><%= t(:forecast)%></th>
 			</tr>
 	</thead>
 	<tbody class="ui-widget-content">
@@ -29,7 +28,6 @@
 			<td><%= w.issued %></td>
 			<td><%= w.min %></td>
 			<td><%= w.max %></td>
-			<td ><%= raw(w.warning) %></td>
 			</tr>
 		<% end %>
 		<% end %>

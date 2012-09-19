@@ -1,0 +1,35 @@
+/* Override here any style defined by web-app-theme */
+#box .block .content .inner {
+  padding: 0 15px 15px;  
+}
+#box .block .content .inner {
+  padding: 0 15px 15px;  
+}
+
+img.opacity {
+	opacity: 0.4;
+	filter: alpha(opacity=40);
+}
+
+.title {
+	text-decoration: none;
+    padding: 1px 1px;
+    background: #41A317;
+    color: #FFF;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: solid 1px #20538D;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    -webkit-transition-duration: 0.2s;
+    -moz-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    margin: 10px;
+}

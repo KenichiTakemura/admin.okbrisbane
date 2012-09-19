@@ -8,8 +8,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 TopFeedList.category_feed(Estate.name).destroy_all
 Estate.destroy_all
-Image.where("attached_type = 'Estate'").destroy_all
-Attachment.where("attached_type = 'Estate'").destroy_all
 
 admin = Admin.find_by_email(Okvalue::POST_ADMIN)
 
@@ -37,14 +35,14 @@ post.set_user(admin)
 post.save
 content.save
 link_to = "http://www.qoq.com.au/korean/property/property_view.php?num=60"
-Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/60_20120723142514.jpg", :link_to_url => link_to, :something => "This is a test message 1").attached_to_by(post, admin)
-Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120723142635.jpg", :link_to_url => link_to, :something => "This is a test message 2").attached_to_by(post, admin)
-Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120723142731.jpg", :link_to_url => link_to, :something => "This is a test message 3").attached_to_by(post, admin)
-Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120723142817.jpg", :link_to_url => link_to, :something => "This is a test message 4").attached_to_by(post, admin)
-Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120723142954.jpg", :link_to_url => link_to).attached_to_by(post, admin)
-Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120723143046.jpg", :link_to_url => link_to, :something => "This is a test message 6").attached_to_by(post, admin)
-Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120723143130.jpg", :link_to_url => link_to).attached_to_by(post, admin)
-Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120723143344.jpg", :link_to_url => link_to, :something => "This is a test message 8").attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/60_20120723142514.jpg", :link_to_url => link_to + "&x=1", :something => "This is a test message 1").attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120723142635.jpg", :link_to_url => link_to + "&x=2", :something => "This is a test message 2").attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120723142731.jpg", :link_to_url => link_to + "&x=3", :something => "This is a test message 3").attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120723142817.jpg", :link_to_url => link_to + "&x=4", :something => "This is a test message 4").attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120723142954.jpg", :link_to_url => link_to + "&x=5").attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120723143046.jpg", :link_to_url => link_to + "&x=6", :something => "This is a test message 6").attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120723143130.jpg", :link_to_url => link_to + "&x=7").attached_to_by(post, admin)
+Image.create(:write_at => post.write_at, :source_url => "http://www.qoq.com.au/_data/property/_20120723143344.jpg", :link_to_url => link_to + "&x=8", :something => "This is a test message 8").attached_to_by(post, admin)
 
 post = Estate.new(:category => Estate::Categories[:for_sale], :subject => "써니뱅크 Banoon역 도보거리")
 body = <<-HTML

@@ -423,7 +423,7 @@
 	<% if !@category.eql?(Style.page(:p_issue)) %>
 	<div class="group wat-cf">
 		<div class="">
-			<%= f.label :views, "#{t(:viewed)} #{t(:number_of)}", :class => "label left" %>
+			<%= f.label :views, t(:viewed), :class => "label left" %>
 		</div>
 		<div class="">
 			<%= f.text_field :views, :class => "text_field" %>
@@ -459,7 +459,7 @@
 	</div>
 	<div class="group wat-cf">
 		<div class="">
-			<%= f.label :rank, "#{t(:rank)} #{t(:number_of)}", :class => "label left" %>
+			<%= f.label :rank, t(:rank), :class => "label left" %>
 		</div>
 		<div class="">
 			<%= f.text_field :rank, :class => "text_field" %>

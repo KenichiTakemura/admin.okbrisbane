@@ -15,7 +15,11 @@
 		<%= f.label :business_category, t("business_category"), :class => "label left" %>
 	</div>
 	<div class="">
-		<%= f.select :business_category, options_from_collection_for_select(BusinessCategory.all, "id", "display_name", @business_client.business_category.id), :include_blank => false %>
+		<% if @business_client.business_category.nil? %>
+			<%= f.select :business_category, options_from_collection_for_select(BusinessCategory.all, "id", "display_name", @business_client.business_category), :include_blank => false %>
+		<% else %>
+			<%= f.select :business_category, options_from_collection_for_select(BusinessCategory.all, "id", "display_name", @business_client.business_category.id), :include_blank => false %>
+		<% end %>
 	</div>
 	<span class="description"><%= t("must_be_selected") %></span><br/>
 	<span class="description"><%= link_to t("not_listed"), new_business_category_path %></span>

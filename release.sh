@@ -1,10 +1,7 @@
 #!/bin/bash
 rm -rf public/assets
 rake assets:precompile --trace RAILS_ENV=production
-# Remove
-rm -rf public/assets/ckeditor
-rm -rf public/assets/fonts
-DATE=`date +%Y%m%d`
+DATE=`date +%Y%m%d%H%M`
 tar jcvf ../release/admin_okbrisbane_$DATE.tar.bz2\
  app/controllers\
  app/helpers\

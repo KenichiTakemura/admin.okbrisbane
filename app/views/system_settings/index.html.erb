@@ -3,10 +3,12 @@
 <div class="inner">
 	<table class="table">
 		<tr>
-			<th><%= t("post_expiry_length") %></th>
-			<th><%= t("socialable") %></th>
-			<th><%= t("issue_report_to")%></th>
-			<th><%= t("admin_email")%></th>
+			<th><%= t(:post_expiry_length) %></th>
+			<th><%= t(:socialable) %></th>
+			<th><%= t(:issue_report_to)%></th>
+			<th><%= t(:admin_email)%></th>
+			<th><%= t(:contact_email)%></th>
+			<th><%= t(:top_page_ajax)%></th>
 			<th class="last"></th>
 		</tr>
 		<% @system_settings.each do |system_setting| %>
@@ -15,7 +17,9 @@
 			<td><%= t("#{!system_setting.socialable}") %></td>
 			<td><%= system_setting.issue_report_to %></td>
 			<td><%= system_setting.admin_email %></td>
-			</td>
+			<td><%= system_setting.contact_email %></td>
+			<td><%= t("#{!system_setting.top_page_ajax}") %></td>
+
 			<td>
 			<%= link_to t('Edit'), edit_system_setting_path(system_setting) %>
 		</tr>

@@ -10,6 +10,11 @@
  *
  *= require_self
  *= require_tree .
+ *= require_tree '../../../vendor/assets/stylesheets/jquery-ui'
+ *= require_tree '../../../vendor/assets/stylesheets/web-app-theme'
+ *= require_tree '../../../vendor/assets/stylesheets/web-app-theme/themes'
+ *= require_tree '../../../vendor/assets/stylesheets/web-app-theme/themes/default'
+ *= require_tree '../../../vendor/assets/stylesheets/fonts'
  */
 
 .thumbnail {
@@ -25,7 +30,7 @@
 
 .delete_x {
 	font-size: 16px;
-	font-style: bold;
+	font-weight: bold;
 	font-family: "NanumGothicExtraBold";
 }
 
@@ -60,7 +65,7 @@ li.menu {
 
 li.item {
 	font-size: 16px;
-	font-style: bold;
+	font-weight: bold;
 	color: #fff;
 }
 
@@ -127,4 +132,13 @@ div.comment {
 	border-radius: 5px;
 	margin-top: 10px;
 	margin-bottom: 10px;
+}
+
+div.image_description {
+	font-weight: bold;
+	font-size: 13px;
+	color: blue;
+	margin-top: 10px;
+	width:200px;
+	padding: 5px;
 }

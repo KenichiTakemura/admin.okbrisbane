@@ -66,9 +66,13 @@ AdminOkbrisbane::Application.routes.draw do
 
   mount Ckeditor::Engine => '/ckeditor'
 
-  match 'client_images/:id' => 'client_images#destroy', :via => :post
+  match 'client_images/:id/destroy' => 'client_images#destroy', :via => :post
   match 'client_images/:id/banner' => 'client_images#dettach', :via => :post, :as => "client_image_dettach"
-  resources :client_images, :only => ["index","new","destroy","create","edit","update"]
+  resources :client_images, :only => ["index","new","destroy","create","edit","update"] do
+    collection do
+      post :image_size_for
+    end
+  end
 
   match 'business_clients/:id/images' => 'business_clients#destroy_image', :via => :delete, :as => "business_client_delete_all_images"
   resources :business_clients

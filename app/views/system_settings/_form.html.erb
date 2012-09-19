@@ -3,7 +3,7 @@
 
 <div class="group wat-cf">
 	<div class="">
-		<%= f.label :post_expiry_length, "#{t("post_expiry_length")} #{t("day")}", :class => "label left" %>
+		<%= f.label :post_expiry_length, t(:post_expiry_length), :class => "label left" %>
 	</div>
 	<div class="">
 		<%= f.number_field :post_expiry_length, :class => "text_field" %>
@@ -14,7 +14,7 @@
 </div>
 <div class="group wat-cf">
 	<div class="">
-		<%= f.label :socialable, t("socialable"), :class => "label " %>
+		<%= f.label :socialable, t(:socialable), :class => "label " %>
 	</div>
 	<div class="">
 		<%= f.check_box :socialable, :class => "checkbox" %>
@@ -22,7 +22,7 @@
 </div>
 <div class="group wat-cf">
 	<div class="">
-		<%= f.label :issue_report_to, t("issue_report_to"), :class => "label left" %>
+		<%= f.label :issue_report_to, t(:issue_report_to), :class => "label left" %>
 	</div>
 	<div class="">
 		<%= f.email_field :issue_report_to, :class => "text_field" %>
@@ -30,10 +30,26 @@
 </div>
 <div class="group wat-cf">
 	<div class="">
-		<%= f.label :admin_email, t("admin_email"), :class => "label left" %>
+		<%= f.label :admin_email, t(:admin_email), :class => "label left" %>
 	</div>
 	<div class="">
 		<%= f.email_field :admin_email, :class => "text_field" %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :contact_email, t(:contact_email), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.email_field :contact_email, :class => "text_field" %>
+	</div>
+</div>
+<div class="group wat-cf">
+	<div class="">
+		<%= f.label :top_page_ajax, t(:top_page_ajax), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.check_box :top_page_ajax, :class => "checkbox" %>
 	</div>
 </div>
 <div class="group wat-cf">
