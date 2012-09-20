@@ -62,7 +62,12 @@ AdminOkbrisbane::Application.routes.draw do
 
   resources :system_settings, :only => ["index","edit","update"]
   
-  resources :statistics, :only => ["index"]
+  resources :statistics, :only => [] do
+    collection do
+      get :hit_counter
+      get :most_clicked
+    end 
+  end
 
   mount Ckeditor::Engine => '/ckeditor'
 

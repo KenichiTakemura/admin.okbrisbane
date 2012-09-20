@@ -1,5 +1,5 @@
 class StatisticsController < ApplicationController
-  def index
+  def hit_counter
     status = params[:status]
     case status
     when Okvalue::SITE_STATISTICS_DAILY
@@ -12,4 +12,7 @@ class StatisticsController < ApplicationController
     end
   end
 
+  def most_clicked
+    
+  end
 end

@@ -225,11 +225,11 @@
 										<li class="item" id="menu_issue">
 											<%= t(:statistics) %>
 											<ul class="">
-												<li class="menu" id="menu_issue_list">
-													<%= link_to t(:daily_statistics), statistics_path(:status => Okvalue::SITE_STATISTICS_DAILY) %>
+												<li class="menu" id="menu_statistics_daily_hit">
+													<%= link_to t(:daily_statistics), hit_counter_statistics_path(:status => Okvalue::SITE_STATISTICS_DAILY) %>
 												</li>
-												<li class="menu" id="menu_new_issue">
-													<%= link_to t(:monthly_statistics), statistics_path(:status => Okvalue::SITE_STATISTICS_MONTHLY) %>
+												<li class="menu" id="menu_statistics_monthly_hit">
+													<%= link_to t(:monthly_statistics), hit_counter_statistics_path(:status => Okvalue::SITE_STATISTICS_MONTHLY) %>
 												</li>
 											</ul>
 										</li>

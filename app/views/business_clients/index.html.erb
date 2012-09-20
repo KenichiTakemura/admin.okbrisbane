@@ -10,7 +10,7 @@
 			<th><%= t("business_name") %></th>
 			<th><%= t("business_category") %></th>
 			<th><%= t("business_profile_image") %></th>
-			<th><%= t("contact_name")%></th>
+			<th><%= t("business_url") %></th>
 			<th><%= t("business_abn")%></th>
 			<th><%= t("client_banner_image")%></th>
 			<th class="last"></th>
@@ -25,7 +25,7 @@
 			<% elsif %>
 			<%= image_tag(business_client.main_profile_image.avatar.url(:thumb), :style => "width:50px;height:50px") %>
 			<% end %> </td>
-			<td><%= business_client.contact_name %></td>
+			<td><%= business_client.business_url %></td>
 			<td><%= business_client.business_abn %></td>
 			<td> <% if business_client.client_image.empty? %>
 			<%= noimage %>
