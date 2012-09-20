@@ -14,7 +14,7 @@ AdminOkbrisbane::Application.routes.draw do
   
   resources :issues, :only => ['create','update']
 
-  resources :legal_services, :only => ['create','update']
+  resources :laws, :only => ['create','update']
 
   resources :estates, :only => ['create','update']
 

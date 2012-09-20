@@ -1,4 +1,4 @@
-class LegalServicesController < PostsController
+class LawsController < PostsController
 
   @@management_path = "sales_managements"  
     
