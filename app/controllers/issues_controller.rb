@@ -4,6 +4,7 @@ class IssuesController < PostsController
 
   def create
     _create(Issue, :issue)
+    IssueMailer.send_new_issue(@post, @category).deliver
   end
   
   def update

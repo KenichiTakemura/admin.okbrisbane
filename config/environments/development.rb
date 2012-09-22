@@ -42,5 +42,12 @@ AdminOkbrisbane::Application.configure do
   config.assets.logger = false
   
   config.ok_debug = true
-
+  
+  # Mail
+  config.action_mailer.default_url_options = { :host => "admin.okbrisbane-stage.com" }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => "localhost",
+    :enable_starttls_auto => true  }
+    
 end

@@ -1,0 +1,11 @@
+<%= content_tag(:p, "Subject") %>
+<%= content_tag(:p, "-------------------------------------") %>
+<%= raw(@issue.subject) %>
+<%= content_tag(:p, "-------------------------------------") %>
+<%= content_tag(:p, "Description") %>
+<%= content_tag(:p, "-------------------------------------") %>
+<%= raw(@issue.content.body) %>
+<%= content_tag(:p, "-------------------------------------") %>
+<br/>
+<%= content_tag(:p, "Please access to the link")%>
+<%= issues_management_url(@issue, :category => @category) %>
