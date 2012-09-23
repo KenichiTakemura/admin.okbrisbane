@@ -1,0 +1,29 @@
+<h2 class="title"><%= "#{t(:contact)} #{t(:listing)}" %></h2>
+
+<div style="position:absolute;right:0px;top:20px;">
+	<%= paginate @contacts %>
+</div>
+<div class="inner">
+	<table class="table">
+		<tr>
+			<th><%= t(:subject)%></th>
+			<th><%= t(:body)%></th>
+			<th><%= t(:email) %></th>
+			<th><%= t(:user_name) %></th>
+			<th><%= t(:phone)%></th>
+			<th class="last"></th>
+		</tr>
+		<% @contacts.each do |contact| %>
+		<tr class="<%= cycle("odd", "even") %>" >
+			<td><%= contact.contact_type_name %></td>
+			<td><%= raw(contact.body) %></td>
+			<td><%= contact.email %></td>
+			<td><%= contact.user_name %></td>
+			<td><%= contact.phone %></td>
+			<td>
+			<%= link_to t(:Show), contact_path(contact) %> |
+			<%= link_to t(:Delete), contact, :method => :delete, :data => { :confirm => t('confirm_delete') } %>
+		</tr>
+		<% end %>
+	</table>
+</div>

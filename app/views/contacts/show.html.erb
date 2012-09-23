@@ -1,0 +1,33 @@
+<h2><%= t(:contact) %> #<%= @contact.id %></h2>
+<div class="inner">
+	<table class="table">
+		<th class="first"><%= t(:item) %></th>
+		<th class="last"><%= t(:content) %></th>
+		<tr class="<%= cycle("odd", "even") %>">
+			<td><%= label_tag :created_at, t(:created_at), :class => "label left" %> </td>
+			<td><%= Common.date_format(@contact.created_at) %></td>
+		</tr>
+		<tr class="<%= cycle("odd", "even") %>">
+			<td><%= label_tag :contact_type, t(:subject), :class => "label left" %> </td>
+			<td><%= @contact.contact_type_name %></td>
+		</tr>
+		<tr class="<%= cycle("odd", "even") %>">
+			<td><%= label_tag :body, t(:content), :class => "label left" %> </td>
+			<td><%= @contact.body %></td>
+		</tr>
+		<tr class="<%= cycle("odd", "even") %>">
+			<td><%= label_tag :email, t(:email), :class => "label left" %> </td>
+			<td><%= @contact.email %></td>
+		</tr>
+		<tr class="<%= cycle("odd", "even") %>">
+			<td><%= label_tag :user_name, t(:user_name), :class => "label left" %> </td>
+			<td><%= @contact.user_name %></td>
+		</tr>
+		<tr class="<%= cycle("odd", "even") %>">
+			<td><%= label_tag :phone, t(:phone), :class => "label left" %> </td>
+			<td><%= @contact.phone %></td>
+		</tr>
+	</table>
+	<%= link_to t('List'), contacts_path(:page => @current_page) %>
+</div>
+

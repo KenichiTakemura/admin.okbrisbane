@@ -58,6 +58,8 @@ AdminOkbrisbane::Application.routes.draw do
 
   resources :business_categories
 
+  resources :contacts, :only => ["index","destroy","edit","show","update"]
+
   resources :business_profile_images
 
   resources :system_settings, :only => ["index","edit","update"]

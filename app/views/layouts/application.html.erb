@@ -26,6 +26,14 @@
 							<span class="management_menu">
 								<div class="">
 									<ul class="">
+										<li class="item" id="menu_system_contact">
+											<%= t(:contact) %>
+											<ul class="">
+												<li class="menu" id="menu_system_contact_list">
+													<%= link_to t("listing"), contacts_path %>
+												</li>
+											</ul>
+										</li>
 										<li class="item" id="menu_system_setting">
 											<%= t(:system_management) %>
 											<ul class="">
