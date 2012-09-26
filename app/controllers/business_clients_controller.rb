@@ -6,6 +6,7 @@ class BusinessClientsController < ApplicationController
     @business_clients.each do |business_client|
        logger.debug("id: #{business_client.id} number_of_images: #{business_client.client_image.size}")
     end
+    @business_categories = BusinessCategory.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @business_clients }
@@ -104,5 +105,11 @@ class BusinessClientsController < ApplicationController
       format.html { redirect_to business_clients_url }
       format.json { head :no_content }
     end
+  end
+  
+  def select_category
+    category = BusinessCategory.find(params[:category])
+    @business_client = BusinessClient.find(params[:business_client])
+    @business_client.update_attribute(:business_category, category)
   end
 end

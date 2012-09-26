@@ -47,7 +47,7 @@
 			<div id="_business_client_name">
 				<%= t("please_select") %>
 			</div></h3>
-			<%= select_tag :business_client, options_from_collection_for_select(BusinessClient.all, "id", "business_name", 0), :include_blank => true, :id => "business_client_select" %>
+			<%= select_tag :business_client, options_from_collection_for_select(@business_clients, :second, :first, 0), :include_blank => true, :id => "business_client_select" %>
 			<%= _script(%Q|
 			populate_image = function(target) {
 			if($("\#" + target + "_select").val() != "") {

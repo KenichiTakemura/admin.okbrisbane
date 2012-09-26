@@ -22,8 +22,8 @@
 				<% banner = banners[:s_header] %>
 				<% i = 1 %>
 				<% banner.each do |e| %>
-				<% if e.is_disabled%>
-				<td></td>
+				<% if e.is_disabled %>
+				<td style="opacity: 0.2;filter: alpha(opacity=20);"><%= link_to(e.img_resolution, edit_banner_path(e, :page_id => e.page_id), :class => "button") %></td>
 				<% else %>
 				<td><%= link_to(e.img_resolution, select_banners_path(:banner => e, :page_id => e.page_id), :class => "button") %></td>
 				<% end %>
@@ -37,7 +37,7 @@
 				<% i = 1 %>
 				<% banner.each do |e| %>
 				<% if e.is_disabled%>
-				<td></td>
+				<td style="opacity: 0.2;filter: alpha(opacity=20);"><%= link_to(e.img_resolution,edit_banner_path(e, :page_id => e.page_id), :class => "button") %></td>
 				<% else %>
 				<td><%= link_to(e.img_resolution, select_banners_path(:banner => e, :page_id => e.page_id), :class => "button") %></td>
 				<% end %>
@@ -51,7 +51,7 @@
 				<% i = 1 %>
 				<% banner.each do |e| %>
 				<% if e.is_disabled%>
-				<td></td>
+				<td style="opacity: 0.2;filter: alpha(opacity=20);"><%= link_to(e.img_resolution, edit_banner_path(e, :page_id => e.page_id), :class => "button") %></td>
 				<% else %>
 				<td><%= link_to(e.img_resolution, select_banners_path(:banner => e, :page_id => e.page_id), :class => "button") %></td>
 				<% end %>

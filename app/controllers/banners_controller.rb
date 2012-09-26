@@ -83,6 +83,10 @@ class BannersController < ApplicationController
     @banner = Banner.find(params[:banner])
     _page
     @banners = Banner.where("page_id = ? AND is_disabled = ?", @page_id, false)
+    clients = BusinessClient.with_banner
+    @business_clients = clients.collect do |client|
+      ["#{client.business_name} (#{client.client_image.size})", client.id]
+    end
   end
   
   # Ajax
@@ -126,6 +130,7 @@ class BannersController < ApplicationController
   def _business_client(id)  
     @banner = Banner.find(params[:banner]) 
     @business_client = BusinessClient.find(id)
+    logger.debug("@business_clients: #{@business_clients}")
     if params[:size].eql?("not_selected")
       @business_client.client_image.each_with_index do |image,i|
         if image.banner.present?

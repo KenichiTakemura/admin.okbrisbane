@@ -21,7 +21,7 @@
 		<tr class="<%= cycle("odd", "even") %>" >
 			<td><%= business_client.id %></td>
 			<td><%= link_to business_client.business_name, business_client_path(:id => business_client, :page => @business_clients.current_page) %></td>
-			<td><%= business_client.business_category %></td>
+			<td><%= select_tag :business_category, options_from_collection_for_select(@business_categories, :id, :display_name, business_client.business_category_id), :include_blank => true, :id => "business_category_#{business_client.id}" %><div class="business_category_update_status_<%=business_client.id%>"></td>
 			<td> <% if business_client.business_profile_image.empty? %>
 			<%= noimage %>
 			<% elsif %>
@@ -49,6 +49,11 @@
 			<% end %>
 			<br/>
 			<%= link_to t('business_banner_image_all_delete'), business_client_delete_all_images_path(business_client), :method => :delete, :data => { :confirm => t('confirm_delete') } %></td>
+			<%= _script(%Q|
+				$('\#business_category_#{business_client.id}').change(function() {
+					$('div.business_category_update_status_#{business_client.id}').html('#{image_tag("common/loading.gif")}');
+					$.post('| + select_category_business_clients_path + %Q|', { business_client: #{business_client.id}, category: $('\#business_category_#{business_client.id}').val()})})
+			|)%>
 		</tr>
 		<% end %>
 	</table>
