@@ -36,6 +36,10 @@
 			<td><%= @business_client.business_fax %></td>
 		</tr>
 		<tr class="<%= cycle("odd", "even") %>">
+			<td><%= label_tag :business_address, t("business_address"), :class => "label left" %> </td>
+			<td><%= @business_client.business_address %></td>
+		</tr>
+		<tr class="<%= cycle("odd", "even") %>">
 			<td><%= label_tag :business_email, t("email"), :class => "label left" %> </td>
 			<td><%= @business_client.business_email %></td>
 		</tr>

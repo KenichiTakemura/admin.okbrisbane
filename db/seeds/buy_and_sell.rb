@@ -6,29 +6,48 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-TopFeedList.category_feed(BuyAndSell.name).delete_all
-BuyAndSell.delete_all
-
+TopFeedList.category_feed(BuyAndSell.name).destroy_all
+BuyAndSell.destroy_all
 # Sample Data
 # Not for Production
 user = User.first
 
-expiry = Common.current_time + 30.days
+expiry = Common.current_time + 60.days
 
-2010.upto(2050) do |x|
-  post = BuyAndSell.new(:category => "buying", :subject => "안녕 하세요 #{x}", :valid_until => expiry, :price => "AUD 9999.99");
-  post.valid_until = Common.current_time
+59.downto(1) { |x|
+  post = BuyAndSell.new(:category => BuyAndSell::Categories[:sell], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
+  post.created_at = Common.current_time - x.days
   content = post.build_content(:body => "안녕 하세요")
-  post.set_user(user)
   post.save
+  post.set_user(user)
   content.save
-end
+}
 
-2100.upto(2150) do |x|
-  post = BuyAndSell.new(:category => "selling", :subject => "어서 오세요 #{x}", :valid_until => expiry, :price => "AUD 9999.99");
-  post.valid_until = Common.current_time
-  content = post.build_content(:body => "어서 오세요")
-  post.set_user(user)
+60.upto(100) { |x|
+  post = BuyAndSell.new(:category => BuyAndSell::Categories[:sell], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
+  post.created_at = Common.current_time
+  content = post.build_content(:body => "안녕 하세요")
   post.save
+  post.set_user(user)
   content.save
-end
+}
+
+159.downto(101) { |x|
+  post = BuyAndSell.new(:category => BuyAndSell::Categories[:buy], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
+  post.created_at = Common.current_time - x.days
+  content = post.build_content(:body => "안녕 하세요")
+  post.save
+  post.set_user(user)
+  content.save
+}
+
+160.upto(200) { |x|
+  post = BuyAndSell.new(:category => BuyAndSell::Categories[:buy], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
+  post.created_at = Common.current_time
+  content = post.build_content(:body => "안녕 하세요")
+  post.save
+  post.set_user(user)
+  content.save
+}
+
+

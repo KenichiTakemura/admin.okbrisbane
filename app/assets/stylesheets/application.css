@@ -142,3 +142,10 @@ div.image_description {
 	width:200px;
 	padding: 5px;
 }
+
+div.paginate {
+	position: absolute;
+	top:0px;
+	right:0px;
+	
+}

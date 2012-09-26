@@ -81,6 +81,16 @@
 </div>
 <div class="group wat-cf">
 	<div class="">
+		<%= f.label :business_address, t("business_address"), :class => "label left" %>
+	</div>
+	<div class="">
+		<%= f.text_field :business_address, :class => "text_field" %>
+	</div>
+	<span class="description"><%= t("optional") %></span>
+</div>
+
+<div class="group wat-cf">
+	<div class="">
 		<%= f.label :business_email, t("business_email"), :class => "label left" %>
 	</div>
 	<div class="">

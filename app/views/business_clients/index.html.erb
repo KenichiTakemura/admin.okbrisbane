@@ -1,9 +1,9 @@
 <h2 class="title"><%= t("listing_business_clients", :default => "Business Clients") %></h2>
 
 <div class="inner">
-	<div style="float:right">
-		<%= paginate @business_clients %>
-	</div>
+<div class="paginate">
+	<%= paginate @business_clients %>
+</div>
 	<table class="table">
 		<tr>
 			<th class="first"><%= t("Id") %></th>
@@ -11,6 +11,8 @@
 			<th><%= t("business_category") %></th>
 			<th><%= t("business_profile_image") %></th>
 			<th><%= t("business_url") %></th>
+			<th><%= t("business_phone") %></th>
+			<th><%= t("business_address") %></th>
 			<th><%= t("business_abn")%></th>
 			<th><%= t("client_banner_image")%></th>
 			<th class="last"></th>
@@ -26,6 +28,8 @@
 			<%= image_tag(business_client.main_profile_image.avatar.url(:thumb), :style => "width:50px;height:50px") %>
 			<% end %> </td>
 			<td><%= business_client.business_url %></td>
+			<td><%= business_client.business_phone %></td>
+			<td><%= business_client.business_address %></td>
 			<td><%= business_client.business_abn %></td>
 			<td> <% if business_client.client_image.empty? %>
 			<%= noimage %>

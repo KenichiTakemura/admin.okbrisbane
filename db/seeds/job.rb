@@ -6,7 +6,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-TopFeedList.category_feed(Job.name).delete_all
+TopFeedList.category_feed(Job.name).destroy_all
 Job.destroy_all
 
 # Sample Data
