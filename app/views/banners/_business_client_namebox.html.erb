@@ -1,0 +1,5 @@
+<% if @business_clients.size > 1 %>
+<%= I18n.t(:all_client) %>
+<% else %>
+<%= @business_clients.first.business_name %>
+<% end %>

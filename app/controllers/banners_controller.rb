@@ -84,9 +84,13 @@ class BannersController < ApplicationController
     _page
     @banners = Banner.where("page_id = ? AND is_disabled = ?", @page_id, false)
     clients = BusinessClient.with_banner
-    @business_clients = clients.collect do |client|
-      ["#{client.business_name} (#{client.client_image.size})", client.id]
+    all_image_size = 0
+    @business_clients = Array.new
+    clients.each do |client|
+      @business_clients.push(["#{client.business_name} (#{client.client_image.size})", client.id])
+      all_image_size += client.client_image.size
     end
+    @business_clients.insert(0, ["#{I18n.t(:all_client)} (#{all_image_size})", -1])
   end
   
   # Ajax
@@ -127,24 +131,31 @@ class BannersController < ApplicationController
     logger.debug("@page_id: #{@page_id} @page_name: #{@page_name}")
   end
 
-  def _business_client(id)  
+  def _business_client(id)
     @banner = Banner.find(params[:banner]) 
-    @business_client = BusinessClient.find(id)
-    logger.debug("@business_clients: #{@business_clients}")
+    if id.to_i >= 0
+      @business_clients = BusinessClient.where('id = ?', id)
+      logger.debug("@business_clients: #{@business_clients}")
+    else
+      @business_clients = BusinessClient.with_banner
+    end
     if params[:size].eql?("not_selected")
-      @business_client.client_image.each_with_index do |image,i|
-        if image.banner.present?
-          image.is_deleted = true
+      @business_clients.each do |business_client|
+        business_client.client_image.each do |image|
+          if image.banner.present?
+            image.is_deleted = true
+          end
         end
       end
     elsif params[:size].eql?("specific")
-      @business_client.client_image.each_with_index do |image,i|
-        if image.original_size != @banner.img_resolution
-          image.is_deleted = true
-        end
-     end
+      @business_clients.each do |business_client|
+        business_client.client_image.each do |image|
+          if image.original_size != @banner.img_resolution
+            image.is_deleted = true
+          end
+         end
+      end
     end
-    
-    @business_client
+    @business_clients
   end
 end

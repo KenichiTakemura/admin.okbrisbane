@@ -1,4 +1,6 @@
 <div style="width:100%; position: relative; top:10px;">
+<% if @business_clients.size == 1 %>
+	<% @business_client = @business_clients.first %>
 	<%= noimage?(@business_client) %>
 	<% @business_client.client_image.each do |client_image| %>
 	<% next if client_image.is_deleted %>
@@ -45,3 +47,6 @@
 	</div>
 	<% end %>
 </div>
+<% else %>
+test
+<% end %>
