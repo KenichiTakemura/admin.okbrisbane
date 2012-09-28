@@ -57,6 +57,8 @@ AdminOkbrisbane::Application.routes.draw do
   devise_for :admins
 
   resources :business_categories
+  
+  resources :admin_notices
 
   resources :contacts, :only => ["index","destroy","edit","show","update"]
 

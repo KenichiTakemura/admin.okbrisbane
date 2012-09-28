@@ -42,6 +42,17 @@
 												</li>
 											</ul>
 										</li>
+										<li class="item" id="menu_admin_notice">
+											<%= t(:admin_notice) %>
+											<ul class="">
+												<li class="menu" id="menu_admin_notice_list">
+													<%= link_to t("listing"), admin_notices_path %>
+												</li>
+												<li class="menu" id="menu_admin_notice_new">
+													<%= link_to t(:add), new_admin_notice_path %>
+												</li>
+											</ul>
+										</li>
 										<li class="item" id="menu_weather_information">
 											<%= t(:weather_information) %>
 											<ul class="">

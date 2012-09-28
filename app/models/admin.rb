@@ -17,6 +17,7 @@ class Admin < ActiveRecord::Base
   has_many :attachment, :as => :attached_by, :class_name => 'Attachment', :dependent => :destroy
   has_many :image, :as  => :attached_by, :class_name => 'Image', :dependent => :destroy
   has_many :issue, :as => :posted_by, :class_name => "Issue", :dependent => :nullify
+  has_many :admin_notice, :as  => :posted_by, :class_name => 'AdminNotice', :dependent => :destroy
 
   after_create :create_mypage, :init_role
 
