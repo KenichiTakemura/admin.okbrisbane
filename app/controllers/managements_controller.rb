@@ -221,21 +221,21 @@ class ManagementsController < ApplicationController
 
   def getPost(model, page, status)
     if status.nil? || status.eql?("valid")
-    post = model.is_valid.order.page page
+    post = model.is_valid.order.desc.page page
     elsif status.eql?("invalid")
-    post = model.is_invalid.order.page page
+    post = model.is_invalid.order.desc.page page
     elsif status.eql?("expired")
-    post = model.expired.order.page page
+    post = model.expired.order.desc.page page
     else
       raise "Bad status #{status}"
     end
     if post.empty? && page.to_i > 1
       if status.nil? || status.eql?("valid")
-      post = model.is_valid.order.page page.to_i - 1
+      post = model.is_valid.order.desc.page page.to_i - 1
       elsif status.eql?("invalid")
-      post = model.is_invalid.order.page page.to_i - 1
+      post = model.is_invalid.order.desc.page page.to_i - 1
       elsif status.eql?("expired")
-      post = model.expired.order.page page.to_i - 1
+      post = model.expired.order.desc.page page.to_i - 1
       end
     end
     post
