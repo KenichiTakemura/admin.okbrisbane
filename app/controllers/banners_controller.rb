@@ -108,9 +108,9 @@ class BannersController < ApplicationController
     @client_image = ClientImage.find(params[:client_image])
     @banner = Banner.find(params[:banner])
     @banner.client_image << @client_image
-    @business_client = _business_client(@client_image.attached)
+    #@business_client = _business_client(@client_image.attached)
+    @business_clients = _business_client(params[:business_client])
     @banner = Banner.find(params[:banner])
-    logger.debug("client_image: #{@client_image} banner: #{@banner}")
   end
   
   # Ajax
@@ -118,7 +118,8 @@ class BannersController < ApplicationController
     @client_image = ClientImage.find(params[:client_image])
     @banner = Banner.find(params[:banner])
     @banner.client_image.destroy(@client_image)
-    @business_client = _business_client(@client_image.attached)
+    #@business_client = _business_client(@client_image.attached)
+    @business_clients = _business_client(params[:business_client])
     @banner = Banner.find(params[:banner])
     logger.debug("client_image: #{@client_image} banner: #{@banner}")
   end
