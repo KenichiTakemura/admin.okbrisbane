@@ -87,6 +87,7 @@ class BannersController < ApplicationController
     all_image_size = 0
     @business_clients = Array.new
     clients.each do |client|
+      logger.debug("push #{client.business_name} (#{client.client_image.size})")
       @business_clients.push(["#{client.business_name} (#{client.client_image.size})", client.id])
       all_image_size += client.client_image.size
     end
