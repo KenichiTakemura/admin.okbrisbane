@@ -44,6 +44,8 @@ lines.each_with_index do |line,x|
   client.build_business_profile(:head => business_name, :body => business_name)
   client.save
   Dir["#{Rails.root}/config/locales/banners/#{business_key}/*"].each do |filename|
+    # skip profile name
+    next if File.directory?(filename)
     puts "Importing #{filename} to #{business_name}"
     banner = ClientImage.new(:avatar => File.new(filename),:link_to_url => "", :caption => "", :source_url => "")
     banner.attached_to_by(client, admin)
