@@ -10,6 +10,7 @@
 			<th><%= t(:contact_email)%></th>
 			<th><%= t(:top_page_ajax)%></th>
 			<th><%= t(:banner_clickable)%></th>
+			<th><%= t(:banner_ajaxable)%></th>
 			<th class="last"></th>
 		</tr>
 		<% @system_settings.each do |system_setting| %>
@@ -21,6 +22,7 @@
 			<td><%= system_setting.contact_email %></td>
 			<td><%= t("#{system_setting.top_page_ajax}") %></td>
 			<td><%= t("#{system_setting.banner_clickable}") %></td>
+			<td><%= t("#{system_setting.banner_ajaxable}") %></td>
 			<td>
 			<%= link_to t('Edit'), edit_system_setting_path(system_setting) %>
 		</tr>
