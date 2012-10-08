@@ -32,22 +32,22 @@ expiry = Common.current_time + 60.days
   content.save
 }
 
-159.downto(101) { |x|
-  post = BuyAndSell.new(:category => BuyAndSell::Categories[:buy], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
-  post.created_at = Common.current_time - x.days
-  content = post.build_content(:body => "안녕 하세요")
-  post.save
-  post.set_user(user)
-  content.save
-}
+#159.downto(101) { |x|
+#  post = BuyAndSell.new(:category => BuyAndSell::Categories[:buy], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
+#  post.created_at = Common.current_time - x.days
+#  content = post.build_content(:body => "안녕 하세요")
+#  post.save
+#  post.set_user(user)
+#  content.save
+#}
 
-160.upto(200) { |x|
-  post = BuyAndSell.new(:category => BuyAndSell::Categories[:buy], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
-  post.created_at = Common.current_time
-  content = post.build_content(:body => "안녕 하세요")
-  post.save
-  post.set_user(user)
-  content.save
-}
+#160.upto(200) { |x|
+#  post = BuyAndSell.new(:category => BuyAndSell::Categories[:buy], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
+#  post.created_at = Common.current_time
+#  content = post.build_content(:body => "안녕 하세요")
+#  post.save
+#  post.set_user(user)
+#  content.save
+#}
 
 

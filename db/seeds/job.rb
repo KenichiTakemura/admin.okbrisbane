@@ -14,9 +14,10 @@ Job.destroy_all
 user = User.first
 
 expiry = Common.current_time + 60.days
+subject = "테스트입니다테스트입니다테스트입니다테스트입니다테스트입니다테스트입니다테스트입니다테스트입니다테스트입니다테스트입니다테스트입니다테스트입니다테스트입니다"
 
 59.downto(1) { |x|
-  post = Job.new(:category => Job::Categories[:seek], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
+  post = Job.new(:category => Job::Categories[:seek], :subject => "안녕 하세요 #{x} #{subject}", :valid_until => expiry);
   post.created_at = Common.current_time - x.days
   content = post.build_content(:body => "안녕 하세요")
   post.save
@@ -25,7 +26,7 @@ expiry = Common.current_time + 60.days
 }
 
 60.upto(100) { |x|
-  post = Job.new(:category => Job::Categories[:seek], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
+  post = Job.new(:category => Job::Categories[:seek], :subject => "안녕 하세요 #{x} #{subject}", :valid_until => expiry);
   post.created_at = Common.current_time
   content = post.build_content(:body => "안녕 하세요")
   post.save
@@ -34,7 +35,7 @@ expiry = Common.current_time + 60.days
 }
 
 159.downto(101) { |x|
-  post = Job.new(:category => Job::Categories[:hire], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
+  post = Job.new(:category => Job::Categories[:hire], :subject => "안녕 하세요 #{x} #{subject}", :valid_until => expiry);
   post.created_at = Common.current_time - x.days
   content = post.build_content(:body => "안녕 하세요")
   post.save
@@ -43,7 +44,7 @@ expiry = Common.current_time + 60.days
 }
 
 160.upto(200) { |x|
-  post = Job.new(:category => Job::Categories[:hire], :subject => "안녕 하세요 #{x}", :valid_until => expiry);
+  post = Job.new(:category => Job::Categories[:hire], :subject => "안녕 하세요 #{x} #{subject}", :valid_until => expiry);
   post.created_at = Common.current_time
   content = post.build_content(:body => "안녕 하세요")
   post.save
