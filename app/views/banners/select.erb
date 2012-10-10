@@ -108,7 +108,7 @@
 		<div id="banner_content">
 			<h3><%= t("client_banner_image") %> <%= t('size') %> :
 			<div id="_banner_image_size">	<%= @banner.img_resolution %></div></h3>
-			<%= select_tag :banner, options_from_collection_for_select(@banners, "id", "name_with_img_resolution", @banner.id), :include_blank => false, :id => "banner_select" %>
+			<%= select_tag :banner, options_from_collection_for_select(@banners, "id", "name_with_img_resolution", @banner.id), :include_blank => false, :id => "banner_select", :multiple => false %>
 			<%= _script_document_ready(%Q|populate_image('banner');
 			$('\#banner_select').change(function() {filter_size("specific");populate_image('banner');populate_image('business_client')})|) %>
 			<div class="group wat-cf">

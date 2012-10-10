@@ -6,12 +6,16 @@
 	<% next if client_image.is_deleted %>
 	<div style="position: relative; float: left; padding: 5px; width: 150px">
 		<% found = false %>
-		<% if !client_image.banner.include?(@banner) %>
+		<% client_image.banner.each do |banner| %>
+		<% if banner.page_id == @banner.page_id %>
+			<% found = true %>
+			<%= link_to image_tag(client_image.thumb_image, :size => client_image.thumb_size, :class => "opacity"), client_image.original_image, :target => "_blank"%>
+			<%= flash?(client_image) %>
+			<% break %>
+		<% end %>
+		<% end %>
+		<% if !found %>
 		<%= link_to image_tag(client_image.thumb_image, :size => client_image.thumb_size), client_image.original_image, :target => "_blank" %>
-		<%= flash?(client_image) %>
-		<% else %>
-		<% found = true %>
-		<%= link_to image_tag(client_image.thumb_image, :size => client_image.thumb_size, :class => "opacity"), client_image.original_image, :target => "_blank"%>
 		<%= flash?(client_image) %>
 		<% end %>
 		<ul>
