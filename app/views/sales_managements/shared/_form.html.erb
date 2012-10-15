@@ -8,7 +8,7 @@
 		<%= f.label :issue_report_to, t("issue_report_to"), :class => "label left" %>
 	</div>
 	<div class="">
-		To : <%= SystemConfig.instance.issue_report_to %>
+		To : <%= SystemSetting.first.issue_report_to %>
 	</div>
 </div>
 <% end %>

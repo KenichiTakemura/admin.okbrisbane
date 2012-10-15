@@ -1,6 +1,66 @@
 <h2 class="title"><%= t(:site_statistics) %></h2>
 
 <div class="inner">
+	<!-- Highchart -->
+	<div id="highchart">
+		<script type="text/javascript">
+			var hit_chart;
+			$(document).ready(function() {
+      			hit_chart = new Highcharts.Chart({
+        			 chart: {
+            			renderTo: 'daily_hit_chart_canvas',
+            			type: 'line'
+         			},
+        		title: {
+            		text: '<%= t(:visitor) %> <%= t(:daily_statistics) %>'
+         		},
+         		xAxis: {
+            		categories: [
+            		<% @hits.each do |hit| %>
+            		'<%= Common.date_format(hit.day) %>',
+            		<% end %>
+            		]
+         		},
+                yAxis: {
+                   title: {
+                      text: ''
+                   }
+                },
+                tooltip: {
+                enabled: true,
+                formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                        this.x +': '+ this.y;
+                }
+            	},
+            	plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                }
+            	},
+         		series: [{
+            		name: '<%= t(:visitor) %>',
+		            data: [
+		            <% @hits.each do |hit| %>
+		            <%= hit.hit %>,
+		            <% end %>
+		            ]
+		         }, {
+		            name: '<%= t(:user_visitor)%>',
+		            data: [
+		            <% @hits.each do |hit| %>
+		            <%= hit.user_hit %>,
+		            <% end %>
+		            ]
+         		}]
+      		});
+   		});
+		</script>
+	<div id="daily_hit_chart_canvas" style="width: 100%; height: 400px"></div>
+	</div>
 	<table class="table">
 		<tr>
 			<th><%= t(:statistics_date) %></th>

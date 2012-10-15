@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
   
   def post_expiry
-    Common.current_time + SystemConfig.instance.post_expiry_length.days
+    Common.current_time + SystemSetting.first.post_expiry_length.days
   end
 
 end
