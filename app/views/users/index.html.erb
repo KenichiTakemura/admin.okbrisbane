@@ -4,7 +4,8 @@
 		<form action="#" class="form">
 			<table class="table">
 				<tr>
-					<th class="first"><%= t("email") %></th>
+					<th class="first"><%= t(:post_id) %></th>
+					<th><%= t(:email) %></th>
 					<th><%= t(:name) %></th>				
 					<th><%= t(:total_signin) %></th>
 					<th><%= t(:confirmed) %></th>
@@ -17,6 +18,7 @@
 				</tr>
 				<% @users.each do |user| %>
 				<tr>
+					<td><%= user.id%></td>
 					<td><%= user.email%></td>
 					<td><%= user.name%></td>
 					<td><%= user.sign_in_count%></td>

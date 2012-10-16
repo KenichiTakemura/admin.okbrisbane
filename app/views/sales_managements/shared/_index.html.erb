@@ -1,8 +1,8 @@
 <h2 class="title"><%= t("#{@category}")%>&nbsp;<%= t('List') %></h2>
 <div class="inner">
-	<div style="float:right">
-		<%= paginate @post %>
-	</div>
+<div class="paginate">
+	<%= paginate @post %>
+</div>
 	<table class="table">
 		<tr>
 			<th class="first"><%= t(:Id) %></th>

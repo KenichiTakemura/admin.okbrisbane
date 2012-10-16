@@ -11,7 +11,7 @@ def getBanner(p, s, a)
   section_id = Style.sectionid(s)
   position_id = a
   banner = Banner.where("page_id = ? AND section_id = ? AND position_id = ?", page_id, section_id, position_id).first
-  BannerImage.where("banner_id = ?", banner).delete_all
+  BannerImage.where("banner_id = ?", banner).destroy_all
   banner
 end
 

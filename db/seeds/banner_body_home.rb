@@ -11,12 +11,12 @@ def getBanner(p, s, a)
   section_id = Style.sectionid(s)
   position_id = a
   banner = Banner.where("page_id = ? AND section_id = ? AND position_id = ?", page_id, section_id, position_id).first
-  BannerImage.where("banner_id = ?", banner).delete_all
+  BannerImage.where("banner_id = ?", banner).destroy_all
   banner
 end
 
 # Main Body
-1.upto(9) do |x|
+1.upto(11) do |x|
   banner = getBanner(:p_home,:s_body,x)
   client_images = ClientImage.where("original_size = ?", banner.img_resolution)
   client_images.each do |i|

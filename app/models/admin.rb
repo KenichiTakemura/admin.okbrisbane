@@ -20,6 +20,8 @@ class Admin < ActiveRecord::Base
   has_many :admin_notice, :as  => :posted_by, :class_name => 'AdminNotice', :dependent => :destroy
 
   after_create :create_mypage, :init_role
+  
+  scope :post_admin, where("email = ?", Okvalue::POST_ADMIN)
 
   def create_mypage
     logger.info("User created: " << self.to_s)
