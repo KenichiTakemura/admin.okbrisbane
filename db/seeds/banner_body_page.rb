@@ -11,12 +11,12 @@ def getBanner(p, s, a)
   section_id = Style.sectionid(s)
   position_id = a
   banner = Banner.where("page_id = ? AND section_id = ? AND position_id = ?", page_id, section_id, position_id).first
-  BannerImage.where("banner_id = ?", banner).delete_all
+  BannerImage.where("banner_id = ?", banner).destroy_all
   banner
 end
 
 # logo position
-[:p_job,:p_buy_and_sell,:p_well_being,:p_study,:p_immig,:p_estate,:p_law,:p_tax,:p_yellowpage,:p_motor_vehicle,:p_business,:p_accommodation].each do |page|
+[:p_job,:p_buy_and_sell,:p_well_being,:p_study,:p_immig,:p_estate,:p_law,:p_tax,:p_yellowpage,:p_motor_vehicle,:p_business,:p_accommodation,:p_sponsor,:p_mypage].each do |page|
   banner = getBanner(page,:s_body,1)
   client_images = ClientImage.where("original_size = ?", banner.img_resolution)
   client_images.each do |i|
@@ -24,7 +24,7 @@ end
   end
 end
 
-[:p_signin,:p_signup,:p_job,:p_buy_and_sell,:p_well_being,:p_study,:p_immig,:p_estate,:p_law,:p_tax,:p_yellowpage,:p_motor_vehicle,:p_business,:p_accommodation].each do |page|
+[:p_signin,:p_signup,:p_signout, :p_job,:p_buy_and_sell,:p_well_being,:p_study,:p_immig,:p_estate,:p_law,:p_tax,:p_yellowpage,:p_motor_vehicle,:p_business,:p_accommodation,:p_sponsor,:p_mypage].each do |page|
   2.upto(5) do |x|
     banner = getBanner(page,:s_body,x)
     client_images = ClientImage.where("original_size = ?", banner.img_resolution)
@@ -35,7 +35,7 @@ end
 end
 
 # Buy and Sell Related
-[:p_estate,:p_motor_vehicle,:p_business,:p_accommodation].each do |page|
+[:p_estate,:p_motor_vehicle,:p_business,:p_accommodation,:p_law,:p_tax,:p_study,:p_immig].each do |page|
   6.upto(8) do |x|
     banner = getBanner(page,:s_body,x)
     client_images = ClientImage.where("original_size = ?", banner.img_resolution)
@@ -45,11 +45,22 @@ end
   end
 end
 
-# Signin
-[:p_signin].each do |page|
+# Signin/Signout
+[:p_signin,:p_signout].each do |page|
   banner = getBanner(page,:s_body,6)
   client_images = ClientImage.where("original_size = ?", banner.img_resolution)
   client_images.each do |i|
     banner.attach(i)
   end
 end
+
+[:p_signin,:p_signup,:p_signout, :p_job,:p_buy_and_sell,:p_well_being,:p_study,:p_immig,:p_estate,:p_law,:p_tax,:p_yellowpage,:p_motor_vehicle,:p_business,:p_accommodation,:p_sponsor,:p_mypage].each do |page|
+  9.upto(9) do |x|
+    banner = getBanner(page,:s_body,x)
+    client_images = ClientImage.where("original_size = ?", banner.img_resolution)
+    client_images.each do |i|
+      banner.attach(i)
+    end
+  end
+end
+
