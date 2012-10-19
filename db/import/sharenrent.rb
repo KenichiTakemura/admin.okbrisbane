@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+require 'db/import/import_helper'
+
 TopFeedList.category_feed(Accommodation.name).destroy_all
 Accommodation.destroy_all
 
@@ -9,16 +12,9 @@ boards.each do |board|
   
   user_name = Okiconv.euckr_to_utf8(board.bbs_name)
   
-  user = User.find_by_user_name(user_name)
-  user.destroy if user.present?
-  user = User.where(:reset_password_token => user_name).first
-  if user
-    puts "#{user} found."
-  else
-    puts "#{user_name} not found."
-    user = User.new(:email => "#{Common.uniqe_token}@okbrisbane.com", :password => Okvalue::DEFAULT_PASSWORD, :password_confirmation => Okvalue::DEFAULT_PASSWORD, :user_name => user_name, :is_special => false, :confirmed_at => Common.current_time)
-    user.save
-  end
+  user_name = Okiconv.euckr_to_utf8(board.bbs_name)
+  user = add_user(user_name)
+  
   expiry_day = SystemSetting.first.post_expiry_length
   expiry = board.bbs_date + expiry_day.days
   puts "expiry: #{expiry}"
