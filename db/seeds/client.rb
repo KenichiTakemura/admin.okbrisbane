@@ -13,12 +13,18 @@ qoq = BusinessClient.new(:business_name => "QOQ Pty Ltd", :business_abn => "38 1
 qoq.business_category = category
 qoq.build_business_profile(:head => "韓・中 부동산의 중심 QOQ 부동산", :body => %Q|<img src="http://www.qoq.com.au/korean/_images/about/aboutus.jpg"/>|)
 qoq.save
-image = BusinessProfileImage.new(:avatar => File.new("public/images/business_profile/qoq_logo.png"), :is_main => true)
+image = BusinessProfileImage.new(:avatar => File.new("#{Rails.root}/config/locales/banners/qoq/qoq.jpg"), :is_main => true)
 image.attached_to_by(qoq, admin)
 image.save
-image = BusinessProfileImage.new(:avatar => File.new("public/images/business_profile/qoq_logo1.png"), :is_main => true)
-image.attached_to_by(qoq, admin)
-image.save
+Dir["#{Rails.root}/config/locales/banners/qoq/*"].each do |filename|
+  # skip profile name
+  next if File.directory?(filename)
+  puts "Importing #{filename} to qoq"
+  banner = ClientImage.new(:avatar => File.new(filename), :link_to_url => "http://www.qoq.com.au/", :caption => "", :source_url => "")
+  banner.attached_to_by(qoq, admin)
+end
+
+
 hanin = BusinessClient.find_by_business_name("Hanin Lawyers")
 hanin.destroy if hanin.present?
 hanin = BusinessClient.new(:business_name => "Hanin Lawyers", :business_abn => "", :business_address => "", :business_url => "", :business_phone => '07 3343 8880', :business_fax => '07 3343 8558', :business_email => 'mootal@hanmail.net', :contact_name => 'Elliott Joo')
@@ -26,7 +32,7 @@ category = BusinessCategory.find_by_display_name("변호사")
 hanin.business_category = category
 hanin.build_business_profile(:head => "韓人 Hanin Lawyers", :body => %Q|<img src="http://www.qoq.com.au/korean/_images/legal/leagal_middle2.png"/>|)
 hanin.save
-image = BusinessProfileImage.new(:avatar => File.new("public/images/business_profile/HaninLawyers.jpg"), :is_main => true)
+image = BusinessProfileImage.new(:avatar => File.new("#{Rails.root}/config/locales/banners/hannin/HaninLawyers.jpg"), :is_main => true)
 image.attached_to_by(hanin, admin)
 image.save
 

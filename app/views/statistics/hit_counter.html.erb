@@ -16,6 +16,9 @@
          		},
          		xAxis: {
             		categories: [
+            		<% @hits_last_month.each do |hit| %>
+            		'<%= Common.date_format(hit.day) %>',
+            		<% end %>
             		<% @hits.each do |hit| %>
             		'<%= Common.date_format(hit.day) %>',
             		<% end %>
@@ -44,6 +47,9 @@
          		series: [{
             		name: '<%= t(:visitor) %>',
 		            data: [
+		            <% @hits_last_month.each do |hit| %>
+		            <%= hit.hit %>,
+		            <% end %>
 		            <% @hits.each do |hit| %>
 		            <%= hit.hit %>,
 		            <% end %>

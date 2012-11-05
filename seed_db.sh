@@ -1,4 +1,4 @@
-#rake db:import:happy_member
+rake db:import:happy_member
 #rake db:import:board_guin
 #rake db:import:sellnbuy
 #rake db:import:well_being
@@ -7,4 +7,4 @@
 #rake db:import:study
 #rake db:import:immigration
 #rake db:import:taxnsuper
-rake db:import:law
+#rake db:import:law
