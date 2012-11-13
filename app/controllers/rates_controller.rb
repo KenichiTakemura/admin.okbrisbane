@@ -5,6 +5,7 @@ class RatesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
     end
+    @older_rates = Rate.all
   end
   
   def collect
