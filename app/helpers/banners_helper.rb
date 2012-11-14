@@ -2,7 +2,8 @@ module BannersHelper
   
   def _edit_common(p, s, a, b)
     div_id = Style.create_banner_div(p,s,a)
-    html = %Q|<div class="edittable_banner" id="banner_edit_#{div_id}" style="#{b.style};">|
+    disabled = b.is_disabled ? "disabled" : ""
+    html = %Q|<div class="edittable_banner #{disabled}" id="banner_edit_#{div_id}" style="#{b.style};">|
     html
   end
   
@@ -51,8 +52,9 @@ module BannersHelper
     b.style =~ /^.*top:[0-9]*/
     # ruby 1.9
     #b.style =~ /^*top:[0-9]*/
-    top = $~.to_s.split(':').last.to_i  
-    html = %Q|<div class="edittable_background_banner" id="banner_edit_#{div_id}" style="">|
+    top = $~.to_s.split(':').last.to_i
+    disabled = b.is_disabled ? "disabled" : ""
+    html = %Q|<div class="edittable_background_banner #{disabled}" id="banner_edit_#{div_id}" style="">|
     html += single_banner(p, s, a)
     html += %Q|<span>| + _title(b) + "<br/>" + _link_to(b) + %Q|</span>|
     html += "</div>"

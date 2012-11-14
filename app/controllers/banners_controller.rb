@@ -70,7 +70,7 @@ class BannersController < ApplicationController
     _page
     respond_to do |format|
       if @banner.update_attributes(params[:banner])
-        format.html { redirect_to banner_path(@banner, :page_id => @page_id), :notice => t('successfully_updated') }
+        format.html { redirect_to banners_path(:page_id => @page_id), :notice => t('successfully_updated') }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }
