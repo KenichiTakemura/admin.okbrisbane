@@ -38,6 +38,8 @@ AdminOkbrisbane::Application.routes.draw do
   
   resources :comments, :only => ['index',"create"]
   
+  resources :quick_links
+  
   [:sales_managements,:posts_managements,:issues_managements].each do |m|
     resources m, :only => ["index","destroy","edit","show"] do
       collection do
@@ -56,7 +58,13 @@ AdminOkbrisbane::Application.routes.draw do
   
   devise_for :admins
 
-  resources :business_categories
+  resources :business_categories do
+    collection do
+      get :query
+      post :search
+    end
+  end
+  
   
   resources :admin_notices
 
@@ -87,6 +95,8 @@ AdminOkbrisbane::Application.routes.draw do
   resources :business_clients do
     collection do
       post :select_category
+      get :query
+      post :search
     end
   end
 

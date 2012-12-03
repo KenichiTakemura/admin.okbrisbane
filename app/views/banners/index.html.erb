@@ -1,26 +1,13 @@
-<%= render :partial => 'banners/shared/head' %>
-<% if !@page_name %>
-<h2 class="title"><%= t("listing_banners") %></h2>
-<div class="inner">
-	<p>
-		<%= t("banner_management_description")%>
-	</p>
+<div class="page-header">
+	<h2><%= t("banner") %> <%= t("page") %> <%= t(@page_name) %></h2>
 </div>
-<% else %>
-<h2 class="title"><%= t("banner") %> <%= t("page") %> <%= t(@page_name) %></h2>
 <style>
-	#_okbrisbane_html {
-		height: 100%;
-		width: 1200px;
-		height: 2500px;
-		margin: 0 auto;
-		background: #FFFFFF;
-	}
+
 	#_okbrisbane_left {
 		height: 100%;
 		position: relative;
 		background: #FFFFFF;
-		left:0px;
+		left:  0px;
 		float: left;
 		width: 0px;
 	}
@@ -28,44 +15,23 @@
 		height: 100%;
 		position: relative;
 		background: #FFFFFF;
-		right:0px;
+		right: 0px;
 		float: right;
 		width: 0px;
 	}
-	#_okbrisbane_body {
-		overflow: auto;
-		min-height: 100%;
-		padding: 10px;
-		margin-top: 20px;
-		margin-bottom: 20px;
-		border: 1px solid white;
-		-webkit-border-radius: 12px;
-		-moz-border-radius: 12px;
-		border-radius: 12px;
-		-webkit-box-shadow: 5px 5px 25px rgba(0,0,0,.5);
-		-webkit-box-shadow: inset 5px 5px 25px rgba(0,0,0,.5);
-		-moz-box-shadow: inset 5px 5px 25px rgba(0,0,0,.5);
-		box-shadow: inset 5px 5px 25px rgba(0,0,0,.1);
-		font-size: 12px;
-		font-family: 'NanumGothic';
-		color: #333;
-		position: relative;
-	}
 </style>
-<div id="_okbrisbane_html">
-	<div id="_okbrisbane_left">
+<div class="row">
+	<div class="row" id="_okbrisbane_left">
 		<%= edittable_background_banner(1, "left") %>
 		<%= edittable_background_banner(3, "left") %>
 		<%= edittable_background_banner(5, "left") %>
 	</div>
-	<div id="_okbrisbane_right">
+	<div class="row" id="_okbrisbane_right">
 		<%= edittable_background_banner(2, "right") %>
 		<%= edittable_background_banner(4, "right") %>
 		<%= edittable_background_banner(6, "right") %>
 	</div>
-	<div id="_okbrisbane_body">
+	<div class="container">
 		<%= render :partial => "banners/#{@page_name}/index" %>
 	</div>
-
 </div>
-<% end %>

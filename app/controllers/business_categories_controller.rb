@@ -1,4 +1,4 @@
-class BusinessCategoriesController < ApplicationController
+class BusinessCategoriesController < SearchablesController
 
   def index
     @business_categories = BusinessCategory.order.page params[:page]
@@ -76,6 +76,25 @@ class BusinessCategoriesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to business_categories_url }
       format.json { head :no_content }
+    end
+  end
+  
+  def query
+    results = BusinessCategory.query_by_name(@@query, QUERY_LIMIT)
+    result = results.collect{ |c| c.display_name}
+    respond_to do |format|
+      format.json { render :json => result }
+    end
+  end
+
+  def search
+    if @@key.present?
+      @business_categories = BusinessCategory.search(@@key, QUERY_LIMIT).page params[:page]
+    else
+      @business_categories = BusinessCategory.order.page params[:page]
+    end
+    respond_to do |format|
+      format.js
     end
   end
 end

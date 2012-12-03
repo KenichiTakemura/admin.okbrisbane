@@ -51,6 +51,7 @@ class PostsController < ApplicationController
           end
           format.json { render :json => @post, :status => :created }
         end
+        true
       else
         logger.info("Post creation failed at #{@post.write_at}")
         flash[:warning] = I18n.t("failed_to_create")
@@ -61,6 +62,7 @@ class PostsController < ApplicationController
           format.html { render :template => "#{@@management_path}/write" }
           format.json { render :json => @post.errors, :status => :unprocessable_entity }
         end
+        false
       end
     end
   end

@@ -47,11 +47,6 @@ class BusinessProfileImagesController < ApplicationController
       @business_client = BusinessClient.find_by_id(@business_profile_image.attached_id)
     end    
     # mark is_main if the first one
-    logger.debug("business_profile_image.size: #{@business_client.business_profile_image.size}")
-    if @business_client.business_profile_image.empty?
-      @business_profile_image.is_main = true
-      logger.info("This is the first profile: #{@business_profile_image}")
-    end
     @business_profile_image.attached_to(@business_client)
     respond_to do |format|
       if @business_profile_image.save

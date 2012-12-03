@@ -1,17 +1,17 @@
-<p class="title">
-	<%= t(:weather_forecast_for) %> <%= @kr_dateOn %>
+<p class="">
+<strong><%= t("ko_weather_information") %> <%= @kr_dateOn %></strong>
 </p>
-<table class="ui-widget information_table" style="opacity:0.95;filter:alpha(opacity=95);">
-	<thead class="ui-widget-header">
+<table class="table">
+	<thead class="">
 		<tr>
-			<th class="small"><%= t(:location)%></th>
-			<th class="small"><%= t(:forecast)%></th>
-			<th class="small"><%= t(:issuedOn)%></th>
-			<th class="small"><%= t(:minTemp)%></th>
-			<th class="small"><%= t(:maxTemp)%></th>
+			<th class=""><%= t(:location)%></th>
+			<th class=""><%= t(:forecast)%></th>
+			<th class=""><%= t(:issuedOn)%></th>
+			<th class=""><%= t(:minTemp)%></th>
+			<th class=""><%= t(:maxTemp)%></th>
 			</tr>
 	</thead>
-	<tbody class="ui-widget-content">
+	<tbody class="">
 		<% if !@kr_weather.present? %>
 		<tr><td colspan="6"><%= t(:no_information) %>
 		</td></tr>
@@ -19,11 +19,11 @@
 			<% @kr_weather.reverse_each do |w| %>
 			<% next if !WeatherConfig::KORCityVisibleMap[w.location.to_sym] %>
 			<tr>
-				<td class="city"><%= link_to(t(w.location), WeatherConfig::KORCityMap[w.location.to_sym], :target => "_blank") %></td>
+				<td class=""><%= link_to(t(w.location), WeatherConfig::KORCityMap[w.location.to_sym], :target => "_blank") %></td>
 			<% if WeatherConfig.kr_letter_to_icon(w.forecast).present? %>
 			<td><%= image_tag("common/weather/#{WeatherConfig.kr_letter_to_icon(w.forecast)}.png") %></td>
 			<% else %>
-			<td><%= image_tag("common/weather/haze.png") %></td>
+			<td></td>
 			<% end %>
 			<td><%= w.issued %></td>
 			<td><%= w.min %></td>

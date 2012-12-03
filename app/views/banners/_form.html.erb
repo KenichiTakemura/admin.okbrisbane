@@ -12,98 +12,32 @@
 	</ul>
 </div>
 <% end %>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :is_disabled, t("hide"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.check_box :is_disabled, :id => "_hide" %>
-	</div>
-	<span class="description"><%= t("if_checked_not_displayed") %></span>
-</div>
-<%= _script_document_ready(%Q|if ($('#_hide').is(":checked")) {$('#_filter').attr("style", "opacity: 0.2;filter: alpha(opacity=20);") }; $('#_hide').click(function() { if ($('#_hide').is(":checked")) {$('#_filter').attr("style", "opacity: 0.2;filter: alpha(opacity=20);") } else {$('#_filter').attr("style", "") }});|)%>
+		<label class="checkbox"><%= f.check_box :is_disabled, :id => "_hide" %><%=t("hide")%></label>
+	<span class="help-block"><%= t("if_checked_not_displayed") %></span>
+<%= _script_document_ready(%Q|if ($('#_hide').is(":checked")) {
+$('#_filter').attr("style", "opacity: 0.2;filter: alpha(opacity=20);") }; $('#_hide').click(function() { if ($('#_hide').is(":checked")) {$('#_filter').attr("style", "opacity: 0.2;filter: alpha(opacity=20);") } else {$('#_filter').attr("style", "") }});|)%>
 <div id="_filter">
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :display_name, t('display_name'), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.text_field :display_name, :class => "text_field" %>
-	</div>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :div_width, t('div_width'), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.number_field :div_width, :class => "text_field" %>
-	</div>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :div_height, t('div_height'), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.number_field :div_height, :class => "text_field" %>
-	</div>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :img_width, t('img_width'), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.number_field :img_width, :class => "text_field" %>
-	</div>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :img_height, t('img_height'), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.number_field :img_height, :class => "text_field" %>
-	</div>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :effect, t("effect"), :class => "label left" %>
-	</div>
-	<div class="">
+		<%= f.label :display_name, t('display_name'), :class => "" %>
+		<%= f.text_field :display_name, :class => "" %>
+		<%= f.label :div_width, t('div_width'), :class => "" %>
+		<%= f.number_field :div_width, :class => "" %>
+		<%= f.label :div_height, t('div_height'), :class => "" %>
+		<%= f.number_field :div_height, :class => "" %>
+		<%= f.label :img_width, t('img_width'), :class => "" %>
+		<%= f.number_field :img_width, :class => "" %>
+		<%= f.label :img_height, t('img_height'), :class => "" %>
+		<%= f.number_field :img_height, :class => "" %>
+		<%= f.label :effect, t("effect"), :class => "" %>
 		<%= f.select :effect, options_for_select(@banner.effect_list, @banner.effect) %>
-	</div>
+		<%= f.label :effect_speed, t("effect_speed"), :class => "" %>
+		<%= f.number_field :effect_speed, :class => "" %>
+			<span class="help-inline"><%= t("unit_second") %></span>
+			<span class="help-block"><%= t("more_than_1") %></span>
+		<%= f.label :style, t("style"), :class => "" %>
+		<%= f.text_field :style, :class => "input-xlarge" %>
+		<label class="checkbox"><%= f.check_box :is_random %><%=t("random")%></label>
+		<span class="help-block"><%= t("randomly_display") %></span>
+		<%= f.submit t("create"), :class => "btn btn-primary" %>
 </div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :effect_speed, t("effect_speed"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.number_field :effect_speed, :class => "text_field" %>
-	</div>
-	<span class="description"><%= t("unit_second") %></span>
-	<span class="description"><%= t("more_than_1") %></span>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :style, t('style'), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.text_field :style, :class => "text_field" %>
-	</div>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :is_random, t("random"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.check_box :is_random %>
-	</div>
-	<span class="description"><%= t("randomly_display") %></span>
-</div>
-</div>
-<div class="group wat-cf">
-	<div class="left">
-		<%= f.submit t("create"), :class => "button" %>
-	</div>
-</div>
-
 <% end %>
 

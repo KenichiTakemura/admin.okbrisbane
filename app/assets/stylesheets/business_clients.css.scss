@@ -10,10 +10,17 @@ div.banner_image_thumbnail_each_with_info {
   position: relative; float: left; padding: 5px; width: 140px; height: 200px
 }
 
-div.banner_image_thumbnail_each {
-  float:left;
-  margin-left: 5px;
+.banner_image_thumbnail_each span {
+  position: absolute;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #666;
+  visibility: hidden;
+  color: black;
+  text-decoration: none;
+  z-index: 1;
 }
+
 
 div.banner_image_thumbnail_each span, div.banner_image_thumbnail_each_with_info span {
   position: absolute;
@@ -32,6 +39,6 @@ div.banner_image_thumbnail_each_with_info:hover span {
   left: 50px;/*position where enlarged image should offset horizontally */
 }
 
-div.banner_image_thumbnail_each:hover span {
+.banner_image_thumbnail_each:hover span {
   visibility: visible;
 }

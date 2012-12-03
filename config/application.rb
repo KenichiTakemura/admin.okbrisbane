@@ -71,7 +71,8 @@ module AdminOkbrisbane
     # Share model from okbrisbane
     config.autoload_paths += %W( #{Rails.root}/../okbrisbane/app/models )
     config.autoload_paths += %W( #{Rails.root}/../okbrisbane/app/models/validator)
-    config.autoload_paths += %W( #{Rails.root}/../okbrisbane/app/models/legacy)
+    config.autoload_paths += %W( #{Rails.root}/../okbrisbane/app/models/singleton)
+    config.autoload_paths += %W( #{Rails.root}/app/models/legacy)
     config.autoload_paths += %W( #{Rails.root}/../okbrisbane/app/helpers )
     config.autoload_paths += %W( #{Rails.root}/../okbrisbane/lib )
     config.autoload_paths += %W( #{config.root}/../okbrisbane/config/locales/ko.yml )

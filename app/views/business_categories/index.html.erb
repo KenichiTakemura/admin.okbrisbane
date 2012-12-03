@@ -1,32 +1,24 @@
-<h2 class="title"><%= t("listing_business_categories") %></h2>
-
-<div style="position:absolute;right:0px;top:20px;">
-	<%= paginate @business_categories %>
+<div class="page-header">
+	<h2><%= t("listing_business_categories") %> </h2>
 </div>
-<div class="inner">
-	<table class="table">
-		<tr>
-			<th><%= t("en_name") %></th>
-			<th><%= t("display_name") %></th>
-			<th><%= t("search_keyword")%></th>
-			<th><%= t("business_client")%></th>
-			<th class="last"></th>
-		</tr>
-		<% @business_categories.each do |business_category| %>
-		<tr class="<%= cycle("odd", "even") %>" >
-			<td><%= business_category.en_name %></td>
-			<td><%= business_category.display_name %></td>
-			<td><%= business_category.search_keyword %></td>
-			<td>
-				<% business_category.business_client.each do |business_client| %>
-					<%= business_client.business_name %>
-					<br/>
-				<% end %>
-			</td>
-			<td>
-			<%= link_to t('Edit'), edit_business_category_path(business_category) %> |
-			<%= link_to t('Delete'), business_category, :method => :delete, :data => { :confirm => t('confirm_delete') } %>
-		</tr>
-		<% end %>
-	</table>
+
+<div class="row-fluid">
+<form class="form-inline" method="post" action="/business_categories/search" id="search-form" data-remote="true" accept-chaset="UTF-8">
+<label><%= t("display_name") %></label>
+<input name="key" type="text" class="ajax-typeahead" id="key" autocomplete="false">
+<input type="submit" class="btn btn-primary" value="<%=t('search')%>">
+<%= _script_document_ready(%Q|
+$('.ajax-typeahead').typeahead({
+    source: function (query, process) {
+        return $.get('/business_categories/query', { query: query }, function (data) {
+            return process(data);
+        });
+    }
+});
+|)%>
+</form>
+</div>
+
+<div class="row-fluid" id="search_result">
+<%= render :partial => 'categories' %>
 </div>

@@ -1,29 +1,27 @@
-<h2 class="title"><%= t("listing_admin_notices") %></h2>
+<div class="page-header">
+	<h2><%= t("listing_admin_notices") %></h2>
+</div>
 
-<div style="position:absolute;right:0px;top:20px;">
+<div class="pagination">
 	<%= paginate @admin_notices %>
 </div>
-<div class="inner">
-	<table class="table">
-		<tr>
-			<th><%= t(:status) %></th>
-			<th><%= t(:subject) %></th>
-			<th><%= t(:content) %></th>
-			<th><%= t(:created_at)%></th>
-			<th class="last"></th>
-		</tr>
-		<% @admin_notices.each do |admin_notice| %>
-		<tr class="<%= cycle("odd", "even") %>" >
-			<td><%= t(admin_notice.status) %></td>
-			<td><%= admin_notice.subject %></td>
-			<td><%= raw(admin_notice.content.body) %></td>
-			<td><%= Common.date_format(admin_notice.created_at)%>
-			</td>
-			<td>
-			<%= link_to t('Show'), admin_notice_path(admin_notice) %> |
-			<%= link_to t('Edit'), edit_admin_notice_path(admin_notice) %> |
-			<%= link_to t('Delete'), admin_notice, :method => :delete, :data => { :confirm => t('confirm_delete') } %>
-		</tr>
-		<% end %>
-	</table>
-</div>
+<table class="table table-condensed table-hover table-striped">
+	<tr>
+		<th><%= t(:status) %></th>
+		<th><%= t(:subject) %></th>
+		<th><%= t(:content) %></th>
+		<th><%= t(:created_at)%></th>
+		<th class="last"></th>
+	</tr>
+	<% @admin_notices.each do |admin_notice| %>
+	<tr class="" >
+		<td><%= t(admin_notice.status) %></td>
+		<td><%= admin_notice.subject %></td>
+		<td><%= raw(admin_notice.content.body) %></td>
+		<td><%= Common.date_format(admin_notice.created_at)%> </td>
+		<td> <%= link_to t('Show'), admin_notice_path(admin_notice), :class => "btn btn-link" %> |
+		<%= link_to t('Edit'), edit_admin_notice_path(admin_notice), :class => "btn btn-link" %> |
+		<%= link_to t('Delete'), admin_notice, :method => :delete, :data => { :confirm => t('confirm_delete') }, :class => "btn btn-link" %>
+	</tr>
+	<% end %>
+</table>

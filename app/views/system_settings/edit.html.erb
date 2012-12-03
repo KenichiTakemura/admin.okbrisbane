@@ -1,8 +1,6 @@
-<h2 class="title"><%= t("system_settings") %> <%= t("Edit") %></h2>
-<div class="inner">
-	<%= render 'form' %>
-
-
-<%= link_to t('Back'), system_settings_path %>
-
+<div class="page-header">
+	<h2><%= t("system_settings") %> <%= t("Edit") %></h2>
 </div>
+<%= render 'form' %>
+
+<%= link_to t('Back'), system_settings_path, :class => "btn btn-link" %>

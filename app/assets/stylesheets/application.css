@@ -10,11 +10,11 @@
  *
  *= require_self
  *= require_tree .
- *= require_tree '../../../vendor/assets/stylesheets/jquery-ui'
  *= require_tree '../../../vendor/assets/stylesheets/web-app-theme'
  *= require_tree '../../../vendor/assets/stylesheets/web-app-theme/themes'
  *= require_tree '../../../vendor/assets/stylesheets/web-app-theme/themes/default'
  *= require_tree '../../../vendor/assets/stylesheets/fonts'
+ *= require bootstrap
  */
 
 .thumbnail {
@@ -31,7 +31,6 @@
 .delete_x {
 	font-size: 16px;
 	font-weight: bold;
-	font-family: "NanumGothicExtraBold";
 }
 
 .delete_x:hover {

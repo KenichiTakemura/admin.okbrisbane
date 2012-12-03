@@ -1,126 +1,68 @@
 <%= form_for(@business_client, :html => { :class => "form" }) do |f| %>
 <%= admin_error_messages!(@business_client) %>
 
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :business_name, t("business_name"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.text_field :business_name, :class => "text_field" %>
-	</div>
-	<span class="description"><%= t("must_be_filled") %></span>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :business_category, t("business_category"), :class => "label left" %>
-	</div>
-	<div class="">
-		<% if @business_client.business_category.nil? %>
-			<%= f.select :business_category, options_from_collection_for_select(BusinessCategory.all, "id", "display_name", @business_client.business_category), :include_blank => false %>
-		<% else %>
-			<%= f.select :business_category, options_from_collection_for_select(BusinessCategory.all, "id", "display_name", @business_client.business_category.id), :include_blank => false %>
-		<% end %>
-	</div>
-	<span class="description"><%= t("must_be_selected") %></span><br/>
-	<span class="description"><%= link_to t("not_listed"), new_business_category_path %></span>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :contact_name, t("contact_name"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.text_field :contact_name, :class => "text_field" %>
-	</div>
-	<span class="description"><%= t("must_be_filled") %></span>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :search_keyword, t("search_keyword"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.text_field :search_keyword, :class => "text_field" %>
-	</div>
-	<span class="description"><%= t("optional") %></span>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :business_abn, t("business_abn"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.text_field :business_abn, :class => "text_field" %>
-	</div>
-	<span class="description"><%= t("optional") %></span>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :business_url, t("business_url"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.text_field :business_url, :class => "text_field" %>
-	</div>
-	<span class="description"><%= t("optional") %></span><br/>
-	<span class="description"><%= t("linked_from_banner") %></span>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :business_phone, t("business_phone"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.text_field :business_phone, :class => "text_field" %>
-	</div>
-	<span class="description"><%= t("optional") %></span>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :business_fax, t("business_fax"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.text_field :business_fax, :class => "text_field" %>
-	</div>
-	<span class="description"><%= t("optional") %></span>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :business_address, t("business_address"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.text_field :business_address, :class => "text_field" %>
-	</div>
-	<span class="description"><%= t("optional") %></span>
-</div>
+<%= f.label :business_name, t("business_name"), :class => "" %>
 
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :business_email, t("business_email"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.text_field :business_email, :class => "text_field" %>
-	</div>
-	<span class="description"><%= t("optional") %></span>
-</div>
-<%= f.fields_for @business_client.business_profile do |profile_form| %>
-<div class="group wat-cf">
-	<div class="">
-		<%= profile_form.label :head, t("business_profile_head"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= profile_form.text_field :head, :class => 'text_field' %>
-	</div>
-	<span class="description"><%= t("must_be_filled") %></span>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= profile_form.label :body, t("business_profile"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= profile_form.cktext_area :body, :toolbar => 'Full' %>
-	</div>
-	<span class="description"><%= t("must_be_filled") %></span>
-</div>
+<%= f.text_field :business_name, :class => "" %>
+
+<span class="description"><%= t("must_be_filled") %></span>
+
+<%= f.label :business_category, t("business_category"), :class => "" %>
+
+<% if @business_client.business_category.nil? %>
+<%= f.select :business_category, options_from_collection_for_select(BusinessCategory.all, "id", "display_name", @business_client.business_category), :include_blank => false %>
+<% else %>
+<%= f.select :business_category, options_from_collection_for_select(BusinessCategory.all, "id", "display_name", @business_client.business_category.id), :include_blank => false %>
 <% end %>
-<div class="group wat-cf">
-	<div class="left">
-		<%= f.submit t("create"), :class => "button" %>
-	</div>
-</div>
+
+<span class="description"><%= t("must_be_selected") %></span>
+<br/>
+<span class="description"><%= link_to t("not_listed"), new_business_category_path %></span>
+
+<%= f.label :contact_name, t("contact_name"), :class => "" %>
+
+<%= f.text_field :contact_name, :class => "" %>
+
+<span class="description"><%= t("must_be_filled") %></span>
+
+<%= f.label :search_keyword, t("search_keyword"), :class => "" %>
+
+<%= f.text_field :search_keyword, :class => "" %>
+
+<span class="description"><%= t("optional") %></span>
+
+<%= f.label :business_abn, t("business_abn"), :class => "" %>
+
+<%= f.text_field :business_abn, :class => "" %>
+
+<span class="description"><%= t("optional") %></span>
+
+<%= f.label :business_url, t("business_url"), :class => "" %>
+
+<%= f.text_field :business_url, :class => "" %>
+<span class="description"><%= t("optional") %></span>
+<br/>
+<span class="description"><%= t("linked_from_banner") %></span>
+<%= f.label :business_phone, t("business_phone"), :class => "" %>
+<%= f.text_field :business_phone, :class => "" %>
+<span class="description"><%= t("optional") %></span>
+<%= f.label :business_fax, t("business_fax"), :class => "" %>
+<%= f.text_field :business_fax, :class => "" %>
+<span class="description"><%= t("optional") %></span>
+<%= f.label :business_address, t("business_address"), :class => "" %>
+<%= f.text_field :business_address, :class => "" %>
+<span class="description"><%= t("optional") %></span>
+<%= f.label :business_email, t("business_email"), :class => "" %>
+<%= f.text_field :business_email, :class => "" %>
+<span class="description"><%= t("optional") %></span>
+<%= f.fields_for @business_client.business_profile do |profile_form| %>
+<%= profile_form.label :head, t("business_profile_head"), :class => "" %>
+<%= profile_form.text_field :head, :class => "" %>
+<span class="description"><%= t("must_be_filled") %></span>
+<%= profile_form.label :body, t("business_profile"), :class => "" %>
+<%= profile_form.cktext_area :body, :toolbar => 'Full' %>
+<span class="description"><%= t("must_be_filled") %></span>
+<% end %>
+<br>
+<%= f.submit t("create"), :class => "btn pull-left" %>
 <% end %>

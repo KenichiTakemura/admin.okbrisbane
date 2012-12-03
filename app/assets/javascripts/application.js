@@ -16,4 +16,5 @@
 //= require jquery_slides
 //= require highcharts
 //= require_tree .
+//= require bootstrap
 //= require_tree '../../../vendor/assets/javascripts/ckeditor'

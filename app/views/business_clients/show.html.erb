@@ -1,131 +1,122 @@
-<h2><%= t("business_client") %></h2>
-<div class="inner">
-	<table class="table">
+<div class="page-header">
+	<h2><%= t("business_client") %> </h2>
+</div>
+	<table class="table table-condensed table-striped table-hover">
 		<th class="first"><%= t("item") %></th>
 		<th class="last"><%= t("content") %></th>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :business_name, t("business_name"), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :business_name, t("business_name"), :class => "" %> </td>
 			<td><%= @business_client.business_name %></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :contact_name, t("contact_name"), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :contact_name, t("contact_name"), :class => "" %> </td>
 			<td><%= @business_client.contact_name %></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :business_category, t("business_category"), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :business_category, t("business_category"), :class => "" %> </td>
 			<td><%= @business_client.business_category %></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :search_keyword, t("search_keyword"), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :search_keyword, t("search_keyword"), :class => "" %> </td>
 			<td><%= @business_client.search_keyword %></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :business_abn, t("business_abn"), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :business_abn, t("business_abn"), :class => "" %> </td>
 			<td><%= @business_client.business_abn %></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :business_url, t("business_url"), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :business_url, t("business_url"), :class => "" %> </td>
 			<td><%= @business_client.business_url %></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :business_phone, t("business_phone"), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :business_phone, t("business_phone"), :class => "" %> </td>
 			<td><%= @business_client.business_phone %></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :business_fax, t("business_fax"), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :business_fax, t("business_fax"), :class => "" %> </td>
 			<td><%= @business_client.business_fax %></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :business_address, t("business_address"), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :business_address, t("business_address"), :class => "" %> </td>
 			<td><%= @business_client.business_address %></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :business_email, t("email"), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :business_email, t("email"), :class => "" %> </td>
 			<td><%= @business_client.business_email %></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
+		<tr class="">
 			<div id="business_client_banner_images">
-				<td><%= label_tag :client_image, t("client_banner_image"), :class => "label left" %>
+				<td><%= label_tag :client_image, t("client_banner_image"), :class => "" %>
 				<br/>
-				<%= link_to t('add'), new_client_image_path(:client => @business_client, :page => @current_page) %> </td>
+				<%= link_to t('add'), new_client_image_path(:client => @business_client, :page => @current_page), :class => "btn" %> </td>
 				<td>
-				<div style="width:100%; position: relative; display: inline;">
+				<ul class="thumbnails">
 					<% if !@business_client.client_image.empty? %>
 					<% @business_client.client_image.each do |client_image| %>
-					<div class="banner_image_thumbnail_each_with_info">
+					<li class="thumbnail banner_image_thumbnail_each pull-left">
 						<%= image_tag client_image.thumb_image, :size => client_image.thumb_size %>
 						<%= flash?(client_image) %>
-						<ul>
-							<li>
-								<%= t("size") %> : <%= client_image.original_size %>
-							</li>
-							<li>
-								<%= client_image.clicked %>&nbsp;<%= t("client_image_clicked") %>
-							</li>
-							<% if !client_image.caption.empty? %>	
-							<li>
-								<%= client_image.caption %>
-							</li>
-							<% end %>
-							<li>
-								<%= t("banner_page") %>
-								<% if client_image.banner.empty? %>
-								<br/>
-								<%= t("not_present") %>
-								<% elsif %>
-								<br/>
-								<% client_image.banner.each do |banner| %>
-								<%= link_to banner.name, banner_path(banner) %><br/>
-								<% end %>
-								<% end %>
-							</li>
-						</ul>
-						<span>
-							<%= link_to(t('delete'), client_image, :method => :delete, :data => { :confirm => t('confirm_delete') }) %> | 
-							<%= link_to(t('Edit'), edit_client_image_path(client_image)) %>
+						<p><%= t("size") %> : <%= client_image.original_size %></p>
+						<p><%= client_image.clicked %>&nbsp;<%= t("client_image_clicked") %></p>
+						<% if client_image.caption.present? %>
+						</p><%= client_image.caption %></p>
+						<% end %>
+						
+						<p><%= t("banner_page") %></p>
+						<% if !client_image.banner.present? %>
+							<p><%= t("not_present") %></p>
+						<% else %>
+							<p><%= client_image.banner.size %></p>
+						<% end %>
+						<span class="">
+							<%= link_to(t('delete'), client_image, :method => :delete, :data => { :confirm => t('confirm_delete') }, :class => "btn btn-link") %>
+							<%= link_to(t('Edit'), edit_client_image_path(client_image), :class => "btn btn-link") %>
 						</span>
-					</div>
+					</li>
 					<% end  %>
-					<% elsif %>
+					<% else %>
 					<%= noimage %>
 					<% end %>
-				</div></td>
+				</ul></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :business_profile_image, t("business_profile_image"), :class => "label left" %>
+		<tr class="">
+			<td><%= label_tag :business_profile_image, t("business_profile_image"), :class => "" %>
 			<br/>
-			<%= link_to t('add'), new_business_profile_image_path(:client => @business_client, :page => @current_page) %> </td>
+			<%= link_to t('add'), new_business_profile_image_path(:client => @business_client, :page => @current_page), :class => "btn" %> </td>
 			</td>
 			<td>
-			<div style="width:100%; position: relative; display: inline;">
-				<% if !@business_client.business_profile_image.empty? %>
+			<ul class="thumbnails">
+				<% if @business_client.business_profile_image.present? %>
 				<% @business_client.business_profile_image.each do |business_profile_image| %>
-				<div style="position: relative; float: left; padding: 5px; width: 250px">
+				<li class="span2 pull-left">
 					<%= image_tag business_profile_image.avatar.url(:thumb) %>
+					<% if business_profile_image.is_main %>
+					<p class="text-info"><%= t("is_main_profile")%></p>
+					<% end %>
 					<div style="position: relative; margin-top: 5px">
 						<%= form_for(business_profile_image, :method => :delete, :html => { :class => "form" }) do |f| %>
-						<%= f.submit t("delete"), :data => { :confirm => t("confirm_delete") } , :class => "button"%>
+						<%= f.submit t("delete"), :data => { :confirm => t("confirm_delete") } , :class => "btn"%>
 						<% end %>
 					</div>
 					<br/>
 					<%= t("image_size") %> <%= business_profile_image.original_size %>
-				</div>
+				</li>
 				<% end %>
 				<% elsif %>
 				<%= noimage %>
 				<% end %>
-			</div></td>
+			</ul></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :business_profile_head, t("business_profile_head"), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :business_profile_head, t("business_profile_head"), :class => "" %> </td>
 			<td><%= raw @business_client.business_profile.head %> </td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :business_profile, t("business_profile"), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :business_profile, t("business_profile"), :class => "" %> </td>
 			<td><%= raw @business_client.business_profile.body %> </td>
 		</tr>
 	</table>
-	<%= link_to t('Edit'), edit_business_client_path(@business_client) %> |
-	<%= link_to t('Back'), business_clients_path(:page => @current_page) %>
-</div>
+	<%= link_to t('Edit'), edit_business_client_path(@business_client), :class => "btn btn-link" %> |
+	<%= link_to t('Back'), business_clients_path(:page => @current_page), :class => "btn btn-link" %>
+
 

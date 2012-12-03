@@ -1,8 +1,7 @@
-<h2 class="title"><%= t("weather_information") %></h2>
-
-<div class="inner">
+<div class="page-header">
+	<h2><%= t("weather_information") %> </h2>
+</div>
 	
-<%= link_to(t(:collect_information), collect_weathers_path)%>
+<%= link_to(t(:collect_information), collect_weathers_path, :class => "btn btn-primary")%>
 <%= render 'au_index' %>
 <%= render 'kr_index' %>
-</div>

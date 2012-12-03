@@ -141,8 +141,8 @@ class ManagementsController < ApplicationController
     images = find_image(timestamp, params[:id])
     image_ids = images.collect{|i| i.id}
     thumbnails = images.collect{|i| i.thumb_image}
-    widths = images.collect{|i| i.width}
-    heights = images.collect{|i| i.height}
+    widths = images.collect{|i| i.thumb_width}
+    heights = images.collect{|i| i.thumb_height}
     somethingies = images.collect{|i| i.something}
     render :json => {:result => 0, :images => image_ids, :thumbnails => thumbnails, :widths => widths, :heights => heights, :somethingies => somethingies }
   end

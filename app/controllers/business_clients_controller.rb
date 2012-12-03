@@ -1,11 +1,8 @@
-class BusinessClientsController < ApplicationController
+class BusinessClientsController < SearchablesController
   # GET /business_clients
   # GET /business_clients.json
   def index
     @business_clients = BusinessClient.order.page params[:page]
-    @business_clients.each do |business_client|
-       logger.debug("id: #{business_client.id} number_of_images: #{business_client.client_image.size}")
-    end
     @business_categories = BusinessCategory.all
     respond_to do |format|
       format.html # index.html.erb
@@ -112,4 +109,25 @@ class BusinessClientsController < ApplicationController
     @business_client = BusinessClient.find(params[:business_client])
     @business_client.update_attribute(:business_category, category)
   end
+  
+  def query
+    clients = BusinessClient.query_by_name(@@query, QUERY_LIMIT)
+    result = clients.collect{ |c| c.business_name}
+    respond_to do |format|
+      format.json { render :json => result }
+    end
+  end
+  
+  def search
+    if @@key.present?
+      @business_clients = BusinessClient.search(@@key, QUERY_LIMIT).page params[:page]
+    else
+      @business_clients = BusinessClient.order.page params[:page]
+    end
+    @business_categories = BusinessCategory.all
+    respond_to do |format|
+      format.js
+    end
+  end
+  
 end

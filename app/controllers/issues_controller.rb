@@ -3,8 +3,7 @@ class IssuesController < PostsController
   @@management_path = "issues_managements"  
 
   def create
-    _create(Issue, :issue)
-    IssueMailer.send_new_issue(@post, @category).deliver
+    IssueMailer.send_new_issue(@post, @category).deliver if _create(Issue, :issue)
   end
   
   def update

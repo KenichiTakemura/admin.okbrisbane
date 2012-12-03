@@ -9,13 +9,12 @@
 		<div id="header">
 			<h1><a href="/">OKBRISBANE</a></h1>
 			<div style="position:relative;float:right;color:#ffffff;font-size:20px;">
-				<p>Supported Browsers:</p><%= link_to(image_tag("common/firefox_logo.png", :size => "120x120"), "http://www.mozilla.org/en-US/firefox/new/")%>
-				<%= link_to(image_tag("common/new-chrome-logo.png", :size => "120x120"),"https://www.google.com/intl/en_us/chrome/browser/")%>
+				<p>Supported Browsers:</p><%= link_to(image_tag("common/firefox_logo.png", :class => "image-resize50_50"), "http://www.mozilla.org/en-US/firefox/new/")%>
+				<%= link_to(image_tag("common/new-chrome-logo.png", :class => "image-resize50_50"),"https://www.google.com/intl/en_us/chrome/browser/")%>
 			</div>
 		</div>
 		<div id="container">
 			<div id="box">
-			
 				<%= yield %>
 			</div>
 		</div>

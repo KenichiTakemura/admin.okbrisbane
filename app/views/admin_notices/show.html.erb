@@ -1,29 +1,29 @@
-<h2><%= t(:admin_notice) %>#<%=@admin_notice.id %></h2>
-<div class="inner">
-	<table class="table">
+<div class="page-header">
+	<h2><%= t("admin_notice") %>#<%=@admin_notice.id %></h2>
+</div>
+	<table class="table table-condensed table-hover table-striped">
 		<th class="first"><%= t("item") %></th>
 		<th class="last"><%= t("content") %></th>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :status, t("status"), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :status, t("status"), :class => "" %> </td>
 			<td><%= t("#{@admin_notice.status}") %></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :subject, t(:subject), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :subject, t(:subject), :class => "" %> </td>
 			<td><%= @admin_notice.subject %></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :content_body, t(:content_body), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :content_body, t(:content_body), :class => "" %> </td>
 			<td><%= raw(@admin_notice.content.body) %></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :created_at, t(:created_at), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :created_at, t(:created_at), :class => "" %> </td>
 			<td><%= Common.date_format_ymdhm(@admin_notice.created_at) %></td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :posted_by, t(:author), :class => "label left" %> </td>
+		<tr class="">
+			<td><%= label_tag :posted_by, t(:author), :class => "" %> </td>
 			<td><%= @admin_notice.posted_by.email %></td>
 		</tr>
 	</table>
-<%= link_to t('Edit'), edit_admin_notice_path(@admin_notice) %> |
-<%= link_to t('Back'), admin_notices_path(:page => @current_page) %>
-</div>
+<%= link_to t('Edit'), edit_admin_notice_path(@admin_notice), :class => "btn btn-link" %> |
+<%= link_to t('Back'), admin_notices_path(:page => @current_page), :class => "btn btn-link" %>

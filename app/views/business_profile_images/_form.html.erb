@@ -1,37 +1,12 @@
 <%= form_for(@business_profile_image, :html => { :class => "form" }) do |f| %>
 <%= f.hidden_field :attached_id, :value => @business_client.id  %>
-<% if @business_profile_image.errors.any? %>
-<div id="error_explanation">
-	<h2><%= pluralize(@business_profile_image.errors.count, "error") %> prohibited this business_profile_image from being saved:</h2>
-	<ul>
-		<% @business_profile_image.errors.full_messages.each do |msg| %>
-		<li>
-			<%= msg %>
-		</li>
-		<% end %>
-	</ul>
-</div>
-<% end %>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :attached_id, t("business_client"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= @business_client.business_name  %>
-	</div>
-</div>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :avatar, t("business_profile_image"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.file_field :avatar %>
-	</div>
-	<span class="description"><%= t("acceptable_extention") %></span>
-</div>
-<div class="group wat-cf">
-	<div class="left">
-		<%= f.submit t("add"), :class => "button" %>
-	</div>
-</div>
+<%= admin_error_messages!(@business_profile_image) %>
+<%= f.label :attached_id, t("business_client"), :class => "" %>
+<span class="label label-info"><%= @business_client.business_name %></span>
+<br>
+<%= f.label :avatar, t("business_profile_image"), :class => "" %>
+<%= f.file_field :avatar %>
+<span class="help-block"><%= t("acceptable_extention") %></span>
+<label class="checkbox"> <%= f.check_box :is_main %><%= t("is_main_profile") %> </label>
+<%= f.submit t("add"), :class => "btn btn-primary" %>
 <% end %>

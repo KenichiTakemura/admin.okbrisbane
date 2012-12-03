@@ -1,0 +1,27 @@
+<div class="pagination">
+	<%= paginate @business_categories %>
+</div>
+
+<table class="table table-hover table-condensed">
+	<tr>
+		<th><%= t("en_name") %></th>
+		<th><%= t("display_name") %></th>
+		<th><%= t("search_keyword")%></th>
+		<th><%= t("business_client")%></th>
+		<th class="last"></th>
+	</tr>
+	<% @business_categories.each do |business_category| %>
+	<tr>
+		<td><%= business_category.en_name %></td>
+		<td><%= business_category.display_name %></td>
+		<td><%= business_category.search_keyword %></td>
+		<td> <% business_category.business_client.each do |business_client| %>
+		<%= business_client.business_name %>
+		<br/>
+		<% end %> </td>
+		<td> <%= link_to t('Edit'), edit_business_category_path(business_category) %> |
+		<%= link_to t('Delete'), business_category, :method => :delete, :data => { :confirm => t('confirm_delete') } %>
+	</tr>
+	<% end %>
+</table>
+

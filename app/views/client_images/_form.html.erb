@@ -16,7 +16,7 @@
 		<%= admin_error_messages!(@client_image) %>
 		<div class="group wat-cf">
 			<div class="">
-				<%= f.label :attached_id, t("business_client"), :class => "label left" %>
+				<%= f.label :attached_id, t("business_client"), :class => "" %>
 			</div>
 			<div class="">
 				<% if @business_client %>
@@ -39,11 +39,15 @@
 				</li>
 			</ul>
 			<div id="image_tabs_upload" style="margin:5px;">
-	    		<div class="flash"><div class="image_upload_progress"></div></div>
-				<div class="image_upload_status" style="display:none"><%= image_tag("common/loading.gif")%></div>
+				<div class="flash">
+					<div class="image_upload_progress"></div>
+				</div>
+				<div class="image_upload_status" style="display:none">
+					<%= image_tag("common/loading.gif")%>
+				</div>
 				<div class="group wat-cf">
 					<div class="">
-						<%= f.label :avatar, t("client_banner_image"), :class => "label left" %>
+						<%= f.label :avatar, t("client_banner_image"), :class => "" %>
 					</div>
 					<div class="">
 						<%= f.file_field :avatar, :id => "avatar" %>
@@ -55,55 +59,79 @@
 				</div>
 			</div>
 			<% script = %Q|
-			    function upload_image() {
-				  if($('\#avatar').val() != "") {
-      				$('div.image_upload_status').css("display","block");
-     				var formData = new FormData();
-      				formData.append("file", document.getElementById('avatar').files[0]);
-				    formData.append("authenticity_token", $("input[name='authenticity_token']").attr("value"));
-      				var xhr = new XMLHttpRequest();
-      				xhr.upload.addEventListener("progress", uploadImageProgress, false);
-         	        xhr.addEventListener("load", uploadImageComplete, false);
-      				xhr.open("POST", "#{image_size_for_client_images_path}", true);
-      				xhr.send(formData);
-      			  }
-    			};
-    			function uploadImageProgress(event) {
-      				var progress = Math.round((event.loaded / event.total) * 100);
-      				$('div.image_upload_progress').html(progress + "%");
-    			};
-    			function uploadImageComplete(event) {
-    			   $('div.image_upload_status').css("display","none");
-    			   $('\#image').val('');
-                   if (event.target.status != 200) {
-                     $('div.image_upload_progress').html("<div class=\\"message error\\">"
-                       + "<p><strong>#{t("failed_to_upload")}</strong></p></div>");
-                       return false;
-                    }
-                    data = JSON.parse(event.target.responseText);
-                    if(data.result == 2) {
-                    $('div.image_upload_progress').html("<div class=\\"message error\\">"
-                      + "<p><strong>#{t("invalid_file_extention")}</strong></p></div>");
-                    } else if(data.result != 0) {
-                    $('div.image_upload_progress').html("<div class=\\"message error\\">"
-                      + "<p><strong>#{t("failed_to_upload")}</strong></p></div>");
-                    } else {
-                      $('div.image_upload_progress').html("");
-                      $('div.image_description').html(data.file + "<br/>" + data.image_size + "<br/>" + data.type + "<br/>" + data.size + " byte");
-                    }
-    			 };
-    			| %>
-    			<%= _script(%Q|$('\#avatar').change(function() {upload_image();return false});
-    			$('\#avatar').click(function() {$('div.image_upload_progress').html('');});
-    			| + script) %>
+			function upload_image() {
+			if($('\#avatar').val() != "") {
+			$('div.image_upload_status').css("display","block");
+			var formData = new FormData();
+			formData.append("file", document.getElementById('avatar').files[0]);
+			formData.append("authenticity_token", $("input[name='authenticity_token']").attr("value"));
+			var xhr = new XMLHttpRequest();
+			xhr.upload.addEventListener("progress", uploadImageProgress, false);
+			xhr.addEventListener("load", uploadImageComplete, false);
+			xhr.open("POST", "#{image_size_for_client_images_path}", true);
+			xhr.send(formData);
+			}
+			};
+			function uploadImageProgress(event) {
+			var progress = Math.round((event.loaded / event.total) * 100);
+			$('div.image_upload_progress').html(progress + "%");
+			};
+			function uploadImageComplete(event) {
+			$('div.image_upload_status').css("display","none");
+			$('\#image').val('');
+			if (event.target.status != 200) {
+			$('div.image_upload_progress').html("
+			<div class=\\"message error\\">
+				"
+				+ "
+				<p>
+					<strong>#{t("failed_to_upload")}</strong>
+				</p>
+			</div>");
+			return false;
+			}
+			data = JSON.parse(event.target.responseText);
+			if(data.result == 2) {
+			$('div.image_upload_progress').html("
+			<div class=\\"message error\\">
+				"
+				+ "
+				<p>
+					<strong>#{t("invalid_file_extention")}</strong>
+				</p>
+			</div>");
+			} else if(data.result != 0) {
+			$('div.image_upload_progress').html("
+			<div class=\\"message error\\">
+				"
+				+ "
+				<p>
+					<strong>#{t("failed_to_upload")}</strong>
+				</p>
+			</div>");
+			} else {
+			$('div.image_upload_progress').html("");
+			$('div.image_description').html(data.file + "
+			<br/>
+			" + data.image_size + "
+			<br/>
+			" + data.type + "
+			<br/>
+			" + data.size + " byte");
+			}
+			};
+			| %>
+			<%= _script(%Q|$('\#avatar').change(function() {upload_image();return false});
+			$('\#avatar').click(function() {$('div.image_upload_progress').html('');});
+			| + script) %>
 			<div id="image_tabs_link" style="position:relative;margin:5px;">
 
 				<div class="group wat-cf" >
 					<div class="">
-						<%= f.label :source_url, t("client_image_source_url"), :class => "label left" %>
+						<%= f.label :source_url, t("client_image_source_url"), :class => "" %>
 					</div>
 					<div id="source_url" class="">
-						<%= f.url_field :source_url, :class => "text_field", :id => "source_url_field" %>
+						<%= f.url_field :source_url, :class => "", :id => "source_url_field" %>
 					</div>
 					<div id="content_url"></div>
 					<span class="description"><%= t("read_image_from_the_url") %></span>
@@ -113,19 +141,19 @@
 
 		<div class="group wat-cf">
 			<div class="">
-				<%= f.label :link_to_url, t("link_to_url"), :class => "label left" %>
+				<%= f.label :link_to_url, t("link_to_url"), :class => "" %>
 			</div>
 			<div class="">
-				<%= f.url_field :link_to_url, :class => "text_field" %>
+				<%= f.url_field :link_to_url, :class => "" %>
 			</div>
 			<span class="description"><%= t("leave_blank_to_show_profile") %></span>
 		</div>
 		<div class="group wat-cf">
 			<div class="">
-				<%= f.label :caption, t("caption"), :class => "label left" %>
+				<%= f.label :caption, t("caption"), :class => "" %>
 			</div>
 			<div class="">
-				<%= f.text_field :caption, :class => "text_field" %>
+				<%= f.text_field :caption, :class => "" %>
 			</div>
 			<span class="description"><%= t("optional") %></span>
 			<br/>
@@ -133,7 +161,7 @@
 
 		<div class="group wat-cf" style="margin-top:5px">
 			<div class="left">
-				<%= f.submit t("add"), :class => "button", :id => "banner_add_submit" %>
+				<%= f.submit t("add"), :class => "button", :id => "banner_add_submit", :class => "btn" %>
 				<div id="banner_upload_status" style="display:none">
 					<%= image_tag ("loading.gif")%>
 				</div>
@@ -142,10 +170,11 @@
 		</div>
 		<% end %>
 	</div>
-	<% if @client_image.id.nil? %>
-	<div style="width:100%; position: relative;">
+	<ul class="thumbnails">
+		<% if @client_image.id.nil? %>
+
 		<% @business_client.client_image.each do |client_image| %>
-		<div style="position: relative; float: left; padding: 5px; width: 150px">
+		<li class="thumbnail">
 			<%= image_tag(client_image.thumb_image, :size => client_image.thumb_size) %>
 			<%= flash?(@client_image) %>
 			<p>
@@ -153,25 +182,30 @@
 			</p>
 			<p>
 				<%= client_image.avatar_file_name %>
-				<br/>
-				<%= client_image.avatar_content_type %>
-				<br/>
-				<%= t("banner_page") %>
-				<% if client_image.banner.empty? %>
-				<br/>
-				<%= t("not_present") %>
-				<% elsif %>
-				<br/>
-				<% client_image.banner.each do |banner| %>
-				<%= link_to banner.name, banner_path(banner) %>
-				<% end %>
-				<% end %>
 			</p>
-		</div>
+			<p>
+				<%= client_image.avatar_content_type %>
+			</p>
+			<p>
+				<%= t("banner_page") %>
+			</p>
+
+			<% if client_image.banner.empty? %>
+			<p>
+				<%= t("not_present") %>
+			</p>
+			<% elsif %>
+			<% client_image.banner.each do |banner| %>
+			<p>
+				<%= link_to banner.name, banner_path(banner) %>
+			</p>
+			<% end %>
+			<% end %>
+		</li>
 		<% end  %>
-	</div>
+	</ul>
 	<% elsif %>
-	<div style="position: relative; float: left; padding: 5px; width: 150px">
+	<li class="thumbnail">
 		<%= image_tag(@client_image.original_image, :size => @client_image.original_size) %>
 		<%= flash?(@client_image) %>
 		<p>
@@ -179,19 +213,25 @@
 		</p>
 		<p>
 			<%= @client_image.avatar_content_type %>
-			<%= t("banner_page") %>
-			<% if @client_image.banner.empty? %>
-			<br/>
-			<%= t("not_present") %>
-			<% elsif %>
-			<br/>
-			<% @client_image.banner.each do |banner| %>
-			<%= link_to banner.name, banner_path(banner) %>
-			<% end %>
-			<% end %>
 		</p>
-	</div>
+		<p>
+			<%= t("banner_page") %>
+		</p>
+		<% if @client_image.banner.empty? %>
+		<p>
+			<%= t("not_present") %>
+		</p>
+		<% elsif %>
+		<% @client_image.banner.each do |banner| %>
+		<p>
+			<%= link_to banner.name, banner_path(banner) %>
+		</p>
+		<% end %>
+		<% end %>
+		</p>
+	</li>
 	<% end %>
+	</ul>
 </div>
 <% script = %Q|
 $('\#image_tabs').tabs();

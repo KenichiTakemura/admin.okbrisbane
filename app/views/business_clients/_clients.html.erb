@@ -1,0 +1,55 @@
+<div class="pagination">
+	<%= paginate @business_clients %>
+</div>
+<table class="table table-hover table-condensed table-striped">
+	<tr>
+		<th class="first"><%= t("Id") %></th>
+		<th><%= t("business_name") %></th>
+		<th><%= t("business_category") %></th>
+		<th><%= t("business_profile_image") %></th>
+		<th><%= t("business_url") %></th>
+		<th><%= t("business_phone") %></th>
+		<th><%= t("business_address") %></th>
+		<th><%= t("business_abn")%></th>
+		<th><%= t("client_banner_image")%></th>
+		<th class="last"></th>
+	</tr>
+	<% @business_clients.each do |business_client| %>
+	<tr>
+		<td><%= business_client.id %></td>
+		<td><%= link_to business_client.business_name, business_client_path(:id => business_client, :page => @business_clients.current_page) %></td>
+		<td><%= select_tag :business_category, options_from_collection_for_select(@business_categories, :id, :display_name, business_client.business_category_id), :include_blank => true, :id => "business_category_#{business_client.id}" %><div class="business_category_update_status_<%= business_client.id%>"></td>
+		<td> <% if business_client.business_profile_image.empty? %>
+		<%= noimage %>
+		<% elsif %>
+		<%= image_tag(business_client.main_profile_image.avatar.url(:thumb), :class => "image-resize50_50") %>
+		<% end %> </td>
+		<td><%= business_client.business_url %></td>
+		<td><%= business_client.business_phone %></td>
+		<td><%= business_client.business_address %></td>
+		<td><%= business_client.business_abn %></td>
+		<td> <% if business_client.client_image.empty? %>
+		<%= noimage %>
+		<% elsif %>
+		<div class="banner_image_thumbnail">
+			<% business_client.client_image.each do |client_image| %>
+			<div class="banner_image_thumbnail_each">
+				<%= link_to image_tag(client_image.thumb_image, :class => "image-resize50_50"), client_image.medium_image, :target => "_blank" %>
+				<span><%= link_to t('Edit'), edit_client_image_path(client_image) %> </span>
+			</div>
+			<% end %>
+		</div> <% end %> </td>
+		<td><%= link_to t('add_business_banner_image'), new_client_image_path(:client => business_client, :page => @business_clients.current_page), :class => "btn btn-link" %>
+		<% if !business_client.business_name.eql?(Okvalue::BUSINESS_CLIENT_OK) %>
+		<%= link_to t('business_client_delete'), business_client, :method => :delete, :data => { :confirm => t('confirm_delete') }, :class => "btn btn-link" %>
+		<% end %>
+		<%= link_to t('business_banner_image_all_delete'), business_client_delete_all_images_path(business_client), :method => :delete, :data => { :confirm => t('confirm_delete') }, :class => "btn btn-link" %></td>
+		<%= _script(%Q|
+		$('\#business_category_#{business_client.id}').change(function() {
+		$('div.business_category_update_status_#{business_client.id}').html('#{image_tag("common/loading.gif")}');
+		$.post('| + select_category_business_clients_path + %Q|', { business_client: #{business_client.id}, category: $('\#business_category_#{business_client.id}').val()})})
+		|)%>
+	</tr>
+	<% end %>
+</table>
+

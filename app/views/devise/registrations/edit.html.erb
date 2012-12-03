@@ -1,54 +1,18 @@
-<div class="block">
-	<div class="content">
-		<h2 class="title"><%= t('change_password')%></h2>
-		<div class="inner">
-
-			<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form" }) do |f| %>
-			<%= devise_error_messages! %>
-
-			<br />
-			<div class="group wat-cf">
-				<div class="">
-					<%= f.label :email, t("email"), :class => "label left" %>
-				</div>
-				<div class="">
-					<%= resource.email %>
-				</div>
-			</div>
-
-			<div class="group wat-cf">
-				<div class="">
-					<%= f.label :password, t("new_password"), :class => "label left" %>
-				</div>
-				<div class="">
-					<%= f.password_field :password, :autocomplete => "off" %>
-				</div>
-			</div>
-
-			<div class="group wat-cf">
-				<div class="">
-					<%= f.label :password_confirmation, t("new_password_confirmation"), :class => "label left" %>
-				</div>
-				<div class="">
-					<%= f.password_field :password_confirmation %>
-				</div>
-			</div>
-
-			<div class="group wat-cf">
-				<div class="">
-					<%= f.label :current_password, t("current_password"), :class => "label left" %>
-					<%= f.password_field :current_password %>
-				</div>
-			</div>
-
-			<div class="group wat-cf">
-				<div class="right">
-					<%= f.submit t("change_password"), :class => "button" %>
-				</div>
-			</div>
-			<% end %>
-		</div>
-	<%= link_to t("Back"), :root %>
-	</div>
+<div class="page-header">
+	<h2><%= t("change_password") %> </h2>
 </div>
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form" }) do |f| %>
+<%= devise_error_messages! %>
+		<%= f.label :email, t("email"), :class => "" %>
+		<%= resource.email %>
+		<%= f.label :password, t("new_password"), :class => "" %>
+		<%= f.password_field :password, :autocomplete => "off" %>
+		<%= f.label :password_confirmation, t("new_password_confirmation"), :class => " " %>
+		<%= f.password_field :password_confirmation %>
+		<%= f.label :current_password, t("current_password"), :class => " " %>
+		<%= f.password_field :current_password %>
+		<br>
+		<%= f.submit t("change_password"), :class => "btn" %>
+<% end %>
+<%= link_to t("Back"), :root, :class => "btn"%>
 

@@ -1,7 +1,6 @@
-<h2 class="title"><%= t("admin_notice") %> <%= t("Edit") %></h2>
-<div class="inner">
-	<%= render 'form' %>
-<%= link_to t('Show'), @admin_notice %> |
-<%= link_to t('Back'), admin_notices_path %>
-
+<div class="page-header">
+	<h2><%= t("admin_notice") %> <%= t("Edit") %></h2>
 </div>
+<%= render 'form' %>
+<%= link_to t('Show'), @admin_notice, :class => "btn btn-link" %> |
+<%= link_to t('Back'), admin_notices_path, :class => "btn btn-link" %>

@@ -1,39 +1,17 @@
 <%= form_for(@admin_notice, :html => { :class => "form" }) do |f| %>
 <%= admin_error_messages!(@admin_notice) %>
 <% if !@admin_notice.id.nil? %>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :status, t("status"), :class => "label left" %>
-	</div>
-	<div class="">
+		<%= f.label :status, t("status"), :class => "" %>
 		<%= f.select :status, options_for_select(@admin_notice.status_list, @admin_notice.status), :id => "" %>
-	</div>
-</div>
 <% end %>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :subject, t(:subject), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.text_field :subject, :class => "text_field" %>
-	</div>
-	<span class="description"><%= t("must_be_filled") %></span>
-</div>
+		<%= f.label :subject, t(:subject), :class => "" %>
+		<%= f.text_field :subject, :class => "" %>
+	<span class="help-block"><%= t("must_be_filled") %></span>
 <%= f.fields_for @admin_notice.content do |content_form| %>
-<div class="group wat-cf">
-	<div class="">
-		<%= content_form.label :body, t("content"), :class => "label left" %>
-	</div>
-	<div class="">
+		<%= content_form.label :body, t("content"), :class => "" %>
 		<%= content_form.cktext_area :body, :toolbar => 'Full' %>
-	</div>
-	<span class="description"><%= t("must_be_filled") %></span>
-</div>
+	<span class="help-block"><%= t("must_be_filled") %></span>
 <% end %>
-<div class="group wat-cf">
-	<div class="left">
-		<%= f.submit t("create"), :class => "button" %>
-	</div>
-</div>
+		<%= f.submit t("create"), :class => "btn btn-primary" %>
 <% end %>
 

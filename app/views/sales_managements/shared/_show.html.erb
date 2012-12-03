@@ -1,132 +1,132 @@
-<h2><%= t("#{@category}") %> #<%= @post.id %></h2>
-<div class="inner">
-	<table class="table">
-		<th class="first"><%= t("item") %></th>
-		<th class="last"><%= t("content") %></th>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :status, t("status"), :class => "label left" %> </td>
-			<td><%= t("#{@post.status}") %></td>
-		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :posted_by, t("author"), :class => "label left" %> </td>
-			<td><%= @post.posted_by.email %></td>
-		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :category, t("category"), :class => "label left" %> </td>
-			<td><%= t("#{@post.category}") %></td>
-		</tr>
-		<% if @post.respond_to? :price %>
-		<tr class="<%= cycle("odd", "even") %>">
+<div class="page-header">
+	<h2><%= t("#{@category}") %> #<%= @post.id %></h2>
+</div>
+<table class="table table-condensed table-hover table-striped">
+	<th class="first"><%= t("item") %></th>
+	<th class="last"><%= t("content") %></th>
+	<tr class="">
+		<td><%= label_tag :status, t("status"), :class => "" %> </td>
+		<td><%= t("#{@post.status}") %></td>
+	</tr>
+	<tr class="">
+		<td><%= label_tag :posted_by, t("author"), :class => "" %> </td>
+		<td><%= @post.posted_by.email %></td>
+	</tr>
+	<tr class="">
+		<td><%= label_tag :category, t("category"), :class => "" %> </td>
+		<td><%= t("#{@post.category}") %></td>
+	</tr>
+	<% if @post.respond_to? :price %>
+	<tr class="">
 
-			<td><%= label_tag :price, t("author"), :class => "label left" %> </td>
-			<td><%= @post.price %></td>
-		</tr>
-		<% end %>
-		<% if @post.respond_to? :bed %>
-		<tr class="<%= cycle("odd", "even") %>">
+		<td><%= label_tag :price, t("author"), :class => "" %> </td>
+		<td><%= @post.price %></td>
+	</tr>
+	<% end %>
+	<% if @post.respond_to? :bed %>
+	<tr class="">
 
-			<td><%= label_tag :bed, t(:bed), :class => "label left" %> </td>
-			<td><%= @post.bed %></td>
-		</tr>
-		<% end %>
-		<% if @post.respond_to? :bath %>
-		<tr class="<%= cycle("odd", "even") %>">
+		<td><%= label_tag :bed, t(:bed), :class => "" %> </td>
+		<td><%= @post.bed %></td>
+	</tr>
+	<% end %>
+	<% if @post.respond_to? :bath %>
+	<tr class="">
 
-			<td><%= label_tag :bath, t(:bath), :class => "label left" %> </td>
-			<td><%= @post.bath %></td>
-		</tr>
-		<% end %>
-		<% if @post.respond_to? :garage %>
-		<tr class="<%= cycle("odd", "even") %>">
+		<td><%= label_tag :bath, t(:bath), :class => "" %> </td>
+		<td><%= @post.bath %></td>
+	</tr>
+	<% end %>
+	<% if @post.respond_to? :garage %>
+	<tr class="">
 
-			<td><%= label_tag :garage, t(:garage), :class => "label left" %> </td>
-			<td><%= @post.garage %></td>
-		</tr>
+		<td><%= label_tag :garage, t(:garage), :class => "" %> </td>
+		<td><%= @post.garage %></td>
+	</tr>
+	<% end %>
+	<tr class="">
+		<% if !@category.eql?(Style.page(:p_issue)) %>
+		<td><%= label_tag :valid_until, t("valid_until"), :class => "" %> </td>
+		<% else %>
+		<td><%= label_tag :valid_until, t("due_date"), :class => "" %> </td>
 		<% end %>
-		<tr class="<%= cycle("odd", "even") %>">
-			<% if !@category.eql?(Style.page(:p_issue)) %>
-			<td><%= label_tag :valid_until, t("valid_until"), :class => "label left" %> </td>
-			<% else %>
-			<td><%= label_tag :valid_until, t("due_date"), :class => "label left" %> </td>
-			<% end %>
-			<td><%= Common.date_format(@post.valid_until) %></td>
-		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :subject, t("subject"), :class => "label left" %> </td>
-			<td><%= @post.subject %></td>
-		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :avatar, t("image"), :class => "label left" %> </td>
-			<td> <%= render :partial => 'sales_managements/shared/image_box' %> </td>
-		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :avatar, t("attachment"), :class => "label left" %> </td>
-			<td> <%= render :partial => 'sales_managements/shared/attachment_box' %> </td>
-		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :context, t("content_body"), :class => "label left" %> </td>
-			<td><%= raw @post.content.body if !@post.content.nil? %> </td>
-		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :views, t(:viewed), :class => "label left" %> </td>
-			<td><%= @post.views %></td>
-		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :likes, t(:likes), :class => "label left" %> </td>
-			<td><%= @post.likes %></td>
-		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :dislikes, t(:dislikes), :class => "label left" %> </td>
-			<td><%= @post.dislikes %></td>
-		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :rank, t(:rank), :class => "label left" %> </td>
-			<td><%= @post.rank %></td>
-		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :abuse, t(:abuse), :class => "label left" %> </td>
-			<td><%= @post.abuse %></td>
-		</tr>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :comment, t("comment"), :class => "label left" %> </td>
-			<td><!-- Comment Area -->
-			<div class="post_comment">
-				<% @post.comment.each_with_index do |comment,i| %>
-				<div class="comment_attr">
+		<td><%= Common.date_format(@post.valid_until) %></td>
+	</tr>
+	<tr class="">
+		<td><%= label_tag :subject, t("subject"), :class => "" %> </td>
+		<td><%= @post.subject %></td>
+	</tr>
+	<tr class="">
+		<td><%= label_tag :avatar, t("image"), :class => "" %> </td>
+		<td> <%= render :partial => 'sales_managements/shared/image_box' %> </td>
+	</tr>
+	<tr class="">
+		<td><%= label_tag :avatar, t("attachment"), :class => "" %> </td>
+		<td> <%= render :partial => 'sales_managements/shared/attachment_box' %> </td>
+	</tr>
+	<tr class="">
+		<td><%= label_tag :context, t("content_body"), :class => "" %> </td>
+		<td><%= raw @post.content.body if !@post.content.nil? %> </td>
+	</tr>
+	<tr class="">
+		<td><%= label_tag :views, t(:viewed), :class => "" %> </td>
+		<td><%= @post.views %></td>
+	</tr>
+	<tr class="">
+		<td><%= label_tag :likes, t(:likes), :class => "" %> </td>
+		<td><%= @post.likes %></td>
+	</tr>
+	<tr class="">
+		<td><%= label_tag :dislikes, t(:dislikes), :class => "" %> </td>
+		<td><%= @post.dislikes %></td>
+	</tr>
+	<tr class="">
+		<td><%= label_tag :rank, t(:rank), :class => "" %> </td>
+		<td><%= @post.rank %></td>
+	</tr>
+	<tr class="">
+		<td><%= label_tag :abuse, t(:abuse), :class => "" %> </td>
+		<td><%= @post.abuse %></td>
+	</tr>
+	<tr class="">
+		<td><%= label_tag :comment, t("comment"), :class => "" %> </td>
+		<td><!-- Comment Area -->
+		<div class="post_comment">
+			<% @post.comment.each_with_index do |comment,i| %>
+			<div class="comment_attr">
 				#<%= i+1 %> <%= comment.postedDate%> <%= comment_author(comment) %>
 				<div style="float:right">
-					<%= label_tag :likes, t(:likes), :class => "label left" %>
+					<%= label_tag :likes, t(:likes), :class => "" %>
 					<%= comment.likes %>
-					<%= label_tag :dislikes, t(:dislikes), :class => "label left" %>
+					<%= label_tag :dislikes, t(:dislikes), :class => "" %>
 					<%= comment.dislikes %>
-					<%= label_tag :abuse, t(:abuse), :class => "label left" %>
+					<%= label_tag :abuse, t(:abuse), :class => "" %>
 					<%= comment.abuse %>
 				</div>
+			</div>
+			<div class="comment">
+				<%= simple_format(comment.body) %>
+			</div>
+			<% end %>
+			<% if(@category.eql?(Style.page(:p_issue))) %>
+			<div class="new_comment">
+				<div class="comment_attr">
+					#<%= (@post.comment.size) +1 %>
 				</div>
-				<div class="comment">
-					<%= simple_format(comment.body) %>
-				</div>
+				<%= form_for(@comment, :method => :post, :html => { :class => "form" }) do |f| %>
+				<%= hidden_field_tag :commented_id, @post.id %>
+				<%= hidden_field_tag :commented_type, @category %>
+				<%= hidden_field_tag :page, @current_page %>
+				<%= f.text_area :body, :class => "text_area", :rows => 10, :cols => 10 %>
+				<br/>
+				<%= f.submit t("add"), :class => "button"%>
 				<% end %>
-				<% if(@category.eql?(Style.page(:p_issue))) %>
-				<div class="new_comment">
-					<div class="comment_attr">
-						#<%= (@post.comment.size) +1 %>
-					</div>
-					<%= form_for(@comment, :method => :post, :html => { :class => "form" }) do |f| %>
-						<%= hidden_field_tag :commented_id, @post.id %>
-						<%= hidden_field_tag :commented_type, @category %>
-						<%= hidden_field_tag :page, @current_page %>
-						<%= f.text_area :body, :class => "text_area", :rows => 10, :cols => 10 %>
-						<br/>
-						<%= f.submit t("add"), :class => "button"%>
-					<% end %>
-				</div>
-					<% end %>
-			</div></td>
-		</tr>
-	
-	</table>
-	<%= link_to t('Edit'), edit_management_path(@post, @category, @current_page) %> |
-	<%= link_to t('List'), management_path(@category, @current_page) %>
-</div>
+			</div>
+			<% end %>
+		</div></td>
+	</tr>
+
+</table>
+<%= link_to t('Edit'), edit_management_path(@post, @category, @current_page), :class => "btn btn-link" %> |
+<%= link_to t('List'), management_path(@category, @current_page), :class => "btn btn-link" %>
 

@@ -1,0 +1,26 @@
+<div class="page-header">
+	<h2><%= t("listing") %> <%= t("quick_links") %> </h2>
+</div>
+
+<div class="pagination">
+	<%= paginate @qlinks %>
+</div>
+
+<table class="table table-hover table-condensed table-striped">
+	<tr>
+		<th><%= t("name") %></th>
+		<th><%= t("link_to") %></th>
+		<th><%= t("sort_key")%></th>
+		<th class="last"></th>
+	</tr>
+	<% @qlinks.each do |qlink| %>
+	<tr>
+		<td><%= qlink.name %></td>
+		<td><%= qlink.link_to %></td>
+		<td><%= qlink.sort_key %></td>
+		<td><%= link_to t('Edit'), edit_quick_link_path(qlink) %> |
+		<%= link_to t('Delete'), qlink, :method => :delete, :data => { :confirm => t('confirm_delete') } %>
+	</tr>
+	<% end %>
+</table>
+

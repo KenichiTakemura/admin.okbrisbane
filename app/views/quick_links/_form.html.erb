@@ -1,0 +1,14 @@
+<%= form_for(@qlink, :html => { :class => "form" }) do |f| %>
+	<%= admin_error_messages!(@qlink) %>
+	<%= f.label :name, t("name"), :class => "" %>
+	<%= f.text_field :name, :class => "input-xlarge" %>
+	<span class="help-block"><%= t("must_be_filled") %></span>
+	<%= f.label :link_to, t("link_to"), :class => "" %>
+	<%= f.text_field :link_to, :class => "input-xxlarge" %>
+	<span class="help-block"><%= t("must_be_filled") %></span>
+	<%= f.label :sort_key, t("sort_key"), :class => "" %>
+	<%= f.text_field :sort_key, :class => "input-small" %>
+	<span class="help-block"><%= t("must_be_selected") %></span>
+	<br>
+	<%= f.submit t("create"), :class => "btn btn-primary" %>
+<% end %>

@@ -1,0 +1,268 @@
+<div class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<%= link_to("OKBRISBANE", root_path, :class => "brand") %>
+			<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+			<!-- Be sure to leave the brand out there if you want it shown -->
+			<!-- Everything you want hidden at 940px or less, place within here -->
+			<div class="nav-collapse">
+				<ul class="nav">
+					<% if current_admin.can_view_for?(:m_business_client) %>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#"><%= t("client_management")%><b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+							<li class="dropdown-submenu">
+								<a tabindex="-1" href="#"><%= t("business_client") %></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a tabindex="-1" href="<%= business_clients_path%>"><%= t("listing")%></a>
+									</li>
+									<li>
+										<a tabindex="-1" href="<%= new_business_client_path(@current_page)%>"><%= t("add")%></a>
+									</li>
+								</ul>
+							</li>
+							<li class="divider"></li>
+							<li class="dropdown-submenu">
+								<a tabindex="-1" href="#"><%= t("business_category") %></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a tabindex="-1" href="<%= business_categories_path%>"><%= t("listing")%></a>
+									</li>
+									<li>
+										<a tabindex="-1" href="<%= new_business_category_path(@current_page)%>"><%= t("add")%></a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<%end%>
+					<% if current_admin.can_view_for?(:m_banner) %>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#"><%= t("banner_management")%><b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+							<!--
+							<li class="dropdown-submenu">
+								<a tabindex="-1" href="#"><%= t("page") %> <%= t("listing") %></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a tabindex="-1" href="<%= image_size_index_banners_path%>"><%= t("image_size_list")%></a>
+									</li>
+									<li>
+										<a tabindex="-1" href="<%= all_page_index_banners_path%>"><%= t("all_page_list")%></a>
+									</li>
+								</ul>
+							</li>
+							<li class="divider"></li>
+							-->
+							<li class="dropdown-submenu">
+								<a tabindex="-1" href="#"><%= t("page") %></a>
+								<ul class="dropdown-menu">
+									<% Style.banner_pages.each do |key,page| %>
+									<li>
+										<a tabindex="-1" href="<%=banners_path(:page_id => Style.pageid_key(key))%>"><%= t(page)%></a>
+									</li>
+									<% end %>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<%end%>
+					<% if current_admin.can_view_for?(:m_sales) %>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#"><%= t("sales_management")%><b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+						<% [:p_estate,:p_motor_vehicle,:p_business,:p_accommodation,:p_law,:p_tax,:p_study,:p_immig].each do |page| %>
+						<li class="dropdown-submenu">
+								<a tabindex="-1" href="#"><%= t(Style.page(page)) %></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a tabindex="-1" href="<%=sales_managements_path(:category => Style.page(page), :status => 'valid')%>"><%= t("public") << " " << t("post_list") %></a>
+									</li>
+									<li>
+										<a tabindex="-1" href="<%=sales_managements_path(:category => Style.page(page), :status => 'invalid')%>"><%= t("hidden") << " " << t("post_list") %></a>
+									</li>
+									<li>
+										<a tabindex="-1" href="<%=sales_managements_path(:category => Style.page(page), :status => 'expired')%>"><%= t("expired") << " " << t("post_list") %></a>
+									</li>
+									<li>
+										<a tabindex="-1" href="<%=write_sales_managements_path(:category => Style.page(page))%>"><%= t("add") %></a>
+									</li>
+								</ul>
+						</li>
+						<li class="divider"></li>
+						<% end %>
+						</ul>
+					</li>
+					<%end%>
+					<% if current_admin.can_view_for?(:m_post) %>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#"><%= t("post_management")%><b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+						<% [:p_job,:p_buy_and_sell,:p_well_being].each do |page| %>
+						<li class="dropdown-submenu">
+								<a tabindex="-1" href="#"><%= t(Style.page(page)) %></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a tabindex="-1" href="<%=posts_managements_path(:category => Style.page(page), :status => 'valid')%>"><%= t("public") << " " << t("post_list") %></a>
+									</li>
+									<li>
+										<a tabindex="-1" href="<%=posts_managements_path(:category => Style.page(page), :status => 'invalid')%>"><%= t("hidden") << " " << t("post_list") %></a>
+									</li>
+									<li>
+										<a tabindex="-1" href="<%=posts_managements_path(:category => Style.page(page), :status => 'expired')%>"><%= t("expired") << " " << t("post_list") %></a>
+									</li>
+									<li>
+										<a tabindex="-1" href="<%=write_posts_managements_path(:category => Style.page(page))%>"><%= t("add") %></a>
+									</li>
+								</ul>
+						</li>
+						<li class="divider"></li>
+						<% end %>
+						</ul>
+					</li>
+					<%end%>
+					<% if current_admin.can_view_for?(:m_user) %>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#"><%= t("member_management")%><b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+							<li class="dropdown-submenu">
+								<a tabindex="-1" href="#"><%= t("member") %></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a tabindex="-1" href="<%= users_path%>"><%= t("listing")%></a>
+									</li>
+								</ul>
+							</li>
+							<li class="divider"></li>
+							<li class="dropdown-submenu">
+								<a tabindex="-1" href="#"><%= t("admin") %></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a tabindex="-1" href="<%= okadmins_path%>"><%= t("listing")%></a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<%end%>
+					<% if current_admin.can_view_for?(:m_site) %>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#"><%= t("site_statistics")%><b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+							<li class="dropdown-submenu">
+								<a tabindex="-1" href="#"><%= t("statistics") %></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a tabindex="-1" href="<%= hit_counter_statistics_path(:status => Okvalue::SITE_STATISTICS_DAILY)%>"><%= t("daily_statistics")%></a>
+									</li>
+									<li>
+										<a tabindex="-1" href="<%= hit_counter_statistics_path(:status => Okvalue::SITE_STATISTICS_MONTHLY)%>"><%= t("monthly_statistics")%></a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<%end%>
+					<% if current_admin.can_view_for?(:m_system_setting) %>
+					<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#"><%= t("system_management")%><b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+						<li class="dropdown-submenu">
+							<a tabindex="-1" href="#"><%= t(:contact) %></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a tabindex="-1" href="<%= contacts_path%>"><%= t("listing")%></a>
+								</li>
+							</ul>
+						</li>
+						<li class="divider"></li>
+						<li class="dropdown-submenu">
+							<a tabindex="-1" href="#"><%= t(:system_management) %></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a tabindex="-1" href="<%= system_settings_path%>"><%= t("listing")%></a>
+								</li>
+							</ul>
+						</li>
+						<li class="divider"></li>
+						<li class="dropdown-submenu">
+							<a tabindex="-1" href="#"><%= t(:admin_notice) %></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a tabindex="-1" href="<%= admin_notices_path%>"><%= t("listing")%></a>
+								</li>
+								<li>
+									<a tabindex="-1" href="<%= new_admin_notice_path%>"><%= t("add")%></a>
+								</li>
+							</ul>
+						</li>
+						<li class="divider"></li>
+						<li class="dropdown-submenu">
+							<a tabindex="-1" href="#"><%= t(:weather_information) %></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a tabindex="-1" href="<%= weathers_path%>"><%= t("listing")%></a>
+								</li>
+								<li>
+									<a tabindex="-1" href="<%= collect_weathers_path%>"><%= t("collect_information")%></a>
+								</li>
+							</ul>
+						</li>
+						<li class="divider"></li>
+						<li class="dropdown-submenu">
+							<a tabindex="-1" href="#"><%= t(:rate_information) %></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a tabindex="-1" href="<%= rates_path%>"><%= t("listing")%></a>
+								</li>
+								<li>
+									<a tabindex="-1" href="<%= collect_rates_path%>"><%= t("collect_information")%></a>
+								</li>
+							</ul>
+						</li>
+						<li class="divider"></li>
+						<li class="dropdown-submenu">
+							<a tabindex="-1" href="#"><%= t("quick_links") %></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a tabindex="-1" href="<%= quick_links_path%>"><%= t("listing")%></a>
+								</li>
+								<li>
+									<a tabindex="-1" href="<%= new_quick_link_path%>"><%= t("add")%></a>
+								</li>
+							</ul>
+						</li>
+						<% if current_admin.can_view_for?(:m_issue) %>
+						<li class="divider"></li>
+						<li class="dropdown-submenu">
+							<a href="#" href="#"><%= t("issue_management")%></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a tabindex="-1" href="<%= issues_managements_path(:category => Style.page(:p_issue), :status => 'valid')%>"><%= t("listing")%></a>
+								</li>
+								<li>
+									<a tabindex="-1" href="<%= write_issues_managements_path(:category => Style.page(:p_issue))%>"><%= t("add")%></a>
+								</li>
+							</li>
+						</ul>
+					</li>
+					<%end%>
+						
+					</ul>
+				</li>
+				<%end%>
+				</ul>
+			</div>
+			<ul class="nav pull-right">	
+				<li>
+					<%= link_to t("change_password"), edit_admin_registration_path, :method => :get, :class => "" %>
+				</li>
+				<li>
+					<%= link_to t("signout"), destroy_admin_session_path, :method => :delete, :class => "", :data => { :confirm => t('are_you_sure_to_singout') } %>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

@@ -1,7 +1,6 @@
-<h2 class="title"><%= t('banner')%><br/>
-	<%=  @banner.name %> <%= t("Edit") %></h2>
-<div class="inner">
-	<%= render 'form' %>
+<div class="page-header">
+	<h2><%= t('banner')%> <%=  @banner.name %> <%= t("Edit") %></h2>
+</div>
+<%= render 'form' %>
 
 <%= link_to t(:back), banners_path(:page_id => @page_id) %>
-</div>

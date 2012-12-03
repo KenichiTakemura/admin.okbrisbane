@@ -2,23 +2,12 @@
 body {
  color: #111111;
  background: #c4c4c4 url("images/bgd.jpg");
- font-family: "NanumGothic", "MuseoSans500", helvetica, arial, sans-serif;
-
 }
-
 
 h1, h2, h3 {
   color: #111111;
   font-weight: normal;
   font-family: "NanumGothic", "Museo700", helvetica, arial, sans-serif;
-}
-
-a:link, a:visited, a:hover, a:active {
-  color: #111111;
-}
-
-a {
-  -moz-outline: none;
 }
 
 hr {

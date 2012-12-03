@@ -1,8 +1,5 @@
-<h2 class="title"><%= t("banner_image") %> <%= t("Edit")%></h2>
-<div class="inner">
-	<%= render 'form' %>
-
-
-<%= link_to t('Back'), business_clients_path(:page => @current_page) %>
-
+<div class="page-header">
+	<h2><%= t("banner_image") %> <%= t("Edit")%></h2>
 </div>
+<%= render 'form' %>
+<%= link_to t('Back'), business_clients_path(:page => @current_page) %>

@@ -2,160 +2,95 @@
 <%= hidden_field_tag :category, @category %>
 <%= f.hidden_field :write_at, :id => "write_at" %>
 <%= admin_error_messages!(@post) %>
-<% if @category.eql?(Style.page(:p_issue)) %>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :issue_report_to, t("issue_report_to"), :class => "label left" %>
-	</div>
-	<div class="">
-		To : <%= SystemSetting.first.issue_report_to %>
-	</div>
-</div>
-<% end %>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :author, t("author"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= post_author(@post) %>
-	</div>
-</div>
-<% if (!@category.eql?(Style.page(:p_issue)) || !@post.id.nil?) %>
-<div class="group wat-cf">
-	<div class="">
-		<%= f.label :status, t("status"), :class => "label left" %>
-	</div>
-	<div class="">
-		<%= f.select :status, options_for_select(@post.status_list, @post.status), :id => "_hide" %>
-	</div>
-</div>
-<% end %>
-<div id="_filter">
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :subject, t("subject"), :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.text_field :subject, :class => "text_field" %>
-		</div>
-		<span class="description"><%= t("must_be_filled") %></span>
-	</div>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :category, t("category"), :class => "label left" %>
-		</div>
-		<div class="">
-			<% if @category.eql?(Style.page(:p_issue)) %>
-				<%= f.select :category, options_for_select(@post.category_list, @post.category) %>
-			<% else %>
-				<%= f.select :category, options_for_select(@post.admin_category_list, @post.category) %>
-			<% end %>
-		</div>
-		<span class="description"><%= t("must_be_selected") %></span>
-	</div>
-	<% if @post.respond_to? :address %>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :address, t(:address), :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.text_field :address, :class => "text_field" %>
-		</div>
-		<span class="description"><%= t("optional") %></span>
-	</div>
-	<% end%>
-	<% if @post.respond_to? :bed %>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :bed, t(:bed), :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.select :bed, options_for_select(Okvalue::BED_LIST, @post.bed), :include_blank => true %>
-		</div>
-		<span class="description"><%= t("optional") %></span>
-		</div>
-	<% end%>
-	<% if @post.respond_to? :bath %>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :bath, t(:bath), :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.select :bath, options_for_select(Okvalue::BATH_LIST, @post.bath), :include_blank => true %>
-		</div>
-		<span class="description"><%= t("optional") %></span>
-		</div>
-	<% end%>
-	<% if @post.respond_to? :garage %>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :garage, t(:garage), :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.select :garage, options_for_select(Okvalue::GARAGE_LIST, @post.garage), :include_blank => true %>
-		</div>
-		<span class="description"><%= t("optional") %></span>
-		</div>
-	<% end%>
-	<% if @post.respond_to? :room_type %>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :room_type, t("room_type"), :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.select :room_type, options_for_select(@post.room_type_list, @post.room_type) %>
-		</div>
-		<span class="description"><%= t("must_be_selected") %></span>
-	</div>
-	<% end%>
-	<% if @post.respond_to? :price %>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :price, t("price"), :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.text_field :price, :class => "text_field" %>
-		</div>
-		<span class="description"><%= t("must_be_filled") %></span>
-	</div>
+	<% if @category.eql?(Style.page(:p_issue)) %>
+	<label><%=t("issue_report_to")%> <%= SystemSetting.first.issue_report_to %></label>
 	<% end %>
-	<div class="group wat-cf">
-		<div class="">
-			<% if @category.eql?(Style.page(:p_issue)) %>
-			<%= f.label :valid_until, t('due_date'), :class => "label left" %>
-			<% else %>
-			<%= f.label :valid_until, t('valid_until'), :class => "label left" %>
-			<% end %>
-		</div>
-		<div class="">
-			<%= f.date_select :valid_until, :class => "right" %><%= t('until')%>
-		</div>
+	<div class="pull-right">
+	<%= f.label :author, t("author"), :class => "" %>
+	<span class="label label-info"><%= post_author(@post) %></span>
 	</div>
-	<% if !@category.eql?(Style.page(:p_issue)) %>
-	<div class="group wat-cf">
-	    <div class="image" style="position:relative;float:left;width:700px;">
-	    	<%= f.label :add_image, t("image") + t("add"), :class => "label left" %>
+	<% if (!@category.eql?(Style.page(:p_issue)) || !@post.id.nil?) %>
+		<%= f.label :status, t("status"), :class => "" %>
+		<%= f.select :status, options_for_select(@post.status_list, @post.status), :id => "_hide" %>
+	<% end %>
+	<div id="_filter">
+		<%= f.label :subject, t("subject"), :class => "" %>
+		<%= f.text_field :subject, :class => "" %>
+		<span class="help-block"><%= t("must_be_filled") %></span>
+		<%= f.label :category, t("category"), :class => "" %>
+		<% if @category.eql?(Style.page(:p_issue)) %>
+			<%= f.select :category, options_for_select(@post.category_list, @post.category) %>
+		<% else %>
+			<%= f.select :category, options_for_select(@post.admin_category_list, @post.category) %>
+		<% end %>
+		<span class="help-block"><%= t("must_be_selected") %></span>
+		<% if @post.respond_to? :address %>
+			<%= f.label :address, t(:address), :class => "" %>
+			<%= f.text_field :address, :class => "" %>
+		<span class="help-block"><%= t("optional") %></span>
+		<% end%>
+		<% if @post.respond_to? :bed %>
+			<%= f.label :bed, t(:bed), :class => "" %>
+			<%= f.select :bed, options_for_select(Okvalue::BED_LIST, @post.bed), :include_blank => true %>
+		<span class="help-block"><%= t("optional") %></span>
+		<% end%>
+		<% if @post.respond_to? :bath %>
+			<%= f.label :bath, t(:bath), :class => "" %>
+			<%= f.select :bath, options_for_select(Okvalue::BATH_LIST, @post.bath), :include_blank => true %>
+		<span class="help-block"><%= t("optional") %></span>
+		<% end%>
+		<% if @post.respond_to? :garage %>
+			<%= f.label :garage, t(:garage), :class => "" %>
+			<%= f.select :garage, options_for_select(Okvalue::GARAGE_LIST, @post.garage), :include_blank => true %>
+		<span class="help-block"><%= t("optional") %></span>
+		<% end%>
+		<% if @post.respond_to? :room_type %>
+			<%= f.label :room_type, t("room_type"), :class => "" %>
+			<%= f.select :room_type, options_for_select(@post.room_type_list, @post.room_type) %>
+		<span class="help-block"><%= t("must_be_selected") %></span>
+		<% end%>
+		<% if @post.respond_to? :price %>
+			<%= f.label :price, t("price"), :class => "" %>
+			<%= f.text_field :price, :class => "" %>
+		<span class="help-block"><%= t("must_be_filled") %></span>
+		<% end %>
+			<% if @category.eql?(Style.page(:p_issue)) %>
+			<%= f.label :valid_until, t('due_date'), :class => "" %>
+			<% else %>
+			<%= f.label :valid_until, t('valid_until'), :class => "" %>
+			<% end %>
+			<%= f.date_select :valid_until, :class => "right" %><%= t('until')%>
+		<% if !@category.eql?(Style.page(:p_issue)) %>
+		<%= f.label :add_image, t("image") + t("add"), :class => "" %>
+	    <div class="image bs-docs box_shadow">	
 
 	    	<div class="flash"><div class="image_upload_progress"></div></div>
 			<div class="image_upload_status" style="display:none"><%= image_tag("common/loading.gif")%></div>
-	    	<div id="image_tabs">
-	    		<ul>
+
+			<ul class="nav nav-tabs" id="image_tabs">
 				<li><a href="#image_tabs_upload"><%=t("upload")%></a></li>
 				<li><a href="#image_tabs_link"><%=t("link")%></a></li>
-				</ul>
-				<div id="image_tabs_upload" style="height:200px;margin:5px;">
-					<span class="description"><%= t("post_image_upload_description") %></span>
-					<br/>
-			<%= file_field_tag :image, :id => "image" %>
-			<%= text_area_tag :something, '', :placeholder => t("write_something"), :class => "text_area", :id => "something", :style => "resize:none;margin-top:5px;height:60px;text-align:top" %>
-			<%= f.label :link_to_url, t("link_to_url"), :class => "label left" %>
-			<span class="description"><%= t("link_on_image_click") %></span>
-			<br/>
-			<%= url_field_tag :link_to_url, nil, :placeholder => t("write_link_to_url"), :id => "link_to_url", :class => "text_field"  %>
-			<br/>
-			<%= link_to t("add"), "#", :id => "upload_image_submit", :class => "button", :style => "margin:5px" %>
-			<br/>
-			<% script = %Q|
+			</ul>
+			<div class="tab-content">
+			<div class="tab-pane" id="image_tabs_upload">
+				<span class="help-block"><%= t("post_image_upload_description") %></span>
+				<%= file_field_tag :image, :id => "image" %>
+				<%= text_area_tag :something, '', :placeholder => t("write_something"), :class => "", :id => "something"%>
+				<%= f.label :link_to_url, t("link_to_url"), :class => "" %>
+				<span class="help-block"><%= t("link_on_image_click") %></span>
+				<%= url_field_tag :link_to_url, nil, :placeholder => t("write_link_to_url"), :id => "link_to_url", :class => "input-xxlarge"  %>
+				<br>
+				<%= link_to t("add"), "#", :id => "upload_image_submit", :class => "btn btn-inverse"%>
+				<%= _script_document_ready(%Q|
+			    $('#image_tabs a').click(function (e) {
+			    	e.preventDefault();
+			    	$(this).tab('show');
+			    });
+			    $(function () {
+					$('#image_tabs a:first').tab('show');
+				})
+				|)%>
+				<% script = %Q|
 			    function upload_image() {
 				  if($('\#image').val() != "") {
       				$('div.image_upload_status').css("display","block");
@@ -230,27 +165,19 @@
     			$('\#image').click(function() {$('div.image_upload_progress').html('');});
     			| + script) %>
 			</div>
-			<div id="image_tabs_link" style="position:relative;height:280px;margin:5px;">
-				<div style="float:left;position:relative;width:100%">
-				<span class="description"><%= t("post_image_upload_description") %></span>
-				<br/>
-				<%= url_field_tag :source_url, nil, :placeholder => t("enter_url"), :id => "source_url", :class => "text_field" %>
-				<br/>
-				<%= link_to t("show_image"), "#", :id => "source_url_image_read", :class => "button", :style => "margin:5px" %>
-				<br/>
+			<div class="tab-pane" id="image_tabs_link">
+				<span class="help-block"><%= t("post_image_upload_description") %></span>
+				<%= url_field_tag :source_url, nil, :placeholder => t("enter_url"), :id => "source_url", :class => "input-xxlarge" %>
+				<%= link_to t("show_image"), "#", :id => "source_url_image_read", :class => "btn btn-link" %>
 				<div class="image_read_status" style="display:none"><%= image_tag("common/loading.gif")%></div>
-				<div class="display_url_image" style="float:left"></div>
-				</div>
-				<div style="position:relative;float:left;width:100%">
-			    <%= text_area_tag :something, '', :placeholder => t("write_something"), :class => "text_area", :id => "something", :style => "resize:none;margin-top:5px;height:60px;text-align:top" %>
-				<%= f.label :link_to_url, t("link_to_url"), :class => "label left" %>
-				<span class="description"><%= t("link_on_image_click") %></span>
+				<div class="display_url_image"></div>
+				<br>
+			    <%= text_area_tag :something, '', :placeholder => t("write_something"), :class => "", :id => "something" %>
+				<%= f.label :link_to_url, t("link_to_url"), :class => "" %>
+				<span class="help-block"><%= t("link_on_image_click") %></span>
+				<%= url_field_tag :link_to_url, nil, :placeholder => t("write_link_to_url"), :id => "link_to_url", :class => "input-xxlarge"  %>
 				<br/>
-				<%= url_field_tag :link_to_url, nil, :placeholder => t("write_link_to_url"), :id => "link_to_url", :class => "text_field"  %>
-				<br/>
-				<%= link_to t("add"), "#", :id => "source_url_image_submit", :class => "button", :style => "margin:5px" %>
-				<br/>
-				</div>
+				<%= link_to t("add"), "#", :id => "source_url_image_submit", :class => "btn btn-inverse"%>
 				<% script = %Q|
 				function readImageComplete(event) {
     			   $('div.image_read_status').css("display","none");
@@ -302,24 +229,22 @@
 				<%= _script(%Q|$('\#source_url_image_read').click(function() {read_image();return false});
 				$('\#source_url_image_submit').click(function() {upload_image_from_url();return false});
 				| + script) %>
+
 			</div>
 			</div>
-			</div>
-			</div>
-	<div class="group wat-cf">
-		<div class="display_image" style="margin: 3px;float:left">
+
+		<div class="display_image row-fluid">
 			<% @images = @post.image %>
 			<% @timestamp = @post.write_at %>
 			<%= render :partial => 'sales_managements/shared/upload_image_box' %>
 		</div>			
-	</div>
-	<% end %>
-	<div class="group wat-cf">
-		<div class="attachment">
-			<div class="attachment_description" style="width:400px;margin:5px;">
-	    	<%= f.label :add_attachment, t("attachment") + t("add"), :class => "label left" %>
+		</div>
+		<% end %>
+		<div class="attachment bs-docs box_shadow">
+			<div class="attachment_help-block" style="width:400px;margin:5px;">
+	    	<%= f.label :add_attachment, t("attachment") + t("add"), :class => "" %>
 			<div class="flash"><div class="attachment_upload_progress"></div></div>
-	    	<span class="description"><%= t("post_attachment_upload_description") %></span>
+	    	<span class="help-block"><%= t("post_attachment_upload_description") %></span>
 	    	<br/>
 			<%= file_field_tag :attachment, :id => "attachment" %>
 			<br/>
@@ -393,87 +318,40 @@
 		    <%= _script(%Q|$('\#attachment').change(function() {upload_attachment();});
 		       $('\#attachment').click(function() {$('div.attachment_upload_progress').html('');});
 		    | + script) %>
+			<div class="display_attachment row-fluid"></div>
 			</div>
-			<div class="group">
-			<div class="display_attachment" style="margin: 3px;float:left"></div>
-		</div>
-	</div>
-	<% if @post.id.nil? || (!@category.eql?(Style.page(:p_issue)) && !@post.id.nil?) %>
-	<%= f.fields_for @post.content do |content_form| %>
-	<div class="group wat-cf">
-		<div class="">
-			<%= content_form.label :body, t("content"), :class => "label left" %>
-		</div>
-		<div class="">
+
+			<% if @post.id.nil? || (!@category.eql?(Style.page(:p_issue)) && !@post.id.nil?) %>
+			<%= f.fields_for @post.content do |content_form| %>
+			<%= content_form.label :body, t("content"), :class => "" %>
 			<%= content_form.cktext_area :body, :toolbar => 'Full' %>
-		</div>
-		<span class="description"><%= t("must_be_filled") %></span>
-	</div>
-	<% end %>
-	<% else %>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :body, t("content"), :class => "label left" %>
-		</div>
-		<div class="">
+
+		<span class="help-block"><%= t("must_be_filled") %></span>
+		<% end %>
+		<% else %>
+			<%= f.label :body, t("content"), :class => "" %>
 			<%= raw @post.content.body %>
-		</div>
-	</div>
-	<% end %>
-	<% if !@category.eql?(Style.page(:p_issue)) %>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :views, t(:viewed), :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.text_field :views, :class => "text_field" %>
-		</div>
-		<span class="description"><%= t(:set_zero_to_reset) %></span>
-	</div>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :likes, "#{t(:likes)} #{t(:number_of)}", :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.text_field :likes, :class => "text_field" %>
-		</div>
-		<span class="description"><%= t(:set_zero_to_reset) %></span>
-	</div>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :dislikes, "#{t(:dislikes)} #{t(:number_of)}", :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.text_field :dislikes, :class => "text_field" %>
-		</div>
-		<span class="description"><%= t(:set_zero_to_reset) %></span>
-	</div>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :abuse, "#{t(:abuse)} #{t(:number_of)}", :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.text_field :abuse, :class => "text_field" %>
-		</div>
-		<span class="description"><%= t(:set_zero_to_reset) %></span>
-	</div>
-	<div class="group wat-cf">
-		<div class="">
-			<%= f.label :rank, t(:rank), :class => "label left" %>
-		</div>
-		<div class="">
-			<%= f.text_field :rank, :class => "text_field" %>
-		</div>
-		<span class="description"><%= t(:set_zero_to_reset) %></span>
-	</div>
+		<% end %>
+		<% if !@category.eql?(Style.page(:p_issue)) %>
+			<%= f.label :views, t(:viewed), :class => "" %>
+			<%= f.text_field :views, :class => "" %>
+		<span class="help-block"><%= t(:set_zero_to_reset) %></span>
+			<%= f.label :likes, "#{t(:likes)} #{t(:number_of)}", :class => "" %>
+			<%= f.text_field :likes, :class => "" %>
+		<span class="help-block"><%= t(:set_zero_to_reset) %></span>
+			<%= f.label :dislikes, "#{t(:dislikes)} #{t(:number_of)}", :class => "" %>
+			<%= f.text_field :dislikes, :class => "" %>
+		<span class="help-block"><%= t(:set_zero_to_reset) %></span>
+			<%= f.label :abuse, "#{t(:abuse)} #{t(:number_of)}", :class => "" %>
+			<%= f.text_field :abuse, :class => "" %>
+		<span class="help-block"><%= t(:set_zero_to_reset) %></span>
+			<%= f.label :rank, t(:rank), :class => "" %>
+			<%= f.text_field :rank, :class => "" %>
+		<span class="help-block"><%= t(:set_zero_to_reset) %></span>
 	<% end %>
 </div>
 
-<div class="group wat-cf">
-	<div class="left">
-		<%= f.submit t("create"), :class => "button" %>
-	</div>
-</div>
+<%= f.submit t("create"), :class => "btn btn-primary" %>
 
 <% end %>
 <% script = ""%>

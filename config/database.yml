@@ -37,8 +37,8 @@ production:
   reconnect: false
   database: okbrisba_okbrisbane
   pool: 5
-  username: okbrisba_prod
-  password: Mv36ucP9BiPKiXH1v
+  username: root
+  password:
   socket: /var/lib/mysql/mysql.sock
 
 legacy:

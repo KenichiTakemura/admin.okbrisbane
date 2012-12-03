@@ -1,42 +1,40 @@
-<%= render :partial => 'banners/shared/head' %>
-<h2><%= t("banner") %></h2>
-<h2><%= @banner.name %></h2>
-<% Rails.logger.debug("view: @banner: #{@banner}") %>
-<div class="inner">
-	<table class="table">
-		<tr class="<%= cycle("odd", "even") %>">
-			<td><%= label_tag :enabled, t("hide"), :class => "label left" %> </td>
+<div class="page-header">
+	<h2><%= t("banner") %> <%= @banner.name %></h2>
+</div>
+	<table class="table table-condensed table-hover table-striped">
+		<tr class="">
+			<td><%= label_tag :enabled, t("hide"), :class => "" %> </td>
 			<td><%= t("#{@banner.is_disabled}") %> </td>
 		</tr>
 		<% style = "" %>
 		<% style = "opacity: 0.2;filter: alpha(opacity=20);" if @banner.is_disabled %>
-		<tr class="<%= cycle("odd", "even") %>" style="<%= style%>">
-			<td><%= label_tag :div_resolution, t("div_size"), :class => "label left" %> </td>
+		<tr class="" style="<%= style%>">
+			<td><%= label_tag :div_resolution, t("div_size"), :class => "" %> </td>
 			<td> <%= @banner.div_resolution %> </td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>" style="<%= style%>">
-			<td><%= label_tag :img_resolution, t("image_size"), :class => "label left" %> </td>
+		<tr class="" style="<%= style%>">
+			<td><%= label_tag :img_resolution, t("image_size"), :class => "" %> </td>
 			<td> <%= @banner.img_resolution %> </td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>" style="<%= style%>">
-			<td><%= label_tag :style, t("style"), :class => "label left" %> </td>
+		<tr class="" style="<%= style%>">
+			<td><%= label_tag :style, t("style"), :class => "" %> </td>
 			<td> <%= @banner.style %> </td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>" style="<%= style%>">
-			<td><%= label_tag :effect, t("effect"), :class => "label left" %> </td>
+		<tr class="" style="<%= style%>">
+			<td><%= label_tag :effect, t("effect"), :class => "" %> </td>
 			<td><%= t("#{@banner.effect}") %> </td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>" style="<%= style%>">
-			<td><%= label_tag :effect_speed, t("effect_speed"), :class => "label left" %> </td>
+		<tr class="" style="<%= style%>">
+			<td><%= label_tag :effect_speed, t("effect_speed"), :class => "" %> </td>
 			<td> <%= @banner.effect_speed %> </td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>" style="<%= style%>">
-			<td><%= label_tag :is_random, t(:random), :class => "label left" %> </td>
+		<tr class="" style="<%= style%>">
+			<td><%= label_tag :is_random, t(:random), :class => "" %> </td>
 			<td> <%= t("#{!@banner.is_random}") %> </td>
 		</tr>
-		<tr class="<%= cycle("odd", "even") %>" style="<%= style%>">
+		<tr class="" style="<%= style%>">
 			<div id="business_client_banner_images">
-				<td><%= label_tag :client_image, t("client_banner_image"), :class => "label left" %></td>
+				<td><%= label_tag :client_image, t("client_banner_image"), :class => "" %></td>
 				<td>
 				<div style="width:100%; position: relative; display: inline;">
 					<% if @banner.client_image %>
@@ -56,7 +54,7 @@
 						</ul>
 						<div style="float:left; position: relative; margin-top: 5px">
 							<%= form_for(client_image, :method => :post, :url => client_image_dettach_path(client_image), :html => { :class => "form" }) do |f| %>
-							<%= f.submit t("client_image_remove_from_banner"), :confirm => t("confirm_remove_from_banner"), :class => "button"%>
+							<%= f.submit t("client_image_remove_from_banner"), :confirm => t("confirm_remove_from_banner"), :class => "btn"%>
 							<% end %>
 						</div>
 					</div>
@@ -68,7 +66,6 @@
 </div>
 </table>
 
-<%= link_to t('Edit'), edit_banner_path(@banner, :page_id => @banner.page_id) %> |
-<%= link_to(t(:select_image), select_banners_path(:banner => @banner, :page_id => @banner.page_id)) %> |
-<%= link_to t('Back'), banners_path(:page_id => @banner.page_id) %> 
-</div>
+<%= link_to t('Edit'), edit_banner_path(@banner, :page_id => @banner.page_id), :class => "btn btn-link" %> |
+<%= link_to(t(:select_image), select_banners_path(:banner => @banner, :page_id => @banner.page_id), :class => "btn btn-link") %> |
+<%= link_to t('Back'), banners_path(:page_id => @banner.page_id), :class => "btn btn-link" %> 

@@ -1,7 +1,6 @@
-<h2 class="title"><%= t(:site_statistics) %></h2>
-
-<div class="inner">
-	<!-- Highchart -->
+<div class="page-header">
+	<h2><%= t("site_statistics") %> </h2>
+</div>	<!-- Highchart -->
 	<div id="highchart">
 		<script type="text/javascript">
 			var hit_chart;
@@ -67,18 +66,17 @@
 		</script>
 	<div id="daily_hit_chart_canvas" style="width: 100%; height: 400px"></div>
 	</div>
-	<table class="table">
+	<table class="table table-hover table-condensed table-striped">
 		<tr>
 			<th><%= t(:statistics_date) %></th>
 			<th><%= t(:visitor) %></th>
 			<th><%= t(:user_visitor)%></th>
 		</tr>
 		<% @hits.each do |hit| %>
-		<tr class="<%= cycle("odd", "even") %>" >
+		<tr class="" >
 			<td><%= Common.date_format(hit.day) %></td>
 			<td><%= hit.hit %></td>
 			<td><%= hit.user_hit %></td>
 		</tr>
 		<% end %>
 	</table>
-</div>

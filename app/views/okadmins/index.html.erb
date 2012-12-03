@@ -1,8 +1,9 @@
-<div class="content">
-	<h2 class="title"><%=t("admin")%> <%=t("List")%></h2>
-	<div class="inner">
+
+<div class="page-header">
+	<h2><%=t("admin")%> <%=t("List")%></h2>
+</div>
 		<form action="#" class="form">
-			<table class="table">
+			<table class="table table-condensed table-hover table-striped">
 				<tr>
 					<th class="first"><%= t("email") %></th>
 					<th><%= t("name") %></th>				
@@ -26,14 +27,13 @@
 					<td><%= user.mypage.num_of_post %></td>
 					<td><%= link_to t(:show), okadmin_path(user) %> | 
 					<% if !user.is_special %>
-					<%= link_to t(:delete), okadmin_path(user), :method => :delete, :data => { :confirm => t("confirm_delete") } %> |
+					<%= link_to t(:delete), okadmin_path(user), :method => :delete, :data => { :confirm => t("confirm_delete") }, :class => "btn btn-link" %> |
 					<% end %>
-					<%= link_to "#{t(:role)} #{t(:edit)}", "#" %>
+					<%= link_to "#{t(:role)} #{t(:edit)}", "#", :class => "btn btn-link" %>
 					</td>
 				</tr>
 				<% end %>
 			</table>
 		</form>
-	</div>
-</div>
+
 

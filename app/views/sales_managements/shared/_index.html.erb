@@ -1,9 +1,10 @@
-<h2 class="title"><%= t("#{@category}")%>&nbsp;<%= t('List') %></h2>
-<div class="inner">
-<div class="paginate">
+<div class="page-header">
+	<h2><%= t("#{@category}")%>&nbsp;<%= t('List') %></h2>
+</div>
+<div class="pagination">
 	<%= paginate @post %>
 </div>
-	<table class="table">
+<table class="table table-condensed table-hover table-striped">
 		<tr>
 			<th class="first"><%= t(:Id) %></th>
 			<th><%= t(:status) %></th>
@@ -28,7 +29,7 @@
 		</tr>
 		<% else %>
 		<% @post.each do |item| %>
-		<tr class="<%= cycle("odd", "even") %>">
+		<tr class="">
 			<td><%= item.id %></td>
 			<td><%= t("#{item.status}") %></td>
 			<td><%= t("#{item.category}") %></td>
@@ -46,14 +47,12 @@
 			<td><%= item.comment.size %></td>
 			<td><%= item.abuse %></td>
 			</td>
-			<td><%= link_to t('Show'), show_management_path(item, @category, @post.current_page) %>
-			<br/>
-			<%= link_to t('Edit'), edit_management_path(item, @category, @post.current_page) %>
-			<br/>
-			<%= link_to t("Delete"), delete_management_path(item, @category, @post.current_page), :method => :delete, :data => { :confirm => t('confirm_delete') } %></td>
+			<td><%= link_to t('Show'), show_management_path(item, @category, @post.current_page), :class => "btn btn-link" %> | 
+			<%= link_to t('Edit'), edit_management_path(item, @category, @post.current_page), :class => "btn btn-link" %> |
+			<%= link_to t("Delete"), delete_management_path(item, @category, @post.current_page), :method => :delete, :data => { :confirm => t('confirm_delete') }, :class => "btn btn-link" %></td>
 		</tr>
 		<% end %>
 		<% end %>
 	</table>
-</div>
+
 
