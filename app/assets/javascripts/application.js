@@ -12,9 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery_ui
 //= require jquery_slides
 //= require highcharts
+//= require jquery.remotipart
 //= require_tree .
 //= require bootstrap
 //= require_tree '../../../vendor/assets/javascripts/ckeditor'

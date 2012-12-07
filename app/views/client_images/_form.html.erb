@@ -1,62 +1,32 @@
-<style>
-	#form_image_content {
-		overflow: hidden;
-		position: relative;
-	}
-	#form_content {
-		position: relative;
-	}
-	#image_content {
-		position: relative;
-	}
-</style>
-<div id="form_image_content">
 	<div id="form_content">
 		<%= form_for(@client_image, :html => { :class => "form" }) do |f| %>
 		<%= admin_error_messages!(@client_image) %>
-		<div class="group wat-cf">
-			<div class="">
-				<%= f.label :attached_id, t("business_client"), :class => "" %>
-			</div>
-			<div class="">
-				<% if @business_client %>
-				<%= f.select :attached_id, options_from_collection_for_select(BusinessClient.all, "id", "business_name", @business_client.id) %>
-				<% elsif %>
-				<%= f.select :attached_id, options_from_collection_for_select(BusinessClient.all, "id", "business_name") %>
-				<% end %>
-			</div>
-			<span class="description"><%= t("must_be_selected") %></span>
-			<br/>
-			<span class="description"><%= link_to t("not_listed"), new_business_client_path %></span>
-		</div>
-		<div id="image_tabs">
-			<ul>
-				<li>
-					<a href="#image_tabs_upload"><%= t("upload")%></a>
-				</li>
-				<li>
-					<a href="#image_tabs_link"><%= t("link")%></a>
-				</li>
+		<%= f.label :attached_id, t("business_client"), :class => "" %>
+		<% if @business_client %>
+		<%= f.select :attached_id, options_from_collection_for_select(BusinessClient.all, "id", "business_name", @business_client.id) %>
+		<% elsif %>
+		<%= f.select :attached_id, options_from_collection_for_select(BusinessClient.all, "id", "business_name") %>
+		<% end %>
+		<span class="help-block"><%= t("must_be_selected") %></span>
+		<span class="help-block"><%= link_to t("not_listed"), new_business_client_path %></span>
+		<div class="image bs-docs box_shadow">
+			<ul class="nav nav-tabs" id="image_tabs">
+				<li><a href="#image_tabs_upload"><%=t("upload")%></a></li>
+				<li><a href="#image_tabs_link"><%=t("link")%></a></li>
 			</ul>
-			<div id="image_tabs_upload" style="margin:5px;">
+			<div class="tab-content">
+			<div class="tab-pane" id="image_tabs_upload">
 				<div class="flash">
 					<div class="image_upload_progress"></div>
 				</div>
 				<div class="image_upload_status" style="display:none">
 					<%= image_tag("common/loading.gif")%>
 				</div>
-				<div class="group wat-cf">
-					<div class="">
 						<%= f.label :avatar, t("client_banner_image"), :class => "" %>
-					</div>
-					<div class="">
 						<%= f.file_field :avatar, :id => "avatar" %>
-					</div>
-					<span class="description"><%= t("acceptable_extention") %> <%= @client_image.attachable_list %></span>
-					<br/>
-					<span class="description"><%= t("auto_detect_image_size") %></span>
+					<span class="help-block"><%= t("acceptable_extention") %> <%= @client_image.attachable_list %></span>
+					<span class="help-block"><%= t("auto_detect_image_size") %></span>
 					<div class="image_description"></div>
-				</div>
 			</div>
 			<% script = %Q|
 			function upload_image() {
@@ -124,57 +94,37 @@
 			<%= _script(%Q|$('\#avatar').change(function() {upload_image();return false});
 			$('\#avatar').click(function() {$('div.image_upload_progress').html('');});
 			| + script) %>
-			<div id="image_tabs_link" style="position:relative;margin:5px;">
-
-				<div class="group wat-cf" >
-					<div class="">
-						<%= f.label :source_url, t("client_image_source_url"), :class => "" %>
-					</div>
+			<div class="tab-pane" id="image_tabs_link">
+					<%= f.label :source_url, t("client_image_source_url"), :class => "" %>
 					<div id="source_url" class="">
 						<%= f.url_field :source_url, :class => "", :id => "source_url_field" %>
 					</div>
 					<div id="content_url"></div>
 					<span class="description"><%= t("read_image_from_the_url") %></span>
-				</div>
+					</div>
 			</div>
 		</div>
 
-		<div class="group wat-cf">
-			<div class="">
-				<%= f.label :link_to_url, t("link_to_url"), :class => "" %>
-			</div>
-			<div class="">
-				<%= f.url_field :link_to_url, :class => "" %>
-			</div>
-			<span class="description"><%= t("leave_blank_to_show_profile") %></span>
-		</div>
-		<div class="group wat-cf">
-			<div class="">
+			<%= f.label :link_to_url, t("link_to_url"), :class => "" %>
+			<%= f.url_field :link_to_url, :class => "input-xxlarge" %>
+			<span class="help-block"><%= t("leave_blank_to_show_profile") %></span>
 				<%= f.label :caption, t("caption"), :class => "" %>
-			</div>
-			<div class="">
-				<%= f.text_field :caption, :class => "" %>
-			</div>
-			<span class="description"><%= t("optional") %></span>
-			<br/>
-		</div>
-
-		<div class="group wat-cf" style="margin-top:5px">
-			<div class="left">
-				<%= f.submit t("add"), :class => "button", :id => "banner_add_submit", :class => "btn" %>
+				<%= f.text_field :caption, :class => "input-xlarge" %>
+			<span class="help-block"><%= t("optional") %></span>
+				<%= f.submit t("add"), :class => "button", :id => "banner_add_submit", :class => "btn btn-primary" %>
 				<div id="banner_upload_status" style="display:none">
 					<%= image_tag ("loading.gif")%>
 				</div>
 				<%= _script(%Q|$('\#banner_add_submit').click(function() {$('\#banner_upload_status').toggle();})|) %>
-			</div>
-		</div>
 		<% end %>
 	</div>
+	
 	<ul class="thumbnails">
-		<% if @client_image.id.nil? %>
+	<% if @client_image.id.nil? %>
 
 		<% @business_client.client_image.each do |client_image| %>
-		<li class="thumbnail">
+		<li class="">
+			<div class="thumbnail">
 			<%= image_tag(client_image.thumb_image, :size => client_image.thumb_size) %>
 			<%= flash?(@client_image) %>
 			<p>
@@ -201,11 +151,12 @@
 			</p>
 			<% end %>
 			<% end %>
+			</div>
 		</li>
 		<% end  %>
-	</ul>
 	<% elsif %>
-	<li class="thumbnail">
+	<li class="">
+		<div class="thumbnail">
 		<%= image_tag(@client_image.original_image, :size => @client_image.original_size) %>
 		<%= flash?(@client_image) %>
 		<p>
@@ -229,12 +180,19 @@
 		<% end %>
 		<% end %>
 		</p>
+	</div>
 	</li>
 	<% end %>
 	</ul>
-</div>
+
 <% script = %Q|
-$('\#image_tabs').tabs();
+$('#image_tabs a').click(function (e) {
+	e.preventDefault();
+	$(this).tab('show');
+});
+$(function () {
+	$('#image_tabs a:first').tab('show');
+})
 $('#avatar').click(function() {$('\#source_url_field').val('');});
 $('#source_url_field').click(function() {$('\#avatar').val('');});
 

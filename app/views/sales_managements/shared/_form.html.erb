@@ -62,7 +62,7 @@
 			<%= f.date_select :valid_until, :class => "right" %><%= t('until')%>
 		<% if !@category.eql?(Style.page(:p_issue)) %>
 		<%= f.label :add_image, t("image") + t("add"), :class => "" %>
-	    <div class="image bs-docs box_shadow">	
+	    <div class="image bs-docs box_shadow">
 
 	    	<div class="flash"><div class="image_upload_progress"></div></div>
 			<div class="image_upload_status" style="display:none"><%= image_tag("common/loading.gif")%></div>
@@ -81,15 +81,6 @@
 				<%= url_field_tag :link_to_url, nil, :placeholder => t("write_link_to_url"), :id => "link_to_url", :class => "input-xxlarge"  %>
 				<br>
 				<%= link_to t("add"), "#", :id => "upload_image_submit", :class => "btn btn-inverse"%>
-				<%= _script_document_ready(%Q|
-			    $('#image_tabs a').click(function (e) {
-			    	e.preventDefault();
-			    	$(this).tab('show');
-			    });
-			    $(function () {
-					$('#image_tabs a:first').tab('show');
-				})
-				|)%>
 				<% script = %Q|
 			    function upload_image() {
 				  if($('\#image').val() != "") {
@@ -381,7 +372,13 @@ script += %Q|}, function(data) {
 });
 |%>
 <% script += %Q|
-$('\#image_tabs').tabs();
+$('#image_tabs a').click(function (e) {
+	e.preventDefault();
+	$(this).tab('show');
+});
+$(function () {
+	$('#image_tabs a:first').tab('show');
+})
 $('#image').click(function() {$('\#source_url').val('');});
 $('#source_url').click(function() {$('\#image').val('');});
 |%>

@@ -58,3 +58,5 @@ gem 'kaminari'
 # rails generate ckeditor:install --orm=active_record --backend=paperclip
 gem "ckeditor", "3.7.1"
 gem "nokogiri"
+gem 'remotipart'
+
