@@ -28,83 +28,16 @@
 					<span class="help-block"><%= t("auto_detect_image_size") %></span>
 					<div class="image_description"></div>
 			</div>
-			<% script = %Q|
-			function upload_image() {
-			if($('\#avatar').val() != "") {
-			$('div.image_upload_status').css("display","block");
-			var formData = new FormData();
-			formData.append("file", document.getElementById('avatar').files[0]);
-			formData.append("authenticity_token", $("input[name='authenticity_token']").attr("value"));
-			var xhr = new XMLHttpRequest();
-			xhr.upload.addEventListener("progress", uploadImageProgress, false);
-			xhr.addEventListener("load", uploadImageComplete, false);
-			xhr.open("POST", "#{image_size_for_client_images_path}", true);
-			xhr.send(formData);
-			}
-			};
-			function uploadImageProgress(event) {
-			var progress = Math.round((event.loaded / event.total) * 100);
-			$('div.image_upload_progress').html(progress + "%");
-			};
-			function uploadImageComplete(event) {
-			$('div.image_upload_status').css("display","none");
-			$('\#image').val('');
-			if (event.target.status != 200) {
-			$('div.image_upload_progress').html("
-			<div class=\\"message error\\">
-				"
-				+ "
-				<p>
-					<strong>#{t("failed_to_upload")}</strong>
-				</p>
-			</div>");
-			return false;
-			}
-			data = JSON.parse(event.target.responseText);
-			if(data.result == 2) {
-			$('div.image_upload_progress').html("
-			<div class=\\"message error\\">
-				"
-				+ "
-				<p>
-					<strong>#{t("invalid_file_extention")}</strong>
-				</p>
-			</div>");
-			} else if(data.result != 0) {
-			$('div.image_upload_progress').html("
-			<div class=\\"message error\\">
-				"
-				+ "
-				<p>
-					<strong>#{t("failed_to_upload")}</strong>
-				</p>
-			</div>");
-			} else {
-			$('div.image_upload_progress').html("");
-			$('div.image_description').html(data.file + "
-			<br/>
-			" + data.image_size + "
-			<br/>
-			" + data.type + "
-			<br/>
-			" + data.size + " byte");
-			}
-			};
-			| %>
-			<%= _script(%Q|$('\#avatar').change(function() {upload_image();return false});
-			$('\#avatar').click(function() {$('div.image_upload_progress').html('');});
-			| + script) %>
 			<div class="tab-pane" id="image_tabs_link">
 					<%= f.label :source_url, t("client_image_source_url"), :class => "" %>
 					<div id="source_url" class="">
-						<%= f.url_field :source_url, :class => "", :id => "source_url_field" %>
+						<%= f.url_field :source_url, :class => "input-xxlarge", :id => "source_url_field" %>
 					</div>
 					<div id="content_url"></div>
 					<span class="description"><%= t("read_image_from_the_url") %></span>
 					</div>
 			</div>
 		</div>
-
 			<%= f.label :link_to_url, t("link_to_url"), :class => "" %>
 			<%= f.url_field :link_to_url, :class => "input-xxlarge" %>
 			<span class="help-block"><%= t("leave_blank_to_show_profile") %></span>
@@ -118,10 +51,8 @@
 				<%= _script(%Q|$('\#banner_add_submit').click(function() {$('\#banner_upload_status').toggle();})|) %>
 		<% end %>
 	</div>
-	
 	<ul class="thumbnails">
 	<% if @client_image.id.nil? %>
-
 		<% @business_client.client_image.each do |client_image| %>
 		<li class="">
 			<div class="thumbnail">

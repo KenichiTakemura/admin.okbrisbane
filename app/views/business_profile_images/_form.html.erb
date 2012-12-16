@@ -5,8 +5,16 @@
 <span class="label label-info"><%= @business_client.business_name %></span>
 <br>
 <%= f.label :avatar, t("business_profile_image"), :class => "" %>
-<%= f.file_field :avatar %>
+<%= f.file_field :avatar, :id => "avatar" %>
 <span class="help-block"><%= t("acceptable_extention") %></span>
 <label class="checkbox"> <%= f.check_box :is_main %><%= t("is_main_profile") %> </label>
-<%= f.submit t("add"), :class => "btn btn-primary" %>
+<%= f.submit t("add"), :class => "btn btn-primary disabled", :id => "image_submit"%>
+<%= _script(%Q|
+	$('\#image_submit').click(function(){
+		if($('\#avatar').val() == "") return false;
+	});
+	$('\#avatar').change(function(){
+		$('\#image_submit').removeClass("disabled");
+	});
+|)%>
 <% end %>

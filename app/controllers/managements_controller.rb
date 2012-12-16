@@ -94,7 +94,7 @@ class ManagementsController < ApplicationController
       if params[:id]
         image.attached_to_by(_model(@category).find(params[:id]), current_admin)
       else
-        image.attached_by(current_admin)
+        image.attached_by_user(current_admin)
         image.update_attribute(:attached_type, _model(@category).to_s)
       end
       logger.debug("image saved. #{image}")
@@ -124,7 +124,7 @@ class ManagementsController < ApplicationController
       if params[:id]
         image.attached_to_by(_model(@category).find(params[:id]), current_admin)
       else
-        image.attached_by(current_admin)
+        image.attached_by_user(current_admin)
         image.update_attribute(:attached_type, _model(@category).to_s)
       end
       logger.debug("image saved. #{image}")
@@ -168,7 +168,7 @@ class ManagementsController < ApplicationController
       if params[:id]
         attachment.attached_to_by(_model(@category).find(params[:id]), current_admin)
       else
-        attachment.attached_by(current_admin)
+        attachment.attached_by_user(current_admin)
         attachment.update_attribute(:attached_type, _model(@category).to_s)
       end
       logger.debug("attachment saved. #{attachment}")

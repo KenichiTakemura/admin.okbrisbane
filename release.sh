@@ -1,6 +1,4 @@
 #!/bin/bash
-rm -rf public/assets
-rake assets:precompile --trace RAILS_ENV=production
 DATE=`date +%Y%m%d%H%M`
 tar jcvf ../release/admin_okbrisbane_$DATE.tar.bz2\
  app/controllers\
@@ -8,7 +6,7 @@ tar jcvf ../release/admin_okbrisbane_$DATE.tar.bz2\
  app/mailers\
  app/models\
  app/views\
- config/locales\
+ config/locales/*.yml\
  config/routes.rb\
  config/application.rb\
  config/boot.rb\
@@ -21,4 +19,6 @@ tar jcvf ../release/admin_okbrisbane_$DATE.tar.bz2\
  public/images\
  public/javascripts\
  public/robots.txt
-rm -rf public/assets
+mv tmp/release/manifest.yml tmp/release/manifest.yml.$DATE
+cp -p public/assets/manifest.yml tmp/release
+mv public/assets public/x_assets

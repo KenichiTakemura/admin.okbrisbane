@@ -41,7 +41,6 @@ class Admin < ActiveRecord::Base
   end
   
   def can_view_for?(o)
-    logger.debug("can_view_for? #{o}")
     self.role.each do |role|
       return true if role.role_name.eql?(Style.admin_role(o)) && role.has_role?(Role::R[:user_r])
     end

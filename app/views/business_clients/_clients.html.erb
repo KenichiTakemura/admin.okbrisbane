@@ -7,10 +7,8 @@
 		<th><%= t("business_name") %></th>
 		<th><%= t("business_category") %></th>
 		<th><%= t("business_profile_image") %></th>
-		<th><%= t("business_url") %></th>
 		<th><%= t("business_phone") %></th>
 		<th><%= t("business_address") %></th>
-		<th><%= t("business_abn")%></th>
 		<th><%= t("client_banner_image")%></th>
 		<th class="last"></th>
 	</tr>
@@ -18,16 +16,14 @@
 	<tr>
 		<td><%= business_client.id %></td>
 		<td><%= link_to business_client.business_name, business_client_path(:id => business_client, :page => @business_clients.current_page) %></td>
-		<td><%= select_tag :business_category, options_from_collection_for_select(@business_categories, :id, :display_name, business_client.business_category_id), :include_blank => true, :id => "business_category_#{business_client.id}" %><div class="business_category_update_status_<%= business_client.id%>"></td>
+		<td width="10%"><%= select_tag :business_category, options_from_collection_for_select(@business_categories, :id, :display_name, business_client.business_category_id), :include_blank => true, :id => "business_category_#{business_client.id}" %><div class="business_category_update_status_<%= business_client.id%>"></td>
 		<td> <% if business_client.business_profile_image.empty? %>
 		<%= noimage %>
 		<% elsif %>
 		<%= image_tag(business_client.main_profile_image.avatar.url(:thumb), :class => "image-resize50_50") %>
 		<% end %> </td>
-		<td><%= business_client.business_url %></td>
 		<td><%= business_client.business_phone %></td>
 		<td><%= business_client.business_address %></td>
-		<td><%= business_client.business_abn %></td>
 		<td> <% if business_client.client_image.empty? %>
 		<%= noimage %>
 		<% elsif %>
@@ -43,6 +39,7 @@
 		<% if !business_client.business_name.eql?(Okvalue::BUSINESS_CLIENT_OK) %>
 		<%= link_to t('business_client_delete'), business_client, :method => :delete, :data => { :confirm => t('confirm_delete') }, :class => "btn btn-link" %>
 		<% end %>
+		<%= link_to "#{t("business_profile_image")} #{t('add')}", new_business_profile_image_path(:client => business_client, :page => @business_clients.current_page), :class => "btn btn-link" %> 
 		<%= link_to t('business_banner_image_all_delete'), business_client_delete_all_images_path(business_client), :method => :delete, :data => { :confirm => t('confirm_delete') }, :class => "btn btn-link" %></td>
 		<%= _script(%Q|
 		$('\#business_category_#{business_client.id}').change(function() {
