@@ -1,11 +1,15 @@
 <%= form_for(@business_client, :html => { :class => "form" }) do |f| %>
-<%= admin_error_messages!(@business_client) %>
 
 <%= f.label :business_name, t("business_name"), :class => "" %>
 
 <%= f.text_field :business_name, :class => "" %>
 
 <span class="description"><%= t("must_be_filled") %></span>
+
+<%= f.fields_for @business_client.logo do |logo_form| %>
+	<%= logo_form.label :avatar, t("logo"), :class => "" %>
+	<%= logo_form.file_field :avatar, :id => "logo" %>
+<% end %>
 
 <%= f.label :business_category, t("business_category"), :class => "" %>
 

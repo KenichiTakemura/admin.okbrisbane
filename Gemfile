@@ -62,4 +62,4 @@ gem 'remotipart'
 gem 'omniauth'
 gem 'oauth2'
 gem 'omniauth-facebook', '1.4.0'
-
+gem 'system_timer'

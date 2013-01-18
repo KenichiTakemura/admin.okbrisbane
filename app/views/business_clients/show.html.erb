@@ -9,6 +9,14 @@
 			<td><%= @business_client.business_name %></td>
 		</tr>
 		<tr class="">
+			<td><%= label_tag :business_name, t("logo"), :class => "" %></td>
+			<% if @business_client.logo.present? %>
+				<td><%= image_tag @business_client.logo.original_image %></td>
+			<% else %>
+				<td><%= noimage %></td>
+			<% end %>
+		</tr>
+		<tr class="">
 			<td><%= label_tag :contact_name, t("contact_name"), :class => "" %> </td>
 			<td><%= @business_client.contact_name %></td>
 		</tr>

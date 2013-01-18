@@ -27,6 +27,7 @@ class BusinessClientsController < SearchablesController
   def new
     @business_client = BusinessClient.new
     @business_client.build_business_profile
+    @business_client.build_logo
     logger.debug("@business_client: #{@business_client}")
     respond_to do |format|
       format.html # new.html.erb
@@ -37,6 +38,9 @@ class BusinessClientsController < SearchablesController
   # GET /business_clients/1/edit
   def edit
     @business_client = BusinessClient.find(params[:id])
+    if !@business_client.logo.present?
+    @business_client.build_logo
+    end
   end
 
   # POST /business_clients
@@ -44,16 +48,38 @@ class BusinessClientsController < SearchablesController
   def create
     business_category = BusinessCategory.find(params[:business_client][:business_category])
     params[:business_client].delete :business_category
-   @business_client = BusinessClient.new(params[:business_client])
-   @business_client.business_category = business_category
+    logo_param = params[:business_client].delete :logo
+    @business_client = BusinessClient.new(params[:business_client])
+    @business_client.business_category = business_category
+    logo = Logo.new(:avatar => logo_param[:avatar])
     respond_to do |format|
-      if @business_client.save
-        format.html { redirect_to @business_client, :notice => t("successfully_created") }
-        format.json { render :json => @business_client, :status => :created, :location => @business_client }
-      else
-        flash[:warning] = I18n.t("failed_to_create")
+      begin
+        if @business_client.save
+          if logo_param.present?
+            if logo.save
+              logo.attached_to(@business_client)
+              format.html { redirect_to @business_client, :notice => t("successfully_created") }
+              format.json { render :json => @business_client, :status => :created, :location => @business_client }
+            else
+              flash[:alert] = I18n.t("invalid_file_extention")
+              @business_client.build_logo
+              format.html { render :action => "new" }
+            end
+          else
+            format.html { redirect_to @business_client, :notice => t("successfully_created") }
+            format.json { render :json => @business_client, :status => :created, :location => @business_client }
+          end
+        else
+          flash[:warning] = I18n.t("failed_to_create")
+          @business_client.build_logo
+          format.html { render :action => "new" }
+          format.json { render :json => @business_client.errors, :status => :unprocessable_entity }
+        end
+      rescue Exception => e
+        logger.error("something wrong e => #{$!}")
+        flash[:alert] = I18n.t("failed_to_create")
+        @business_client.build_logo
         format.html { render :action => "new" }
-        format.json { render :json => @business_client.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -65,15 +91,38 @@ class BusinessClientsController < SearchablesController
     logger.debug("Business_client update #{@business_client}")
     business_category = BusinessCategory.find(params[:business_client][:business_category])
     params[:business_client].delete :business_category
-   @business_client.business_category = business_category
+    logo_param = params[:business_client].delete :logo
+    @business_client.business_category = business_category
+    logo = Logo.new(:avatar => logo_param[:avatar])
     respond_to do |format|
-      if @business_client.update_attributes(params[:business_client])
-        format.html { redirect_to @business_client, :notice => t("successfully_updated") }
-        format.json { head :no_content }
-      else
-        flash[:warning] = I18n.t("failed_to_create")
+      begin
+        if @business_client.update_attributes(params[:business_client])
+          if logo_param.present?
+            if logo.save
+              @business_client.logo.destroy
+              logo.attached_to(@business_client)
+              format.html { redirect_to @business_client, :notice => t("successfully_updated") }
+              format.json { head :no_content }
+            else
+              flash[:alert] = I18n.t("invalid_file_extention")
+              logger.warn("Cannot save logo. #{logo.errors.full_messages}")
+              @business_client.build_logo
+              format.html { render :action => "edit" }
+            end
+          else
+            format.html { redirect_to @business_client, :notice => t("successfully_updated") }
+            format.json { head :no_content }
+          end
+        else
+          flash[:warning] = I18n.t("failed_to_create")
+          format.html { render :action => "edit" }
+          format.json { render :json => @business_client.errors, :status => :unprocessable_entity }
+        end
+      rescue Exception => e
+        logger.error("something wrong e => #{$!}")
+        flash[:alert] = I18n.t("failed_to_create")
+        @business_client.build_logo
         format.html { render :action => "edit" }
-        format.json { render :json => @business_client.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -89,7 +138,7 @@ class BusinessClientsController < SearchablesController
       format.json { head :no_content }
     end
   end
-  
+
   def destroy_image
     @business_client = BusinessClient.find(params[:id])
     client_images = @business_client.client_image
@@ -103,13 +152,13 @@ class BusinessClientsController < SearchablesController
       format.json { head :no_content }
     end
   end
-  
+
   def select_category
     category = BusinessCategory.find(params[:category])
     @business_client = BusinessClient.find(params[:business_client])
     @business_client.update_attribute(:business_category, category)
   end
-  
+
   def query
     clients = BusinessClient.query_by_name(@@query, QUERY_LIMIT)
     result = clients.collect{ |c| c.business_name}
@@ -117,7 +166,7 @@ class BusinessClientsController < SearchablesController
       format.json { render :json => result }
     end
   end
-  
+
   def search
     if @@key.present?
       @business_clients = BusinessClient.search(@@key, QUERY_LIMIT).page params[:page]
@@ -129,5 +178,5 @@ class BusinessClientsController < SearchablesController
       format.js
     end
   end
-  
+
 end
