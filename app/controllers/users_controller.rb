@@ -27,6 +27,20 @@ class UsersController < MembersController
       format.json { head :no_content }
     end
   end
+  
+  def block_user
+    @user = _block_user(User)
+    respond_to do |format|
+      format.html { redirect_to @user }
+      format.json { head :no_content }
+    end
+  end
 
-
+  def unblock_user
+    @user = _unblock_user(User)
+    respond_to do |format|
+      format.html { redirect_to @user }
+      format.json { head :no_content }
+    end
+  end
 end

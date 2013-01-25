@@ -2,17 +2,44 @@
 	<h2><%= t("member") %> </h2>
 </div>
 
-	<table class="table table-condensed table-hover table-striped">
-		<th class="first"><%= t("item") %></th>
+	<table class="table table-condensed table-hover">
+		<th class="first" style="width:20%"><%= t("item") %></th>
 		<th class="last"><%= t("content") %></th>
 		<tr class="">
 			<td><%= label_tag :name, t("name"), :class => "" %> </td>
-			<td><%= @user.name %></td>
+			<% if !@user.locked? %>
+			<td><%= @user.name %></td>			
+			<% else %>	
+			<td><span class="text-warning"><i class="icon-lock"></i><%= @user.name %></span>
+				<%=link_to(t("unblock"),users_unblock_path(@user),:class => "btn btn-link",:method => :post)%>
+			</td>			
+			<% end %>
 		</tr>
 		<tr class="">
 			<td><%= label_tag :email, t("email"), :class => "" %> </td>
 			<td><%= @user.email %></td>
 		</tr>
+		<tr class="">
+			<td><%= label_tag :confirmed, t("confirmed"), :class => "" %> </td>
+			<td><%= Common.date_format_ymdhms(@user.confirmed_at) %></td>
+		</tr>
+		<tr class="">
+			<td><%= label_tag :current_signin_at, t("current_signin_at"), :class => "" %> </td>
+			<td><%= Common.date_format_ymdhms(@user.current_sign_in_at) %></td>
+		</tr>
+		<tr class="">
+			<td><%= label_tag :current_signin_ip, t("current_signin_ip"), :class => "" %> </td>
+			<td><%= @user.current_sign_in_ip %></td>
+		</tr>
+		<tr class="">
+			<td><%= label_tag :last_signin_at, t("last_signin_at"), :class => "" %> </td>
+			<td><%= Common.date_format_ymdhms(@user.last_sign_in_at) %></td>
+		</tr>
+		<tr class="">
+			<td><%= label_tag :last_signin_ip, t("last_signin_ip"), :class => "" %> </td>
+			<td><%= @user.last_sign_in_ip %></td>
+		</tr>
+
 		<tr class="">
 			<td><%= label_tag :job_post, t("num_of_job_post"), :class => "" %> </td>
 			<td><%= link_to @user.job.size, posts_managements_path(:category => Style.page(:p_job), :user => @user), :class => "btn" %></td>

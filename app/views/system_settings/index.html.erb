@@ -1,31 +1,21 @@
 <div class="page-header">
 	<h2><%= t("listing_system_settings") %></h2>
 </div>
+<% system_setting = @system_settings.first %>
 <table class="table table-hover table-condensed table-striped">
-		<tr>
-			<th><%= t(:post_expiry_length) %></th>
-			<th><%= t(:socialable) %></th>
-			<th><%= t(:issue_report_to)%></th>
-			<th><%= t(:admin_email)%></th>
-			<th><%= t(:contact_email)%></th>
-			<th><%= t(:top_page_ajax)%></th>
-			<th><%= t(:banner_clickable)%></th>
-			<th><%= t(:banner_ajaxable)%></th>
-			<th class="last"></th>
-		</tr>
-		<% @system_settings.each do |system_setting| %>
-		<tr class="" >
-			<td><%= t("#{system_setting.post_expiry_length}") << " " << t("day") %></td>
-			<td><%= t("#{system_setting.socialable}") %></td>
-			<td><%= system_setting.issue_report_to %></td>
-			<td><%= system_setting.admin_email %></td>
-			<td><%= system_setting.contact_email %></td>
-			<td><%= t("#{system_setting.top_page_ajax}") %></td>
-			<td><%= t("#{system_setting.banner_clickable}") %></td>
-			<td><%= t("#{system_setting.banner_ajaxable}") %></td>
-			<td>
-			<%= link_to t('Edit'), edit_system_setting_path(system_setting), :class => "btn btn-link" %>
-		</tr>
-		<% end %>
+			<tr><td><%= t(:post_expiry_length) %></td><td><%= t("#{system_setting.post_expiry_length}") << " " << t("day") %></td></tr>
+			<tr><td><%= t(:socialable) %></td><td><%= t("#{system_setting.socialable}") %></td></tr>
+			<tr><td><%= t(:issue_report_to)%></td><td><%= system_setting.issue_report_to %></td></tr>
+			<tr><td><%= t(:admin_email)%></td><td><%= system_setting.admin_email %></td></tr>
+			<tr><td><%= t(:contact_email)%></td><td><%= system_setting.contact_email %></td></tr>
+			<tr><td><%= t(:top_page_ajax)%></td><td><%= t("#{system_setting.top_page_ajax}") %></td></tr>
+			<tr><td><%= t(:banner_clickable)%></td><td><%= t("#{system_setting.banner_clickable}") %></td></tr>
+			<tr><td><%= t(:banner_ajaxable)%></td><td><%= t("#{system_setting.banner_ajaxable}") %></td></tr>
+			<tr><td><%= t(:local_signin)%></td><td><%= t("#{system_setting.local_signin}") %></td></tr>
+			<tr><td><%= t(:facebook_signin)%></td><td><%= t("#{system_setting.facebook_signin}") %></td></tr>
+			<tr><td><%= t(:google_signin)%></td><td><%= t("#{system_setting.google_signin}") %></td></tr>
+			<tr><td><%= t(:naver_signin)%></td><td><%= t("#{system_setting.naver_signin}") %></td></tr>
+			<tr><td><%= t(:twitter_signin)%></td><td><%= t("#{system_setting.twitter_signin}") %></td></tr>
 	</table>
 </div>
+<%= link_to t('Edit'), edit_system_setting_path(system_setting), :class => "btn btn-primary" %>

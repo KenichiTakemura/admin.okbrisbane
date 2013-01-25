@@ -116,6 +116,9 @@ AdminOkbrisbane::Application.routes.draw do
 
   match "users/:id/clean_image" => "users#clean_image", :via => :delete, :as => "users_clean_image"
   match "users/:id/clean_attachment" => "users#clean_attachment", :via => :delete, :as => "users_clean_attachment"
+  match "users/:id/block" => "users#block_user", :via => :post, :as => "users_block"
+  match "users/:id/unblock" => "users#unblock_user", :via => :post, :as => "users_unblock"
+  
   resources :users, :only => ["index","show","destroy"]
 
   match "okadmins/:id" => "okadmins#destroy", :via => :delete, :as => "okadmins_delete"

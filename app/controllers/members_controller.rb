@@ -43,6 +43,20 @@ class MembersController < ApplicationController
     end
     user
   end
+  
+  def _block_user(model)
+    user = model.find(params[:id])
+    user.update_attribute(:locked_at, Common.current_time) 
+    logger.info("User is locked. #{user}")
+    user
+  end
+  
+  def _unblock_user(model)
+    user = model.find(params[:id])
+    user.update_attribute(:locked_at, nil) 
+    logger.info("User is unlocked. #{user}")
+    user
+  end 
 
 
 end

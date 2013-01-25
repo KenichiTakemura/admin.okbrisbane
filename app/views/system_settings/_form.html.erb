@@ -1,20 +1,99 @@
-<%= form_for(@system_setting, :html => { :class => "form" }) do |f| %>
+<%= form_for(@system_setting, :html => { :class => "form-horizontal" }) do |f| %>
 <%= admin_error_messages!(@system_setting) %>
 
-<%= f.label :post_expiry_length, t(:post_expiry_length), :class => "" %>
-<%= f.number_field :post_expiry_length, :class => "" %>
-<span class="help-block"><%= t("must_be_filled") %></span>
-<span class="help-block"><%= t("must_be_numbers") %></span>
-<label class="checkbox"><%= f.check_box :socialable %><%= t(:socialable) %></label>
-<%= f.label :issue_report_to, t(:issue_report_to), :class => "" %>
-<%= f.email_field :issue_report_to, :class => "" %>
-<%= f.label :admin_email, t(:admin_email), :class => "" %>
-<%= f.email_field :admin_email, :class => "" %>
-<%= f.label :contact_email, t(:contact_email), :class => "" %>
-<%= f.email_field :contact_email, :class => "" %>
-<label class="checkbox"><%= f.check_box :top_page_ajax %><%= t(:top_page_ajax) %></label>
-<label class="checkbox"><%= f.check_box :banner_clickable %><%= t(:banner_clickable) %></label>
-<label class="checkbox"><%= f.check_box :banner_ajaxable %><%= t(:banner_ajaxable) %></label>
+
+<div class="control-group">
+	<%= f.label :post_expiry_length, t(:post_expiry_length), :class => "control-label" %>
+<div class="controls">
+	<%= f.number_field :post_expiry_length, :class => "" %>
+	<span class="help-inline"><%= t("must_be_filled") %></span>&nbsp;
+	<span class="help-inline"><%= t("must_be_numbers") %></span>
+</div>
+</div>
+
+<div class="control-group">
+	<%= f.label :socialable, t(:socialable), :class => "control-label" %>
+<div class="controls">
+	<%= f.check_box :socialable %>
+</div>
+</div>
+
+<div class="control-group">
+	<%= f.label :issue_report_to, t(:issue_report_to), :class => "control-label" %>
+<div class="controls">
+	<%= f.email_field :issue_report_to, :class => "input-large" %>
+</div>
+</div>
+
+<div class="control-group">
+	<%= f.label :admin_email, t(:admin_email), :class => "control-label" %>
+<div class="controls">
+	<%= f.email_field :admin_email, :class => "input-large" %>
+</div>
+</div>
+
+<div class="control-group">
+	<%= f.label :contact_email, t(:contact_email), :class => "control-label" %>
+<div class="controls">
+	<%= f.email_field :contact_email, :class => "input-large" %>
+</div>
+</div>
+
+<div class="control-group">
+	<%= f.label :top_page_ajax, t(:top_page_ajax), :class => "control-label" %>
+<div class="controls">
+	<%= f.check_box :top_page_ajax %>
+</div>
+</div>
+
+<div class="control-group">
+	<%= f.label :banner_clickable, t(:banner_clickable), :class => "control-label" %>
+<div class="controls">
+	<%= f.check_box :banner_clickable %>
+</div>
+</div>
+
+<div class="control-group">
+	<%= f.label :banner_ajaxable, t(:banner_ajaxable), :class => "control-label" %>
+<div class="controls">
+	<%= f.check_box :banner_ajaxable %>
+</div>
+</div>
+
+<div class="control-group">
+	<%= f.label :local_signin, t(:local_signin), :class => "control-label" %>
+<div class="controls">
+	<%= f.check_box :local_signin %>
+</div>
+</div>
+
+<div class="control-group">
+	<%= f.label :facebook_signin, t(:facebook_signin), :class => "control-label" %>
+<div class="controls">
+	<%= f.check_box :facebook_signin %>
+</div>
+</div>
+
+<div class="control-group">
+	<%= f.label :google_signin, t(:google_signin), :class => "control-label" %>
+<div class="controls">
+	<%= f.check_box :google_signin %>
+</div>
+</div>
+
+<div class="control-group">
+	<%= f.label :naver_signin, t(:naver_signin), :class => "control-label" %>
+<div class="controls">
+	<%= f.check_box :naver_signin %>
+</div>
+</div>
+
+<div class="control-group">
+	<%= f.label :twitter_signin, t(:twitter_signin), :class => "control-label" %>
+<div class="controls">
+	<%= f.check_box :twitter_signin %>
+</div>
+</div>
 <%= f.submit t("create"), :class => "btn btn-primary" %>
 <% end %>
 
