@@ -1,0 +1,37 @@
+<%= form_for(@logo, :html => { :class => "form-horizontal" }) do |f| %>
+<%= f.hidden_field :attached_id, :value => @business_client.id  %>
+<div class="control-group">
+<%= f.label :attached_id, t("business_client"), :class => "control-label" %>
+<div class="controls">
+<span class="label label-info"><%= @business_client.business_name %></span>
+</div>
+</div>
+<div class="control-group">
+<%= f.label :avatar, t("logo"), :class => "control-label" %>
+<div class="controls">
+<%= f.file_field :avatar, :id => "avatar" %>
+<span class="help-block"><%= t("acceptable_extention") %> <%=Logo::THUMBNAILABLE%></span>
+<span class="help-block"><%= t("max_size", :size => number_to_human_size(Logo::MAX_IMAGE_SIZE)) %></span>
+</div>
+</div>
+
+<div class="control-group">
+<%= f.label :device, t("device"), :class => "control-label" %>
+<div class="controls">
+<%= f.select :device, options_from_collection_for_select(@logo.device_list, :first, :second, @logo.device), :include_blank => false %>
+</div>
+</div>
+<div class="control-group">
+	<div class="controls">
+<%= f.submit t("add"), :class => "btn btn-primary disabled", :id => "image_submit"%>
+</div>
+</div>
+<%= _script(%Q|
+	$('\#image_submit').click(function(){
+		if($('\#avatar').val() == "") return false;
+	});
+	$('\#avatar').change(function(){
+		$('\#image_submit').removeClass("disabled");
+	});
+|)%>
+<% end %>

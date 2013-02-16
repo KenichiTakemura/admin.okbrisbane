@@ -6,11 +6,12 @@
 
 <span class="description"><%= t("must_be_filled") %></span>
 
+<!--
 <%= f.fields_for @business_client.logo do |logo_form| %>
 	<%= logo_form.label :avatar, t("logo"), :class => "" %>
 	<%= logo_form.file_field :avatar, :id => "logo" %>
 <% end %>
-
+-->
 <%= f.label :business_category, t("business_category"), :class => "" %>
 
 <% if @business_client.business_category.nil? %>
@@ -43,7 +44,7 @@
 
 <%= f.label :business_url, t("business_url"), :class => "" %>
 
-<%= f.text_field :business_url, :class => "" %>
+<%= f.url_field :business_url, :class => "" %>
 <span class="description"><%= t("optional") %></span>
 <br/>
 <span class="description"><%= t("linked_from_banner") %></span>
@@ -54,10 +55,10 @@
 <%= f.text_field :business_fax, :class => "" %>
 <span class="description"><%= t("optional") %></span>
 <%= f.label :business_address, t("business_address"), :class => "" %>
-<%= f.text_field :business_address, :class => "" %>
+<%= f.text_field :business_address, :class => "input-xlarge" %>
 <span class="description"><%= t("optional") %></span>
 <%= f.label :business_email, t("business_email"), :class => "" %>
-<%= f.text_field :business_email, :class => "" %>
+<%= f.email_field :business_email, :class => "" %>
 <span class="description"><%= t("optional") %></span>
 <%= f.fields_for @business_client.business_profile do |profile_form| %>
 <%= profile_form.label :head, t("business_profile_head"), :class => "" %>

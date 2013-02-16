@@ -10,5 +10,5 @@ f = File.open("#{Rails.root}/config/locales/business_category.txt", "r:utf-8")
 lines = f.readlines
 lines.each_with_index do |line,x|
   category = line.split("#")
-  BusinessCategory.create(:en_name => "BusinessCategory_#{x}", :display_name => category[0], :search_keyword => category[1])
+  BusinessCategory.create(:en_name => category[0], :display_name => category[1], :search_keyword => category[2])
 end

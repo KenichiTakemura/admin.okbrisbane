@@ -71,6 +71,7 @@ AdminOkbrisbane::Application.routes.draw do
   resources :contacts, :only => ["index","destroy","edit","show","update"]
 
   resources :business_profile_images, :only => ["index","new","create","destroy"]
+  resources :logos, :only => ["index","new","create","destroy"]
 
   resources :system_settings, :only => ["index","edit","update"]
   
@@ -111,80 +112,18 @@ AdminOkbrisbane::Application.routes.draw do
       post :select_banner_image
     end
   end
-
   get "main/index"
-
   match "users/:id/clean_image" => "users#clean_image", :via => :delete, :as => "users_clean_image"
   match "users/:id/clean_attachment" => "users#clean_attachment", :via => :delete, :as => "users_clean_attachment"
   match "users/:id/block" => "users#block_user", :via => :post, :as => "users_block"
   match "users/:id/unblock" => "users#unblock_user", :via => :post, :as => "users_unblock"
-  
   resources :users, :only => ["index","show","destroy"]
-
   match "okadmins/:id" => "okadmins#destroy", :via => :delete, :as => "okadmins_delete"
   match "okadmins" => "okadmins#index", :via => :get, :as => "okadmins"
   match "okadmins/:id" => "okadmins#show", :via => :get, :as => "okadmin"
   match "okadmins/:id/clean_image" => "okadmins#clean_image", :via => :delete, :as => "okadmins_clean_image"
   match "okadmins/:id/clean_attachment" => "okadmins#clean_attachment", :via => :delete, :as => "okadmins_clean_attachment"
-
   resources :okadmins, :only => []
-  
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
   resources :mains, :only => ["index"]
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
   root :to => 'main#index'
-
-# See how all your routes lay out with "rake routes"
-
-# This is a legacy wild controller route that's not recommended for RESTful applications.
-# Note: This route will make all actions in every controller accessible via GET requests.
-# match ':controller(/:action(/:id))(.:format)'
 end

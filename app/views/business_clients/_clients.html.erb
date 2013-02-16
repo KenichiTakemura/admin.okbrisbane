@@ -1,3 +1,4 @@
+<span class="label label-inverse"><%=t("display_num")%></span>&nbsp;<span class="badge badge-info"><%=@business_clients.length%></span>
 <div class="pagination">
 	<%= paginate @business_clients %>
 </div>
@@ -9,7 +10,7 @@
 		<th><%= t("business_profile_image") %></th>
 		<th><%= t("business_phone") %></th>
 		<th><%= t("business_address") %></th>
-		<th><%= t("client_banner_image")%></th>
+		<!--th><%= t("client_banner_image")%></th-->
 		<th class="last"></th>
 	</tr>
 	<% @business_clients.each do |business_client| %>
@@ -24,6 +25,7 @@
 		<% end %> </td>
 		<td><%= business_client.business_phone %></td>
 		<td><%= business_client.business_address %></td>
+		<!--
 		<td> <% if business_client.client_image.empty? %>
 		<%= noimage %>
 		<% elsif %>
@@ -35,6 +37,7 @@
 			</div>
 			<% end %>
 		</div> <% end %> </td>
+		-->
 		<td><%= link_to t('add_business_banner_image'), new_client_image_path(:client => business_client, :page => @business_clients.current_page), :class => "btn btn-link" %>
 		<% if !business_client.business_name.eql?(Okvalue::BUSINESS_CLIENT_OK) %>
 		<%= link_to t('business_client_delete'), business_client, :method => :delete, :data => { :confirm => t('confirm_delete') }, :class => "btn btn-link" %>

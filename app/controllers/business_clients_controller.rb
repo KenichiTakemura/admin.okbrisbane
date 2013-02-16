@@ -99,7 +99,7 @@ class BusinessClientsController < SearchablesController
         if @business_client.update_attributes(params[:business_client])
           if logo_param.present?
             if logo.save
-              @business_client.logo.destroy
+              @business_client.logo.destroy if @business_client.logo.present?
               logo.attached_to(@business_client)
               format.html { redirect_to @business_client, :notice => t("successfully_updated") }
               format.json { head :no_content }

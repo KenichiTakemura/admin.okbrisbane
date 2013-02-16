@@ -18,11 +18,11 @@ development:
   password:
   socket: /var/lib/mysql/mysql.sock
   
-development_0124:
+development_0123:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: okbrisbane_development.0124
+  database: okbrisbane_development.0123
   pool: 5
   username: root
   password:
