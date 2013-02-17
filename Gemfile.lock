@@ -1,3 +1,8 @@
+PATH
+  remote: vendor/gems/webcom
+  specs:
+    webcom (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -151,7 +156,6 @@ GEM
     warden (1.2.1)
       rack (>= 1.0)
     web-app-theme (0.7.0)
-    webcom (0.0.1)
 
 PLATFORMS
   ruby
@@ -178,4 +182,4 @@ DEPENDENCIES
   turbo-sprockets-rails3
   uglifier
   web-app-theme
-  webcom (= 0.0.1)
+  webcom (= 0.0.1)!

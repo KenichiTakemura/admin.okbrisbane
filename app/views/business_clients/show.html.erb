@@ -1,21 +1,27 @@
 <div class="page-header">
-	<h2><%= t("business_client") %> </h2>
+	<h2><%= @business_client.business_name %> </h2>
 </div>
 	<table class="table table-condensed table-striped table-hover">
 		<th class="first"><%= t("item") %></th>
 		<th class="last"><%= t("content") %></th>
-		<tr class="">
-			<td><%= label_tag :business_name, t("business_name"), :class => "" %> </td>
-			<td><%= @business_client.business_name %></td>
-		</tr>
 		<tr class="">
 			<td><%= label_tag :business_name, t("logo"), :class => "" %>
 			<br/>
 			<%= link_to t('add'), new_logo_path(:client => @business_client, :page => @current_page), :class => "btn" %> </td>	
 			</td>
 			<% if @business_client.logo.present? %>
-				<td><%= image_tag @business_client.logo.original_image %></td>
-			<% else %>
+				<td>
+					<ul class="thumbnails">
+					<% @business_client.logo.each do |logo| %>
+					<li class="thumbnail banner_image_thumbnail_each pull-left">
+						<%= image_tag logo.original_image %>
+						<%= content_tag(:p, logo.device_name)%>
+						<%= link_to_with_icon_with_method_with_confirm(t("delete"),logo_path(logo),"btn btn-min","","icon-remove","","delete",t("confirm_delete"))%>
+					</li>
+					<% end %>
+					</ul>
+				</td>
+				<% else %>
 				<td><%= noimage %></td>
 			<% end %>
 		</tr>

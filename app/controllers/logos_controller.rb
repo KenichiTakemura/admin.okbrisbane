@@ -69,10 +69,10 @@ class LogosController < ApplicationController
   # DELETE /business_profile_images/1
   # DELETE /business_profile_images/1.json
   def destroy
-    @business_profile_image = BusinessProfileImage.find(params[:id])
-    logger.debug("Delete business_profile_image: #{@business_profile_image}")
-    @business_client = @business_profile_image.attached
-    @business_profile_image.destroy
+    @logo = Logo.find(params[:id])
+    logger.debug("Delete logo #{@logo}")
+    @business_client = @logo.attached
+    @logo.destroy
 
     respond_to do |format|
     #format.html { redirect_to business_profile_images_url }
